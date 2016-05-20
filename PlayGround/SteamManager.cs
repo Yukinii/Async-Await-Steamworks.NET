@@ -16,8 +16,8 @@ namespace PlayGround
         private readonly SteamAPIWarningMessageHook_t _SteamApiWarningMessageHook;
         private static void SteamApiDebugTextHook(int nSeverity, System.Text.StringBuilder pchDebugText) => Debug.WriteLine(pchDebugText);
         
-        public Callback<DownloadItemResult_t> DownloadRequestResult;
-        public Callback<ItemInstalled_t> ItemInstalledCallback;
+        public Callback<DownloadItemResult> DownloadRequestResult;
+        public Callback<ItemInstalled> ItemInstalledCallback;
         public readonly Dictionary<ulong,string> PendingDownloads = new Dictionary<ulong, string>();
 
         public SteamManager()
@@ -32,8 +32,8 @@ namespace PlayGround
             _SteamApiWarningMessageHook = SteamApiDebugTextHook;
             SteamClient.SetWarningMessageHook(_SteamApiWarningMessageHook);
 
-            ItemInstalledCallback = Callback<ItemInstalled_t>.Create(ItemInstalled);
-            DownloadRequestResult = Callback<DownloadItemResult_t>.Create(OnDownloadCompleted);
+            ItemInstalledCallback = Callback<ItemInstalled>.Create(ItemInstalled);
+            DownloadRequestResult = Callback<DownloadItemResult>.Create(OnDownloadCompleted);
 
         }
 
@@ -41,7 +41,7 @@ namespace PlayGround
         {
             try
             {
-                if (SteamAPI.RestartAppIfNecessary((AppId_t)432200))
+                if (SteamAPI.RestartAppIfNecessary((AppId)432200))
                     Environment.Exit(0);
                 if (!SteamAPI.Init())
                     Environment.Exit(0);
@@ -58,14 +58,14 @@ namespace PlayGround
         public void GetWorkshopStuff()
         {
             var numSubscribedItems = CountWorkshopStuff();
-            var items = new PublishedFileId_t[numSubscribedItems];
+            var items = new PublishedFileId[numSubscribedItems];
             var numFound = SteamUGC.GetSubscribedItems(items, numSubscribedItems);
             Array.Resize(ref items, (int)numFound);
 
             CheckWorkshopStuff(items);
         }
 
-        private void CheckWorkshopStuff(PublishedFileId_t[] items)
+        private void CheckWorkshopStuff(IEnumerable<PublishedFileId> items)
         {
             foreach (var item in items)
             {
@@ -87,7 +87,7 @@ namespace PlayGround
             }
         }
 
-        private void VerifyStuff(PublishedFileId_t item)
+        private void VerifyStuff(PublishedFileId item)
         {
             uint timeStamp;
             ulong sizeOnDisk;
@@ -113,7 +113,7 @@ namespace PlayGround
             }
         }
 
-        private void QueueDownload(PublishedFileId_t item)
+        private void QueueDownload(PublishedFileId item)
         {
             var call = SteamUGC.RequestUGCDetails(item, 0);
             var DetailRequestResult = new CallResult<SteamUGCRequestUGCDetailsResult_t>();
@@ -125,38 +125,24 @@ namespace PlayGround
                     return;
 
                 Console.WriteLine("Download queued");
-                PendingDownloads.Add(a._details._nPublishedFileId._PublishedFileId, a._details._rgchTitle);
+                PendingDownloads.Add(a._details.PublishedField._PublishedFileId, a._details._rgchTitle);
             });
         }
 
-        private void OnDownloadCompleted(DownloadItemResult_t param)
+        private void OnDownloadCompleted(DownloadItemResult param)
         {
             string name;
-            if (PendingDownloads.TryGetValue(param._nPublishedFileId._PublishedFileId, out name))
-                Console.WriteLine($"{name} - download result: {param._eResult}");
+            if (PendingDownloads.TryGetValue(param.PublishedField._PublishedFileId, out name))
+                Console.WriteLine($"{name} - download result: {param.ResultType}");
         }
 
-        private async void ItemInstalled(ItemInstalled_t param)
+        private async void ItemInstalled(ItemInstalled param)
         {
-            var details = await GetItemDetailsAsync(param._nPublishedFileId);
+            var details = await SteamUGC.GetItemDetailsAsync(param.PublishedFileId);
             Console.WriteLine("Installed: "+details.Key._details._rgchTitle);
         }
 
         public void Update() => SteamAPI.RunCallbacks();
-
-
-        /// <summary>
-        /// Get's all the available info about the PublishedFieldId and if it exists locally.
-        /// </summary>
-        /// <param name="item">Item to get details for</param>
-        /// <returns>KeyValuePair(Details,Bool (exists locally) )</returns>
-        public Task<KeyValuePair<SteamUGCRequestUGCDetailsResult_t, bool>> GetItemDetailsAsync(PublishedFileId_t item)
-        {
-            var tcs = new TaskCompletionSource<KeyValuePair<SteamUGCRequestUGCDetailsResult_t, bool>>();
-            var call = SteamUGC.RequestUGCDetails(item, 0);
-            var detailRequestResult = new CallResult<SteamUGCRequestUGCDetailsResult_t>();
-            detailRequestResult.Set(call, (a, d) => tcs.SetResult(new KeyValuePair<SteamUGCRequestUGCDetailsResult_t, bool>(a, d)));
-            return tcs.Task;
-        }
+        
     }
 }

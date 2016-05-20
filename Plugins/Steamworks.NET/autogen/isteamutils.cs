@@ -85,9 +85,9 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> returns the appID of the current process</para>
 		/// </summary>
-		public static AppId_t GetAppID() {
+		public static AppId GetAppID() {
 			InteropHelp.TestIfAvailableClient();
-			return (AppId_t)NativeMethods.ISteamUtils_GetAppID();
+			return (AppId)NativeMethods.ISteamUtils_GetAppID();
 		}
 
 		/// <summary>

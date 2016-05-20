@@ -19,12 +19,12 @@ namespace Steamworks {
 			_GameID = GameID;
 		}
 
-		public CGameID(AppId_t appId) {
+		public CGameID(AppId appId) {
 			_GameID = 0;
 			SetAppID(appId);
 		}
 
-		public CGameID(AppId_t appId, uint nModID) {
+		public CGameID(AppId appId, uint nModID) {
 			_GameID = 0;
 			SetAppID(appId);
 			SetType(EGameIDType.k_EGameIDTypeGameMod);
@@ -39,7 +39,7 @@ namespace Steamworks {
 
 	    public bool IsP2PFile() => Type() == EGameIDType.k_EGameIDTypeP2P;
 
-	    public AppId_t AppID() => new AppId_t((uint)(_GameID & 0xFFFFFFul));
+	    public AppId AppID() => new AppId((uint)(_GameID & 0xFFFFFFul));
 
 	    public EGameIDType Type() => (EGameIDType)((_GameID >> 24) & 0xFFul);
 
@@ -49,16 +49,16 @@ namespace Steamworks {
 			// Each type has it's own invalid fixed point:
 			switch (Type()) {
 				case EGameIDType.k_EGameIDTypeApp:
-					return AppID() != AppId_t.Invalid;
+					return AppID() != AppId.Invalid;
 
 				case EGameIDType.k_EGameIDTypeGameMod:
-					return AppID() != AppId_t.Invalid && (ModID() & 0x80000000) != 0;
+					return AppID() != AppId.Invalid && (ModID() & 0x80000000) != 0;
 
 				case EGameIDType.k_EGameIDTypeShortcut:
 					return (ModID() & 0x80000000) != 0;
 
 				case EGameIDType.k_EGameIDTypeP2P:
-					return AppID() == AppId_t.Invalid && (ModID() & 0x80000000) != 0;
+					return AppID() == AppId.Invalid && (ModID() & 0x80000000) != 0;
 
 				default:
 					return false;
@@ -74,7 +74,7 @@ namespace Steamworks {
 		}
 
 		#region Private Setters for internal use
-		private void SetAppID(AppId_t other) {
+		private void SetAppID(AppId other) {
 			_GameID = (_GameID & ~(0xFFFFFFul << 0)) | (((ulong)(other) & 0xFFFFFFul) << 0);
 		}
 

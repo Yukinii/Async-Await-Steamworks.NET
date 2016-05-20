@@ -28,7 +28,7 @@ namespace Steamworks {
 		/// <para> *punFlags specify whether the game server was stored as an explicit favorite or in the history of connections</para>
 		/// <para> *pRTime32LastPlayedOnServer is filled in the with the Unix time the favorite was added</para>
 		/// </summary>
-		public static bool GetFavoriteGame(int iGame, out AppId_t pappId, out uint pnIP, out ushort pnConnPort, out ushort pnQueryPort, out uint punFlags, out uint pRTime32LastPlayedOnServer) {
+		public static bool GetFavoriteGame(int iGame, out AppId pappId, out uint pnIP, out ushort pnConnPort, out ushort pnQueryPort, out uint punFlags, out uint pRTime32LastPlayedOnServer) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamMatchmaking_GetFavoriteGame(iGame, out pappId, out pnIP, out pnConnPort, out pnQueryPort, out punFlags, out pRTime32LastPlayedOnServer);
 		}
@@ -36,7 +36,7 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> adds the game server to the local list; updates the time played of the server if it already exists in the list</para>
 		/// </summary>
-		public static int AddFavoriteGame(AppId_t appId, uint nIP, ushort nConnPort, ushort nQueryPort, uint unFlags, uint rTime32LastPlayedOnServer) {
+		public static int AddFavoriteGame(AppId appId, uint nIP, ushort nConnPort, ushort nQueryPort, uint unFlags, uint rTime32LastPlayedOnServer) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamMatchmaking_AddFavoriteGame(appId, nIP, nConnPort, nQueryPort, unFlags, rTime32LastPlayedOnServer);
 		}
@@ -44,7 +44,7 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> removes the game server from the local storage; returns true if one was removed</para>
 		/// </summary>
-		public static bool RemoveFavoriteGame(AppId_t appId, uint nIP, ushort nConnPort, ushort nQueryPort, uint unFlags) {
+		public static bool RemoveFavoriteGame(AppId appId, uint nIP, ushort nConnPort, ushort nQueryPort, uint unFlags) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamMatchmaking_RemoveFavoriteGame(appId, nIP, nConnPort, nQueryPort, unFlags);
 		}
@@ -437,32 +437,32 @@ namespace Steamworks {
 		/// <para> Each call allocates a new asynchronous request object.</para>
 		/// <para> Request object must be released by calling ReleaseRequest( hServerListRequest )</para>
 		/// </summary>
-		public static HServerListRequest RequestInternetServerList(AppId_t iApp, MatchMakingKeyValuePair_t[] ppchFilters, uint nFilters, ISteamMatchmakingServerListResponse pRequestServersResponse) {
+		public static HServerListRequest RequestInternetServerList(AppId iApp, MatchMakingKeyValuePair_t[] ppchFilters, uint nFilters, ISteamMatchmakingServerListResponse pRequestServersResponse) {
 			InteropHelp.TestIfAvailableClient();
 			return (HServerListRequest)NativeMethods.ISteamMatchmakingServers_RequestInternetServerList(iApp, new MMKVPMarshaller(ppchFilters), nFilters, (IntPtr)pRequestServersResponse);
 		}
 
-		public static HServerListRequest RequestLANServerList(AppId_t iApp, ISteamMatchmakingServerListResponse pRequestServersResponse) {
+		public static HServerListRequest RequestLANServerList(AppId iApp, ISteamMatchmakingServerListResponse pRequestServersResponse) {
 			InteropHelp.TestIfAvailableClient();
 			return (HServerListRequest)NativeMethods.ISteamMatchmakingServers_RequestLANServerList(iApp, (IntPtr)pRequestServersResponse);
 		}
 
-		public static HServerListRequest RequestFriendsServerList(AppId_t iApp, MatchMakingKeyValuePair_t[] ppchFilters, uint nFilters, ISteamMatchmakingServerListResponse pRequestServersResponse) {
+		public static HServerListRequest RequestFriendsServerList(AppId iApp, MatchMakingKeyValuePair_t[] ppchFilters, uint nFilters, ISteamMatchmakingServerListResponse pRequestServersResponse) {
 			InteropHelp.TestIfAvailableClient();
 			return (HServerListRequest)NativeMethods.ISteamMatchmakingServers_RequestFriendsServerList(iApp, new MMKVPMarshaller(ppchFilters), nFilters, (IntPtr)pRequestServersResponse);
 		}
 
-		public static HServerListRequest RequestFavoritesServerList(AppId_t iApp, MatchMakingKeyValuePair_t[] ppchFilters, uint nFilters, ISteamMatchmakingServerListResponse pRequestServersResponse) {
+		public static HServerListRequest RequestFavoritesServerList(AppId iApp, MatchMakingKeyValuePair_t[] ppchFilters, uint nFilters, ISteamMatchmakingServerListResponse pRequestServersResponse) {
 			InteropHelp.TestIfAvailableClient();
 			return (HServerListRequest)NativeMethods.ISteamMatchmakingServers_RequestFavoritesServerList(iApp, new MMKVPMarshaller(ppchFilters), nFilters, (IntPtr)pRequestServersResponse);
 		}
 
-		public static HServerListRequest RequestHistoryServerList(AppId_t iApp, MatchMakingKeyValuePair_t[] ppchFilters, uint nFilters, ISteamMatchmakingServerListResponse pRequestServersResponse) {
+		public static HServerListRequest RequestHistoryServerList(AppId iApp, MatchMakingKeyValuePair_t[] ppchFilters, uint nFilters, ISteamMatchmakingServerListResponse pRequestServersResponse) {
 			InteropHelp.TestIfAvailableClient();
 			return (HServerListRequest)NativeMethods.ISteamMatchmakingServers_RequestHistoryServerList(iApp, new MMKVPMarshaller(ppchFilters), nFilters, (IntPtr)pRequestServersResponse);
 		}
 
-		public static HServerListRequest RequestSpectatorServerList(AppId_t iApp, MatchMakingKeyValuePair_t[] ppchFilters, uint nFilters, ISteamMatchmakingServerListResponse pRequestServersResponse) {
+		public static HServerListRequest RequestSpectatorServerList(AppId iApp, MatchMakingKeyValuePair_t[] ppchFilters, uint nFilters, ISteamMatchmakingServerListResponse pRequestServersResponse) {
 			InteropHelp.TestIfAvailableClient();
 			return (HServerListRequest)NativeMethods.ISteamMatchmakingServers_RequestSpectatorServerList(iApp, new MMKVPMarshaller(ppchFilters), nFilters, (IntPtr)pRequestServersResponse);
 		}

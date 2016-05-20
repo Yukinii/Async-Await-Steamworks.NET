@@ -289,7 +289,7 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> activates game overlay to store page for app</para>
 		/// </summary>
-		public static void ActivateGameOverlayToStore(AppId_t appId, EOverlayToStoreFlag eFlag) {
+		public static void ActivateGameOverlayToStore(AppId appId, EOverlayToStoreFlag eFlag) {
 			InteropHelp.TestIfAvailableClient();
 			NativeMethods.ISteamFriends_ActivateGameOverlayToStore(appId, eFlag);
 		}
@@ -479,9 +479,9 @@ namespace Steamworks {
 			return NativeMethods.ISteamFriends_GetFriendCoplayTime(steamIDFriend);
 		}
 
-		public static AppId_t GetFriendCoplayGame(CSteamID steamIDFriend) {
+		public static AppId GetFriendCoplayGame(CSteamID steamIDFriend) {
 			InteropHelp.TestIfAvailableClient();
-			return (AppId_t)NativeMethods.ISteamFriends_GetFriendCoplayGame(steamIDFriend);
+			return (AppId)NativeMethods.ISteamFriends_GetFriendCoplayGame(steamIDFriend);
 		}
 
 		/// <summary>

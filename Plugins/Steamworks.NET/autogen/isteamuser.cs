@@ -197,7 +197,7 @@ namespace Steamworks {
 		/// <para> After receiving a user's authentication data, and passing it to BeginAuthSession, use this function</para>
 		/// <para> to determine if the user owns downloadable content specified by the provided AppID.</para>
 		/// </summary>
-		public static EUserHasLicenseForAppResult UserHasLicenseForApp(CSteamID steamID, AppId_t appID) {
+		public static EUserHasLicenseForAppResult UserHasLicenseForApp(CSteamID steamID, AppId appID) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamUser_UserHasLicenseForApp(steamID, appID);
 		}
@@ -281,7 +281,7 @@ namespace Steamworks {
 		/// <para> PARAMS: bInteractive - If set tells Steam to go ahead and show the PS3 NetStart dialog if needed to</para>
 		/// <para> prompt the user for network setup/PSN logon before initiating the Steam side of the logon.</para>
 		/// <para> Listen for SteamServersConnected_t or SteamServerConnectFailure_t for status.  SteamServerConnectFailure_t</para>
-		/// <para> may return with EResult k_EResultExternalAccountUnlinked if the PSN account is unknown to Steam.  You should</para>
+		/// <para> may return with ResultType k_EResultExternalAccountUnlinked if the PSN account is unknown to Steam.  You should</para>
 		/// <para> then call LogOnAndLinkSteamAccountToPSN() after prompting the user for credentials to establish a link.</para>
 		/// <para> Future calls to LogOn() after the one time link call should succeed as long as the user is connected to PSN.</para>
 		/// </summary>
@@ -297,7 +297,7 @@ namespace Steamworks {
 		/// <para> prompt the user for network setup/PSN logon before initiating the Steam side of the logon.  pchUserName</para>
 		/// <para> should be the users Steam username, and pchPassword should be the users Steam password.</para>
 		/// <para> Listen for SteamServersConnected_t or SteamServerConnectFailure_t for status.  SteamServerConnectFailure_t</para>
-		/// <para> may return with EResult k_EResultOtherAccountAlreadyLinked if already linked to another account.</para>
+		/// <para> may return with ResultType k_EResultOtherAccountAlreadyLinked if already linked to another account.</para>
 		/// </summary>
 		public static void LogOnAndLinkSteamAccountToPSN(bool bInteractive, string pchUserName, string pchPassword) {
 			InteropHelp.TestIfAvailableClient();

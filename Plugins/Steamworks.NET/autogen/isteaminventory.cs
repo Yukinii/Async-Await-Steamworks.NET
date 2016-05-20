@@ -23,7 +23,7 @@ namespace Steamworks {
 		/// <para>  k_EResultLimitExceeded - ERROR: operation would exceed per-user inventory limits</para>
 		/// <para>  k_EResultFail - ERROR: unknown / generic error</para>
 		/// </summary>
-		public static EResult GetResultStatus(SteamInventoryResult_t resultHandle) {
+		public static ResultType GetResultStatus(SteamInventoryResult_t resultHandle) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamInventory_GetResultStatus(resultHandle);
 		}

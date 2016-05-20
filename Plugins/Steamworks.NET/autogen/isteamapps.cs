@@ -42,7 +42,7 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> only use this member if you need to check ownership of another game related to yours, a demo for example</para>
 		/// </summary>
-		public static bool BIsSubscribedApp(AppId_t appID) {
+		public static bool BIsSubscribedApp(AppId appID) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamApps_BIsSubscribedApp(appID);
 		}
@@ -50,7 +50,7 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> Takes AppID of DLC and checks if the user owns the DLC &amp; if the DLC is installed</para>
 		/// </summary>
-		public static bool BIsDlcInstalled(AppId_t appID) {
+		public static bool BIsDlcInstalled(AppId appID) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamApps_BIsDlcInstalled(appID);
 		}
@@ -58,7 +58,7 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> returns the Unix time of the purchase of the app</para>
 		/// </summary>
-		public static uint GetEarliestPurchaseUnixTime(AppId_t appId) {
+		public static uint GetEarliestPurchaseUnixTime(AppId appId) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamApps_GetEarliestPurchaseUnixTime(appId);
 		}
@@ -84,7 +84,7 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> Returns metadata for DLC by index, of range [0, GetDLCCount()]</para>
 		/// </summary>
-		public static bool BGetDLCDataByIndex(int iDLC, out AppId_t pAppID, out bool pbAvailable, out string name, int cchNameBufferSize) {
+		public static bool BGetDLCDataByIndex(int iDLC, out AppId pAppID, out bool pbAvailable, out string name, int cchNameBufferSize) {
 			InteropHelp.TestIfAvailableClient();
 			var name2 = Marshal.AllocHGlobal(cchNameBufferSize);
 			var ret = NativeMethods.ISteamApps_BGetDLCDataByIndex(iDLC, out pAppID, out pbAvailable, name2, cchNameBufferSize);
@@ -96,12 +96,12 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> Install/Uninstall control for optional DLC</para>
 		/// </summary>
-		public static void InstallDLC(AppId_t appId) {
+		public static void InstallDLC(AppId appId) {
 			InteropHelp.TestIfAvailableClient();
 			NativeMethods.ISteamApps_InstallDLC(appId);
 		}
 
-		public static void UninstallDLC(AppId_t appId) {
+		public static void UninstallDLC(AppId appId) {
 			InteropHelp.TestIfAvailableClient();
 			NativeMethods.ISteamApps_UninstallDLC(appId);
 		}
@@ -113,7 +113,7 @@ namespace Steamworks {
 		/// <para> You'll receive an AppProofOfPurchaseKeyResponse_t callback when</para>
 		/// <para> the key is available (which may be immediately).</para>
 		/// </summary>
-		public static void RequestAppProofOfPurchaseKey(AppId_t appId) {
+		public static void RequestAppProofOfPurchaseKey(AppId appId) {
 			InteropHelp.TestIfAvailableClient();
 			NativeMethods.ISteamApps_RequestAppProofOfPurchaseKey(appId);
 		}
@@ -141,15 +141,15 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> return installed depots in mount order</para>
 		/// </summary>
-		public static uint GetInstalledDepots(AppId_t appID, DepotId_t[] pvecDepots, uint cMaxDepots) {
+		public static uint GetInstalledDepots(AppId appID, DepotId_t[] Depots, uint cMaxDepots) {
 			InteropHelp.TestIfAvailableClient();
-			return NativeMethods.ISteamApps_GetInstalledDepots(appID, pvecDepots, cMaxDepots);
+			return NativeMethods.ISteamApps_GetInstalledDepots(appID, Depots, cMaxDepots);
 		}
 
 		/// <summary>
 		/// <para> returns current app install folder for AppID, returns folder name length</para>
 		/// </summary>
-		public static uint GetAppInstallDir(AppId_t appID, out string pchFolder, uint cchFolderBufferSize) {
+		public static uint GetAppInstallDir(AppId appID, out string pchFolder, uint cchFolderBufferSize) {
 			InteropHelp.TestIfAvailableClient();
 			var pchFolder2 = Marshal.AllocHGlobal((int)cchFolderBufferSize);
 			var ret = NativeMethods.ISteamApps_GetAppInstallDir(appID, pchFolder2, cchFolderBufferSize);
@@ -161,7 +161,7 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> returns true if that app is installed (not necessarily owned)</para>
 		/// </summary>
-		public static bool BIsAppInstalled(AppId_t appID) {
+		public static bool BIsAppInstalled(AppId appID) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamApps_BIsAppInstalled(appID);
 		}
@@ -190,7 +190,7 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> get download progress for optional DLC</para>
 		/// </summary>
-		public static bool GetDlcDownloadProgress(AppId_t appId, out ulong punBytesDownloaded, out ulong punBytesTotal) {
+		public static bool GetDlcDownloadProgress(AppId appId, out ulong punBytesDownloaded, out ulong punBytesTotal) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamApps_GetDlcDownloadProgress(appId, out punBytesDownloaded, out punBytesTotal);
 		}

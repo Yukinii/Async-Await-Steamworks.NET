@@ -10,7 +10,7 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> Get a URL suitable for streaming the given Video app ID's video</para>
 		/// </summary>
-		public static void GetVideoURL(AppId_t unVideoAppID) {
+		public static void GetVideoURL(AppId unVideoAppID) {
 			InteropHelp.TestIfAvailableClient();
 			NativeMethods.ISteamVideo_GetVideoURL(unVideoAppID);
 		}

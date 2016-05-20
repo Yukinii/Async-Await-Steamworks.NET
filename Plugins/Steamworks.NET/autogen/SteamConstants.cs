@@ -37,14 +37,14 @@ namespace Steamworks {
 		// Purpose: Base values for callback identifiers, each callback must
 		//			have a unique ID.
 		//-----------------------------------------------------------------------------
-		public const int k_iSteamUserCallbacks = 100;
-		public const int k_iSteamGameServerCallbacks = 200;
-		public const int k_iSteamFriendsCallbacks = 300;
-		public const int k_iSteamBillingCallbacks = 400;
-		public const int k_iSteamMatchmakingCallbacks = 500;
-		public const int k_iSteamContentServerCallbacks = 600;
-		public const int k_iSteamUtilsCallbacks = 700;
-		public const int k_iClientFriendsCallbacks = 800;
+		public const int SteamUserCallbacks = 100;
+		public const int SteamGameServerCallbacks = 200;
+		public const int SteamFriendsCallbacks = 300;
+		public const int SteamBillingCallbacks = 400;
+		public const int SteamMatchmakingCallbacks = 500;
+		public const int SteamContentServerCallbacks = 600;
+		public const int SteamUtilsCallbacks = 700;
+		public const int ClientFriendsCallbacks = 800;
 		public const int k_iClientUserCallbacks = 900;
 		public const int k_iSteamAppsCallbacks = 1000;
 		public const int k_iSteamUserStatsCallbacks = 1100;

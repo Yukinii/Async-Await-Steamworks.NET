@@ -199,7 +199,7 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> Gets metadata for a file after it has been downloaded. This is the same metadata given in the RemoteStorageDownloadUGCResult_t call result</para>
 		/// </summary>
-		public static bool GetUGCDetails(UGCHandle_t hContent, out AppId_t pappId, out string pname, out int pnFileSizeInBytes, out CSteamID pSteamIDOwner) {
+		public static bool GetUGCDetails(UGCHandle_t hContent, out AppId pappId, out string pname, out int pnFileSizeInBytes, out CSteamID pSteamIDOwner) {
 			InteropHelp.TestIfAvailableClient();
 			IntPtr pname2;
 			var ret = NativeMethods.ISteamRemoteStorage_GetUGCDetails(hContent, out pappId, out pname2, out pnFileSizeInBytes, out pSteamIDOwner);
@@ -290,7 +290,7 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> publishing UGC</para>
 		/// </summary>
-		public static SteamAPICall_t PublishWorkshopFile(string pchFile, string pchPreviewFile, AppId_t nConsumerAppId, string pchTitle, string pchDescription, ERemoteStoragePublishedFileVisibility eVisibility, System.Collections.Generic.IList<string> pTags, EWorkshopFileType eWorkshopFileType) {
+		public static SteamAPICall_t PublishWorkshopFile(string pchFile, string pchPreviewFile, AppId nConsumerAppId, string pchTitle, string pchDescription, ERemoteStoragePublishedFileVisibility eVisibility, System.Collections.Generic.IList<string> pTags, EWorkshopFileType eWorkshopFileType) {
 			InteropHelp.TestIfAvailableClient();
 			using (var pchFile2 = new InteropHelp.UTF8StringHandle(pchFile))
 			using (var pchPreviewFile2 = new InteropHelp.UTF8StringHandle(pchPreviewFile))
@@ -300,7 +300,7 @@ namespace Steamworks {
 			}
 		}
 
-		public static PublishedFileUpdateHandle_t CreatePublishedFileUpdateRequest(PublishedFileId_t unPublishedFileId) {
+		public static PublishedFileUpdateHandle_t CreatePublishedFileUpdateRequest(PublishedFileId unPublishedFileId) {
 			InteropHelp.TestIfAvailableClient();
 			return (PublishedFileUpdateHandle_t)NativeMethods.ISteamRemoteStorage_CreatePublishedFileUpdateRequest(unPublishedFileId);
 		}
@@ -353,12 +353,12 @@ namespace Steamworks {
 		/// <para> cached data may be returned, depending on how long ago it was cached.  A value of 0 will force a refresh.</para>
 		/// <para> A value of k_WorkshopForceLoadPublishedFileDetailsFromCache will use cached data if it exists, no matter how old it is.</para>
 		/// </summary>
-		public static SteamAPICall_t GetPublishedFileDetails(PublishedFileId_t unPublishedFileId, uint unMaxSecondsOld) {
+		public static SteamAPICall_t GetPublishedFileDetails(PublishedFileId unPublishedFileId, uint unMaxSecondsOld) {
 			InteropHelp.TestIfAvailableClient();
 			return (SteamAPICall_t)NativeMethods.ISteamRemoteStorage_GetPublishedFileDetails(unPublishedFileId, unMaxSecondsOld);
 		}
 
-		public static SteamAPICall_t DeletePublishedFile(PublishedFileId_t unPublishedFileId) {
+		public static SteamAPICall_t DeletePublishedFile(PublishedFileId unPublishedFileId) {
 			InteropHelp.TestIfAvailableClient();
 			return (SteamAPICall_t)NativeMethods.ISteamRemoteStorage_DeletePublishedFile(unPublishedFileId);
 		}
@@ -371,7 +371,7 @@ namespace Steamworks {
 			return (SteamAPICall_t)NativeMethods.ISteamRemoteStorage_EnumerateUserPublishedFiles(unStartIndex);
 		}
 
-		public static SteamAPICall_t SubscribePublishedFile(PublishedFileId_t unPublishedFileId) {
+		public static SteamAPICall_t SubscribePublishedFile(PublishedFileId unPublishedFileId) {
 			InteropHelp.TestIfAvailableClient();
 			return (SteamAPICall_t)NativeMethods.ISteamRemoteStorage_SubscribePublishedFile(unPublishedFileId);
 		}
@@ -381,7 +381,7 @@ namespace Steamworks {
 			return (SteamAPICall_t)NativeMethods.ISteamRemoteStorage_EnumerateUserSubscribedFiles(unStartIndex);
 		}
 
-		public static SteamAPICall_t UnsubscribePublishedFile(PublishedFileId_t unPublishedFileId) {
+		public static SteamAPICall_t UnsubscribePublishedFile(PublishedFileId unPublishedFileId) {
 			InteropHelp.TestIfAvailableClient();
 			return (SteamAPICall_t)NativeMethods.ISteamRemoteStorage_UnsubscribePublishedFile(unPublishedFileId);
 		}
@@ -393,17 +393,17 @@ namespace Steamworks {
 			}
 		}
 
-		public static SteamAPICall_t GetPublishedItemVoteDetails(PublishedFileId_t unPublishedFileId) {
+		public static SteamAPICall_t GetPublishedItemVoteDetails(PublishedFileId unPublishedFileId) {
 			InteropHelp.TestIfAvailableClient();
 			return (SteamAPICall_t)NativeMethods.ISteamRemoteStorage_GetPublishedItemVoteDetails(unPublishedFileId);
 		}
 
-		public static SteamAPICall_t UpdateUserPublishedItemVote(PublishedFileId_t unPublishedFileId, bool bVoteUp) {
+		public static SteamAPICall_t UpdateUserPublishedItemVote(PublishedFileId unPublishedFileId, bool bVoteUp) {
 			InteropHelp.TestIfAvailableClient();
 			return (SteamAPICall_t)NativeMethods.ISteamRemoteStorage_UpdateUserPublishedItemVote(unPublishedFileId, bVoteUp);
 		}
 
-		public static SteamAPICall_t GetUserPublishedItemVoteDetails(PublishedFileId_t unPublishedFileId) {
+		public static SteamAPICall_t GetUserPublishedItemVoteDetails(PublishedFileId unPublishedFileId) {
 			InteropHelp.TestIfAvailableClient();
 			return (SteamAPICall_t)NativeMethods.ISteamRemoteStorage_GetUserPublishedItemVoteDetails(unPublishedFileId);
 		}
@@ -413,7 +413,7 @@ namespace Steamworks {
 			return (SteamAPICall_t)NativeMethods.ISteamRemoteStorage_EnumerateUserSharedWorkshopFiles(steamId, unStartIndex, new InteropHelp.SteamParamStringArray(pRequiredTags), new InteropHelp.SteamParamStringArray(pExcludedTags));
 		}
 
-		public static SteamAPICall_t PublishVideo(EWorkshopVideoProvider eVideoProvider, string pchVideoAccount, string pchVideoIdentifier, string pchPreviewFile, AppId_t nConsumerAppId, string pchTitle, string pchDescription, ERemoteStoragePublishedFileVisibility eVisibility, System.Collections.Generic.IList<string> pTags) {
+		public static SteamAPICall_t PublishVideo(EWorkshopVideoProvider eVideoProvider, string pchVideoAccount, string pchVideoIdentifier, string pchPreviewFile, AppId nConsumerAppId, string pchTitle, string pchDescription, ERemoteStoragePublishedFileVisibility eVisibility, System.Collections.Generic.IList<string> pTags) {
 			InteropHelp.TestIfAvailableClient();
 			using (var pchVideoAccount2 = new InteropHelp.UTF8StringHandle(pchVideoAccount))
 			using (var pchVideoIdentifier2 = new InteropHelp.UTF8StringHandle(pchVideoIdentifier))
@@ -424,7 +424,7 @@ namespace Steamworks {
 			}
 		}
 
-		public static SteamAPICall_t SetUserPublishedFileAction(PublishedFileId_t unPublishedFileId, EWorkshopFileAction eAction) {
+		public static SteamAPICall_t SetUserPublishedFileAction(PublishedFileId unPublishedFileId, EWorkshopFileAction eAction) {
 			InteropHelp.TestIfAvailableClient();
 			return (SteamAPICall_t)NativeMethods.ISteamRemoteStorage_SetUserPublishedFileAction(unPublishedFileId, eAction);
 		}

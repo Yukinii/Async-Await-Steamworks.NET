@@ -34,7 +34,7 @@ namespace Steamworks {
 		//
 		// NOTE: This function should be used only if you are using CEG or not using Steam's DRM. Once applied
 		//       to your executable, Steam's DRM will handle restarting through Steam if necessary.
-		public static bool RestartAppIfNecessary(AppId_t unOwappId) {
+		public static bool RestartAppIfNecessary(AppId unOwappId) {
 			InteropHelp.TestIfPlatformSupported();
 			return NativeMethods.SteamAPI_RestartAppIfNecessary(unOwappId);
 		}
@@ -191,7 +191,7 @@ namespace Steamworks {
 			return NativeMethods.BDecryptTicket(rgubTicketEncrypted, cubTicketEncrypted, rgubTicketDecrypted, ref pcubTicketDecrypted, rgubKey, cubKey);
 		}
 
-		public static bool BIsTicketForApp(byte[] rgubTicketDecrypted, uint cubTicketDecrypted, AppId_t appId) {
+		public static bool BIsTicketForApp(byte[] rgubTicketDecrypted, uint cubTicketDecrypted, AppId appId) {
 			InteropHelp.TestIfPlatformSupported();
 			return NativeMethods.BIsTicketForApp(rgubTicketDecrypted, cubTicketDecrypted, appId);
 		}
@@ -211,7 +211,7 @@ namespace Steamworks {
 			return NativeMethods.GetTicketAppID(rgubTicketDecrypted, cubTicketDecrypted);
 		}
 
-		public static bool BUserOwnsAppInTicket(byte[] rgubTicketDecrypted, uint cubTicketDecrypted, AppId_t appId) {
+		public static bool BUserOwnsAppInTicket(byte[] rgubTicketDecrypted, uint cubTicketDecrypted, AppId appId) {
 			InteropHelp.TestIfPlatformSupported();
 			return NativeMethods.BUserOwnsAppInTicket(rgubTicketDecrypted, cubTicketDecrypted, appId);
 		}

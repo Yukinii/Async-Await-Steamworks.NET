@@ -600,7 +600,7 @@ namespace Steamworks
         Installed = 4,  // item is installed and usable (but maybe out of date)
         NeedsUpdate = 8,    // items needs an update. Either because it's not installed yet or creator updated content
         Downloading = 16,   // item update is currently downloading
-        DownloadPending = 32,   // DownloadItem() was called for this item, content isn't available until DownloadItemResult_t is fired
+        DownloadPending = 32,   // DownloadItem() was called for this item, content isn't available until DownloadItemResult is fired
     }
 
     public enum EItemStatistic
@@ -706,7 +706,7 @@ namespace Steamworks
     }
 
     // General result codes
-    public enum EResult
+    public enum ResultType
     {
         Ok = 1,                         // success
         Fail = 2,                           // generic failure
@@ -830,7 +830,7 @@ namespace Steamworks
 
     }
 
-    // Result codes to GSHandleClientDeny/Kick
+    // ResultType codes to GSHandleClientDeny/Kick
     public enum EDenyReason
     {
         Invalid = 0,

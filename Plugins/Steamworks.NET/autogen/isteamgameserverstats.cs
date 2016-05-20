@@ -10,7 +10,7 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> downloads stats for the user</para>
 		/// <para> returns a GSStatsReceived_t callback when completed</para>
-		/// <para> if the user has no stats, GSStatsReceived_t._eResult will be set to k_EResultFail</para>
+		/// <para> if the user has no stats, GSStatsReceived_t.ResultType will be set to k_EResultFail</para>
 		/// <para> these stats will only be auto-updated for clients playing on the server. For other</para>
 		/// <para> users you'll need to call RequestUserStats() again to refresh any data</para>
 		/// </summary>

@@ -85,11 +85,11 @@ namespace Steamworks {
 	// Details for a single published file/UGC
 	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
 	public struct SteamUGCDetails_t {
-		public PublishedFileId_t _nPublishedFileId;
-		public EResult _eResult;												// The result of the operation.
+		public PublishedFileId PublishedField;
+		public ResultType ResultType;												// The result of the operation.
 		public EWorkshopFileType _eFileType;									// Type of the file
-		public AppId_t _nCreatorAppID;										// ID of the app that created this file.
-		public AppId_t _nConsumerAppID;										// ID of the app that will consume this file.
+		public AppId _nCreatorAppID;										// ID of the app that created this file.
+		public AppId _nConsumerAppID;										// ID of the app that will consume this file.
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = Constants.k_cchPublishedDocumentTitleMax)]
 		public string _rgchTitle;				// title of document
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = Constants.k_cchPublishedDocumentDescriptionMax)]

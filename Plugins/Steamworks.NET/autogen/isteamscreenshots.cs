@@ -69,7 +69,7 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> Tags a published file as being visible in the screenshot</para>
 		/// </summary>
-		public static bool TagPublishedFile(ScreenshotHandle hScreenshot, PublishedFileId_t unPublishedFileID) {
+		public static bool TagPublishedFile(ScreenshotHandle hScreenshot, PublishedFileId unPublishedFileID) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamScreenshots_TagPublishedFile(hScreenshot, unPublishedFileID);
 		}

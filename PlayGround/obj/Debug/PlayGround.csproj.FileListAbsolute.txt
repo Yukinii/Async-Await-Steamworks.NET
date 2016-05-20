@@ -1,0 +1,8 @@
+x:\Users\domi\Desktop\GIT\Steamworks.NET\PlayGround\bin\Debug\PlayGround.exe.config
+x:\Users\domi\Desktop\GIT\Steamworks.NET\PlayGround\bin\Debug\PlayGround.exe
+x:\Users\domi\Desktop\GIT\Steamworks.NET\PlayGround\bin\Debug\PlayGround.pdb
+x:\Users\domi\Desktop\GIT\Steamworks.NET\PlayGround\bin\Debug\Steamworks.NET.dll
+x:\Users\domi\Desktop\GIT\Steamworks.NET\PlayGround\bin\Debug\Steamworks.NET.pdb
+x:\Users\domi\Desktop\GIT\Steamworks.NET\PlayGround\obj\Debug\PlayGround.csprojResolveAssemblyReference.cache
+x:\Users\domi\Desktop\GIT\Steamworks.NET\PlayGround\obj\Debug\PlayGround.exe
+x:\Users\domi\Desktop\GIT\Steamworks.NET\PlayGround\obj\Debug\PlayGround.pdb

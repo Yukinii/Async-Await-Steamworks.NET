@@ -166,7 +166,7 @@ namespace Steamworks {
 		/// <para> Friends stats &amp; achievements</para>
 		/// <para> downloads stats for the user</para>
 		/// <para> returns a UserStatsReceived_t received when completed</para>
-		/// <para> if the other user has no stats, UserStatsReceived_t._eResult will be set to k_EResultFail</para>
+		/// <para> if the other user has no stats, UserStatsReceived_t.ResultType will be set to k_EResultFail</para>
 		/// <para> these stats won't be auto-updated; you'll need to call RequestUserStats() again to refresh any data</para>
 		/// </summary>
 		public static SteamAPICall_t RequestUserStats(CSteamID steamIDUser) {

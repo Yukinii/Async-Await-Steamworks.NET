@@ -46,6 +46,7 @@ namespace Steamworks {
 #elif VALVE_CALLBACK_PACK_SMALL
 			return sentinelSize == 24 && subscribedFilesSize == (1 + 1 + 1 + 50 + 100) * 4;
 #endif
+		    return false;
 		}
 
 		[StructLayout(LayoutKind.Sequential, Pack = value)]

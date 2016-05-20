@@ -19,11 +19,11 @@ namespace Steamworks {
 		}
 
 		/// <summary>
-		/// <para> Gets the size of the response and the EResult. Returns false if the response is not ready yet.</para>
+		/// <para> Gets the size of the response and the ResultType. Returns false if the response is not ready yet.</para>
 		/// </summary>
-		public static bool GetMethodResponseInfo(ClientUnifiedMessageHandle hHandle, out uint punResponseSize, out EResult peResult) {
+		public static bool GetMethodResponseInfo(ClientUnifiedMessageHandle hHandle, out uint punResponseSize, out ResultType peResultType) {
 			InteropHelp.TestIfAvailableClient();
-			return NativeMethods.ISteamUnifiedMessages_GetMethodResponseInfo(hHandle, out punResponseSize, out peResult);
+			return NativeMethods.ISteamUnifiedMessages_GetMethodResponseInfo(hHandle, out punResponseSize, out peResultType);
 		}
 
 		/// <summary>

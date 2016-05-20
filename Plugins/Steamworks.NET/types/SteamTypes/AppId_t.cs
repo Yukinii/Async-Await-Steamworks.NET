@@ -5,30 +5,30 @@
 // Changes to this file will be reverted when you update Steamworks.NET
 
 namespace Steamworks {
-	public struct AppId_t : System.IEquatable<AppId_t>, System.IComparable<AppId_t> {
-		public static readonly AppId_t Invalid = new AppId_t(0x0);
+	public struct AppId : System.IEquatable<AppId>, System.IComparable<AppId> {
+		public static readonly AppId Invalid = new AppId(0x0);
 		public uint _AppId;
 
-		public AppId_t(uint value) {
+		public AppId(uint value) {
 			_AppId = value;
 		}
 
 		public override string ToString() => _AppId.ToString();
 
-	    public override bool Equals(object other) => other is AppId_t && this == (AppId_t)other;
+	    public override bool Equals(object other) => other is AppId && this == (AppId)other;
 
 	    public override int GetHashCode() => _AppId.GetHashCode();
 
-	    public static bool operator ==(AppId_t x, AppId_t y) => x._AppId == y._AppId;
+	    public static bool operator ==(AppId x, AppId y) => x._AppId == y._AppId;
 
-	    public static bool operator !=(AppId_t x, AppId_t y) => !(x == y);
+	    public static bool operator !=(AppId x, AppId y) => !(x == y);
 
-	    public static explicit operator AppId_t(uint value) => new AppId_t(value);
+	    public static explicit operator AppId(uint value) => new AppId(value);
 
-	    public static explicit operator uint(AppId_t that) => that._AppId;
+	    public static explicit operator uint(AppId that) => that._AppId;
 
-	    public bool Equals(AppId_t other) => _AppId == other._AppId;
+	    public bool Equals(AppId other) => _AppId == other._AppId;
 
-	    public int CompareTo(AppId_t other) => _AppId.CompareTo(other._AppId);
+	    public int CompareTo(AppId other) => _AppId.CompareTo(other._AppId);
 	}
 }

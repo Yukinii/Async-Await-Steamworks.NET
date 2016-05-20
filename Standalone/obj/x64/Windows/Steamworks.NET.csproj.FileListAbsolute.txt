@@ -1,0 +1,6 @@
+x:\Users\domi\Desktop\GIT\Steamworks.NET\Standalone\bin\x64\Windows\Steamworks.NET.dll
+x:\Users\domi\Desktop\GIT\Steamworks.NET\Standalone\bin\x64\Windows\Steamworks.NET.pdb
+x:\Users\domi\Desktop\GIT\Steamworks.NET\Standalone\obj\x64\Windows\Steamworks.NET.dll
+x:\Users\domi\Desktop\GIT\Steamworks.NET\Standalone\obj\x64\Windows\Steamworks.NET.pdb
+x:\Users\domi\Desktop\GIT\Steamworks.NET\Standalone\bin\debug\Steamworks.NET.dll
+x:\Users\domi\Desktop\GIT\Steamworks.NET\Standalone\bin\debug\Steamworks.NET.pdb

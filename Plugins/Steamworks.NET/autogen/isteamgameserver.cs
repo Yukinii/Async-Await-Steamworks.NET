@@ -12,7 +12,7 @@ namespace Steamworks {
 		/// <para> may not be changed after logged in.</para>
 		/// <para>/ This is called by SteamGameServer_Init, and you will usually not need to call it directly</para>
 		/// </summary>
-		public static bool InitGameServer(uint unIP, ushort usGamePort, ushort usQueryPort, uint unFlags, AppId_t nGameAppId, string pchVersionString) {
+		public static bool InitGameServer(uint unIP, ushort usGamePort, ushort usQueryPort, uint unFlags, AppId nGameAppId, string pchVersionString) {
 			InteropHelp.TestIfAvailableGameServer();
 			using (var pchVersionString2 = new InteropHelp.UTF8StringHandle(pchVersionString)) {
 				return NativeMethods.ISteamGameServer_InitGameServer(unIP, usGamePort, usQueryPort, unFlags, nGameAppId, pchVersionString2);
@@ -340,7 +340,7 @@ namespace Steamworks {
 		/// <para> After receiving a user's authentication data, and passing it to SendUserConnectAndAuthenticate, use this function</para>
 		/// <para> to determine if the user owns downloadable content specified by the provided AppID.</para>
 		/// </summary>
-		public static EUserHasLicenseForAppResult UserHasLicenseForApp(CSteamID steamID, AppId_t appID) {
+		public static EUserHasLicenseForAppResult UserHasLicenseForApp(CSteamID steamID, AppId appID) {
 			InteropHelp.TestIfAvailableGameServer();
 			return NativeMethods.ISteamGameServer_UserHasLicenseForApp(steamID, appID);
 		}

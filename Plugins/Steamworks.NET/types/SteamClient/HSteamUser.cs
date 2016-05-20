@@ -6,28 +6,28 @@
 
 namespace Steamworks {
 	public struct HSteamUser : System.IEquatable<HSteamUser>, System.IComparable<HSteamUser> {
-		public int _HSteamUser;
+		public readonly int User;
 
 		public HSteamUser(int value) {
-			_HSteamUser = value;
+			User = value;
 		}
 
-		public override string ToString() => _HSteamUser.ToString();
+		public override string ToString() => User.ToString();
 
 	    public override bool Equals(object other) => other is HSteamUser && this == (HSteamUser)other;
 
-	    public override int GetHashCode() => _HSteamUser.GetHashCode();
+	    public override int GetHashCode() => User.GetHashCode();
 
-	    public static bool operator ==(HSteamUser x, HSteamUser y) => x._HSteamUser == y._HSteamUser;
+	    public static bool operator ==(HSteamUser x, HSteamUser y) => x.User == y.User;
 
 	    public static bool operator !=(HSteamUser x, HSteamUser y) => !(x == y);
 
 	    public static explicit operator HSteamUser(int value) => new HSteamUser(value);
 
-	    public static explicit operator int(HSteamUser that) => that._HSteamUser;
+	    public static explicit operator int(HSteamUser that) => that.User;
 
-	    public bool Equals(HSteamUser other) => _HSteamUser == other._HSteamUser;
+	    public bool Equals(HSteamUser other) => User == other.User;
 
-	    public int CompareTo(HSteamUser other) => _HSteamUser.CompareTo(other._HSteamUser);
+	    public int CompareTo(HSteamUser other) => User.CompareTo(other.User);
 	}
 }

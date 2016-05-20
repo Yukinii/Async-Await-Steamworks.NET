@@ -83,31 +83,31 @@ namespace Steamworks {
 		/// <para> this needs to be called before RequestLobbyList() to take effect</para>
 		/// <para> these are cleared on each call to RequestLobbyList()</para>
 		/// </summary>
-		public static void AddRequestLobbyListStringFilter(string pchKeyToMatch, string pchValueToMatch, ELobbyComparison eComparisonType) {
+		public static void AddRequestLobbyListStringFilter(string KeyToMatch, string ValueToMatch, ELobbyComparison eComparisonType) {
 			InteropHelp.TestIfAvailableClient();
-			using (var pchKeyToMatch2 = new InteropHelp.UTF8StringHandle(pchKeyToMatch))
-			using (var pchValueToMatch2 = new InteropHelp.UTF8StringHandle(pchValueToMatch)) {
-				NativeMethods.ISteamMatchmaking_AddRequestLobbyListStringFilter(pchKeyToMatch2, pchValueToMatch2, eComparisonType);
+			using (var KeyToMatch2 = new InteropHelp.UTF8StringHandle(KeyToMatch))
+			using (var ValueToMatch2 = new InteropHelp.UTF8StringHandle(ValueToMatch)) {
+				NativeMethods.ISteamMatchmaking_AddRequestLobbyListStringFilter(KeyToMatch2, ValueToMatch2, eComparisonType);
 			}
 		}
 
 		/// <summary>
 		/// <para> numerical comparison</para>
 		/// </summary>
-		public static void AddRequestLobbyListNumericalFilter(string pchKeyToMatch, int nValueToMatch, ELobbyComparison eComparisonType) {
+		public static void AddRequestLobbyListNumericalFilter(string KeyToMatch, int nValueToMatch, ELobbyComparison eComparisonType) {
 			InteropHelp.TestIfAvailableClient();
-			using (var pchKeyToMatch2 = new InteropHelp.UTF8StringHandle(pchKeyToMatch)) {
-				NativeMethods.ISteamMatchmaking_AddRequestLobbyListNumericalFilter(pchKeyToMatch2, nValueToMatch, eComparisonType);
+			using (var KeyToMatch2 = new InteropHelp.UTF8StringHandle(KeyToMatch)) {
+				NativeMethods.ISteamMatchmaking_AddRequestLobbyListNumericalFilter(KeyToMatch2, nValueToMatch, eComparisonType);
 			}
 		}
 
 		/// <summary>
 		/// <para> returns results closest to the specified value. Multiple near filters can be added, with early filters taking precedence</para>
 		/// </summary>
-		public static void AddRequestLobbyListNearValueFilter(string pchKeyToMatch, int nValueToBeCloseTo) {
+		public static void AddRequestLobbyListNearValueFilter(string KeyToMatch, int nValueToBeCloseTo) {
 			InteropHelp.TestIfAvailableClient();
-			using (var pchKeyToMatch2 = new InteropHelp.UTF8StringHandle(pchKeyToMatch)) {
-				NativeMethods.ISteamMatchmaking_AddRequestLobbyListNearValueFilter(pchKeyToMatch2, nValueToBeCloseTo);
+			using (var KeyToMatch2 = new InteropHelp.UTF8StringHandle(KeyToMatch)) {
+				NativeMethods.ISteamMatchmaking_AddRequestLobbyListNearValueFilter(KeyToMatch2, nValueToBeCloseTo);
 			}
 		}
 
@@ -143,7 +143,7 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> returns the SteamId of a lobby, as retrieved by a RequestLobbyList call</para>
 		/// <para> should only be called after a LobbyMatchList callback is received</para>
-		/// <para> iLobby is of the range [0, LobbyMatchList::_nLobbiesMatching)</para>
+		/// <para> iLobby is of the range [0, LobbyMatchList::LobbiesMatching)</para>
 		/// <para> the returned SteamId::IsValid() will be false if iLobby is out of range</para>
 		/// </summary>
 		public static SteamId GetLobbyByIndex(int iLobby) {
@@ -224,10 +224,10 @@ namespace Steamworks {
 		/// <para> takes a simple key, and returns the string associated with it</para>
 		/// <para> "" will be returned if no value is set, or if steamIDLobby is invalid</para>
 		/// </summary>
-		public static string GetLobbyData(SteamId steamIDLobby, string pchKey) {
+		public static string GetLobbyData(SteamId steamIDLobby, string Key) {
 			InteropHelp.TestIfAvailableClient();
-			using (var pchKey2 = new InteropHelp.UTF8StringHandle(pchKey)) {
-				return InteropHelp.PtrToStringUTF8(NativeMethods.ISteamMatchmaking_GetLobbyData(steamIDLobby, pchKey2));
+			using (var Key2 = new InteropHelp.UTF8StringHandle(Key)) {
+				return InteropHelp.PtrToStringUTF8(NativeMethods.ISteamMatchmaking_GetLobbyData(steamIDLobby, Key2));
 			}
 		}
 
@@ -238,11 +238,11 @@ namespace Steamworks {
 		/// <para> to reset a key, just set it to ""</para>
 		/// <para> other users in the lobby will receive notification of the lobby data change via a LobbyDataUpdate callback</para>
 		/// </summary>
-		public static bool SetLobbyData(SteamId steamIDLobby, string pchKey, string pchValue) {
+		public static bool SetLobbyData(SteamId steamIDLobby, string Key, string Value) {
 			InteropHelp.TestIfAvailableClient();
-			using (var pchKey2 = new InteropHelp.UTF8StringHandle(pchKey))
-			using (var pchValue2 = new InteropHelp.UTF8StringHandle(pchValue)) {
-				return NativeMethods.ISteamMatchmaking_SetLobbyData(steamIDLobby, pchKey2, pchValue2);
+			using (var Key2 = new InteropHelp.UTF8StringHandle(Key))
+			using (var Value2 = new InteropHelp.UTF8StringHandle(Value)) {
+				return NativeMethods.ISteamMatchmaking_SetLobbyData(steamIDLobby, Key2, Value2);
 			}
 		}
 
@@ -257,46 +257,46 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> returns a lobby metadata key/values pair by index, of range [0, GetLobbyDataCount())</para>
 		/// </summary>
-		public static bool GetLobbyDataByIndex(SteamId steamIDLobby, int iLobbyData, out string pchKey, int KeyBufferSize, out string pchValue, int ValueBufferSize) {
+		public static bool GetLobbyDataByIndex(SteamId steamIDLobby, int iLobbyData, out string Key, int KeyBufferSize, out string Value, int ValueBufferSize) {
 			InteropHelp.TestIfAvailableClient();
-			var pchKey2 = Marshal.AllocHGlobal(KeyBufferSize);
-			var pchValue2 = Marshal.AllocHGlobal(ValueBufferSize);
-			var ret = NativeMethods.ISteamMatchmaking_GetLobbyDataByIndex(steamIDLobby, iLobbyData, pchKey2, KeyBufferSize, pchValue2, ValueBufferSize);
-			pchKey = ret ? InteropHelp.PtrToStringUTF8(pchKey2) : null;
-			Marshal.FreeHGlobal(pchKey2);
-			pchValue = ret ? InteropHelp.PtrToStringUTF8(pchValue2) : null;
-			Marshal.FreeHGlobal(pchValue2);
+			var Key2 = Marshal.AllocHGlobal(KeyBufferSize);
+			var Value2 = Marshal.AllocHGlobal(ValueBufferSize);
+			var ret = NativeMethods.ISteamMatchmaking_GetLobbyDataByIndex(steamIDLobby, iLobbyData, Key2, KeyBufferSize, Value2, ValueBufferSize);
+			Key = ret ? InteropHelp.PtrToStringUTF8(Key2) : null;
+			Marshal.FreeHGlobal(Key2);
+			Value = ret ? InteropHelp.PtrToStringUTF8(Value2) : null;
+			Marshal.FreeHGlobal(Value2);
 			return ret;
 		}
 
 		/// <summary>
 		/// <para> removes a metadata key from the lobby</para>
 		/// </summary>
-		public static bool DeleteLobbyData(SteamId steamIDLobby, string pchKey) {
+		public static bool DeleteLobbyData(SteamId steamIDLobby, string Key) {
 			InteropHelp.TestIfAvailableClient();
-			using (var pchKey2 = new InteropHelp.UTF8StringHandle(pchKey)) {
-				return NativeMethods.ISteamMatchmaking_DeleteLobbyData(steamIDLobby, pchKey2);
+			using (var Key2 = new InteropHelp.UTF8StringHandle(Key)) {
+				return NativeMethods.ISteamMatchmaking_DeleteLobbyData(steamIDLobby, Key2);
 			}
 		}
 
 		/// <summary>
 		/// <para> Gets per-user metadata for someone in this lobby</para>
 		/// </summary>
-		public static string GetLobbyMemberData(SteamId steamIDLobby, SteamId steamIDUser, string pchKey) {
+		public static string GetLobbyMemberData(SteamId steamIDLobby, SteamId userId, string Key) {
 			InteropHelp.TestIfAvailableClient();
-			using (var pchKey2 = new InteropHelp.UTF8StringHandle(pchKey)) {
-				return InteropHelp.PtrToStringUTF8(NativeMethods.ISteamMatchmaking_GetLobbyMemberData(steamIDLobby, steamIDUser, pchKey2));
+			using (var Key2 = new InteropHelp.UTF8StringHandle(Key)) {
+				return InteropHelp.PtrToStringUTF8(NativeMethods.ISteamMatchmaking_GetLobbyMemberData(steamIDLobby, userId, Key2));
 			}
 		}
 
 		/// <summary>
 		/// <para> Sets per-user metadata (for the local user implicitly)</para>
 		/// </summary>
-		public static void SetLobbyMemberData(SteamId steamIDLobby, string pchKey, string pchValue) {
+		public static void SetLobbyMemberData(SteamId steamIDLobby, string Key, string Value) {
 			InteropHelp.TestIfAvailableClient();
-			using (var pchKey2 = new InteropHelp.UTF8StringHandle(pchKey))
-			using (var pchValue2 = new InteropHelp.UTF8StringHandle(pchValue)) {
-				NativeMethods.ISteamMatchmaking_SetLobbyMemberData(steamIDLobby, pchKey2, pchValue2);
+			using (var Key2 = new InteropHelp.UTF8StringHandle(Key))
+			using (var Value2 = new InteropHelp.UTF8StringHandle(Value)) {
+				NativeMethods.ISteamMatchmaking_SetLobbyMemberData(steamIDLobby, Key2, Value2);
 			}
 		}
 
@@ -331,7 +331,7 @@ namespace Steamworks {
 		/// <para> this is an asynchronous call</para>
 		/// <para> returns false if the local user is not connected to the Steam servers</para>
 		/// <para> results will be returned by a LobbyDataUpdate callback</para>
-		/// <para> if the specified lobby doesn't exist, LobbyDataUpdate::_bSuccess will be set to false</para>
+		/// <para> if the specified lobby doesn't exist, LobbyDataUpdate::Success will be set to false</para>
 		/// </summary>
 		public static bool RequestLobbyData(SteamId steamIDLobby) {
 			InteropHelp.TestIfAvailableClient();
@@ -437,34 +437,34 @@ namespace Steamworks {
 		/// <para> Each call allocates a new asynchronous request object.</para>
 		/// <para> Request object must be released by calling ReleaseRequest( hServerListRequest )</para>
 		/// </summary>
-		public static HServerListRequest RequestInternetServerList(AppId iApp, MatchMakingKeyValuePair[] ppchFilters, uint nFilters, ISteamMatchmakingServerListResponse pRequestServersResponse) {
+		public static HServerListRequest RequestInternetServerList(AppId iApp, MatchMakingKeyValuePair[] pFilters, uint nFilters, SteamMatchmakingServerListResponse pRequestServersResponse) {
 			InteropHelp.TestIfAvailableClient();
-			return (HServerListRequest)NativeMethods.ISteamMatchmakingServers_RequestInternetServerList(iApp, new MMKVPMarshaller(ppchFilters), nFilters, (IntPtr)pRequestServersResponse);
+			return (HServerListRequest)NativeMethods.ISteamMatchmakingServers_RequestInternetServerList(iApp, new MmkvpMarshaller(pFilters), nFilters, (IntPtr)pRequestServersResponse);
 		}
 
-		public static HServerListRequest RequestLANServerList(AppId iApp, ISteamMatchmakingServerListResponse pRequestServersResponse) {
+		public static HServerListRequest RequestLANServerList(AppId iApp, SteamMatchmakingServerListResponse pRequestServersResponse) {
 			InteropHelp.TestIfAvailableClient();
 			return (HServerListRequest)NativeMethods.ISteamMatchmakingServers_RequestLANServerList(iApp, (IntPtr)pRequestServersResponse);
 		}
 
-		public static HServerListRequest RequestFriendsServerList(AppId iApp, MatchMakingKeyValuePair[] ppchFilters, uint nFilters, ISteamMatchmakingServerListResponse pRequestServersResponse) {
+		public static HServerListRequest RequestFriendsServerList(AppId iApp, MatchMakingKeyValuePair[] pFilters, uint nFilters, SteamMatchmakingServerListResponse pRequestServersResponse) {
 			InteropHelp.TestIfAvailableClient();
-			return (HServerListRequest)NativeMethods.ISteamMatchmakingServers_RequestFriendsServerList(iApp, new MMKVPMarshaller(ppchFilters), nFilters, (IntPtr)pRequestServersResponse);
+			return (HServerListRequest)NativeMethods.ISteamMatchmakingServers_RequestFriendsServerList(iApp, new MmkvpMarshaller(pFilters), nFilters, (IntPtr)pRequestServersResponse);
 		}
 
-		public static HServerListRequest RequestFavoritesServerList(AppId iApp, MatchMakingKeyValuePair[] ppchFilters, uint nFilters, ISteamMatchmakingServerListResponse pRequestServersResponse) {
+		public static HServerListRequest RequestFavoritesServerList(AppId iApp, MatchMakingKeyValuePair[] pFilters, uint nFilters, SteamMatchmakingServerListResponse pRequestServersResponse) {
 			InteropHelp.TestIfAvailableClient();
-			return (HServerListRequest)NativeMethods.ISteamMatchmakingServers_RequestFavoritesServerList(iApp, new MMKVPMarshaller(ppchFilters), nFilters, (IntPtr)pRequestServersResponse);
+			return (HServerListRequest)NativeMethods.ISteamMatchmakingServers_RequestFavoritesServerList(iApp, new MmkvpMarshaller(pFilters), nFilters, (IntPtr)pRequestServersResponse);
 		}
 
-		public static HServerListRequest RequestHistoryServerList(AppId iApp, MatchMakingKeyValuePair[] ppchFilters, uint nFilters, ISteamMatchmakingServerListResponse pRequestServersResponse) {
+		public static HServerListRequest RequestHistoryServerList(AppId iApp, MatchMakingKeyValuePair[] pFilters, uint nFilters, SteamMatchmakingServerListResponse pRequestServersResponse) {
 			InteropHelp.TestIfAvailableClient();
-			return (HServerListRequest)NativeMethods.ISteamMatchmakingServers_RequestHistoryServerList(iApp, new MMKVPMarshaller(ppchFilters), nFilters, (IntPtr)pRequestServersResponse);
+			return (HServerListRequest)NativeMethods.ISteamMatchmakingServers_RequestHistoryServerList(iApp, new MmkvpMarshaller(pFilters), nFilters, (IntPtr)pRequestServersResponse);
 		}
 
-		public static HServerListRequest RequestSpectatorServerList(AppId iApp, MatchMakingKeyValuePair[] ppchFilters, uint nFilters, ISteamMatchmakingServerListResponse pRequestServersResponse) {
+		public static HServerListRequest RequestSpectatorServerList(AppId iApp, MatchMakingKeyValuePair[] pFilters, uint nFilters, SteamMatchmakingServerListResponse pRequestServersResponse) {
 			InteropHelp.TestIfAvailableClient();
-			return (HServerListRequest)NativeMethods.ISteamMatchmakingServers_RequestSpectatorServerList(iApp, new MMKVPMarshaller(ppchFilters), nFilters, (IntPtr)pRequestServersResponse);
+			return (HServerListRequest)NativeMethods.ISteamMatchmakingServers_RequestSpectatorServerList(iApp, new MmkvpMarshaller(pFilters), nFilters, (IntPtr)pRequestServersResponse);
 		}
 
 		/// <summary>

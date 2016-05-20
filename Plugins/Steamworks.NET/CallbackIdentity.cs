@@ -5,6 +5,7 @@
 // Changes to this file will be reverted when you update Steamworks.NET
 
 using System;
+using Steamworks.Steamworks.NET;
 
 namespace Steamworks {
     static class CallbackIdentities {
@@ -14,14 +15,6 @@ namespace Steamworks {
 			}
 
 			throw new Exception("Callback number not found for struct " + callbackStruct);
-		}
-	}
-
-	[AttributeUsage(AttributeTargets.Struct)]
-	internal class CallbackIdentityAttribute : Attribute {
-		public int Identity { get; set; }
-		public CallbackIdentityAttribute(int callbackNum) {
-			Identity = callbackNum;
 		}
 	}
 }

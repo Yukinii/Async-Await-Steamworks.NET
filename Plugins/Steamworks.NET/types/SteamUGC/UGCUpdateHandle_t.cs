@@ -5,9 +5,10 @@
 // Changes to this file will be reverted when you update Steamworks.NET
 
 namespace Steamworks {
-	public struct UGCUpdateHandle : System.IEquatable<UGCUpdateHandle>, System.IComparable<UGCUpdateHandle> {
+	public struct UGCUpdateHandle : System.IEquatable<UGCUpdateHandle>, System.IComparable<UGCUpdateHandle>
+    {
 		public static readonly UGCUpdateHandle Invalid = new UGCUpdateHandle(0xffffffffffffffff);
-		public ulong _UGCUpdateHandle;
+	    private readonly ulong _UGCUpdateHandle;
 
 		public UGCUpdateHandle(ulong value) {
 			_UGCUpdateHandle = value;

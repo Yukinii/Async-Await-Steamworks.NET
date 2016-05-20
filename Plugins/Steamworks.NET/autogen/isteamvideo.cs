@@ -10,17 +10,17 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> Get a URL suitable for streaming the given Video app ID's video</para>
 		/// </summary>
-		public static void GetVideoURL(AppId unVideoAppID) {
+		public static void GetVideoURL(AppId videoAppId) {
 			InteropHelp.TestIfAvailableClient();
-			NativeMethods.ISteamVideo_GetVideoURL(unVideoAppID);
+			NativeMethods.ISteamVideo_GetVideoURL(videoAppId);
 		}
 
 		/// <summary>
 		/// <para> returns true if user is uploading a live broadcast</para>
 		/// </summary>
-		public static bool IsBroadcasting(out int pnNumViewers) {
+		public static bool IsBroadcasting(out int numViewers) {
 			InteropHelp.TestIfAvailableClient();
-			return NativeMethods.ISteamVideo_IsBroadcasting(out pnNumViewers);
+			return NativeMethods.ISteamVideo_IsBroadcasting(out numViewers);
 		}
 	}
 }

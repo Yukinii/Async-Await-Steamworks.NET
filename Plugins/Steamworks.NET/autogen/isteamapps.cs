@@ -9,22 +9,22 @@ using System.Runtime.InteropServices;
 
 namespace Steamworks {
 	public static class SteamApps {
-		public static bool BIsSubscribed() {
+		public static bool IsSubscribed() {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamApps_BIsSubscribed();
 		}
 
-		public static bool BIsLowViolence() {
+		public static bool IsLowViolence() {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamApps_BIsLowViolence();
 		}
 
-		public static bool BIsCybercafe() {
+		public static bool IsCybercafe() {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamApps_BIsCybercafe();
 		}
 
-		public static bool BIsVACBanned() {
+		public static bool IsVACBanned() {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamApps_BIsVACBanned();
 		}
@@ -42,17 +42,17 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> only use this member if you need to check ownership of another game related to yours, a demo for example</para>
 		/// </summary>
-		public static bool BIsSubscribedApp(AppId appID) {
+		public static bool BIsSubscribedApp(AppId appId) {
 			InteropHelp.TestIfAvailableClient();
-			return NativeMethods.ISteamApps_BIsSubscribedApp(appID);
+			return NativeMethods.ISteamApps_BIsSubscribedApp(appId);
 		}
 
 		/// <summary>
 		/// <para> Takes AppID of DLC and checks if the user owns the DLC &amp; if the DLC is installed</para>
 		/// </summary>
-		public static bool BIsDlcInstalled(AppId appID) {
+		public static bool BIsDlcInstalled(AppId appId) {
 			InteropHelp.TestIfAvailableClient();
-			return NativeMethods.ISteamApps_BIsDlcInstalled(appID);
+			return NativeMethods.ISteamApps_BIsDlcInstalled(appId);
 		}
 
 		/// <summary>
@@ -84,10 +84,10 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> Returns metadata for DLC by index, of range [0, GetDLCCount()]</para>
 		/// </summary>
-		public static bool BGetDLCDataByIndex(int iDLC, out AppId pAppID, out bool pbAvailable, out string name, int NameBufferSize) {
+		public static bool BGetDLCDataByIndex(int iDLC, out AppId appId, out bool pbAvailable, out string name, int nameBufferSize) {
 			InteropHelp.TestIfAvailableClient();
-			var name2 = Marshal.AllocHGlobal(NameBufferSize);
-			var ret = NativeMethods.ISteamApps_BGetDLCDataByIndex(iDLC, out pAppID, out pbAvailable, name2, NameBufferSize);
+			var name2 = Marshal.AllocHGlobal(nameBufferSize);
+			var ret = NativeMethods.ISteamApps_BGetDLCDataByIndex(iDLC, out appId, out pbAvailable, name2, nameBufferSize);
 			name = ret ? InteropHelp.PtrToStringUTF8(name2) : null;
 			Marshal.FreeHGlobal(name2);
 			return ret;
@@ -121,10 +121,10 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> returns current beta branch name, 'public' is the default branch</para>
 		/// </summary>
-		public static bool GetCurrentBetaName(out string name, int NameBufferSize) {
+		public static bool GetCurrentBetaName(out string name, int nameBufferSize) {
 			InteropHelp.TestIfAvailableClient();
-			var name2 = Marshal.AllocHGlobal(NameBufferSize);
-			var ret = NativeMethods.ISteamApps_GetCurrentBetaName(name2, NameBufferSize);
+			var name2 = Marshal.AllocHGlobal(nameBufferSize);
+			var ret = NativeMethods.ISteamApps_GetCurrentBetaName(name2, nameBufferSize);
 			name = ret ? InteropHelp.PtrToStringUTF8(name2) : null;
 			Marshal.FreeHGlobal(name2);
 			return ret;
@@ -141,29 +141,29 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> return installed depots in mount order</para>
 		/// </summary>
-		public static uint GetInstalledDepots(AppId appID, DepotId[] Depots, uint cMaxDepots) {
+		public static uint GetInstalledDepots(AppId appId, DepotId[] depots, uint cMaxDepots) {
 			InteropHelp.TestIfAvailableClient();
-			return NativeMethods.ISteamApps_GetInstalledDepots(appID, Depots, cMaxDepots);
+			return NativeMethods.ISteamApps_GetInstalledDepots(appId, depots, cMaxDepots);
 		}
 
 		/// <summary>
 		/// <para> returns current app install folder for AppID, returns folder name length</para>
 		/// </summary>
-		public static uint GetAppInstallDir(AppId appID, out string pchFolder, uint FolderBufferSize) {
+		public static uint GetAppInstallDir(AppId appId, out string folder, uint folderBufferSize) {
 			InteropHelp.TestIfAvailableClient();
-			var pchFolder2 = Marshal.AllocHGlobal((int)FolderBufferSize);
-			var ret = NativeMethods.ISteamApps_GetAppInstallDir(appID, pchFolder2, FolderBufferSize);
-			pchFolder = ret != 0 ? InteropHelp.PtrToStringUTF8(pchFolder2) : null;
-			Marshal.FreeHGlobal(pchFolder2);
+			var folder2 = Marshal.AllocHGlobal((int)folderBufferSize);
+			var ret = NativeMethods.ISteamApps_GetAppInstallDir(appId, folder2, folderBufferSize);
+			folder = ret != 0 ? InteropHelp.PtrToStringUTF8(folder2) : null;
+			Marshal.FreeHGlobal(folder2);
 			return ret;
 		}
 
 		/// <summary>
 		/// <para> returns true if that app is installed (not necessarily owned)</para>
 		/// </summary>
-		public static bool BIsAppInstalled(AppId appID) {
+		public static bool BIsAppInstalled(AppId appId) {
 			InteropHelp.TestIfAvailableClient();
-			return NativeMethods.ISteamApps_BIsAppInstalled(appID);
+			return NativeMethods.ISteamApps_BIsAppInstalled(appId);
 		}
 
 		/// <summary>
@@ -180,10 +180,10 @@ namespace Steamworks {
 		/// <para> Parameter names starting with an underscore '_' are reserved for steam features -- they can be queried by the game,</para>
 		/// <para> but it is advised that you not param names beginning with an underscore for your own features.</para>
 		/// </summary>
-		public static string GetLaunchQueryParam(string pchKey) {
+		public static string GetLaunchQueryParam(string key) {
 			InteropHelp.TestIfAvailableClient();
-			using (var pchKey2 = new InteropHelp.UTF8StringHandle(pchKey)) {
-				return InteropHelp.PtrToStringUTF8(NativeMethods.ISteamApps_GetLaunchQueryParam(pchKey2));
+			using (var key2 = new InteropHelp.UTF8StringHandle(key)) {
+				return InteropHelp.PtrToStringUTF8(NativeMethods.ISteamApps_GetLaunchQueryParam(key2));
 			}
 		}
 

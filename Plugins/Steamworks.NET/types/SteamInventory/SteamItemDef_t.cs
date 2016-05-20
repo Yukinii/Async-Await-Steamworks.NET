@@ -6,28 +6,28 @@
 
 namespace Steamworks {
 	public struct SteamItemDef : System.IEquatable<SteamItemDef>, System.IComparable<SteamItemDef> {
-		public int _SteamItemDef;
+		public readonly int Definition;
 
 		public SteamItemDef(int value) {
-			_SteamItemDef = value;
+			Definition = value;
 		}
 
-		public override string ToString() => _SteamItemDef.ToString();
+		public override string ToString() => Definition.ToString();
 
 	    public override bool Equals(object other) => other is SteamItemDef && this == (SteamItemDef)other;
 
-	    public override int GetHashCode() => _SteamItemDef.GetHashCode();
+	    public override int GetHashCode() => Definition.GetHashCode();
 
-	    public static bool operator ==(SteamItemDef x, SteamItemDef y) => x._SteamItemDef == y._SteamItemDef;
+	    public static bool operator ==(SteamItemDef x, SteamItemDef y) => x.Definition == y.Definition;
 
 	    public static bool operator !=(SteamItemDef x, SteamItemDef y) => !(x == y);
 
 	    public static explicit operator SteamItemDef(int value) => new SteamItemDef(value);
 
-	    public static explicit operator int(SteamItemDef that) => that._SteamItemDef;
+	    public static explicit operator int(SteamItemDef that) => that.Definition;
 
-	    public bool Equals(SteamItemDef other) => _SteamItemDef == other._SteamItemDef;
+	    public bool Equals(SteamItemDef other) => Definition == other.Definition;
 
-	    public int CompareTo(SteamItemDef other) => _SteamItemDef.CompareTo(other._SteamItemDef);
+	    public int CompareTo(SteamItemDef other) => Definition.CompareTo(other.Definition);
 	}
 }

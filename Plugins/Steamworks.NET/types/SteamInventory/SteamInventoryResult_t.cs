@@ -7,28 +7,28 @@
 namespace Steamworks {
 	public struct SteamInventoryResult : System.IEquatable<SteamInventoryResult>, System.IComparable<SteamInventoryResult> {
 		public static readonly SteamInventoryResult Invalid = new SteamInventoryResult(-1);
-		public int _SteamInventoryResult;
+		public readonly int Result;
 
 		public SteamInventoryResult(int value) {
-			_SteamInventoryResult = value;
+			Result = value;
 		}
 
-		public override string ToString() => _SteamInventoryResult.ToString();
+		public override string ToString() => Result.ToString();
 
 	    public override bool Equals(object other) => other is SteamInventoryResult && this == (SteamInventoryResult)other;
 
-	    public override int GetHashCode() => _SteamInventoryResult.GetHashCode();
+	    public override int GetHashCode() => Result.GetHashCode();
 
-	    public static bool operator ==(SteamInventoryResult x, SteamInventoryResult y) => x._SteamInventoryResult == y._SteamInventoryResult;
+	    public static bool operator ==(SteamInventoryResult x, SteamInventoryResult y) => x.Result == y.Result;
 
 	    public static bool operator !=(SteamInventoryResult x, SteamInventoryResult y) => !(x == y);
 
 	    public static explicit operator SteamInventoryResult(int value) => new SteamInventoryResult(value);
 
-	    public static explicit operator int(SteamInventoryResult that) => that._SteamInventoryResult;
+	    public static explicit operator int(SteamInventoryResult that) => that.Result;
 
-	    public bool Equals(SteamInventoryResult other) => _SteamInventoryResult == other._SteamInventoryResult;
+	    public bool Equals(SteamInventoryResult other) => Result == other.Result;
 
-	    public int CompareTo(SteamInventoryResult other) => _SteamInventoryResult.CompareTo(other._SteamInventoryResult);
+	    public int CompareTo(SteamInventoryResult other) => Result.CompareTo(other.Result);
 	}
 }

@@ -14,7 +14,7 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> Query UGC associated with a user. Creator app id or consumer app id must be valid and be set to the current running app. unPage should start at 1.</para>
 		/// </summary>
-		public static UGCQueryHandle CreateQueryUserUGCRequest(AccountID accountId, UserUGCList listType, MatchingUGCType matchingUGCType, UGCListSortOrder sortOrder, AppId creatorAppId, AppId consumerAppId, uint unPage) {
+		public static UGCQueryHandle CreateQueryUserUGCRequest(AccountId accountId, UserUGCList listType, MatchingUGCType matchingUGCType, UGCListSortOrder sortOrder, AppId creatorAppId, AppId consumerAppId, uint unPage) {
 			InteropHelp.TestIfAvailableClient();
 			return (UGCQueryHandle)NativeMethods.ISteamUGC_CreateQueryUserUGCRequest(accountId, listType, matchingUGCType, sortOrder, creatorAppId, consumerAppId, unPage);
 		}
@@ -51,21 +51,21 @@ namespace Steamworks {
 			return NativeMethods.ISteamUGC_GetQueryUGCResult(handle, index, out pDetails);
 		}
 
-		public static bool GetQueryUGCPreviewURL(UGCQueryHandle handle, uint index, out string pchURL, uint urlSize) {
+		public static bool GetQueryUGCPreviewURL(UGCQueryHandle handle, uint index, out string URL, uint urlSize) {
 			InteropHelp.TestIfAvailableClient();
-			var pchURL2 = Marshal.AllocHGlobal((int)urlSize);
-			var ret = NativeMethods.ISteamUGC_GetQueryUGCPreviewURL(handle, index, pchURL2, urlSize);
-			pchURL = ret ? InteropHelp.PtrToStringUTF8(pchURL2) : null;
-			Marshal.FreeHGlobal(pchURL2);
+			var URL2 = Marshal.AllocHGlobal((int)urlSize);
+			var ret = NativeMethods.ISteamUGC_GetQueryUGCPreviewURL(handle, index, URL2, urlSize);
+			URL = ret ? InteropHelp.PtrToStringUTF8(URL2) : null;
+			Marshal.FreeHGlobal(URL2);
 			return ret;
 		}
 
-		public static bool GetQueryUGCMetadata(UGCQueryHandle handle, uint index, out string pchMetadata, uint metadatasize) {
+		public static bool GetQueryUGCMetadata(UGCQueryHandle handle, uint index, out string Metadata, uint metadatasize) {
 			InteropHelp.TestIfAvailableClient();
-			var pchMetadata2 = Marshal.AllocHGlobal((int)metadatasize);
-			var ret = NativeMethods.ISteamUGC_GetQueryUGCMetadata(handle, index, pchMetadata2, metadatasize);
-			pchMetadata = ret ? InteropHelp.PtrToStringUTF8(pchMetadata2) : null;
-			Marshal.FreeHGlobal(pchMetadata2);
+			var Metadata2 = Marshal.AllocHGlobal((int)metadatasize);
+			var ret = NativeMethods.ISteamUGC_GetQueryUGCMetadata(handle, index, Metadata2, metadatasize);
+			Metadata = ret ? InteropHelp.PtrToStringUTF8(Metadata2) : null;
+			Marshal.FreeHGlobal(Metadata2);
 			return ret;
 		}
 
@@ -98,15 +98,15 @@ namespace Steamworks {
 			return NativeMethods.ISteamUGC_GetQueryUGCNumKeyValueTags(handle, index);
 		}
 
-		public static bool GetQueryUGCKeyValueTag(UGCQueryHandle handle, uint index, uint keyValueTagIndex, out string pchKey, uint keySize, out string pchValue, uint valueSize) {
+		public static bool GetQueryUGCKeyValueTag(UGCQueryHandle handle, uint index, uint keyValueTagIndex, out string Key, uint keySize, out string Value, uint valueSize) {
 			InteropHelp.TestIfAvailableClient();
-			var pchKey2 = Marshal.AllocHGlobal((int)keySize);
-			var pchValue2 = Marshal.AllocHGlobal((int)valueSize);
-			var ret = NativeMethods.ISteamUGC_GetQueryUGCKeyValueTag(handle, index, keyValueTagIndex, pchKey2, keySize, pchValue2, valueSize);
-			pchKey = ret ? InteropHelp.PtrToStringUTF8(pchKey2) : null;
-			Marshal.FreeHGlobal(pchKey2);
-			pchValue = ret ? InteropHelp.PtrToStringUTF8(pchValue2) : null;
-			Marshal.FreeHGlobal(pchValue2);
+			var Key2 = Marshal.AllocHGlobal((int)keySize);
+			var Value2 = Marshal.AllocHGlobal((int)valueSize);
+			var ret = NativeMethods.ISteamUGC_GetQueryUGCKeyValueTag(handle, index, keyValueTagIndex, Key2, keySize, Value2, valueSize);
+			Key = ret ? InteropHelp.PtrToStringUTF8(Key2) : null;
+			Marshal.FreeHGlobal(Key2);
+			Value = ret ? InteropHelp.PtrToStringUTF8(Value2) : null;
+			Marshal.FreeHGlobal(Value2);
 			return ret;
 		}
 
@@ -165,10 +165,10 @@ namespace Steamworks {
 			return NativeMethods.ISteamUGC_SetReturnTotalOnly(handle, bReturnTotalOnly);
 		}
 
-		public static bool SetLanguage(UGCQueryHandle handle, string pchLanguage) {
+		public static bool SetLanguage(UGCQueryHandle handle, string Language) {
 			InteropHelp.TestIfAvailableClient();
-			using (var pchLanguage2 = new InteropHelp.UTF8StringHandle(pchLanguage)) {
-				return NativeMethods.ISteamUGC_SetLanguage(handle, pchLanguage2);
+			using (var Language2 = new InteropHelp.UTF8StringHandle(Language)) {
+				return NativeMethods.ISteamUGC_SetLanguage(handle, Language2);
 			}
 		}
 
@@ -255,40 +255,40 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> change the title of an UGC item</para>
 		/// </summary>
-		public static bool SetItemTitle(UGCUpdateHandle handle, string pchTitle) {
+		public static bool SetItemTitle(UGCUpdateHandle handle, string Title) {
 			InteropHelp.TestIfAvailableClient();
-			using (var pchTitle2 = new InteropHelp.UTF8StringHandle(pchTitle)) {
-				return NativeMethods.ISteamUGC_SetItemTitle(handle, pchTitle2);
+			using (var Title2 = new InteropHelp.UTF8StringHandle(Title)) {
+				return NativeMethods.ISteamUGC_SetItemTitle(handle, Title2);
 			}
 		}
 
 		/// <summary>
 		/// <para> change the description of an UGC item</para>
 		/// </summary>
-		public static bool SetItemDescription(UGCUpdateHandle handle, string pchDescription) {
+		public static bool SetItemDescription(UGCUpdateHandle handle, string Description) {
 			InteropHelp.TestIfAvailableClient();
-			using (var pchDescription2 = new InteropHelp.UTF8StringHandle(pchDescription)) {
-				return NativeMethods.ISteamUGC_SetItemDescription(handle, pchDescription2);
+			using (var Description2 = new InteropHelp.UTF8StringHandle(Description)) {
+				return NativeMethods.ISteamUGC_SetItemDescription(handle, Description2);
 			}
 		}
 
 		/// <summary>
 		/// <para> specify the language of the title or description that will be set</para>
 		/// </summary>
-		public static bool SetItemUpdateLanguage(UGCUpdateHandle handle, string pchLanguage) {
+		public static bool SetItemUpdateLanguage(UGCUpdateHandle handle, string Language) {
 			InteropHelp.TestIfAvailableClient();
-			using (var pchLanguage2 = new InteropHelp.UTF8StringHandle(pchLanguage)) {
-				return NativeMethods.ISteamUGC_SetItemUpdateLanguage(handle, pchLanguage2);
+			using (var Language2 = new InteropHelp.UTF8StringHandle(Language)) {
+				return NativeMethods.ISteamUGC_SetItemUpdateLanguage(handle, Language2);
 			}
 		}
 
 		/// <summary>
 		/// <para> change the metadata of an UGC item (max = DeveloperMetadataMax)</para>
 		/// </summary>
-		public static bool SetItemMetadata(UGCUpdateHandle handle, string pchMetaData) {
+		public static bool SetItemMetadata(UGCUpdateHandle handle, string MetaData) {
 			InteropHelp.TestIfAvailableClient();
-			using (var pchMetaData2 = new InteropHelp.UTF8StringHandle(pchMetaData)) {
-				return NativeMethods.ISteamUGC_SetItemMetadata(handle, pchMetaData2);
+			using (var MetaData2 = new InteropHelp.UTF8StringHandle(MetaData)) {
+				return NativeMethods.ISteamUGC_SetItemMetadata(handle, MetaData2);
 			}
 		}
 
@@ -331,31 +331,31 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> remove any existing key-value tags with the specified key</para>
 		/// </summary>
-		public static bool RemoveItemKeyValueTags(UGCUpdateHandle handle, string pchKey) {
+		public static bool RemoveItemKeyValueTags(UGCUpdateHandle handle, string Key) {
 			InteropHelp.TestIfAvailableClient();
-			using (var pchKey2 = new InteropHelp.UTF8StringHandle(pchKey)) {
-				return NativeMethods.ISteamUGC_RemoveItemKeyValueTags(handle, pchKey2);
+			using (var Key2 = new InteropHelp.UTF8StringHandle(Key)) {
+				return NativeMethods.ISteamUGC_RemoveItemKeyValueTags(handle, Key2);
 			}
 		}
 
 		/// <summary>
 		/// <para> add new key-value tags for the item. Note that there can be multiple values for a tag.</para>
 		/// </summary>
-		public static bool AddItemKeyValueTag(UGCUpdateHandle handle, string pchKey, string pchValue) {
+		public static bool AddItemKeyValueTag(UGCUpdateHandle handle, string Key, string Value) {
 			InteropHelp.TestIfAvailableClient();
-			using (var pchKey2 = new InteropHelp.UTF8StringHandle(pchKey))
-			using (var pchValue2 = new InteropHelp.UTF8StringHandle(pchValue)) {
-				return NativeMethods.ISteamUGC_AddItemKeyValueTag(handle, pchKey2, pchValue2);
+			using (var Key2 = new InteropHelp.UTF8StringHandle(Key))
+			using (var Value2 = new InteropHelp.UTF8StringHandle(Value)) {
+				return NativeMethods.ISteamUGC_AddItemKeyValueTag(handle, Key2, Value2);
 			}
 		}
 
 		/// <summary>
 		/// <para> commit update process started with StartItemUpdate()</para>
 		/// </summary>
-		public static SteamAPICall SubmitItemUpdate(UGCUpdateHandle handle, string pchChangeNote) {
+		public static SteamAPICall SubmitItemUpdate(UGCUpdateHandle handle, string ChangeNote) {
 			InteropHelp.TestIfAvailableClient();
-			using (var pchChangeNote2 = new InteropHelp.UTF8StringHandle(pchChangeNote)) {
-				return (SteamAPICall)NativeMethods.ISteamUGC_SubmitItemUpdate(handle, pchChangeNote2);
+			using (var ChangeNote2 = new InteropHelp.UTF8StringHandle(ChangeNote)) {
+				return (SteamAPICall)NativeMethods.ISteamUGC_SubmitItemUpdate(handle, ChangeNote2);
 			}
 		}
 
@@ -433,10 +433,10 @@ namespace Steamworks {
 		/// </summary>
 		public static bool GetItemInstallInfo(PublishedFileId fileId, out ulong sizeOnDisk, out string directoryPath, uint directorySize, out uint timeStamp) {
 			InteropHelp.TestIfAvailableClient();
-			var pchFolder2 = Marshal.AllocHGlobal((int)directorySize);
-			var ret = NativeMethods.ISteamUGC_GetItemInstallInfo(fileId, out sizeOnDisk, pchFolder2, directorySize, out timeStamp);
-			directoryPath = ret ? InteropHelp.PtrToStringUTF8(pchFolder2) : null;
-			Marshal.FreeHGlobal(pchFolder2);
+			var Folder2 = Marshal.AllocHGlobal((int)directorySize);
+			var ret = NativeMethods.ISteamUGC_GetItemInstallInfo(fileId, out sizeOnDisk, Folder2, directorySize, out timeStamp);
+			directoryPath = ret ? InteropHelp.PtrToStringUTF8(Folder2) : null;
+			Marshal.FreeHGlobal(Folder2);
 			return ret;
 		}
 

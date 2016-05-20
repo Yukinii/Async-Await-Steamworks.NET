@@ -7,28 +7,28 @@
 namespace Steamworks {
 	public struct UGCHandle : System.IEquatable<UGCHandle>, System.IComparable<UGCHandle> {
 		public static readonly UGCHandle Invalid = new UGCHandle(0xffffffffffffffff);
-		public ulong _UGCHandle;
+	    public readonly ulong Handle;
 
 		public UGCHandle(ulong value) {
-			_UGCHandle = value;
+			Handle = value;
 		}
 
-		public override string ToString() => _UGCHandle.ToString();
+		public override string ToString() => Handle.ToString();
 
 	    public override bool Equals(object other) => other is UGCHandle && this == (UGCHandle)other;
 
-	    public override int GetHashCode() => _UGCHandle.GetHashCode();
+	    public override int GetHashCode() => Handle.GetHashCode();
 
-	    public static bool operator ==(UGCHandle x, UGCHandle y) => x._UGCHandle == y._UGCHandle;
+	    public static bool operator ==(UGCHandle x, UGCHandle y) => x.Handle == y.Handle;
 
 	    public static bool operator !=(UGCHandle x, UGCHandle y) => !(x == y);
 
 	    public static explicit operator UGCHandle(ulong value) => new UGCHandle(value);
 
-	    public static explicit operator ulong(UGCHandle that) => that._UGCHandle;
+	    public static explicit operator ulong(UGCHandle that) => that.Handle;
 
-	    public bool Equals(UGCHandle other) => _UGCHandle == other._UGCHandle;
+	    public bool Equals(UGCHandle other) => Handle == other.Handle;
 
-	    public int CompareTo(UGCHandle other) => _UGCHandle.CompareTo(other._UGCHandle);
+	    public int CompareTo(UGCHandle other) => Handle.CompareTo(other.Handle);
 	}
 }

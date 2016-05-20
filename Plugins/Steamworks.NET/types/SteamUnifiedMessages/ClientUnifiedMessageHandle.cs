@@ -7,7 +7,7 @@
 namespace Steamworks {
 	public struct ClientUnifiedMessageHandle : System.IEquatable<ClientUnifiedMessageHandle>, System.IComparable<ClientUnifiedMessageHandle> {
 		public static readonly ClientUnifiedMessageHandle Invalid = new ClientUnifiedMessageHandle(0);
-		public ulong _ClientUnifiedMessageHandle;
+	    private readonly ulong _ClientUnifiedMessageHandle;
 
 		public ClientUnifiedMessageHandle(ulong value) {
 			_ClientUnifiedMessageHandle = value;

@@ -7,31 +7,31 @@
 namespace Steamworks {
 	public struct SteamId : System.IEquatable<SteamId>, System.IComparable<SteamId> {
 		public static readonly SteamId Nil = new SteamId();
-		public static readonly SteamId OutofDateGS = new SteamId(new AccountID(0), 0, EUniverse.Invalid, EAccountType.Invalid);
-		public static readonly SteamId LanModeGS = new SteamId(new AccountID(0), 0, EUniverse.Public, EAccountType.Invalid);
-		public static readonly SteamId NotInitYetGS = new SteamId(new AccountID(1), 0, EUniverse.Invalid, EAccountType.Invalid);
-		public static readonly SteamId NonSteamGS = new SteamId(new AccountID(2), 0, EUniverse.Invalid, EAccountType.Invalid);
-		public ulong _SteamID;
+		public static readonly SteamId OutofDate = new SteamId(new AccountId(0), 0, EUniverse.Invalid, EAccountType.Invalid);
+		public static readonly SteamId LanMode = new SteamId(new AccountId(0), 0, EUniverse.Public, EAccountType.Invalid);
+		public static readonly SteamId NotInitYet = new SteamId(new AccountId(1), 0, EUniverse.Invalid, EAccountType.Invalid);
+		public static readonly SteamId NonSteam = new SteamId(new AccountId(2), 0, EUniverse.Invalid, EAccountType.Invalid);
+		public ulong Id;
 
-		public SteamId(AccountID accountId, EUniverse eUniverse, EAccountType eAccountType) {
-			_SteamID = 0;
+		public SteamId(AccountId accountId, EUniverse eUniverse, EAccountType eAccountType) {
+			Id = 0;
 			Set(accountId, eUniverse, eAccountType);
 		}
 
-		public SteamId(AccountID accountId, uint unAccountInstance, EUniverse eUniverse, EAccountType eAccountType) {
-			_SteamID = 0;
+		public SteamId(AccountId accountId, uint unAccountInstance, EUniverse eUniverse, EAccountType eAccountType) {
+			Id = 0;
 #if _SERVER && Assert
 		Assert( ! ( ( EAccountType.Individual == eAccountType ) && ( unAccountInstance > SteamUserWebInstance ) ) );	// enforce that for individual accounts, instance is always 1
 #endif // _SERVER
 			InstancedSet(accountId, unAccountInstance, eUniverse, eAccountType);
 		}
 
-		public SteamId(ulong ulSteamID) {
-			_SteamID = ulSteamID;
+		public SteamId(ulong ulId) {
+			Id = ulId;
 		}
 
-		public void Set(AccountID accountId, EUniverse eUniverse, EAccountType eAccountType) {
-			SetAccountID(accountId);
+		public void Set(AccountId accountId, EUniverse eUniverse, EAccountType eAccountType) {
+			SetAccountId(accountId);
 			SetEUniverse(eUniverse);
 			SetEAccountType(eAccountType);
 
@@ -44,26 +44,26 @@ namespace Steamworks {
 			}
 		}
 
-		public void InstancedSet(AccountID accountId, uint unInstance, EUniverse eUniverse, EAccountType eAccountType) {
-			SetAccountID(accountId);
+		public void InstancedSet(AccountId accountId, uint unInstance, EUniverse eUniverse, EAccountType eAccountType) {
+			SetAccountId(accountId);
 			SetEUniverse(eUniverse);
 			SetEAccountType(eAccountType);
 			SetAccountInstance(unInstance);
 		}
 
 		public void Clear() {
-			_SteamID = 0;
+			Id = 0;
 		}
 
 		public void CreateBlankAnonLogon(EUniverse eUniverse) {
-			SetAccountID(new AccountID(0));
+			SetAccountId(new AccountId(0));
 			SetEUniverse(eUniverse);
 			SetEAccountType(EAccountType.AnonGameServer);
 			SetAccountInstance(0);
 		}
 
 		public void CreateBlankAnonUserLogon(EUniverse eUniverse) {
-			SetAccountID(new AccountID(0));
+			SetAccountId(new AccountId(0));
 			SetEUniverse(eUniverse);
 			SetEAccountType(EAccountType.AnonUser);
 			SetAccountInstance(0);
@@ -72,7 +72,7 @@ namespace Steamworks {
 		//-----------------------------------------------------------------------------
 		// Purpose: Is this an anonymous game server login that will be filled in?
 		//-----------------------------------------------------------------------------
-		public bool BBlankAnonAccount() => GetAccountID() == new AccountID(0) && BAnonAccount() && GetUnAccountInstance() == 0;
+		public bool BBlankAnonAccount() => GetAccountId() == new AccountId(0) && BAnonAccount() && GetUnAccountInstance() == 0;
 
 	    //-----------------------------------------------------------------------------
 		// Purpose: Is this a game server account id?  (Either persistent or anonymous)
@@ -134,21 +134,21 @@ namespace Steamworks {
 		//-----------------------------------------------------------------------------
 		public bool BConsoleUserAccount() => GetEAccountType() == EAccountType.ConsoleUser;
 
-	    public void SetAccountID(AccountID other) {
-			_SteamID = (_SteamID & ~(0xFFFFFFFFul << 0)) | (((ulong)(other) & 0xFFFFFFFFul) << 0);
+	    public void SetAccountId(AccountId other) {
+			Id = (Id & ~(0xFFFFFFFFul << 0)) | (((ulong)(other) & 0xFFFFFFFFul) << 0);
 		}
 
 		public void SetAccountInstance(uint other) {
-			_SteamID = (_SteamID & ~(0xFFFFFul << 32)) | ((other & 0xFFFFFul) << 32);
+			Id = (Id & ~(0xFFFFFul << 32)) | ((other & 0xFFFFFul) << 32);
 		}
 
 		// This is a non standard/custom function not found in C++ Steamworks
 		public void SetEAccountType(EAccountType other) {
-			_SteamID = (_SteamID & ~(0xFul << 52)) | (((ulong)(other) & 0xFul) << 52);
+			Id = (Id & ~(0xFul << 52)) | (((ulong)(other) & 0xFul) << 52);
 		}
 
 		public void SetEUniverse(EUniverse other) {
-			_SteamID = (_SteamID & ~(0xFFul << 56)) | (((ulong)(other) & 0xFFul) << 56);
+			Id = (Id & ~(0xFFul << 56)) | (((ulong)(other) & 0xFFul) << 56);
 		}
 
 		public void ClearIndividualInstance() {
@@ -158,13 +158,13 @@ namespace Steamworks {
 
 		public bool HasNoIndividualInstance() => BIndividualAccount() && (GetUnAccountInstance() == 0);
 
-	    public AccountID GetAccountID() => new AccountID((uint)(_SteamID & 0xFFFFFFFFul));
+	    public AccountId GetAccountId() => new AccountId((uint)(Id & 0xFFFFFFFFul));
 
-	    public uint GetUnAccountInstance() => (uint)((_SteamID >> 32) & 0xFFFFFul);
+	    public uint GetUnAccountInstance() => (uint)((Id >> 32) & 0xFFFFFul);
 
-	    public EAccountType GetEAccountType() => (EAccountType)((_SteamID >> 52) & 0xFul);
+	    public EAccountType GetEAccountType() => (EAccountType)((Id >> 52) & 0xFul);
 
-	    public EUniverse GetEUniverse() => (EUniverse)((_SteamID >> 56) & 0xFFul);
+	    public EUniverse GetEUniverse() => (EUniverse)((Id >> 56) & 0xFFul);
 
 	    public bool IsValid() {
 			if (GetEAccountType() <= EAccountType.Invalid || GetEAccountType() >= EAccountType.Max)
@@ -174,40 +174,37 @@ namespace Steamworks {
 				return false;
 
 			if (GetEAccountType() == EAccountType.Individual) {
-				if (GetAccountID() == new AccountID(0) || GetUnAccountInstance() > Constants.SteamUserWebInstance)
+				if (GetAccountId() == new AccountId(0) || GetUnAccountInstance() > Constants.SteamUserWebInstance)
 					return false;
 			}
 
 			if (GetEAccountType() == EAccountType.Clan) {
-				if (GetAccountID() == new AccountID(0) || GetUnAccountInstance() != 0)
+				if (GetAccountId() == new AccountId(0) || GetUnAccountInstance() != 0)
 					return false;
 			}
 
-			if (GetEAccountType() == EAccountType.GameServer) {
-				if (GetAccountID() == new AccountID(0))
-					return false;
-				// Any limit on instances?  We use them for local users and bots
-			}
-			return true;
-		}
+	        if (GetEAccountType() != EAccountType.GameServer) return true;
+	        return GetAccountId() != new AccountId(0);
+	        // Any limit on instances?  We use them for local users and bots
+	    }
 
 		#region Overrides
-		public override string ToString() => _SteamID.ToString();
+		public override string ToString() => Id.ToString();
 
 	    public override bool Equals(object other) => other is SteamId && this == (SteamId)other;
 
-	    public override int GetHashCode() => _SteamID.GetHashCode();
+	    public override int GetHashCode() => Id.GetHashCode();
 
-	    public static bool operator ==(SteamId x, SteamId y) => x._SteamID == y._SteamID;
+	    public static bool operator ==(SteamId x, SteamId y) => x.Id == y.Id;
 
 	    public static bool operator !=(SteamId x, SteamId y) => !(x == y);
 
 	    public static explicit operator SteamId(ulong value) => new SteamId(value);
-	    public static explicit operator ulong(SteamId that) => that._SteamID;
+	    public static explicit operator ulong(SteamId that) => that.Id;
 
-	    public bool Equals(SteamId other) => _SteamID == other._SteamID;
+	    public bool Equals(SteamId other) => Id == other.Id;
 
-	    public int CompareTo(SteamId other) => _SteamID.CompareTo(other._SteamID);
+	    public int CompareTo(SteamId other) => Id.CompareTo(other.Id);
 
 	    #endregion
 	}

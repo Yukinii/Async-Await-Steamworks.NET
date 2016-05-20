@@ -6,28 +6,28 @@
 
 namespace Steamworks {
 	public struct ControllerDigitalActionHandle : System.IEquatable<ControllerDigitalActionHandle>, System.IComparable<ControllerDigitalActionHandle> {
-		public ulong _ControllerDigitalActionHandle;
+		public readonly ulong Handle;
 
 		public ControllerDigitalActionHandle(ulong value) {
-			_ControllerDigitalActionHandle = value;
+			Handle = value;
 		}
 
-		public override string ToString() => _ControllerDigitalActionHandle.ToString();
+		public override string ToString() => Handle.ToString();
 
 	    public override bool Equals(object other) => other is ControllerDigitalActionHandle && this == (ControllerDigitalActionHandle)other;
 
-	    public override int GetHashCode() => _ControllerDigitalActionHandle.GetHashCode();
+	    public override int GetHashCode() => Handle.GetHashCode();
 
-	    public static bool operator ==(ControllerDigitalActionHandle x, ControllerDigitalActionHandle y) => x._ControllerDigitalActionHandle == y._ControllerDigitalActionHandle;
+	    public static bool operator ==(ControllerDigitalActionHandle x, ControllerDigitalActionHandle y) => x.Handle == y.Handle;
 
 	    public static bool operator !=(ControllerDigitalActionHandle x, ControllerDigitalActionHandle y) => !(x == y);
 
 	    public static explicit operator ControllerDigitalActionHandle(ulong value) => new ControllerDigitalActionHandle(value);
 
-	    public static explicit operator ulong(ControllerDigitalActionHandle that) => that._ControllerDigitalActionHandle;
+	    public static explicit operator ulong(ControllerDigitalActionHandle that) => that.Handle;
 
-	    public bool Equals(ControllerDigitalActionHandle other) => _ControllerDigitalActionHandle == other._ControllerDigitalActionHandle;
+	    public bool Equals(ControllerDigitalActionHandle other) => Handle == other.Handle;
 
-	    public int CompareTo(ControllerDigitalActionHandle other) => _ControllerDigitalActionHandle.CompareTo(other._ControllerDigitalActionHandle);
+	    public int CompareTo(ControllerDigitalActionHandle other) => Handle.CompareTo(other.Handle);
 	}
 }

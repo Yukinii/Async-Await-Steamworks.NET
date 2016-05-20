@@ -6,7 +6,7 @@ namespace Steamworks.Steamworks.NET
     public class SteamMatchmakingRulesResponse {
         // Got data on a rule on the server -- you'll get one of these per rule defined on
         // the server you are querying
-        public delegate void RulesResponded(string pchRule, string pchValue);
+        public delegate void RulesResponded(string Rule, string Value);
 
         // The server failed to respond to the request for rule details
         public delegate void RulesFailedToRespond();
@@ -54,13 +54,13 @@ namespace Steamworks.Steamworks.NET
 		
 #if NOTHISPTR
 		[UnmanagedFunctionPointer(CallingConvention.StdCall)]
-		public delegate void InternalRulesResponded(IntPtr pchRule, IntPtr pchValue);
+		public delegate void InternalRulesResponded(IntPtr Rule, IntPtr Value);
 		[UnmanagedFunctionPointer(CallingConvention.StdCall)]
 		public delegate void InternalRulesFailedToRespond();
 		[UnmanagedFunctionPointer(CallingConvention.StdCall)]
 		public delegate void InternalRulesRefreshComplete();
-		private void InternalOnRulesResponded(IntPtr pchRule, IntPtr pchValue) {
-			_RulesResponded(InteropHelp.PtrToStringUTF8(pchRule), InteropHelp.PtrToStringUTF8(pchValue));
+		private void InternalOnRulesResponded(IntPtr Rule, IntPtr Value) {
+			_RulesResponded(InteropHelp.PtrToStringUTF8(Rule), InteropHelp.PtrToStringUTF8(Value));
 		}
 		private void InternalOnRulesFailedToRespond() {
 			_RulesFailedToRespond();
@@ -70,12 +70,12 @@ namespace Steamworks.Steamworks.NET
 		}
 #else
         [UnmanagedFunctionPointer(CallingConvention.ThisCall)]
-        public delegate void InternalRulesResponded(IntPtr thisptr, IntPtr pchRule, IntPtr pchValue);
+        public delegate void InternalRulesResponded(IntPtr thisptr, IntPtr Rule, IntPtr Value);
         [UnmanagedFunctionPointer(CallingConvention.ThisCall)]
         public delegate void InternalRulesFailedToRespond(IntPtr thisptr);
         [UnmanagedFunctionPointer(CallingConvention.ThisCall)]
         public delegate void InternalRulesRefreshComplete(IntPtr thisptr);
-        private void InternalOnRulesResponded(IntPtr thisptr, IntPtr pchRule, IntPtr pchValue) => _RulesResponded(InteropHelp.PtrToStringUTF8(pchRule), InteropHelp.PtrToStringUTF8(pchValue));
+        private void InternalOnRulesResponded(IntPtr thisptr, IntPtr Rule, IntPtr Value) => _RulesResponded(InteropHelp.PtrToStringUTF8(Rule), InteropHelp.PtrToStringUTF8(Value));
         private void InternalOnRulesFailedToRespond(IntPtr thisptr) => _RulesFailedToRespond();
 
         private void InternalOnRulesRefreshComplete(IntPtr thisptr) => _RulesRefreshComplete();

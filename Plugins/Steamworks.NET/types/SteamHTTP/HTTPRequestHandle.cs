@@ -7,28 +7,28 @@
 namespace Steamworks {
 	public struct HTTPRequestHandle : System.IEquatable<HTTPRequestHandle>, System.IComparable<HTTPRequestHandle> {
 		public static readonly HTTPRequestHandle Invalid = new HTTPRequestHandle(0);
-		public uint _HTTPRequestHandle;
+		public readonly uint Handle;
 
 		public HTTPRequestHandle(uint value) {
-			_HTTPRequestHandle = value;
+			Handle = value;
 		}
 
-		public override string ToString() => _HTTPRequestHandle.ToString();
+		public override string ToString() => Handle.ToString();
 
 	    public override bool Equals(object other) => other is HTTPRequestHandle && this == (HTTPRequestHandle)other;
 
-	    public override int GetHashCode() => _HTTPRequestHandle.GetHashCode();
+	    public override int GetHashCode() => Handle.GetHashCode();
 
-	    public static bool operator ==(HTTPRequestHandle x, HTTPRequestHandle y) => x._HTTPRequestHandle == y._HTTPRequestHandle;
+	    public static bool operator ==(HTTPRequestHandle x, HTTPRequestHandle y) => x.Handle == y.Handle;
 
 	    public static bool operator !=(HTTPRequestHandle x, HTTPRequestHandle y) => !(x == y);
 
 	    public static explicit operator HTTPRequestHandle(uint value) => new HTTPRequestHandle(value);
 
-	    public static explicit operator uint(HTTPRequestHandle that) => that._HTTPRequestHandle;
+	    public static explicit operator uint(HTTPRequestHandle that) => that.Handle;
 
-	    public bool Equals(HTTPRequestHandle other) => _HTTPRequestHandle == other._HTTPRequestHandle;
+	    public bool Equals(HTTPRequestHandle other) => Handle == other.Handle;
 
-	    public int CompareTo(HTTPRequestHandle other) => _HTTPRequestHandle.CompareTo(other._HTTPRequestHandle);
+	    public int CompareTo(HTTPRequestHandle other) => Handle.CompareTo(other.Handle);
 	}
 }

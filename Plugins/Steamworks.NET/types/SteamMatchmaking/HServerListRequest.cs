@@ -7,26 +7,26 @@
 namespace Steamworks {
 	public struct HServerListRequest : System.IEquatable<HServerListRequest> {
 		public static readonly HServerListRequest Invalid = new HServerListRequest(System.IntPtr.Zero);
-		public System.IntPtr _HServerListRequest;
+		public readonly System.IntPtr ListRequest;
 
 		public HServerListRequest(System.IntPtr value) {
-			_HServerListRequest = value;
+			ListRequest = value;
 		}
 
-		public override string ToString() => _HServerListRequest.ToString();
+		public override string ToString() => ListRequest.ToString();
 
 	    public override bool Equals(object other) => other is HServerListRequest && this == (HServerListRequest)other;
 
-	    public override int GetHashCode() => _HServerListRequest.GetHashCode();
+	    public override int GetHashCode() => ListRequest.GetHashCode();
 
-	    public static bool operator ==(HServerListRequest x, HServerListRequest y) => x._HServerListRequest == y._HServerListRequest;
+	    public static bool operator ==(HServerListRequest x, HServerListRequest y) => x.ListRequest == y.ListRequest;
 
 	    public static bool operator !=(HServerListRequest x, HServerListRequest y) => !(x == y);
 
 	    public static explicit operator HServerListRequest(System.IntPtr value) => new HServerListRequest(value);
 
-	    public static explicit operator System.IntPtr(HServerListRequest that) => that._HServerListRequest;
+	    public static explicit operator System.IntPtr(HServerListRequest that) => that.ListRequest;
 
-	    public bool Equals(HServerListRequest other) => _HServerListRequest == other._HServerListRequest;
+	    public bool Equals(HServerListRequest other) => ListRequest == other.ListRequest;
 	}
 }

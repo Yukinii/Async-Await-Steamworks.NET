@@ -6,28 +6,28 @@
 
 namespace Steamworks {
 	public struct ControllerHandle : System.IEquatable<ControllerHandle>, System.IComparable<ControllerHandle> {
-		public ulong _ControllerHandle;
+		public readonly ulong Handle;
 
 		public ControllerHandle(ulong value) {
-			_ControllerHandle = value;
+			Handle = value;
 		}
 
-		public override string ToString() => _ControllerHandle.ToString();
+		public override string ToString() => Handle.ToString();
 
 	    public override bool Equals(object other) => other is ControllerHandle && this == (ControllerHandle)other;
 
-	    public override int GetHashCode() => _ControllerHandle.GetHashCode();
+	    public override int GetHashCode() => Handle.GetHashCode();
 
-	    public static bool operator ==(ControllerHandle x, ControllerHandle y) => x._ControllerHandle == y._ControllerHandle;
+	    public static bool operator ==(ControllerHandle x, ControllerHandle y) => x.Handle == y.Handle;
 
 	    public static bool operator !=(ControllerHandle x, ControllerHandle y) => !(x == y);
 
 	    public static explicit operator ControllerHandle(ulong value) => new ControllerHandle(value);
 
-	    public static explicit operator ulong(ControllerHandle that) => that._ControllerHandle;
+	    public static explicit operator ulong(ControllerHandle that) => that.Handle;
 
-	    public bool Equals(ControllerHandle other) => _ControllerHandle == other._ControllerHandle;
+	    public bool Equals(ControllerHandle other) => Handle == other.Handle;
 
-	    public int CompareTo(ControllerHandle other) => _ControllerHandle.CompareTo(other._ControllerHandle);
+	    public int CompareTo(ControllerHandle other) => Handle.CompareTo(other.Handle);
 	}
 }

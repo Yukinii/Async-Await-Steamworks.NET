@@ -6,28 +6,28 @@
 
 namespace Steamworks {
 	public struct SNetListenSocket : System.IEquatable<SNetListenSocket>, System.IComparable<SNetListenSocket> {
-		public uint _SNetListenSocket;
+		public readonly uint ListenSocket;
 
 		public SNetListenSocket(uint value) {
-			_SNetListenSocket = value;
+			ListenSocket = value;
 		}
 
-		public override string ToString() => _SNetListenSocket.ToString();
+		public override string ToString() => ListenSocket.ToString();
 
 	    public override bool Equals(object other) => other is SNetListenSocket && this == (SNetListenSocket)other;
 
-	    public override int GetHashCode() => _SNetListenSocket.GetHashCode();
+	    public override int GetHashCode() => ListenSocket.GetHashCode();
 
-	    public static bool operator ==(SNetListenSocket x, SNetListenSocket y) => x._SNetListenSocket == y._SNetListenSocket;
+	    public static bool operator ==(SNetListenSocket x, SNetListenSocket y) => x.ListenSocket == y.ListenSocket;
 
 	    public static bool operator !=(SNetListenSocket x, SNetListenSocket y) => !(x == y);
 
 	    public static explicit operator SNetListenSocket(uint value) => new SNetListenSocket(value);
 
-	    public static explicit operator uint(SNetListenSocket that) => that._SNetListenSocket;
+	    public static explicit operator uint(SNetListenSocket that) => that.ListenSocket;
 
-	    public bool Equals(SNetListenSocket other) => _SNetListenSocket == other._SNetListenSocket;
+	    public bool Equals(SNetListenSocket other) => ListenSocket == other.ListenSocket;
 
-	    public int CompareTo(SNetListenSocket other) => _SNetListenSocket.CompareTo(other._SNetListenSocket);
+	    public int CompareTo(SNetListenSocket other) => ListenSocket.CompareTo(other.ListenSocket);
 	}
 }

@@ -106,7 +106,7 @@ namespace Steamworks {
 				var stringArray = new global::Steamworks.SteamParamStringArray
 				{
 					_ppStrings = _ptrStrings,
-					_nNumStrings = _Strings.Length
+					NumStrings = _Strings.Length
 				};
 				Marshal.Copy(_Strings, 0, stringArray._ppStrings, _Strings.Length);
 
@@ -134,85 +134,4 @@ namespace Steamworks {
 	
 	// TODO - Should be IDisposable
 	// MatchMaking Key-Value Pair Marshaller
-	public class MMKVPMarshaller {
-		private readonly IntPtr _pNativeArray;
-		private readonly IntPtr _pArrayEntries;
-
-		public MMKVPMarshaller(MatchMakingKeyValuePair[] filters) {
-			if (filters == null) {
-				return;
-			}
-
-			var sizeOfMMKVP = Marshal.SizeOf(typeof(MatchMakingKeyValuePair));
-
-			_pNativeArray = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(IntPtr)) * filters.Length);
-			_pArrayEntries = Marshal.AllocHGlobal(sizeOfMMKVP * filters.Length);
-			for (var i = 0; i < filters.Length; ++i) {
-				Marshal.StructureToPtr(filters[i], new IntPtr(_pArrayEntries.ToInt64() + (i * sizeOfMMKVP)), false);
-			}
-
-			Marshal.WriteIntPtr(_pNativeArray, _pArrayEntries);
-		}
-
-		~MMKVPMarshaller() {
-			if (_pArrayEntries != IntPtr.Zero) {
-				Marshal.FreeHGlobal(_pArrayEntries);
-			}
-			if (_pNativeArray != IntPtr.Zero) {
-				Marshal.FreeHGlobal(_pNativeArray);
-			}
-		}
-
-		public static implicit operator IntPtr(MMKVPMarshaller that) => that._pNativeArray;
-	}
-
-	public class DllCheck {
-		[DllImport("kernel32.dll")]
-		public static extern IntPtr GetModuleHandle(string lpModuleName);
-
-		[DllImport("kernel32.dll", CharSet = CharSet.Auto)]
-		extern static int GetModuleFileName(IntPtr hModule, StringBuilder strFullPath, int nSize);
-
-		/// <summary>
-		/// This is an optional runtime check to ensure that the dlls are the correct version. Returns false only if the stea_api.dll is found and it's the wrong size or version number.
-		/// </summary>
-		public static bool Test() => true;
-
-	    private static bool CheckSteamAPIDLL() {
-#if STEAMWORKS_WIN || (UNITY_EDITOR_WIN && UNITY_STANDALONE) || (!UNITY_EDITOR && UNITY_STANDALONE_WIN)
-			string fileName;
-			int fileBytes;
-			if (IntPtr.Size == 4) {
-				fileName = "stea_api.dll";
-				fileBytes = Version.SteamAPIDLLSize;
-			}
-			else {
-				fileName = "stea_api64.dll";
-				fileBytes = Version.SteamAPI64DLLSize;
-			}
-
-			var handle = GetModuleHandle(fileName);
-			if (handle == IntPtr.Zero) {
-				return true;
-			}
-
-			var filePath = new StringBuilder(256);
-			GetModuleFileName(handle, filePath, filePath.Capacity);
-			var file = filePath.ToString();
-
-			// If we can not find the file we'll just skip it and let the DllNotFoundException take care of it.
-			if (System.IO.File.Exists(file)) {
-				var fInfo = new System.IO.FileInfo(file);
-				if (fInfo.Length != fileBytes) {
-					return false;
-				}
-
-				if (System.Diagnostics.FileVersionInfo.GetVersionInfo(file).FileVersion != Version.SteamAPIDLLVersion) {
-					return false;
-				}
-			}
-#endif
-			return true;
-		}
-	}
 }

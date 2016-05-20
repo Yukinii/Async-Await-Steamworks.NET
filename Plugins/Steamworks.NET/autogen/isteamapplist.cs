@@ -34,12 +34,12 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> returns -1 if no dir was found</para>
 		/// </summary>
-		public static int GetAppInstallDir(AppId appId, out string pchDirectory, int maxNameLen) {
+		public static int GetAppInstallDir(AppId appId, out string Directory, int maxNameLen) {
 			InteropHelp.TestIfAvailableClient();
-			var pchDirectory2 = Marshal.AllocHGlobal(maxNameLen);
-			var ret = NativeMethods.ISteamAppList_GetAppInstallDir(appId, pchDirectory2, maxNameLen);
-			pchDirectory = ret != -1 ? InteropHelp.PtrToStringUTF8(pchDirectory2) : null;
-			Marshal.FreeHGlobal(pchDirectory2);
+			var Directory2 = Marshal.AllocHGlobal(maxNameLen);
+			var ret = NativeMethods.ISteamAppList_GetAppInstallDir(appId, Directory2, maxNameLen);
+			Directory = ret != -1 ? InteropHelp.PtrToStringUTF8(Directory2) : null;
+			Marshal.FreeHGlobal(Directory2);
 			return ret;
 		}
 

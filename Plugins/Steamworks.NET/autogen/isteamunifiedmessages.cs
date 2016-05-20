@@ -11,10 +11,10 @@ namespace Steamworks {
 		/// <para> Sends a service method (in binary serialized form) using the Steam Client.</para>
 		/// <para> Returns a unified message handle (InvalidUnifiedMessageHandle if could not send the message).</para>
 		/// </summary>
-		public static ClientUnifiedMessageHandle SendMethod(string pchServiceMethod, byte[] pRequestBuffer, uint unRequestBufferSize, ulong unContext) {
+		public static ClientUnifiedMessageHandle SendMethod(string ServiceMethod, byte[] pRequestBuffer, uint unRequestBufferSize, ulong unContext) {
 			InteropHelp.TestIfAvailableClient();
-			using (var pchServiceMethod2 = new InteropHelp.UTF8StringHandle(pchServiceMethod)) {
-				return (ClientUnifiedMessageHandle)NativeMethods.ISteamUnifiedMessages_SendMethod(pchServiceMethod2, pRequestBuffer, unRequestBufferSize, unContext);
+			using (var ServiceMethod2 = new InteropHelp.UTF8StringHandle(ServiceMethod)) {
+				return (ClientUnifiedMessageHandle)NativeMethods.ISteamUnifiedMessages_SendMethod(ServiceMethod2, pRequestBuffer, unRequestBufferSize, unContext);
 			}
 		}
 
@@ -46,10 +46,10 @@ namespace Steamworks {
 		/// <para> Sends a service notification (in binary serialized form) using the Steam Client.</para>
 		/// <para> Returns true if the notification was sent successfully.</para>
 		/// </summary>
-		public static bool SendNotification(string pchServiceNotification, byte[] pNotificationBuffer, uint unNotificationBufferSize) {
+		public static bool SendNotification(string ServiceNotification, byte[] pNotificationBuffer, uint unNotificationBufferSize) {
 			InteropHelp.TestIfAvailableClient();
-			using (var pchServiceNotification2 = new InteropHelp.UTF8StringHandle(pchServiceNotification)) {
-				return NativeMethods.ISteamUnifiedMessages_SendNotification(pchServiceNotification2, pNotificationBuffer, unNotificationBufferSize);
+			using (var ServiceNotification2 = new InteropHelp.UTF8StringHandle(ServiceNotification)) {
+				return NativeMethods.ISteamUnifiedMessages_SendNotification(ServiceNotification2, pNotificationBuffer, unNotificationBufferSize);
 			}
 		}
 	}

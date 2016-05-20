@@ -14,32 +14,32 @@ namespace Steamworks {
 		/// <para> these stats will only be auto-updated for clients playing on the server. For other</para>
 		/// <para> users you'll need to call RequestUserStats() again to refresh any data</para>
 		/// </summary>
-		public static SteamAPICall RequestUserStats(SteamId steamIDUser) {
+		public static SteamAPICall RequestUserStats(SteamId userId) {
 			InteropHelp.TestIfAvailableGameServer();
-			return (SteamAPICall)NativeMethods.ISteamGameServerStats_RequestUserStats(steamIDUser);
+			return (SteamAPICall)NativeMethods.ISteamGameServerStats_RequestUserStats(userId);
 		}
 
 		/// <summary>
 		/// <para> requests stat information for a user, usable after a successful call to RequestUserStats()</para>
 		/// </summary>
-		public static bool GetUserStat(SteamId steamIDUser, string name, out int pData) {
+		public static bool GetUserStat(SteamId userId, string name, out int data) {
 			InteropHelp.TestIfAvailableGameServer();
 			using (var name2 = new InteropHelp.UTF8StringHandle(name)) {
-				return NativeMethods.ISteamGameServerStats_GetUserStat(steamIDUser, name2, out pData);
+				return NativeMethods.ISteamGameServerStats_GetUserStat(userId, name2, out data);
 			}
 		}
 
-		public static bool GetUserStat(SteamId steamIDUser, string name, out float pData) {
+		public static bool GetUserStat(SteamId userId, string name, out float data) {
 			InteropHelp.TestIfAvailableGameServer();
 			using (var name2 = new InteropHelp.UTF8StringHandle(name)) {
-				return NativeMethods.ISteamGameServerStats_GetUserStat_(steamIDUser, name2, out pData);
+				return NativeMethods.ISteamGameServerStats_GetUserStat_(userId, name2, out data);
 			}
 		}
 
-		public static bool GetUserAchievement(SteamId steamIDUser, string name, out bool pbAchieved) {
+		public static bool GetUserAchievement(SteamId userId, string name, out bool achieved) {
 			InteropHelp.TestIfAvailableGameServer();
 			using (var name2 = new InteropHelp.UTF8StringHandle(name)) {
-				return NativeMethods.ISteamGameServerStats_GetUserAchievement(steamIDUser, name2, out pbAchieved);
+				return NativeMethods.ISteamGameServerStats_GetUserAchievement(userId, name2, out achieved);
 			}
 		}
 
@@ -49,38 +49,38 @@ namespace Steamworks {
 		/// <para> game servers that have been declared as officially controlled by the game creators.</para>
 		/// <para> Set the IP range of your official servers on the Steamworks page</para>
 		/// </summary>
-		public static bool SetUserStat(SteamId steamIDUser, string name, int nData) {
+		public static bool SetUserStat(SteamId userId, string name, int nData) {
 			InteropHelp.TestIfAvailableGameServer();
 			using (var name2 = new InteropHelp.UTF8StringHandle(name)) {
-				return NativeMethods.ISteamGameServerStats_SetUserStat(steamIDUser, name2, nData);
+				return NativeMethods.ISteamGameServerStats_SetUserStat(userId, name2, nData);
 			}
 		}
 
-		public static bool SetUserStat(SteamId steamIDUser, string name, float fData) {
+		public static bool SetUserStat(SteamId userId, string name, float fData) {
 			InteropHelp.TestIfAvailableGameServer();
 			using (var name2 = new InteropHelp.UTF8StringHandle(name)) {
-				return NativeMethods.ISteamGameServerStats_SetUserStat_(steamIDUser, name2, fData);
+				return NativeMethods.ISteamGameServerStats_SetUserStat_(userId, name2, fData);
 			}
 		}
 
-		public static bool UpdateUserAvgRateStat(SteamId steamIDUser, string name, float flCountThisSession, double dSessionLength) {
+		public static bool UpdateUserAvgRateStat(SteamId userId, string name, float flCountThisSession, double dSessionLength) {
 			InteropHelp.TestIfAvailableGameServer();
 			using (var name2 = new InteropHelp.UTF8StringHandle(name)) {
-				return NativeMethods.ISteamGameServerStats_UpdateUserAvgRateStat(steamIDUser, name2, flCountThisSession, dSessionLength);
+				return NativeMethods.ISteamGameServerStats_UpdateUserAvgRateStat(userId, name2, flCountThisSession, dSessionLength);
 			}
 		}
 
-		public static bool SetUserAchievement(SteamId steamIDUser, string name) {
+		public static bool SetUserAchievement(SteamId userId, string name) {
 			InteropHelp.TestIfAvailableGameServer();
 			using (var name2 = new InteropHelp.UTF8StringHandle(name)) {
-				return NativeMethods.ISteamGameServerStats_SetUserAchievement(steamIDUser, name2);
+				return NativeMethods.ISteamGameServerStats_SetUserAchievement(userId, name2);
 			}
 		}
 
-		public static bool ClearUserAchievement(SteamId steamIDUser, string name) {
+		public static bool ClearUserAchievement(SteamId userId, string name) {
 			InteropHelp.TestIfAvailableGameServer();
 			using (var name2 = new InteropHelp.UTF8StringHandle(name)) {
-				return NativeMethods.ISteamGameServerStats_ClearUserAchievement(steamIDUser, name2);
+				return NativeMethods.ISteamGameServerStats_ClearUserAchievement(userId, name2);
 			}
 		}
 
@@ -91,9 +91,9 @@ namespace Steamworks {
 		/// <para> or were out of date. In this case the server sends back updated values.</para>
 		/// <para> The stats should be re-iterated to keep in sync.</para>
 		/// </summary>
-		public static SteamAPICall StoreUserStats(SteamId steamIDUser) {
+		public static SteamAPICall StoreUserStats(SteamId userId) {
 			InteropHelp.TestIfAvailableGameServer();
-			return (SteamAPICall)NativeMethods.ISteamGameServerStats_StoreUserStats(steamIDUser);
+			return (SteamAPICall)NativeMethods.ISteamGameServerStats_StoreUserStats(userId);
 		}
 	}
 }

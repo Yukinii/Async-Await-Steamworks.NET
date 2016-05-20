@@ -30,11 +30,11 @@ namespace Steamworks {
 		/// <para>   The userCSS string lets you apply a CSS style sheet to every displayed page, leave null if</para>
 		/// <para> you do not require this functionality.</para>
 		/// </summary>
-		public static SteamAPICall CreateBrowser(string pchUserAgent, string pchUserCSS) {
+		public static SteamAPICall CreateBrowser(string UserAgent, string UserCSS) {
 			InteropHelp.TestIfAvailableClient();
-			using (var pchUserAgent2 = new InteropHelp.UTF8StringHandle(pchUserAgent))
-			using (var pchUserCSS2 = new InteropHelp.UTF8StringHandle(pchUserCSS)) {
-				return (SteamAPICall)NativeMethods.ISteamHTMLSurface_CreateBrowser(pchUserAgent2, pchUserCSS2);
+			using (var UserAgent2 = new InteropHelp.UTF8StringHandle(UserAgent))
+			using (var UserCSS2 = new InteropHelp.UTF8StringHandle(UserCSS)) {
+				return (SteamAPICall)NativeMethods.ISteamHTMLSurface_CreateBrowser(UserAgent2, UserCSS2);
 			}
 		}
 
@@ -49,11 +49,11 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> Navigate to this URL, results in a HTML_StartRequest as the request commences</para>
 		/// </summary>
-		public static void LoadURL(HHTMLBrowser unBrowserHandle, string pchURL, string pchPostData) {
+		public static void LoadURL(HHTMLBrowser unBrowserHandle, string URL, string PostData) {
 			InteropHelp.TestIfAvailableClient();
-			using (var pchURL2 = new InteropHelp.UTF8StringHandle(pchURL))
-			using (var pchPostData2 = new InteropHelp.UTF8StringHandle(pchPostData)) {
-				NativeMethods.ISteamHTMLSurface_LoadURL(unBrowserHandle, pchURL2, pchPostData2);
+			using (var URL2 = new InteropHelp.UTF8StringHandle(URL))
+			using (var PostData2 = new InteropHelp.UTF8StringHandle(PostData)) {
+				NativeMethods.ISteamHTMLSurface_LoadURL(unBrowserHandle, URL2, PostData2);
 			}
 		}
 
@@ -100,21 +100,21 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> add this header to any url requests from this browser</para>
 		/// </summary>
-		public static void AddHeader(HHTMLBrowser unBrowserHandle, string pchKey, string pchValue) {
+		public static void AddHeader(HHTMLBrowser unBrowserHandle, string Key, string Value) {
 			InteropHelp.TestIfAvailableClient();
-			using (var pchKey2 = new InteropHelp.UTF8StringHandle(pchKey))
-			using (var pchValue2 = new InteropHelp.UTF8StringHandle(pchValue)) {
-				NativeMethods.ISteamHTMLSurface_AddHeader(unBrowserHandle, pchKey2, pchValue2);
+			using (var Key2 = new InteropHelp.UTF8StringHandle(Key))
+			using (var Value2 = new InteropHelp.UTF8StringHandle(Value)) {
+				NativeMethods.ISteamHTMLSurface_AddHeader(unBrowserHandle, Key2, Value2);
 			}
 		}
 
 		/// <summary>
 		/// <para> run this javascript script in the currently loaded page</para>
 		/// </summary>
-		public static void ExecuteJavascript(HHTMLBrowser unBrowserHandle, string pchScript) {
+		public static void ExecuteJavascript(HHTMLBrowser unBrowserHandle, string Script) {
 			InteropHelp.TestIfAvailableClient();
-			using (var pchScript2 = new InteropHelp.UTF8StringHandle(pchScript)) {
-				NativeMethods.ISteamHTMLSurface_ExecuteJavascript(unBrowserHandle, pchScript2);
+			using (var Script2 = new InteropHelp.UTF8StringHandle(Script)) {
+				NativeMethods.ISteamHTMLSurface_ExecuteJavascript(unBrowserHandle, Script2);
 			}
 		}
 
@@ -221,10 +221,10 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> find this string in the browser, if bCurrentlyInFind is true then instead cycle to the next matching element</para>
 		/// </summary>
-		public static void Find(HHTMLBrowser unBrowserHandle, string pchSearchStr, bool bCurrentlyInFind, bool bReverse) {
+		public static void Find(HHTMLBrowser unBrowserHandle, string SearchStr, bool bCurrentlyInFind, bool bReverse) {
 			InteropHelp.TestIfAvailableClient();
-			using (var pchSearchStr2 = new InteropHelp.UTF8StringHandle(pchSearchStr)) {
-				NativeMethods.ISteamHTMLSurface_Find(unBrowserHandle, pchSearchStr2, bCurrentlyInFind, bReverse);
+			using (var SearchStr2 = new InteropHelp.UTF8StringHandle(SearchStr)) {
+				NativeMethods.ISteamHTMLSurface_Find(unBrowserHandle, SearchStr2, bCurrentlyInFind, bReverse);
 			}
 		}
 
@@ -247,13 +247,13 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> set a webcookie for the hostname in question</para>
 		/// </summary>
-		public static void SetCookie(string pchHostname, string pchKey, string pchValue, string pchPath = "/", uint nExpires = 0, bool bSecure = false, bool bHTTPOnly = false) {
+		public static void SetCookie(string Hostname, string Key, string Value, string Path = "/", uint nExpires = 0, bool bSecure = false, bool bHTTPOnly = false) {
 			InteropHelp.TestIfAvailableClient();
-			using (var pchHostname2 = new InteropHelp.UTF8StringHandle(pchHostname))
-			using (var pchKey2 = new InteropHelp.UTF8StringHandle(pchKey))
-			using (var pchValue2 = new InteropHelp.UTF8StringHandle(pchValue))
-			using (var pchPath2 = new InteropHelp.UTF8StringHandle(pchPath)) {
-				NativeMethods.ISteamHTMLSurface_SetCookie(pchHostname2, pchKey2, pchValue2, pchPath2, nExpires, bSecure, bHTTPOnly);
+			using (var Hostname2 = new InteropHelp.UTF8StringHandle(Hostname))
+			using (var Key2 = new InteropHelp.UTF8StringHandle(Key))
+			using (var Value2 = new InteropHelp.UTF8StringHandle(Value))
+			using (var Path2 = new InteropHelp.UTF8StringHandle(Path)) {
+				NativeMethods.ISteamHTMLSurface_SetCookie(Hostname2, Key2, Value2, Path2, nExpires, bSecure, bHTTPOnly);
 			}
 		}
 
@@ -268,7 +268,7 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> Enable/disable low-resource background mode, where javascript and repaint timers are throttled, resources are</para>
 		/// <para> more aggressively purged from memory, and audio/video elements are paused. When background mode is enabled,</para>
-		/// <para> all HTML5 video and audio objects will execute ".pause()" and gain the property "._stea_background_paused = 1".</para>
+		/// <para> all HTML5 video and audio objects will execute ".pause()" and gain the property "._steaackground_paused = 1".</para>
 		/// <para> When background mode is disabled, any video or audio objects with that property will resume with ".play()".</para>
 		/// </summary>
 		public static void SetBackgroundMode(HHTMLBrowser unBrowserHandle, bool bBackgroundMode) {
@@ -301,9 +301,9 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> You MUST call this in response to a HTML_FileOpenDialog callback</para>
 		/// </summary>
-		public static void FileLoadDialogResponse(HHTMLBrowser unBrowserHandle, IntPtr pchSelectedFiles) {
+		public static void FileLoadDialogResponse(HHTMLBrowser unBrowserHandle, IntPtr SelectedFiles) {
 			InteropHelp.TestIfAvailableClient();
-			NativeMethods.ISteamHTMLSurface_FileLoadDialogResponse(unBrowserHandle, pchSelectedFiles);
+			NativeMethods.ISteamHTMLSurface_FileLoadDialogResponse(unBrowserHandle, SelectedFiles);
 		}
 	}
 }

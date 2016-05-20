@@ -7,28 +7,28 @@
 namespace Steamworks {
 	public struct PublishedFileUpdateHandle : System.IEquatable<PublishedFileUpdateHandle>, System.IComparable<PublishedFileUpdateHandle> {
 		public static readonly PublishedFileUpdateHandle Invalid = new PublishedFileUpdateHandle(0xffffffffffffffff);
-		public ulong _PublishedFileUpdateHandle;
+	    public readonly ulong UpdateHandle;
 
 		public PublishedFileUpdateHandle(ulong value) {
-			_PublishedFileUpdateHandle = value;
+			UpdateHandle = value;
 		}
 
-		public override string ToString() => _PublishedFileUpdateHandle.ToString();
+		public override string ToString() => UpdateHandle.ToString();
 
 	    public override bool Equals(object other) => other is PublishedFileUpdateHandle && this == (PublishedFileUpdateHandle)other;
 
-	    public override int GetHashCode() => _PublishedFileUpdateHandle.GetHashCode();
+	    public override int GetHashCode() => UpdateHandle.GetHashCode();
 
-	    public static bool operator ==(PublishedFileUpdateHandle x, PublishedFileUpdateHandle y) => x._PublishedFileUpdateHandle == y._PublishedFileUpdateHandle;
+	    public static bool operator ==(PublishedFileUpdateHandle x, PublishedFileUpdateHandle y) => x.UpdateHandle == y.UpdateHandle;
 
 	    public static bool operator !=(PublishedFileUpdateHandle x, PublishedFileUpdateHandle y) => !(x == y);
 
 	    public static explicit operator PublishedFileUpdateHandle(ulong value) => new PublishedFileUpdateHandle(value);
 
-	    public static explicit operator ulong(PublishedFileUpdateHandle that) => that._PublishedFileUpdateHandle;
+	    public static explicit operator ulong(PublishedFileUpdateHandle that) => that.UpdateHandle;
 
-	    public bool Equals(PublishedFileUpdateHandle other) => _PublishedFileUpdateHandle == other._PublishedFileUpdateHandle;
+	    public bool Equals(PublishedFileUpdateHandle other) => UpdateHandle == other.UpdateHandle;
 
-	    public int CompareTo(PublishedFileUpdateHandle other) => _PublishedFileUpdateHandle.CompareTo(other._PublishedFileUpdateHandle);
+	    public int CompareTo(PublishedFileUpdateHandle other) => UpdateHandle.CompareTo(other.UpdateHandle);
 	}
 }

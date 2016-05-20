@@ -27,7 +27,7 @@ namespace Steamworks {
 		public static extern void SteamAPI_WriteMiniDump(uint uStructuredExceptionCode, IntPtr pvExceptionInfo, uint uBuildID);
 
 		[DllImport("CSteamworks", EntryPoint = "SetMiniDumpComment", CallingConvention = CallingConvention.Cdecl)]
-		public static extern void SteamAPI_SetMiniDumpComment(InteropHelp.UTF8StringHandle pchMsg);
+		public static extern void SteamAPI_SetMiniDumpComment(InteropHelp.UTF8StringHandle Msg);
 
 		[DllImport("CSteamworks", EntryPoint = "SteamClient_", CallingConvention = CallingConvention.Cdecl)]
 		public static extern IntPtr SteamClient();
@@ -83,7 +83,7 @@ namespace Steamworks {
 		public static extern int SteamAPI_GetHSteamUser();
 
 		[DllImport("CSteamworks", EntryPoint = "UseBreakpadCrashHandler", CallingConvention = CallingConvention.Cdecl)]
-		public static extern void SteamAPI_UseBreakpadCrashHandler(InteropHelp.UTF8StringHandle pchVersion, InteropHelp.UTF8StringHandle pchDate, InteropHelp.UTF8StringHandle pchTime, [MarshalAs(UnmanagedType.I1)] bool bFullMemoryDumps, IntPtr pvContext, IntPtr _pfnPreMinidumpCallback);
+		public static extern void SteamAPI_UseBreakpadCrashHandler(InteropHelp.UTF8StringHandle Version, InteropHelp.UTF8StringHandle Date, InteropHelp.UTF8StringHandle Time, [MarshalAs(UnmanagedType.I1)] bool bFullMemoryDumps, IntPtr pvContext, IntPtr _pfnPreMinidumpCallback);
 
 		// SteamContext Accessors:
 		[DllImport("CSteamworks", EntryPoint = "SteamUser", CallingConvention = CallingConvention.Cdecl)]
@@ -130,13 +130,13 @@ namespace Steamworks {
 #region stea_gameserver.h
 		[DllImport("CSteamworks", EntryPoint = "GameServer_InitSafe", CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool SteamGameServer_InitSafe(uint unIP, ushort usSteamPort, ushort usGamePort, ushort usQueryPort, EServerMode eServerMode, InteropHelp.UTF8StringHandle pchVersionString);
+		public static extern bool SteamGameServer_InitSafe(uint unIP, ushort usSteamPort, ushort usGamePort, ushort usQueryPort, EServerMode eServerMode, InteropHelp.UTF8StringHandle VersionString);
 
 #if DISABLED
 		// This depends on how CSteamworks was compiled. By default it's compiled with VERSION_SAFE_STEAM_API_INTERFACES.
 		[DllImport("CSteamworks", EntryPoint = "GameServer_Init", CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool SteamGameServer_Init(uint unIP, ushort usSteamPort, ushort usGamePort, ushort usQueryPort, EServerMode eServerMode, InteropHelp.UTF8StringHandle pchVersionString);
+		public static extern bool SteamGameServer_Init(uint unIP, ushort usSteamPort, ushort usGamePort, ushort usQueryPort, EServerMode eServerMode, InteropHelp.UTF8StringHandle VersionString);
 #endif
 
 		[DllImport("CSteamworks", EntryPoint = "GameServer_Shutdown", CallingConvention = CallingConvention.Cdecl)]
@@ -180,7 +180,7 @@ namespace Steamworks {
 #region steamencryptedappticket.h
 		[DllImport("sdkencryptedappticket", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamEncryptedAppTicket_BDecryptTicket")]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool BDecryptTicket([In, Out] byte[] rgubTicketEncrypted, uint TicketEncrypted, [In, Out] byte[] rgubTicketDecrypted, ref uint pcubTicketDecrypted, [MarshalAs(UnmanagedType.LPArray, SizeConst=Constants.nSteamEncryptedAppTicketSymmetricKeyLen)] byte[] rgubKey, int Key);
+		public static extern bool BDecryptTicket([In, Out] byte[] rgubTicketEncrypted, uint TicketEncrypted, [In, Out] byte[] rgubTicketDecrypted, ref uint pcubTicketDecrypted, [MarshalAs(UnmanagedType.LPArray, SizeConst=Constants.SteamEncryptedAppTicketSymmetricKeyLen)] byte[] rgubKey, int Key);
 
 		[DllImport("sdkencryptedappticket", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamEncryptedAppTicket_BIsTicketForApp")]
 		[return: MarshalAs(UnmanagedType.I1)]
@@ -217,7 +217,7 @@ namespace Steamworks {
 		public static extern int ISteamAppList_GetAppName(AppId appId, IntPtr name, int maxNameLen);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern int ISteamAppList_GetAppInstallDir(AppId appId, IntPtr pchDirectory, int maxNameLen);
+		public static extern int ISteamAppList_GetAppInstallDir(AppId appId, IntPtr Directory, int maxNameLen);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern int ISteamAppList_GetAppBuildId(AppId appId);
@@ -288,7 +288,7 @@ namespace Steamworks {
 		public static extern uint ISteamApps_GetInstalledDepots(AppId appID, [In, Out] DepotId[] Depots, uint cMaxDepots);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern uint ISteamApps_GetAppInstallDir(AppId appID, IntPtr pchFolder, uint FolderBufferSize);
+		public static extern uint ISteamApps_GetAppInstallDir(AppId appID, IntPtr Folder, uint FolderBufferSize);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
@@ -298,7 +298,7 @@ namespace Steamworks {
 		public static extern ulong ISteamApps_GetAppOwner();
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern IntPtr ISteamApps_GetLaunchQueryParam(InteropHelp.UTF8StringHandle pchKey);
+		public static extern IntPtr ISteamApps_GetLaunchQueryParam(InteropHelp.UTF8StringHandle Key);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
@@ -325,46 +325,46 @@ namespace Steamworks {
 		public static extern void ISteamClient_ReleaseUser(HSteamPipe hSteamPipe, HSteamUser hUser);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern IntPtr ISteamClient_GetISteamUser(HSteamUser hSteamUser, HSteamPipe hSteamPipe, InteropHelp.UTF8StringHandle pchVersion);
+		public static extern IntPtr ISteamClient_GetISteamUser(HSteamUser hSteamUser, HSteamPipe hSteamPipe, InteropHelp.UTF8StringHandle Version);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern IntPtr ISteamClient_GetISteamGameServer(HSteamUser hSteamUser, HSteamPipe hSteamPipe, InteropHelp.UTF8StringHandle pchVersion);
+		public static extern IntPtr ISteamClient_GetISteamGameServer(HSteamUser hSteamUser, HSteamPipe hSteamPipe, InteropHelp.UTF8StringHandle Version);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern void ISteamClient_SetLocalIPBinding(uint unIP, ushort usPort);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern IntPtr ISteamClient_GetISteamFriends(HSteamUser hSteamUser, HSteamPipe hSteamPipe, InteropHelp.UTF8StringHandle pchVersion);
+		public static extern IntPtr ISteamClient_GetISteamFriends(HSteamUser hSteamUser, HSteamPipe hSteamPipe, InteropHelp.UTF8StringHandle Version);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern IntPtr ISteamClient_GetISteamUtils(HSteamPipe hSteamPipe, InteropHelp.UTF8StringHandle pchVersion);
+		public static extern IntPtr ISteamClient_GetISteamUtils(HSteamPipe hSteamPipe, InteropHelp.UTF8StringHandle Version);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern IntPtr ISteamClient_GetISteamMatchmaking(HSteamUser hSteamUser, HSteamPipe hSteamPipe, InteropHelp.UTF8StringHandle pchVersion);
+		public static extern IntPtr ISteamClient_GetISteamMatchmaking(HSteamUser hSteamUser, HSteamPipe hSteamPipe, InteropHelp.UTF8StringHandle Version);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern IntPtr ISteamClient_GetISteamMatchmakingServers(HSteamUser hSteamUser, HSteamPipe hSteamPipe, InteropHelp.UTF8StringHandle pchVersion);
+		public static extern IntPtr ISteamClient_GetISteamMatchmakingServers(HSteamUser hSteamUser, HSteamPipe hSteamPipe, InteropHelp.UTF8StringHandle Version);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern IntPtr ISteamClient_GetISteamGenericInterface(HSteamUser hSteamUser, HSteamPipe hSteamPipe, InteropHelp.UTF8StringHandle pchVersion);
+		public static extern IntPtr ISteamClient_GetISteamGenericInterface(HSteamUser hSteamUser, HSteamPipe hSteamPipe, InteropHelp.UTF8StringHandle Version);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern IntPtr ISteamClient_GetISteamUserStats(HSteamUser hSteamUser, HSteamPipe hSteamPipe, InteropHelp.UTF8StringHandle pchVersion);
+		public static extern IntPtr ISteamClient_GetISteamUserStats(HSteamUser hSteamUser, HSteamPipe hSteamPipe, InteropHelp.UTF8StringHandle Version);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern IntPtr ISteamClient_GetISteamGameServerStats(HSteamUser hSteamuser, HSteamPipe hSteamPipe, InteropHelp.UTF8StringHandle pchVersion);
+		public static extern IntPtr ISteamClient_GetISteamGameServerStats(HSteamUser hSteamuser, HSteamPipe hSteamPipe, InteropHelp.UTF8StringHandle Version);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern IntPtr ISteamClient_GetISteamApps(HSteamUser hSteamUser, HSteamPipe hSteamPipe, InteropHelp.UTF8StringHandle pchVersion);
+		public static extern IntPtr ISteamClient_GetISteamApps(HSteamUser hSteamUser, HSteamPipe hSteamPipe, InteropHelp.UTF8StringHandle Version);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern IntPtr ISteamClient_GetISteamNetworking(HSteamUser hSteamUser, HSteamPipe hSteamPipe, InteropHelp.UTF8StringHandle pchVersion);
+		public static extern IntPtr ISteamClient_GetISteamNetworking(HSteamUser hSteamUser, HSteamPipe hSteamPipe, InteropHelp.UTF8StringHandle Version);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern IntPtr ISteamClient_GetISteamRemoteStorage(HSteamUser hSteamuser, HSteamPipe hSteamPipe, InteropHelp.UTF8StringHandle pchVersion);
+		public static extern IntPtr ISteamClient_GetISteamRemoteStorage(HSteamUser hSteamuser, HSteamPipe hSteamPipe, InteropHelp.UTF8StringHandle Version);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern IntPtr ISteamClient_GetISteamScreenshots(HSteamUser hSteamuser, HSteamPipe hSteamPipe, InteropHelp.UTF8StringHandle pchVersion);
+		public static extern IntPtr ISteamClient_GetISteamScreenshots(HSteamUser hSteamuser, HSteamPipe hSteamPipe, InteropHelp.UTF8StringHandle Version);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern uint ISteamClient_GetIPCCallCount();
@@ -377,34 +377,34 @@ namespace Steamworks {
 		public static extern bool ISteamClient_BShutdownIfAllPipesClosed();
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern IntPtr ISteamClient_GetISteamHTTP(HSteamUser hSteamuser, HSteamPipe hSteamPipe, InteropHelp.UTF8StringHandle pchVersion);
+		public static extern IntPtr ISteamClient_GetISteamHTTP(HSteamUser hSteamuser, HSteamPipe hSteamPipe, InteropHelp.UTF8StringHandle Version);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern IntPtr ISteamClient_GetISteamUnifiedMessages(HSteamUser hSteamuser, HSteamPipe hSteamPipe, InteropHelp.UTF8StringHandle pchVersion);
+		public static extern IntPtr ISteamClient_GetISteamUnifiedMessages(HSteamUser hSteamuser, HSteamPipe hSteamPipe, InteropHelp.UTF8StringHandle Version);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern IntPtr ISteamClient_GetISteamController(HSteamUser hSteamUser, HSteamPipe hSteamPipe, InteropHelp.UTF8StringHandle pchVersion);
+		public static extern IntPtr ISteamClient_GetISteamController(HSteamUser hSteamUser, HSteamPipe hSteamPipe, InteropHelp.UTF8StringHandle Version);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern IntPtr ISteamClient_GetISteamUGC(HSteamUser hSteamUser, HSteamPipe hSteamPipe, InteropHelp.UTF8StringHandle pchVersion);
+		public static extern IntPtr ISteamClient_GetISteamUGC(HSteamUser hSteamUser, HSteamPipe hSteamPipe, InteropHelp.UTF8StringHandle Version);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern IntPtr ISteamClient_GetISteamAppList(HSteamUser hSteamUser, HSteamPipe hSteamPipe, InteropHelp.UTF8StringHandle pchVersion);
+		public static extern IntPtr ISteamClient_GetISteamAppList(HSteamUser hSteamUser, HSteamPipe hSteamPipe, InteropHelp.UTF8StringHandle Version);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern IntPtr ISteamClient_GetISteamMusic(HSteamUser hSteamuser, HSteamPipe hSteamPipe, InteropHelp.UTF8StringHandle pchVersion);
+		public static extern IntPtr ISteamClient_GetISteamMusic(HSteamUser hSteamuser, HSteamPipe hSteamPipe, InteropHelp.UTF8StringHandle Version);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern IntPtr ISteamClient_GetISteamMusicRemote(HSteamUser hSteamuser, HSteamPipe hSteamPipe, InteropHelp.UTF8StringHandle pchVersion);
+		public static extern IntPtr ISteamClient_GetISteamMusicRemote(HSteamUser hSteamuser, HSteamPipe hSteamPipe, InteropHelp.UTF8StringHandle Version);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern IntPtr ISteamClient_GetISteamHTMLSurface(HSteamUser hSteamuser, HSteamPipe hSteamPipe, InteropHelp.UTF8StringHandle pchVersion);
+		public static extern IntPtr ISteamClient_GetISteamHTMLSurface(HSteamUser hSteamuser, HSteamPipe hSteamPipe, InteropHelp.UTF8StringHandle Version);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern IntPtr ISteamClient_GetISteamInventory(HSteamUser hSteamuser, HSteamPipe hSteamPipe, InteropHelp.UTF8StringHandle pchVersion);
+		public static extern IntPtr ISteamClient_GetISteamInventory(HSteamUser hSteamuser, HSteamPipe hSteamPipe, InteropHelp.UTF8StringHandle Version);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern IntPtr ISteamClient_GetISteamVideo(HSteamUser hSteamuser, HSteamPipe hSteamPipe, InteropHelp.UTF8StringHandle pchVersion);
+		public static extern IntPtr ISteamClient_GetISteamVideo(HSteamUser hSteamuser, HSteamPipe hSteamPipe, InteropHelp.UTF8StringHandle Version);
 #endregion
 #region SteamController
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
@@ -466,7 +466,7 @@ namespace Steamworks {
 		public static extern IntPtr ISteamFriends_GetPersonaName();
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern ulong ISteamFriends_SetPersonaName(InteropHelp.UTF8StringHandle pchPersonaName);
+		public static extern ulong ISteamFriends_SetPersonaName(InteropHelp.UTF8StringHandle PersonaName);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern EPersonaState ISteamFriends_GetPersonaState();
@@ -545,25 +545,25 @@ namespace Steamworks {
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamFriends_IsUserInSource(SteamId steamIDUser, SteamId steamIDSource);
+		public static extern bool ISteamFriends_IsUserInSource(SteamId userId, SteamId steamIDSource);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern void ISteamFriends_SetInGameVoiceSpeaking(SteamId steamIDUser, [MarshalAs(UnmanagedType.I1)] bool bSpeaking);
+		public static extern void ISteamFriends_SetInGameVoiceSpeaking(SteamId userId, [MarshalAs(UnmanagedType.I1)] bool bSpeaking);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern void ISteamFriends_ActivateGameOverlay(InteropHelp.UTF8StringHandle pchDialog);
+		public static extern void ISteamFriends_ActivateGameOverlay(InteropHelp.UTF8StringHandle Dialog);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern void ISteamFriends_ActivateGameOverlayToUser(InteropHelp.UTF8StringHandle pchDialog, SteamId steamID);
+		public static extern void ISteamFriends_ActivateGameOverlayToUser(InteropHelp.UTF8StringHandle Dialog, SteamId steamID);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern void ISteamFriends_ActivateGameOverlayToWebPage(InteropHelp.UTF8StringHandle pchURL);
+		public static extern void ISteamFriends_ActivateGameOverlayToWebPage(InteropHelp.UTF8StringHandle URL);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern void ISteamFriends_ActivateGameOverlayToStore(AppId appId, EOverlayToStoreFlag eFlag);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern void ISteamFriends_SetPlayedWith(SteamId steamIDUserPlayedWith);
+		public static extern void ISteamFriends_SetPlayedWith(SteamId userIdPlayedWith);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern void ISteamFriends_ActivateGameOverlayInviteDialog(SteamId steamIDLobby);
@@ -579,7 +579,7 @@ namespace Steamworks {
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamFriends_RequestUserInformation(SteamId steamIDUser, [MarshalAs(UnmanagedType.I1)] bool bRequireNameOnly);
+		public static extern bool ISteamFriends_RequestUserInformation(SteamId userId, [MarshalAs(UnmanagedType.I1)] bool bRequireNameOnly);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern ulong ISteamFriends_RequestClanOfficerList(SteamId steamIDClan);
@@ -598,13 +598,13 @@ namespace Steamworks {
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamFriends_SetRichPresence(InteropHelp.UTF8StringHandle pchKey, InteropHelp.UTF8StringHandle pchValue);
+		public static extern bool ISteamFriends_SetRichPresence(InteropHelp.UTF8StringHandle Key, InteropHelp.UTF8StringHandle Value);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern void ISteamFriends_ClearRichPresence();
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern IntPtr ISteamFriends_GetFriendRichPresence(SteamId steamIDFriend, InteropHelp.UTF8StringHandle pchKey);
+		public static extern IntPtr ISteamFriends_GetFriendRichPresence(SteamId steamIDFriend, InteropHelp.UTF8StringHandle Key);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern int ISteamFriends_GetFriendRichPresenceKeyCount(SteamId steamIDFriend);
@@ -617,7 +617,7 @@ namespace Steamworks {
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamFriends_InviteUserToGame(SteamId steamIDFriend, InteropHelp.UTF8StringHandle pchConnectString);
+		public static extern bool ISteamFriends_InviteUserToGame(SteamId steamIDFriend, InteropHelp.UTF8StringHandle ConnectString);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern int ISteamFriends_GetCoplayFriendCount();
@@ -646,14 +646,14 @@ namespace Steamworks {
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamFriends_SendClanChatMessage(SteamId steamIDClanChat, InteropHelp.UTF8StringHandle pchText);
+		public static extern bool ISteamFriends_SendClanChatMessage(SteamId steamIDClanChat, InteropHelp.UTF8StringHandle Text);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern int ISteamFriends_GetClanChatMessage(SteamId steamIDClanChat, int iMessage, IntPtr prgchText, int TextMax, out EChatEntryType peChatEntryType, out SteamId psteamidChatter);
+		public static extern int ISteamFriends_GetClanChatMessage(SteamId steamIDClanChat, int iMessage, IntPtr prText, int TextMax, out EChatEntryType peChatEntryType, out SteamId psteamidChatter);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamFriends_IsClanChatAdmin(SteamId steamIDClanChat, SteamId steamIDUser);
+		public static extern bool ISteamFriends_IsClanChatAdmin(SteamId steamIDClanChat, SteamId userId);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
@@ -673,7 +673,7 @@ namespace Steamworks {
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamFriends_ReplyToFriendMessage(SteamId steamIDFriend, InteropHelp.UTF8StringHandle pchMsgToSend);
+		public static extern bool ISteamFriends_ReplyToFriendMessage(SteamId steamIDFriend, InteropHelp.UTF8StringHandle MsgToSend);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern int ISteamFriends_GetFriendMessage(SteamId steamIDFriend, int iMessageID, IntPtr pvData, int Data, out EChatEntryType peChatEntryType);
@@ -690,7 +690,7 @@ namespace Steamworks {
 #region SteamGameServer
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamGameServer_InitGameServer(uint unIP, ushort usGamePort, ushort usQueryPort, uint unFlags, AppId nGameAppId, InteropHelp.UTF8StringHandle pchVersionString);
+		public static extern bool ISteamGameServer_InitGameServer(uint unIP, ushort usGamePort, ushort usQueryPort, uint unFlags, AppId nGameAppId, InteropHelp.UTF8StringHandle VersionString);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern void ISteamGameServer_SetProduct(InteropHelp.UTF8StringHandle pszProduct);
@@ -756,10 +756,10 @@ namespace Steamworks {
 		public static extern void ISteamGameServer_SetKeyValue(InteropHelp.UTF8StringHandle pKey, InteropHelp.UTF8StringHandle pValue);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern void ISteamGameServer_SetGameTags(InteropHelp.UTF8StringHandle pchGameTags);
+		public static extern void ISteamGameServer_SetGameTags(InteropHelp.UTF8StringHandle GameTags);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern void ISteamGameServer_SetGameData(InteropHelp.UTF8StringHandle pchGameData);
+		public static extern void ISteamGameServer_SetGameData(InteropHelp.UTF8StringHandle GameData);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern void ISteamGameServer_SetRegion(InteropHelp.UTF8StringHandle pszRegion);
@@ -772,11 +772,11 @@ namespace Steamworks {
 		public static extern ulong ISteamGameServer_CreateUnauthenticatedUserConnection();
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern void ISteamGameServer_SendUserDisconnect(SteamId steamIDUser);
+		public static extern void ISteamGameServer_SendUserDisconnect(SteamId userId);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamGameServer_BUpdateUserData(SteamId steamIDUser, InteropHelp.UTF8StringHandle pchPlayerName, uint uScore);
+		public static extern bool ISteamGameServer_BUpdateUserData(SteamId userId, InteropHelp.UTF8StringHandle PlayerName, uint uScore);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern uint ISteamGameServer_GetAuthSessionTicket([In, Out] byte[] pTicket, int MaxTicket, out uint pcbTicket);
@@ -795,7 +795,7 @@ namespace Steamworks {
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamGameServer_RequestUserGroupStatus(SteamId steamIDUser, SteamId steamIDGroup);
+		public static extern bool ISteamGameServer_RequestUserGroupStatus(SteamId userId, SteamId steamIDGroup);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern void ISteamGameServer_GetGameplayStats();
@@ -808,7 +808,7 @@ namespace Steamworks {
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamGameServer_HandleIncomingPacket([In, Out] byte[] pData, int cbData, uint srcIP, ushort srcPort);
+		public static extern bool ISteamGameServer_HandleIncomingPacket([In, Out] byte[] data, int cbData, uint srcIP, ushort srcPort);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern int ISteamGameServer_GetNextOutgoingPacket([In, Out] byte[] pOut, int MaxOut, out uint pNetAdr, out ushort pPort);
@@ -830,42 +830,42 @@ namespace Steamworks {
 #endregion
 #region SteamGameServerStats
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern ulong ISteamGameServerStats_RequestUserStats(SteamId steamIDUser);
+		public static extern ulong ISteamGameServerStats_RequestUserStats(SteamId userId);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamGameServerStats_GetUserStat(SteamId steamIDUser, InteropHelp.UTF8StringHandle name, out int pData);
+		public static extern bool ISteamGameServerStats_GetUserStat(SteamId userId, InteropHelp.UTF8StringHandle name, out int data);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamGameServerStats_GetUserStat_(SteamId steamIDUser, InteropHelp.UTF8StringHandle name, out float pData);
+		public static extern bool ISteamGameServerStats_GetUserStat_(SteamId userId, InteropHelp.UTF8StringHandle name, out float data);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamGameServerStats_GetUserAchievement(SteamId steamIDUser, InteropHelp.UTF8StringHandle name, out bool pbAchieved);
+		public static extern bool ISteamGameServerStats_GetUserAchievement(SteamId userId, InteropHelp.UTF8StringHandle name, out bool achieved);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamGameServerStats_SetUserStat(SteamId steamIDUser, InteropHelp.UTF8StringHandle name, int nData);
+		public static extern bool ISteamGameServerStats_SetUserStat(SteamId userId, InteropHelp.UTF8StringHandle name, int nData);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamGameServerStats_SetUserStat_(SteamId steamIDUser, InteropHelp.UTF8StringHandle name, float fData);
+		public static extern bool ISteamGameServerStats_SetUserStat_(SteamId userId, InteropHelp.UTF8StringHandle name, float fData);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamGameServerStats_UpdateUserAvgRateStat(SteamId steamIDUser, InteropHelp.UTF8StringHandle name, float flCountThisSession, double dSessionLength);
+		public static extern bool ISteamGameServerStats_UpdateUserAvgRateStat(SteamId userId, InteropHelp.UTF8StringHandle name, float flCountThisSession, double dSessionLength);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamGameServerStats_SetUserAchievement(SteamId steamIDUser, InteropHelp.UTF8StringHandle name);
+		public static extern bool ISteamGameServerStats_SetUserAchievement(SteamId userId, InteropHelp.UTF8StringHandle name);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamGameServerStats_ClearUserAchievement(SteamId steamIDUser, InteropHelp.UTF8StringHandle name);
+		public static extern bool ISteamGameServerStats_ClearUserAchievement(SteamId userId, InteropHelp.UTF8StringHandle name);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern ulong ISteamGameServerStats_StoreUserStats(SteamId steamIDUser);
+		public static extern ulong ISteamGameServerStats_StoreUserStats(SteamId userId);
 #endregion
 #region SteamHTMLSurface
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
@@ -877,13 +877,13 @@ namespace Steamworks {
 		public static extern bool ISteamHTMLSurface_Shutdown();
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern ulong ISteamHTMLSurface_CreateBrowser(InteropHelp.UTF8StringHandle pchUserAgent, InteropHelp.UTF8StringHandle pchUserCSS);
+		public static extern ulong ISteamHTMLSurface_CreateBrowser(InteropHelp.UTF8StringHandle UserAgent, InteropHelp.UTF8StringHandle UserCSS);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern void ISteamHTMLSurface_RemoveBrowser(HHTMLBrowser unBrowserHandle);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern void ISteamHTMLSurface_LoadURL(HHTMLBrowser unBrowserHandle, InteropHelp.UTF8StringHandle pchURL, InteropHelp.UTF8StringHandle pchPostData);
+		public static extern void ISteamHTMLSurface_LoadURL(HHTMLBrowser unBrowserHandle, InteropHelp.UTF8StringHandle URL, InteropHelp.UTF8StringHandle PostData);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern void ISteamHTMLSurface_SetSize(HHTMLBrowser unBrowserHandle, uint unWidth, uint unHeight);
@@ -901,10 +901,10 @@ namespace Steamworks {
 		public static extern void ISteamHTMLSurface_GoForward(HHTMLBrowser unBrowserHandle);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern void ISteamHTMLSurface_AddHeader(HHTMLBrowser unBrowserHandle, InteropHelp.UTF8StringHandle pchKey, InteropHelp.UTF8StringHandle pchValue);
+		public static extern void ISteamHTMLSurface_AddHeader(HHTMLBrowser unBrowserHandle, InteropHelp.UTF8StringHandle Key, InteropHelp.UTF8StringHandle Value);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern void ISteamHTMLSurface_ExecuteJavascript(HHTMLBrowser unBrowserHandle, InteropHelp.UTF8StringHandle pchScript);
+		public static extern void ISteamHTMLSurface_ExecuteJavascript(HHTMLBrowser unBrowserHandle, InteropHelp.UTF8StringHandle Script);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern void ISteamHTMLSurface_MouseUp(HHTMLBrowser unBrowserHandle, EhtmlMouseButton eMouseButton);
@@ -949,7 +949,7 @@ namespace Steamworks {
 		public static extern void ISteamHTMLSurface_PasteFromClipboard(HHTMLBrowser unBrowserHandle);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern void ISteamHTMLSurface_Find(HHTMLBrowser unBrowserHandle, InteropHelp.UTF8StringHandle pchSearchStr, [MarshalAs(UnmanagedType.I1)] bool bCurrentlyInFind, [MarshalAs(UnmanagedType.I1)] bool bReverse);
+		public static extern void ISteamHTMLSurface_Find(HHTMLBrowser unBrowserHandle, InteropHelp.UTF8StringHandle SearchStr, [MarshalAs(UnmanagedType.I1)] bool bCurrentlyInFind, [MarshalAs(UnmanagedType.I1)] bool bReverse);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern void ISteamHTMLSurface_StopFind(HHTMLBrowser unBrowserHandle);
@@ -958,7 +958,7 @@ namespace Steamworks {
 		public static extern void ISteamHTMLSurface_GetLinkAtPosition(HHTMLBrowser unBrowserHandle, int x, int y);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern void ISteamHTMLSurface_SetCookie(InteropHelp.UTF8StringHandle pchHostname, InteropHelp.UTF8StringHandle pchKey, InteropHelp.UTF8StringHandle pchValue, InteropHelp.UTF8StringHandle pchPath, uint nExpires, [MarshalAs(UnmanagedType.I1)] bool bSecure, [MarshalAs(UnmanagedType.I1)] bool bHTTPOnly);
+		public static extern void ISteamHTMLSurface_SetCookie(InteropHelp.UTF8StringHandle Hostname, InteropHelp.UTF8StringHandle Key, InteropHelp.UTF8StringHandle Value, InteropHelp.UTF8StringHandle Path, uint nExpires, [MarshalAs(UnmanagedType.I1)] bool bSecure, [MarshalAs(UnmanagedType.I1)] bool bHTTPOnly);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern void ISteamHTMLSurface_SetPageScaleFactor(HHTMLBrowser unBrowserHandle, float flZoom, int nPointX, int nPointY);
@@ -973,11 +973,11 @@ namespace Steamworks {
 		public static extern void ISteamHTMLSurface_JSDialogResponse(HHTMLBrowser unBrowserHandle, [MarshalAs(UnmanagedType.I1)] bool bResult);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern void ISteamHTMLSurface_FileLoadDialogResponse(HHTMLBrowser unBrowserHandle, IntPtr pchSelectedFiles);
+		public static extern void ISteamHTMLSurface_FileLoadDialogResponse(HHTMLBrowser unBrowserHandle, IntPtr SelectedFiles);
 #endregion
 #region SteamHTTP
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern uint ISteamHTTP_CreateHTTPRequest(EhttpMethod eHTTPRequestMethod, InteropHelp.UTF8StringHandle pchAbsoluteURL);
+		public static extern uint ISteamHTTP_CreateHTTPRequest(EhttpMethod eHTTPRequestMethod, InteropHelp.UTF8StringHandle AbsoluteURL);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
@@ -989,11 +989,11 @@ namespace Steamworks {
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamHTTP_SetHTTPRequestHeaderValue(HTTPRequestHandle hRequest, InteropHelp.UTF8StringHandle pchHeaderName, InteropHelp.UTF8StringHandle pchHeaderValue);
+		public static extern bool ISteamHTTP_SetHTTPRequestHeaderValue(HTTPRequestHandle hRequest, InteropHelp.UTF8StringHandle HeaderName, InteropHelp.UTF8StringHandle HeaderValue);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamHTTP_SetHTTPRequestGetOrPostParameter(HTTPRequestHandle hRequest, InteropHelp.UTF8StringHandle pchParamName, InteropHelp.UTF8StringHandle pchParamValue);
+		public static extern bool ISteamHTTP_SetHTTPRequestGetOrPostParameter(HTTPRequestHandle hRequest, InteropHelp.UTF8StringHandle ParamName, InteropHelp.UTF8StringHandle ParamValue);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
@@ -1013,11 +1013,11 @@ namespace Steamworks {
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamHTTP_GetHTTPResponseHeaderSize(HTTPRequestHandle hRequest, InteropHelp.UTF8StringHandle pchHeaderName, out uint unResponseHeaderSize);
+		public static extern bool ISteamHTTP_GetHTTPResponseHeaderSize(HTTPRequestHandle hRequest, InteropHelp.UTF8StringHandle HeaderName, out uint unResponseHeaderSize);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamHTTP_GetHTTPResponseHeaderValue(HTTPRequestHandle hRequest, InteropHelp.UTF8StringHandle pchHeaderName, [In, Out] byte[] pHeaderValueBuffer, uint unBufferSize);
+		public static extern bool ISteamHTTP_GetHTTPResponseHeaderValue(HTTPRequestHandle hRequest, InteropHelp.UTF8StringHandle HeaderName, [In, Out] byte[] pHeaderValueBuffer, uint unBufferSize);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
@@ -1041,7 +1041,7 @@ namespace Steamworks {
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamHTTP_SetHTTPRequestRawPostBody(HTTPRequestHandle hRequest, InteropHelp.UTF8StringHandle pchContentType, [In, Out] byte[] pubBody, uint unBodyLen);
+		public static extern bool ISteamHTTP_SetHTTPRequestRawPostBody(HTTPRequestHandle hRequest, InteropHelp.UTF8StringHandle ContentType, [In, Out] byte[] pubBody, uint unBodyLen);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern uint ISteamHTTP_CreateCookieContainer([MarshalAs(UnmanagedType.I1)] bool bAllowResponsesToModify);
@@ -1052,7 +1052,7 @@ namespace Steamworks {
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamHTTP_SetCookie(HTTPCookieContainerHandle hCookieContainer, InteropHelp.UTF8StringHandle pchHost, InteropHelp.UTF8StringHandle pchUrl, InteropHelp.UTF8StringHandle pchCookie);
+		public static extern bool ISteamHTTP_SetCookie(HTTPCookieContainerHandle hCookieContainer, InteropHelp.UTF8StringHandle Host, InteropHelp.UTF8StringHandle Url, InteropHelp.UTF8StringHandle Cookie);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
@@ -1060,7 +1060,7 @@ namespace Steamworks {
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamHTTP_SetHTTPRequestUserAgentInfo(HTTPRequestHandle hRequest, InteropHelp.UTF8StringHandle pchUserAgentInfo);
+		public static extern bool ISteamHTTP_SetHTTPRequestUserAgentInfo(HTTPRequestHandle hRequest, InteropHelp.UTF8StringHandle UserAgentInfo);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
@@ -1098,7 +1098,7 @@ namespace Steamworks {
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamInventory_GetItemsByID(out SteamInventoryResult pResultHandle, [In, Out] SteamItemInstanceID[] pInstanceIDs, uint unCountInstanceIDs);
+		public static extern bool ISteamInventory_GetItemsByID(out SteamInventoryResult pResultHandle, [In, Out] SteamItemInstanceId[] pInstanceIDs, uint unCountInstanceIDs);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
@@ -1126,15 +1126,15 @@ namespace Steamworks {
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamInventory_ConsumeItem(out SteamInventoryResult pResultHandle, SteamItemInstanceID itemConsume, uint unQuantity);
+		public static extern bool ISteamInventory_ConsumeItem(out SteamInventoryResult pResultHandle, SteamItemInstanceId itemConsume, uint unQuantity);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamInventory_ExchangeItems(out SteamInventoryResult pResultHandle, [In, Out] SteamItemDef[] pArrayGenerate, [In, Out] uint[] punArrayGenerateQuantity, uint unArrayGenerateLength, [In, Out] SteamItemInstanceID[] pArrayDestroy, [In, Out] uint[] punArrayDestroyQuantity, uint unArrayDestroyLength);
+		public static extern bool ISteamInventory_ExchangeItems(out SteamInventoryResult pResultHandle, [In, Out] SteamItemDef[] pArrayGenerate, [In, Out] uint[] punArrayGenerateQuantity, uint unArrayGenerateLength, [In, Out] SteamItemInstanceId[] pArrayDestroy, [In, Out] uint[] punArrayDestroyQuantity, uint unArrayDestroyLength);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamInventory_TransferItemQuantity(out SteamInventoryResult pResultHandle, SteamItemInstanceID itemIdSource, uint unQuantity, SteamItemInstanceID itemIdDest);
+		public static extern bool ISteamInventory_TransferItemQuantity(out SteamInventoryResult pResultHandle, SteamItemInstanceId itemIdSource, uint unQuantity, SteamItemInstanceId itemIdDest);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern void ISteamInventory_SendItemDropHeartbeat();
@@ -1145,7 +1145,7 @@ namespace Steamworks {
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamInventory_TradeItems(out SteamInventoryResult pResultHandle, SteamId steamIDTradePartner, [In, Out] SteamItemInstanceID[] pArrayGive, [In, Out] uint[] pArrayGiveQuantity, uint nArrayGiveLength, [In, Out] SteamItemInstanceID[] pArrayGet, [In, Out] uint[] pArrayGetQuantity, uint nArrayGetLength);
+		public static extern bool ISteamInventory_TradeItems(out SteamInventoryResult pResultHandle, SteamId steamIDTradePartner, [In, Out] SteamItemInstanceId[] pArrayGive, [In, Out] uint[] pArrayGiveQuantity, uint nArrayGiveLength, [In, Out] SteamItemInstanceId[] pArrayGet, [In, Out] uint[] pArrayGetQuantity, uint nArrayGetLength);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
@@ -1157,7 +1157,7 @@ namespace Steamworks {
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamInventory_GetItemDefinitionProperty(SteamItemDef iDefinition, InteropHelp.UTF8StringHandle pchPropertyName, IntPtr pchValueBuffer, ref uint punValueBufferSize);
+		public static extern bool ISteamInventory_GetItemDefinitionProperty(SteamItemDef iDefinition, InteropHelp.UTF8StringHandle PropertyName, IntPtr ValueBuffer, ref uint punValueBufferSize);
 #endregion
 #region SteamMatchmaking
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
@@ -1178,13 +1178,13 @@ namespace Steamworks {
 		public static extern ulong ISteamMatchmaking_RequestLobbyList();
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern void ISteamMatchmaking_AddRequestLobbyListStringFilter(InteropHelp.UTF8StringHandle pchKeyToMatch, InteropHelp.UTF8StringHandle pchValueToMatch, ELobbyComparison eComparisonType);
+		public static extern void ISteamMatchmaking_AddRequestLobbyListStringFilter(InteropHelp.UTF8StringHandle KeyToMatch, InteropHelp.UTF8StringHandle ValueToMatch, ELobbyComparison eComparisonType);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern void ISteamMatchmaking_AddRequestLobbyListNumericalFilter(InteropHelp.UTF8StringHandle pchKeyToMatch, int nValueToMatch, ELobbyComparison eComparisonType);
+		public static extern void ISteamMatchmaking_AddRequestLobbyListNumericalFilter(InteropHelp.UTF8StringHandle KeyToMatch, int nValueToMatch, ELobbyComparison eComparisonType);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern void ISteamMatchmaking_AddRequestLobbyListNearValueFilter(InteropHelp.UTF8StringHandle pchKeyToMatch, int nValueToBeCloseTo);
+		public static extern void ISteamMatchmaking_AddRequestLobbyListNearValueFilter(InteropHelp.UTF8StringHandle KeyToMatch, int nValueToBeCloseTo);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern void ISteamMatchmaking_AddRequestLobbyListFilterSlotsAvailable(int nSlotsAvailable);
@@ -1221,28 +1221,28 @@ namespace Steamworks {
 		public static extern ulong ISteamMatchmaking_GetLobbyMemberByIndex(SteamId steamIDLobby, int iMember);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern IntPtr ISteamMatchmaking_GetLobbyData(SteamId steamIDLobby, InteropHelp.UTF8StringHandle pchKey);
+		public static extern IntPtr ISteamMatchmaking_GetLobbyData(SteamId steamIDLobby, InteropHelp.UTF8StringHandle Key);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamMatchmaking_SetLobbyData(SteamId steamIDLobby, InteropHelp.UTF8StringHandle pchKey, InteropHelp.UTF8StringHandle pchValue);
+		public static extern bool ISteamMatchmaking_SetLobbyData(SteamId steamIDLobby, InteropHelp.UTF8StringHandle Key, InteropHelp.UTF8StringHandle Value);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern int ISteamMatchmaking_GetLobbyDataCount(SteamId steamIDLobby);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamMatchmaking_GetLobbyDataByIndex(SteamId steamIDLobby, int iLobbyData, IntPtr pchKey, int KeyBufferSize, IntPtr pchValue, int ValueBufferSize);
+		public static extern bool ISteamMatchmaking_GetLobbyDataByIndex(SteamId steamIDLobby, int iLobbyData, IntPtr Key, int KeyBufferSize, IntPtr Value, int ValueBufferSize);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamMatchmaking_DeleteLobbyData(SteamId steamIDLobby, InteropHelp.UTF8StringHandle pchKey);
+		public static extern bool ISteamMatchmaking_DeleteLobbyData(SteamId steamIDLobby, InteropHelp.UTF8StringHandle Key);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern IntPtr ISteamMatchmaking_GetLobbyMemberData(SteamId steamIDLobby, SteamId steamIDUser, InteropHelp.UTF8StringHandle pchKey);
+		public static extern IntPtr ISteamMatchmaking_GetLobbyMemberData(SteamId steamIDLobby, SteamId userId, InteropHelp.UTF8StringHandle Key);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern void ISteamMatchmaking_SetLobbyMemberData(SteamId steamIDLobby, InteropHelp.UTF8StringHandle pchKey, InteropHelp.UTF8StringHandle pchValue);
+		public static extern void ISteamMatchmaking_SetLobbyMemberData(SteamId steamIDLobby, InteropHelp.UTF8StringHandle Key, InteropHelp.UTF8StringHandle Value);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
@@ -1294,22 +1294,22 @@ namespace Steamworks {
 #endregion
 #region SteamMatchmakingServers
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern IntPtr ISteamMatchmakingServers_RequestInternetServerList(AppId iApp, IntPtr ppchFilters, uint nFilters, IntPtr pRequestServersResponse);
+		public static extern IntPtr ISteamMatchmakingServers_RequestInternetServerList(AppId iApp, IntPtr pFilters, uint nFilters, IntPtr pRequestServersResponse);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern IntPtr ISteamMatchmakingServers_RequestLANServerList(AppId iApp, IntPtr pRequestServersResponse);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern IntPtr ISteamMatchmakingServers_RequestFriendsServerList(AppId iApp, IntPtr ppchFilters, uint nFilters, IntPtr pRequestServersResponse);
+		public static extern IntPtr ISteamMatchmakingServers_RequestFriendsServerList(AppId iApp, IntPtr pFilters, uint nFilters, IntPtr pRequestServersResponse);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern IntPtr ISteamMatchmakingServers_RequestFavoritesServerList(AppId iApp, IntPtr ppchFilters, uint nFilters, IntPtr pRequestServersResponse);
+		public static extern IntPtr ISteamMatchmakingServers_RequestFavoritesServerList(AppId iApp, IntPtr pFilters, uint nFilters, IntPtr pRequestServersResponse);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern IntPtr ISteamMatchmakingServers_RequestHistoryServerList(AppId iApp, IntPtr ppchFilters, uint nFilters, IntPtr pRequestServersResponse);
+		public static extern IntPtr ISteamMatchmakingServers_RequestHistoryServerList(AppId iApp, IntPtr pFilters, uint nFilters, IntPtr pRequestServersResponse);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern IntPtr ISteamMatchmakingServers_RequestSpectatorServerList(AppId iApp, IntPtr ppchFilters, uint nFilters, IntPtr pRequestServersResponse);
+		public static extern IntPtr ISteamMatchmakingServers_RequestSpectatorServerList(AppId iApp, IntPtr pFilters, uint nFilters, IntPtr pRequestServersResponse);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern void ISteamMatchmakingServers_ReleaseRequest(HServerListRequest hServerListRequest);
@@ -1394,7 +1394,7 @@ namespace Steamworks {
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamMusicRemote_SetDisplayName(InteropHelp.UTF8StringHandle pchDisplayName);
+		public static extern bool ISteamMusicRemote_SetDisplayName(InteropHelp.UTF8StringHandle DisplayName);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
@@ -1450,7 +1450,7 @@ namespace Steamworks {
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamMusicRemote_UpdateCurrentEntryText(InteropHelp.UTF8StringHandle pchText);
+		public static extern bool ISteamMusicRemote_UpdateCurrentEntryText(InteropHelp.UTF8StringHandle Text);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
@@ -1474,7 +1474,7 @@ namespace Steamworks {
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamMusicRemote_SetQueueEntry(int nID, int nPosition, InteropHelp.UTF8StringHandle pchEntryText);
+		public static extern bool ISteamMusicRemote_SetQueueEntry(int nID, int nPosition, InteropHelp.UTF8StringHandle EntryText);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
@@ -1494,7 +1494,7 @@ namespace Steamworks {
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamMusicRemote_SetPlaylistEntry(int nID, int nPosition, InteropHelp.UTF8StringHandle pchEntryText);
+		public static extern bool ISteamMusicRemote_SetPlaylistEntry(int nID, int nPosition, InteropHelp.UTF8StringHandle EntryText);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
@@ -1591,16 +1591,16 @@ namespace Steamworks {
 #region SteamRemoteStorage
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamRemoteStorage_FileWrite(InteropHelp.UTF8StringHandle pchFile, [In, Out] byte[] pvData, int Data);
+		public static extern bool ISteamRemoteStorage_FileWrite(InteropHelp.UTF8StringHandle File, [In, Out] byte[] pvData, int Data);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern int ISteamRemoteStorage_FileRead(InteropHelp.UTF8StringHandle pchFile, [In, Out] byte[] pvData, int DataToRead);
+		public static extern int ISteamRemoteStorage_FileRead(InteropHelp.UTF8StringHandle File, [In, Out] byte[] pvData, int DataToRead);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern ulong ISteamRemoteStorage_FileWriteAsync(InteropHelp.UTF8StringHandle pchFile, [In, Out] byte[] pvData, uint Data);
+		public static extern ulong ISteamRemoteStorage_FileWriteAsync(InteropHelp.UTF8StringHandle File, [In, Out] byte[] pvData, uint Data);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern ulong ISteamRemoteStorage_FileReadAsync(InteropHelp.UTF8StringHandle pchFile, uint nOffset, uint ToRead);
+		public static extern ulong ISteamRemoteStorage_FileReadAsync(InteropHelp.UTF8StringHandle File, uint nOffset, uint ToRead);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
@@ -1608,21 +1608,21 @@ namespace Steamworks {
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamRemoteStorage_FileForget(InteropHelp.UTF8StringHandle pchFile);
+		public static extern bool ISteamRemoteStorage_FileForget(InteropHelp.UTF8StringHandle File);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamRemoteStorage_FileDelete(InteropHelp.UTF8StringHandle pchFile);
+		public static extern bool ISteamRemoteStorage_FileDelete(InteropHelp.UTF8StringHandle File);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern ulong ISteamRemoteStorage_FileShare(InteropHelp.UTF8StringHandle pchFile);
+		public static extern ulong ISteamRemoteStorage_FileShare(InteropHelp.UTF8StringHandle File);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamRemoteStorage_SetSyncPlatforms(InteropHelp.UTF8StringHandle pchFile, ERemoteStoragePlatform eRemoteStoragePlatform);
+		public static extern bool ISteamRemoteStorage_SetSyncPlatforms(InteropHelp.UTF8StringHandle File, ERemoteStoragePlatform eRemoteStoragePlatform);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern ulong ISteamRemoteStorage_FileWriteStreamOpen(InteropHelp.UTF8StringHandle pchFile);
+		public static extern ulong ISteamRemoteStorage_FileWriteStreamOpen(InteropHelp.UTF8StringHandle File);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
@@ -1638,20 +1638,20 @@ namespace Steamworks {
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamRemoteStorage_FileExists(InteropHelp.UTF8StringHandle pchFile);
+		public static extern bool ISteamRemoteStorage_FileExists(InteropHelp.UTF8StringHandle File);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamRemoteStorage_FilePersisted(InteropHelp.UTF8StringHandle pchFile);
+		public static extern bool ISteamRemoteStorage_FilePersisted(InteropHelp.UTF8StringHandle File);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern int ISteamRemoteStorage_GetFileSize(InteropHelp.UTF8StringHandle pchFile);
+		public static extern int ISteamRemoteStorage_GetFileSize(InteropHelp.UTF8StringHandle File);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern long ISteamRemoteStorage_GetFileTimestamp(InteropHelp.UTF8StringHandle pchFile);
+		public static extern long ISteamRemoteStorage_GetFileTimestamp(InteropHelp.UTF8StringHandle File);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern ERemoteStoragePlatform ISteamRemoteStorage_GetSyncPlatforms(InteropHelp.UTF8StringHandle pchFile);
+		public static extern ERemoteStoragePlatform ISteamRemoteStorage_GetSyncPlatforms(InteropHelp.UTF8StringHandle File);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern int ISteamRemoteStorage_GetFileCount();
@@ -1699,11 +1699,11 @@ namespace Steamworks {
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamRemoteStorage_FileFetch(InteropHelp.UTF8StringHandle pchFile);
+		public static extern bool ISteamRemoteStorage_FileFetch(InteropHelp.UTF8StringHandle File);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamRemoteStorage_FilePersist(InteropHelp.UTF8StringHandle pchFile);
+		public static extern bool ISteamRemoteStorage_FilePersist(InteropHelp.UTF8StringHandle File);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
@@ -1718,26 +1718,26 @@ namespace Steamworks {
 		public static extern bool ISteamRemoteStorage_ResetFileRequestState();
 #endif
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern ulong ISteamRemoteStorage_PublishWorkshopFile(InteropHelp.UTF8StringHandle pchFile, InteropHelp.UTF8StringHandle pchPreviewFile, AppId nConsumerAppId, InteropHelp.UTF8StringHandle pchTitle, InteropHelp.UTF8StringHandle pchDescription, ERemoteStoragePublishedFileVisibility eVisibility, IntPtr pTags, EWorkshopFileType eWorkshopFileType);
+		public static extern ulong ISteamRemoteStorage_PublishWorkshopFile(InteropHelp.UTF8StringHandle File, InteropHelp.UTF8StringHandle PreviewFile, AppId nConsumerAppId, InteropHelp.UTF8StringHandle Title, InteropHelp.UTF8StringHandle Description, ERemoteStoragePublishedFileVisibility eVisibility, IntPtr pTags, EWorkshopFileType eWorkshopFileType);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern ulong ISteamRemoteStorage_CreatePublishedFileUpdateRequest(PublishedFileId unPublishedFileId);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamRemoteStorage_UpdatePublishedFileFile(PublishedFileUpdateHandle updateHandle, InteropHelp.UTF8StringHandle pchFile);
+		public static extern bool ISteamRemoteStorage_UpdatePublishedFileFile(PublishedFileUpdateHandle updateHandle, InteropHelp.UTF8StringHandle File);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamRemoteStorage_UpdatePublishedFilePreviewFile(PublishedFileUpdateHandle updateHandle, InteropHelp.UTF8StringHandle pchPreviewFile);
+		public static extern bool ISteamRemoteStorage_UpdatePublishedFilePreviewFile(PublishedFileUpdateHandle updateHandle, InteropHelp.UTF8StringHandle PreviewFile);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamRemoteStorage_UpdatePublishedFileTitle(PublishedFileUpdateHandle updateHandle, InteropHelp.UTF8StringHandle pchTitle);
+		public static extern bool ISteamRemoteStorage_UpdatePublishedFileTitle(PublishedFileUpdateHandle updateHandle, InteropHelp.UTF8StringHandle Title);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamRemoteStorage_UpdatePublishedFileDescription(PublishedFileUpdateHandle updateHandle, InteropHelp.UTF8StringHandle pchDescription);
+		public static extern bool ISteamRemoteStorage_UpdatePublishedFileDescription(PublishedFileUpdateHandle updateHandle, InteropHelp.UTF8StringHandle Description);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
@@ -1770,7 +1770,7 @@ namespace Steamworks {
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamRemoteStorage_UpdatePublishedFileSetChangeDescription(PublishedFileUpdateHandle updateHandle, InteropHelp.UTF8StringHandle pchChangeDescription);
+		public static extern bool ISteamRemoteStorage_UpdatePublishedFileSetChangeDescription(PublishedFileUpdateHandle updateHandle, InteropHelp.UTF8StringHandle ChangeDescription);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern ulong ISteamRemoteStorage_GetPublishedItemVoteDetails(PublishedFileId unPublishedFileId);
@@ -1785,7 +1785,7 @@ namespace Steamworks {
 		public static extern ulong ISteamRemoteStorage_EnumerateUserSharedWorkshopFiles(SteamId steamId, uint unStartIndex, IntPtr pRequiredTags, IntPtr pExcludedTags);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern ulong ISteamRemoteStorage_PublishVideo(EWorkshopVideoProvider eVideoProvider, InteropHelp.UTF8StringHandle pchVideoAccount, InteropHelp.UTF8StringHandle pchVideoIdentifier, InteropHelp.UTF8StringHandle pchPreviewFile, AppId nConsumerAppId, InteropHelp.UTF8StringHandle pchTitle, InteropHelp.UTF8StringHandle pchDescription, ERemoteStoragePublishedFileVisibility eVisibility, IntPtr pTags);
+		public static extern ulong ISteamRemoteStorage_PublishVideo(EWorkshopVideoProvider eVideoProvider, InteropHelp.UTF8StringHandle VideoAccount, InteropHelp.UTF8StringHandle VideoIdentifier, InteropHelp.UTF8StringHandle PreviewFile, AppId nConsumerAppId, InteropHelp.UTF8StringHandle Title, InteropHelp.UTF8StringHandle Description, ERemoteStoragePublishedFileVisibility eVisibility, IntPtr pTags);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern ulong ISteamRemoteStorage_SetUserPublishedFileAction(PublishedFileId unPublishedFileId, EWorkshopFileAction eAction);
@@ -1797,14 +1797,14 @@ namespace Steamworks {
 		public static extern ulong ISteamRemoteStorage_EnumeratePublishedWorkshopFiles(EWorkshopEnumerationType eEnumerationType, uint unStartIndex, uint unCount, uint unDays, IntPtr pTags, IntPtr pUserTags);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern ulong ISteamRemoteStorage_UGCDownloadToLocation(UGCHandle hContent, InteropHelp.UTF8StringHandle pchLocation, uint unPriority);
+		public static extern ulong ISteamRemoteStorage_UGCDownloadToLocation(UGCHandle hContent, InteropHelp.UTF8StringHandle Location, uint unPriority);
 #endregion
 #region SteamScreenshots
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern uint ISteamScreenshots_WriteScreenshot([In, Out] byte[] pubRGB, uint RGB, int nWidth, int nHeight);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern uint ISteamScreenshots_AddScreenshotToLibrary(InteropHelp.UTF8StringHandle pchFilename, InteropHelp.UTF8StringHandle pchThumbnailFilename, int nWidth, int nHeight);
+		public static extern uint ISteamScreenshots_AddScreenshotToLibrary(InteropHelp.UTF8StringHandle Filename, InteropHelp.UTF8StringHandle ThumbnailFilename, int nWidth, int nHeight);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern void ISteamScreenshots_TriggerScreenshot();
@@ -1814,7 +1814,7 @@ namespace Steamworks {
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamScreenshots_SetLocation(ScreenshotHandle hScreenshot, InteropHelp.UTF8StringHandle pchLocation);
+		public static extern bool ISteamScreenshots_SetLocation(ScreenshotHandle hScreenshot, InteropHelp.UTF8StringHandle Location);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
@@ -1826,7 +1826,7 @@ namespace Steamworks {
 #endregion
 #region SteamUGC
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern ulong ISteamUGC_CreateQueryUserUGCRequest(AccountID accountId, UserUGCList listType, MatchingUGCType eMatchingUGCType, UGCListSortOrder eSortOrder, AppId nCreatorAppID, AppId nConsumerAppID, uint unPage);
+		public static extern ulong ISteamUGC_CreateQueryUserUGCRequest(AccountId accountId, UserUGCList listType, MatchingUGCType eMatchingUGCType, UGCListSortOrder eSortOrder, AppId nCreatorAppID, AppId nConsumerAppID, uint unPage);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern ulong ISteamUGC_CreateQueryAllUGCRequest(UGCQuery eQueryType, MatchingUGCType eMatchingeMatchingUGCTypeFileType, AppId nCreatorAppID, AppId nConsumerAppID, uint unPage);
@@ -1843,11 +1843,11 @@ namespace Steamworks {
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamUGC_GetQueryUGCPreviewURL(UGCQueryHandle handle, uint index, IntPtr pchURL, uint URLSize);
+		public static extern bool ISteamUGC_GetQueryUGCPreviewURL(UGCQueryHandle handle, uint index, IntPtr URL, uint URLSize);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamUGC_GetQueryUGCMetadata(UGCQueryHandle handle, uint index, IntPtr pchMetadata, uint Metadatasize);
+		public static extern bool ISteamUGC_GetQueryUGCMetadata(UGCQueryHandle handle, uint index, IntPtr Metadata, uint Metadatasize);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
@@ -1862,14 +1862,14 @@ namespace Steamworks {
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamUGC_GetQueryUGCAdditionalPreview(UGCQueryHandle handle, uint index, uint previewIndex, IntPtr pchURLOrVideoID, uint URLSize, out bool pbIsImage);
+		public static extern bool ISteamUGC_GetQueryUGCAdditionalPreview(UGCQueryHandle handle, uint index, uint previewIndex, IntPtr URLOrVideoID, uint URLSize, out bool pbIsImage);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern uint ISteamUGC_GetQueryUGCNumKeyValueTags(UGCQueryHandle handle, uint index);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamUGC_GetQueryUGCKeyValueTag(UGCQueryHandle handle, uint index, uint keyValueTagIndex, IntPtr pchKey, uint KeySize, IntPtr pchValue, uint ValueSize);
+		public static extern bool ISteamUGC_GetQueryUGCKeyValueTag(UGCQueryHandle handle, uint index, uint keyValueTagIndex, IntPtr Key, uint KeySize, IntPtr Value, uint ValueSize);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
@@ -1909,7 +1909,7 @@ namespace Steamworks {
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamUGC_SetLanguage(UGCQueryHandle handle, InteropHelp.UTF8StringHandle pchLanguage);
+		public static extern bool ISteamUGC_SetLanguage(UGCQueryHandle handle, InteropHelp.UTF8StringHandle Language);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
@@ -1946,19 +1946,19 @@ namespace Steamworks {
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamUGC_SetItemTitle(UGCUpdateHandle handle, InteropHelp.UTF8StringHandle pchTitle);
+		public static extern bool ISteamUGC_SetItemTitle(UGCUpdateHandle handle, InteropHelp.UTF8StringHandle Title);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamUGC_SetItemDescription(UGCUpdateHandle handle, InteropHelp.UTF8StringHandle pchDescription);
+		public static extern bool ISteamUGC_SetItemDescription(UGCUpdateHandle handle, InteropHelp.UTF8StringHandle Description);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamUGC_SetItemUpdateLanguage(UGCUpdateHandle handle, InteropHelp.UTF8StringHandle pchLanguage);
+		public static extern bool ISteamUGC_SetItemUpdateLanguage(UGCUpdateHandle handle, InteropHelp.UTF8StringHandle Language);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamUGC_SetItemMetadata(UGCUpdateHandle handle, InteropHelp.UTF8StringHandle pchMetaData);
+		public static extern bool ISteamUGC_SetItemMetadata(UGCUpdateHandle handle, InteropHelp.UTF8StringHandle MetaData);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
@@ -1978,14 +1978,14 @@ namespace Steamworks {
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamUGC_RemoveItemKeyValueTags(UGCUpdateHandle handle, InteropHelp.UTF8StringHandle pchKey);
+		public static extern bool ISteamUGC_RemoveItemKeyValueTags(UGCUpdateHandle handle, InteropHelp.UTF8StringHandle Key);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamUGC_AddItemKeyValueTag(UGCUpdateHandle handle, InteropHelp.UTF8StringHandle pchKey, InteropHelp.UTF8StringHandle pchValue);
+		public static extern bool ISteamUGC_AddItemKeyValueTag(UGCUpdateHandle handle, InteropHelp.UTF8StringHandle Key, InteropHelp.UTF8StringHandle Value);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern ulong ISteamUGC_SubmitItemUpdate(UGCUpdateHandle handle, InteropHelp.UTF8StringHandle pchChangeNote);
+		public static extern ulong ISteamUGC_SubmitItemUpdate(UGCUpdateHandle handle, InteropHelp.UTF8StringHandle ChangeNote);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern EItemUpdateStatus ISteamUGC_GetItemUpdateProgress(UGCUpdateHandle handle, out ulong punBytesProcessed, out ulong punBytesTotal);
@@ -2019,7 +2019,7 @@ namespace Steamworks {
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamUGC_GetItemInstallInfo(PublishedFileId fileId, out ulong punSizeOnDisk, IntPtr pchFolder, uint FolderSize, out uint punTimeStamp);
+		public static extern bool ISteamUGC_GetItemInstallInfo(PublishedFileId fileId, out ulong punSizeOnDisk, IntPtr Folder, uint FolderSize, out uint punTimeStamp);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
@@ -2038,7 +2038,7 @@ namespace Steamworks {
 #endregion
 #region SteamUnifiedMessages
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern ulong ISteamUnifiedMessages_SendMethod(InteropHelp.UTF8StringHandle pchServiceMethod, [In, Out] byte[] pRequestBuffer, uint unRequestBufferSize, ulong unContext);
+		public static extern ulong ISteamUnifiedMessages_SendMethod(InteropHelp.UTF8StringHandle ServiceMethod, [In, Out] byte[] pRequestBuffer, uint unRequestBufferSize, ulong unContext);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
@@ -2054,7 +2054,7 @@ namespace Steamworks {
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamUnifiedMessages_SendNotification(InteropHelp.UTF8StringHandle pchServiceNotification, [In, Out] byte[] pNotificationBuffer, uint unNotificationBufferSize);
+		public static extern bool ISteamUnifiedMessages_SendNotification(InteropHelp.UTF8StringHandle ServiceNotification, [In, Out] byte[] pNotificationBuffer, uint unNotificationBufferSize);
 #endregion
 #region SteamUser
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
@@ -2074,12 +2074,8 @@ namespace Steamworks {
 		public static extern void ISteamUser_TerminateGameConnection(uint serverIp, ushort usPortServer);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern void ISteamUser_TrackAppUsageEvent(CGameID gameId, int eAppUsageEvent, InteropHelp.UTF8StringHandle pchExtraInfo);
-
-		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamUser_GetUserDataFolder(IntPtr pchBuffer, int Buffer);
-
+		public static extern void ISteamUser_TrackAppUsageEvent(GameId gameId, int eAppUsageEvent, InteropHelp.UTF8StringHandle ExtraInfo);
+        
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern void ISteamUser_StartVoiceRecording();
 
@@ -2121,7 +2117,7 @@ namespace Steamworks {
 		public static extern void ISteamUser_AdvertiseGame(SteamId steamIDGameServer, uint serverIp, ushort usPortServer);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern ulong ISteamUser_RequestEncryptedAppTicket([In, Out] byte[] pDataToInclude, int cbDataToInclude);
+		public static extern ulong ISteamUser_RequestEncryptedAppTicket([In, Out] byte[] dataToInclude, int cbDataToInclude);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
@@ -2134,13 +2130,13 @@ namespace Steamworks {
 		public static extern int ISteamUser_GetPlayerSteamLevel();
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern ulong ISteamUser_RequestStoreAuthURL(InteropHelp.UTF8StringHandle pchRedirectURL);
+		public static extern ulong ISteamUser_RequestStoreAuthURL(InteropHelp.UTF8StringHandle RedirectURL);
 #if _PS3
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern void ISteamUser_LogOn([MarshalAs(UnmanagedType.I1)] bool bInteractive);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern void ISteamUser_LogOnAndLinkSteamAccountToPSN([MarshalAs(UnmanagedType.I1)] bool bInteractive, InteropHelp.UTF8StringHandle pchUserName, InteropHelp.UTF8StringHandle pchPassword);
+		public static extern void ISteamUser_LogOnAndLinkSteamAccountToPSN([MarshalAs(UnmanagedType.I1)] bool bInteractive, InteropHelp.UTF8StringHandle UserName, InteropHelp.UTF8StringHandle Password);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern void ISteamUser_LogOnAndCreateNewSteamAccountIfNeeded([MarshalAs(UnmanagedType.I1)] bool bInteractive);
@@ -2156,11 +2152,11 @@ namespace Steamworks {
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamUserStats_GetStat(InteropHelp.UTF8StringHandle name, out int pData);
+		public static extern bool ISteamUserStats_GetStat(InteropHelp.UTF8StringHandle name, out int data);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamUserStats_GetStat_(InteropHelp.UTF8StringHandle name, out float pData);
+		public static extern bool ISteamUserStats_GetStat_(InteropHelp.UTF8StringHandle name, out float data);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
@@ -2176,7 +2172,7 @@ namespace Steamworks {
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamUserStats_GetAchievement(InteropHelp.UTF8StringHandle name, out bool pbAchieved);
+		public static extern bool ISteamUserStats_GetAchievement(InteropHelp.UTF8StringHandle name, out bool achieved);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
@@ -2188,7 +2184,7 @@ namespace Steamworks {
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamUserStats_GetAchievementAndUnlockTime(InteropHelp.UTF8StringHandle name, out bool pbAchieved, out uint punUnlockTime);
+		public static extern bool ISteamUserStats_GetAchievementAndUnlockTime(InteropHelp.UTF8StringHandle name, out bool achieved, out uint punUnlockTime);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
@@ -2198,7 +2194,7 @@ namespace Steamworks {
 		public static extern int ISteamUserStats_GetAchievementIcon(InteropHelp.UTF8StringHandle name);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern IntPtr ISteamUserStats_GetAchievementDisplayAttribute(InteropHelp.UTF8StringHandle name, InteropHelp.UTF8StringHandle pchKey);
+		public static extern IntPtr ISteamUserStats_GetAchievementDisplayAttribute(InteropHelp.UTF8StringHandle name, InteropHelp.UTF8StringHandle Key);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
@@ -2211,33 +2207,33 @@ namespace Steamworks {
 		public static extern IntPtr ISteamUserStats_GetAchievementName(uint iAchievement);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern ulong ISteamUserStats_RequestUserStats(SteamId steamIDUser);
+		public static extern ulong ISteamUserStats_RequestUserStats(SteamId userId);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamUserStats_GetUserStat(SteamId steamIDUser, InteropHelp.UTF8StringHandle name, out int pData);
+		public static extern bool ISteamUserStats_GetUserStat(SteamId userId, InteropHelp.UTF8StringHandle name, out int data);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamUserStats_GetUserStat_(SteamId steamIDUser, InteropHelp.UTF8StringHandle name, out float pData);
+		public static extern bool ISteamUserStats_GetUserStat_(SteamId userId, InteropHelp.UTF8StringHandle name, out float data);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamUserStats_GetUserAchievement(SteamId steamIDUser, InteropHelp.UTF8StringHandle name, out bool pbAchieved);
+		public static extern bool ISteamUserStats_GetUserAchievement(SteamId userId, InteropHelp.UTF8StringHandle name, out bool achieved);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamUserStats_GetUserAchievementAndUnlockTime(SteamId steamIDUser, InteropHelp.UTF8StringHandle name, out bool pbAchieved, out uint punUnlockTime);
+		public static extern bool ISteamUserStats_GetUserAchievementAndUnlockTime(SteamId userId, InteropHelp.UTF8StringHandle name, out bool achieved, out uint punUnlockTime);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamUserStats_ResetAllStats([MarshalAs(UnmanagedType.I1)] bool bAchievementsToo);
+		public static extern bool ISteamUserStats_ResetAllStats([MarshalAs(UnmanagedType.I1)] bool achievementsToo);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern ulong ISteamUserStats_FindOrCreateLeaderboard(InteropHelp.UTF8StringHandle pchLeaderboardName, ELeaderboardSortMethod eLeaderboardSortMethod, ELeaderboardDisplayType eLeaderboardDisplayType);
+		public static extern ulong ISteamUserStats_FindOrCreateLeaderboard(InteropHelp.UTF8StringHandle LeaderboardName, ELeaderboardSortMethod eLeaderboardSortMethod, ELeaderboardDisplayType eLeaderboardDisplayType);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern ulong ISteamUserStats_FindLeaderboard(InteropHelp.UTF8StringHandle pchLeaderboardName);
+		public static extern ulong ISteamUserStats_FindLeaderboard(InteropHelp.UTF8StringHandle LeaderboardName);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern IntPtr ISteamUserStats_GetLeaderboardName(SteamLeaderboard hSteamLeaderboard);
@@ -2274,10 +2270,10 @@ namespace Steamworks {
 		public static extern ulong ISteamUserStats_RequestGlobalAchievementPercentages();
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern int ISteamUserStats_GetMostAchievedAchievementInfo(IntPtr name, uint unNameBufLen, out float pflPercent, out bool pbAchieved);
+		public static extern int ISteamUserStats_GetMostAchievedAchievementInfo(IntPtr name, uint unNameBufLen, out float pflPercent, out bool achieved);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern int ISteamUserStats_GetNextMostAchievedAchievementInfo(int iIteratorPrevious, IntPtr name, uint unNameBufLen, out float pflPercent, out bool pbAchieved);
+		public static extern int ISteamUserStats_GetNextMostAchievedAchievementInfo(int iIteratorPrevious, IntPtr name, uint unNameBufLen, out float pflPercent, out bool achieved);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
@@ -2288,17 +2284,17 @@ namespace Steamworks {
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamUserStats_GetGlobalStat(InteropHelp.UTF8StringHandle pchStatName, out long pData);
+		public static extern bool ISteamUserStats_GetGlobalStat(InteropHelp.UTF8StringHandle StatName, out long data);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamUserStats_GetGlobalStat_(InteropHelp.UTF8StringHandle pchStatName, out double pData);
+		public static extern bool ISteamUserStats_GetGlobalStat_(InteropHelp.UTF8StringHandle StatName, out double data);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern int ISteamUserStats_GetGlobalStatHistory(InteropHelp.UTF8StringHandle pchStatName, [In, Out] long[] pData, uint Data);
+		public static extern int ISteamUserStats_GetGlobalStatHistory(InteropHelp.UTF8StringHandle StatName, [In, Out] long[] data, uint Data);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern int ISteamUserStats_GetGlobalStatHistory_(InteropHelp.UTF8StringHandle pchStatName, [In, Out] double[] pData, uint Data);
+		public static extern int ISteamUserStats_GetGlobalStatHistory_(InteropHelp.UTF8StringHandle StatName, [In, Out] double[] data, uint Data);
 #if _PS3
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
@@ -2383,14 +2379,10 @@ namespace Steamworks {
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamUtils_ShowGamepadTextInput(EGamepadTextInputMode eInputMode, EGamepadTextInputLineMode eLineInputMode, InteropHelp.UTF8StringHandle pchDescription, uint unCharMax, InteropHelp.UTF8StringHandle pchExistingText);
+		public static extern bool ISteamUtils_ShowGamepadTextInput(EGamepadTextInputMode eInputMode, EGamepadTextInputLineMode eLineInputMode, InteropHelp.UTF8StringHandle Description, uint unCharMax, InteropHelp.UTF8StringHandle ExistingText);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern uint ISteamUtils_GetEnteredGamepadTextLength();
-
-		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamUtils_GetEnteredGamepadTextInput(IntPtr pchText, uint Text);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern IntPtr ISteamUtils_GetSteamUILanguage();
@@ -2412,7 +2404,7 @@ namespace Steamworks {
 #endregion
 #region SteamGameServerHTTP
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern uint ISteamGameServerHTTP_CreateHTTPRequest(EhttpMethod eHTTPRequestMethod, InteropHelp.UTF8StringHandle pchAbsoluteURL);
+		public static extern uint ISteamGameServerHTTP_CreateHTTPRequest(EhttpMethod eHTTPRequestMethod, InteropHelp.UTF8StringHandle AbsoluteURL);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
@@ -2424,11 +2416,11 @@ namespace Steamworks {
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamGameServerHTTP_SetHTTPRequestHeaderValue(HTTPRequestHandle hRequest, InteropHelp.UTF8StringHandle pchHeaderName, InteropHelp.UTF8StringHandle pchHeaderValue);
+		public static extern bool ISteamGameServerHTTP_SetHTTPRequestHeaderValue(HTTPRequestHandle hRequest, InteropHelp.UTF8StringHandle HeaderName, InteropHelp.UTF8StringHandle HeaderValue);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamGameServerHTTP_SetHTTPRequestGetOrPostParameter(HTTPRequestHandle hRequest, InteropHelp.UTF8StringHandle pchParamName, InteropHelp.UTF8StringHandle pchParamValue);
+		public static extern bool ISteamGameServerHTTP_SetHTTPRequestGetOrPostParameter(HTTPRequestHandle hRequest, InteropHelp.UTF8StringHandle ParamName, InteropHelp.UTF8StringHandle ParamValue);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
@@ -2448,11 +2440,11 @@ namespace Steamworks {
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamGameServerHTTP_GetHTTPResponseHeaderSize(HTTPRequestHandle hRequest, InteropHelp.UTF8StringHandle pchHeaderName, out uint unResponseHeaderSize);
+		public static extern bool ISteamGameServerHTTP_GetHTTPResponseHeaderSize(HTTPRequestHandle hRequest, InteropHelp.UTF8StringHandle HeaderName, out uint unResponseHeaderSize);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamGameServerHTTP_GetHTTPResponseHeaderValue(HTTPRequestHandle hRequest, InteropHelp.UTF8StringHandle pchHeaderName, [In, Out] byte[] pHeaderValueBuffer, uint unBufferSize);
+		public static extern bool ISteamGameServerHTTP_GetHTTPResponseHeaderValue(HTTPRequestHandle hRequest, InteropHelp.UTF8StringHandle HeaderName, [In, Out] byte[] pHeaderValueBuffer, uint unBufferSize);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
@@ -2476,7 +2468,7 @@ namespace Steamworks {
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamGameServerHTTP_SetHTTPRequestRawPostBody(HTTPRequestHandle hRequest, InteropHelp.UTF8StringHandle pchContentType, [In, Out] byte[] pubBody, uint unBodyLen);
+		public static extern bool ISteamGameServerHTTP_SetHTTPRequestRawPostBody(HTTPRequestHandle hRequest, InteropHelp.UTF8StringHandle ContentType, [In, Out] byte[] pubBody, uint unBodyLen);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern uint ISteamGameServerHTTP_CreateCookieContainer([MarshalAs(UnmanagedType.I1)] bool bAllowResponsesToModify);
@@ -2487,7 +2479,7 @@ namespace Steamworks {
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamGameServerHTTP_SetCookie(HTTPCookieContainerHandle hCookieContainer, InteropHelp.UTF8StringHandle pchHost, InteropHelp.UTF8StringHandle pchUrl, InteropHelp.UTF8StringHandle pchCookie);
+		public static extern bool ISteamGameServerHTTP_SetCookie(HTTPCookieContainerHandle hCookieContainer, InteropHelp.UTF8StringHandle Host, InteropHelp.UTF8StringHandle Url, InteropHelp.UTF8StringHandle Cookie);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
@@ -2495,7 +2487,7 @@ namespace Steamworks {
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamGameServerHTTP_SetHTTPRequestUserAgentInfo(HTTPRequestHandle hRequest, InteropHelp.UTF8StringHandle pchUserAgentInfo);
+		public static extern bool ISteamGameServerHTTP_SetHTTPRequestUserAgentInfo(HTTPRequestHandle hRequest, InteropHelp.UTF8StringHandle UserAgentInfo);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
@@ -2533,7 +2525,7 @@ namespace Steamworks {
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamGameServerInventory_GetItemsByID(out SteamInventoryResult pResultHandle, [In, Out] SteamItemInstanceID[] pInstanceIDs, uint unCountInstanceIDs);
+		public static extern bool ISteamGameServerInventory_GetItemsByID(out SteamInventoryResult pResultHandle, [In, Out] SteamItemInstanceId[] pInstanceIDs, uint unCountInstanceIDs);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
@@ -2561,15 +2553,15 @@ namespace Steamworks {
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamGameServerInventory_ConsumeItem(out SteamInventoryResult pResultHandle, SteamItemInstanceID itemConsume, uint unQuantity);
+		public static extern bool ISteamGameServerInventory_ConsumeItem(out SteamInventoryResult pResultHandle, SteamItemInstanceId itemConsume, uint unQuantity);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamGameServerInventory_ExchangeItems(out SteamInventoryResult pResultHandle, [In, Out] SteamItemDef[] pArrayGenerate, [In, Out] uint[] punArrayGenerateQuantity, uint unArrayGenerateLength, [In, Out] SteamItemInstanceID[] pArrayDestroy, [In, Out] uint[] punArrayDestroyQuantity, uint unArrayDestroyLength);
+		public static extern bool ISteamGameServerInventory_ExchangeItems(out SteamInventoryResult pResultHandle, [In, Out] SteamItemDef[] pArrayGenerate, [In, Out] uint[] punArrayGenerateQuantity, uint unArrayGenerateLength, [In, Out] SteamItemInstanceId[] pArrayDestroy, [In, Out] uint[] punArrayDestroyQuantity, uint unArrayDestroyLength);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamGameServerInventory_TransferItemQuantity(out SteamInventoryResult pResultHandle, SteamItemInstanceID itemIdSource, uint unQuantity, SteamItemInstanceID itemIdDest);
+		public static extern bool ISteamGameServerInventory_TransferItemQuantity(out SteamInventoryResult pResultHandle, SteamItemInstanceId itemIdSource, uint unQuantity, SteamItemInstanceId itemIdDest);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern void ISteamGameServerInventory_SendItemDropHeartbeat();
@@ -2580,7 +2572,7 @@ namespace Steamworks {
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamGameServerInventory_TradeItems(out SteamInventoryResult pResultHandle, SteamId steamIDTradePartner, [In, Out] SteamItemInstanceID[] pArrayGive, [In, Out] uint[] pArrayGiveQuantity, uint nArrayGiveLength, [In, Out] SteamItemInstanceID[] pArrayGet, [In, Out] uint[] pArrayGetQuantity, uint nArrayGetLength);
+		public static extern bool ISteamGameServerInventory_TradeItems(out SteamInventoryResult pResultHandle, SteamId steamIDTradePartner, [In, Out] SteamItemInstanceId[] pArrayGive, [In, Out] uint[] pArrayGiveQuantity, uint nArrayGiveLength, [In, Out] SteamItemInstanceId[] pArrayGet, [In, Out] uint[] pArrayGetQuantity, uint nArrayGetLength);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
@@ -2592,7 +2584,7 @@ namespace Steamworks {
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamGameServerInventory_GetItemDefinitionProperty(SteamItemDef iDefinition, InteropHelp.UTF8StringHandle pchPropertyName, IntPtr pchValueBuffer, ref uint punValueBufferSize);
+		public static extern bool ISteamGameServerInventory_GetItemDefinitionProperty(SteamItemDef iDefinition, InteropHelp.UTF8StringHandle PropertyName, IntPtr ValueBuffer, ref uint punValueBufferSize);
 #endregion
 #region SteamGameServerNetworking
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
@@ -2680,7 +2672,7 @@ namespace Steamworks {
 #endregion
 #region SteamGameServerUGC
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern ulong ISteamGameServerUGC_CreateQueryUserUGCRequest(AccountID accountId, UserUGCList listType, MatchingUGCType eMatchingUGCType, UGCListSortOrder eSortOrder, AppId nCreatorAppID, AppId nConsumerAppID, uint unPage);
+		public static extern ulong ISteamGameServerUGC_CreateQueryUserUGCRequest(AccountId accountId, UserUGCList listType, MatchingUGCType eMatchingUGCType, UGCListSortOrder eSortOrder, AppId nCreatorAppID, AppId nConsumerAppID, uint unPage);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern ulong ISteamGameServerUGC_CreateQueryAllUGCRequest(UGCQuery eQueryType, MatchingUGCType eMatchingeMatchingUGCTypeFileType, AppId nCreatorAppID, AppId nConsumerAppID, uint unPage);
@@ -2697,11 +2689,11 @@ namespace Steamworks {
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamGameServerUGC_GetQueryUGCPreviewURL(UGCQueryHandle handle, uint index, IntPtr pchURL, uint URLSize);
+		public static extern bool ISteamGameServerUGC_GetQueryUGCPreviewURL(UGCQueryHandle handle, uint index, IntPtr URL, uint URLSize);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamGameServerUGC_GetQueryUGCMetadata(UGCQueryHandle handle, uint index, IntPtr pchMetadata, uint Metadatasize);
+		public static extern bool ISteamGameServerUGC_GetQueryUGCMetadata(UGCQueryHandle handle, uint index, IntPtr Metadata, uint Metadatasize);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
@@ -2716,14 +2708,14 @@ namespace Steamworks {
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamGameServerUGC_GetQueryUGCAdditionalPreview(UGCQueryHandle handle, uint index, uint previewIndex, IntPtr pchURLOrVideoID, uint URLSize, out bool pbIsImage);
+		public static extern bool ISteamGameServerUGC_GetQueryUGCAdditionalPreview(UGCQueryHandle handle, uint index, uint previewIndex, IntPtr URLOrVideoID, uint URLSize, out bool pbIsImage);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern uint ISteamGameServerUGC_GetQueryUGCNumKeyValueTags(UGCQueryHandle handle, uint index);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamGameServerUGC_GetQueryUGCKeyValueTag(UGCQueryHandle handle, uint index, uint keyValueTagIndex, IntPtr pchKey, uint KeySize, IntPtr pchValue, uint ValueSize);
+		public static extern bool ISteamGameServerUGC_GetQueryUGCKeyValueTag(UGCQueryHandle handle, uint index, uint keyValueTagIndex, IntPtr Key, uint KeySize, IntPtr Value, uint ValueSize);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
@@ -2763,7 +2755,7 @@ namespace Steamworks {
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamGameServerUGC_SetLanguage(UGCQueryHandle handle, InteropHelp.UTF8StringHandle pchLanguage);
+		public static extern bool ISteamGameServerUGC_SetLanguage(UGCQueryHandle handle, InteropHelp.UTF8StringHandle Language);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
@@ -2800,19 +2792,19 @@ namespace Steamworks {
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamGameServerUGC_SetItemTitle(UGCUpdateHandle handle, InteropHelp.UTF8StringHandle pchTitle);
+		public static extern bool ISteamGameServerUGC_SetItemTitle(UGCUpdateHandle handle, InteropHelp.UTF8StringHandle Title);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamGameServerUGC_SetItemDescription(UGCUpdateHandle handle, InteropHelp.UTF8StringHandle pchDescription);
+		public static extern bool ISteamGameServerUGC_SetItemDescription(UGCUpdateHandle handle, InteropHelp.UTF8StringHandle Description);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamGameServerUGC_SetItemUpdateLanguage(UGCUpdateHandle handle, InteropHelp.UTF8StringHandle pchLanguage);
+		public static extern bool ISteamGameServerUGC_SetItemUpdateLanguage(UGCUpdateHandle handle, InteropHelp.UTF8StringHandle Language);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamGameServerUGC_SetItemMetadata(UGCUpdateHandle handle, InteropHelp.UTF8StringHandle pchMetaData);
+		public static extern bool ISteamGameServerUGC_SetItemMetadata(UGCUpdateHandle handle, InteropHelp.UTF8StringHandle MetaData);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
@@ -2832,14 +2824,14 @@ namespace Steamworks {
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamGameServerUGC_RemoveItemKeyValueTags(UGCUpdateHandle handle, InteropHelp.UTF8StringHandle pchKey);
+		public static extern bool ISteamGameServerUGC_RemoveItemKeyValueTags(UGCUpdateHandle handle, InteropHelp.UTF8StringHandle Key);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamGameServerUGC_AddItemKeyValueTag(UGCUpdateHandle handle, InteropHelp.UTF8StringHandle pchKey, InteropHelp.UTF8StringHandle pchValue);
+		public static extern bool ISteamGameServerUGC_AddItemKeyValueTag(UGCUpdateHandle handle, InteropHelp.UTF8StringHandle Key, InteropHelp.UTF8StringHandle Value);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern ulong ISteamGameServerUGC_SubmitItemUpdate(UGCUpdateHandle handle, InteropHelp.UTF8StringHandle pchChangeNote);
+		public static extern ulong ISteamGameServerUGC_SubmitItemUpdate(UGCUpdateHandle handle, InteropHelp.UTF8StringHandle ChangeNote);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern EItemUpdateStatus ISteamGameServerUGC_GetItemUpdateProgress(UGCUpdateHandle handle, out ulong punBytesProcessed, out ulong punBytesTotal);
@@ -2873,7 +2865,7 @@ namespace Steamworks {
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamGameServerUGC_GetItemInstallInfo(PublishedFileId fileId, out ulong punSizeOnDisk, IntPtr pchFolder, uint FolderSize, out uint punTimeStamp);
+		public static extern bool ISteamGameServerUGC_GetItemInstallInfo(PublishedFileId fileId, out ulong punSizeOnDisk, IntPtr Folder, uint FolderSize, out uint punTimeStamp);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
@@ -2957,14 +2949,10 @@ namespace Steamworks {
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamGameServerUtils_ShowGamepadTextInput(EGamepadTextInputMode eInputMode, EGamepadTextInputLineMode eLineInputMode, InteropHelp.UTF8StringHandle pchDescription, uint unCharMax, InteropHelp.UTF8StringHandle pchExistingText);
+		public static extern bool ISteamGameServerUtils_ShowGamepadTextInput(EGamepadTextInputMode eInputMode, EGamepadTextInputLineMode eLineInputMode, InteropHelp.UTF8StringHandle Description, uint unCharMax, InteropHelp.UTF8StringHandle ExistingText);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern uint ISteamGameServerUtils_GetEnteredGamepadTextLength();
-
-		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamGameServerUtils_GetEnteredGamepadTextInput(IntPtr pchText, uint Text);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern IntPtr ISteamGameServerUtils_GetSteamUILanguage();

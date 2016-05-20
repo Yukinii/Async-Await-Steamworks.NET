@@ -6,7 +6,7 @@
 
 namespace Steamworks {
 	public struct SteamLeaderboard : System.IEquatable<SteamLeaderboard>, System.IComparable<SteamLeaderboard> {
-		public ulong _SteamLeaderboard;
+	    private readonly ulong _SteamLeaderboard;
 
 		public SteamLeaderboard(ulong value) {
 			_SteamLeaderboard = value;

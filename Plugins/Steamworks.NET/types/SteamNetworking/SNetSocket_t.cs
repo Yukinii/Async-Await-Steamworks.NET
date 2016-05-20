@@ -6,28 +6,28 @@
 
 namespace Steamworks {
 	public struct SNetSocket : System.IEquatable<SNetSocket>, System.IComparable<SNetSocket> {
-		public uint _SNetSocket;
+		public readonly uint Socket;
 
 		public SNetSocket(uint value) {
-			_SNetSocket = value;
+			Socket = value;
 		}
 
-		public override string ToString() => _SNetSocket.ToString();
+		public override string ToString() => Socket.ToString();
 
 	    public override bool Equals(object other) => other is SNetSocket && this == (SNetSocket)other;
 
-	    public override int GetHashCode() => _SNetSocket.GetHashCode();
+	    public override int GetHashCode() => Socket.GetHashCode();
 
-	    public static bool operator ==(SNetSocket x, SNetSocket y) => x._SNetSocket == y._SNetSocket;
+	    public static bool operator ==(SNetSocket x, SNetSocket y) => x.Socket == y.Socket;
 
 	    public static bool operator !=(SNetSocket x, SNetSocket y) => !(x == y);
 
 	    public static explicit operator SNetSocket(uint value) => new SNetSocket(value);
 
-	    public static explicit operator uint(SNetSocket that) => that._SNetSocket;
+	    public static explicit operator uint(SNetSocket that) => that.Socket;
 
-	    public bool Equals(SNetSocket other) => _SNetSocket == other._SNetSocket;
+	    public bool Equals(SNetSocket other) => Socket == other.Socket;
 
-	    public int CompareTo(SNetSocket other) => _SNetSocket.CompareTo(other._SNetSocket);
+	    public int CompareTo(SNetSocket other) => Socket.CompareTo(other.Socket);
 	}
 }

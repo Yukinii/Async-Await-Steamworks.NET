@@ -7,28 +7,28 @@
 namespace Steamworks {
 	public struct HAuthTicket : System.IEquatable<HAuthTicket>, System.IComparable<HAuthTicket> {
 		public static readonly HAuthTicket Invalid = new HAuthTicket(0);
-		public uint _HAuthTicket;
+		public readonly uint Ticket;
 
 		public HAuthTicket(uint value) {
-			_HAuthTicket = value;
+			Ticket = value;
 		}
 
-		public override string ToString() => _HAuthTicket.ToString();
+		public override string ToString() => Ticket.ToString();
 
 	    public override bool Equals(object other) => other is HAuthTicket && this == (HAuthTicket)other;
 
-	    public override int GetHashCode() => _HAuthTicket.GetHashCode();
+	    public override int GetHashCode() => Ticket.GetHashCode();
 
-	    public static bool operator ==(HAuthTicket x, HAuthTicket y) => x._HAuthTicket == y._HAuthTicket;
+	    public static bool operator ==(HAuthTicket x, HAuthTicket y) => x.Ticket == y.Ticket;
 
 	    public static bool operator !=(HAuthTicket x, HAuthTicket y) => !(x == y);
 
 	    public static explicit operator HAuthTicket(uint value) => new HAuthTicket(value);
 
-	    public static explicit operator uint(HAuthTicket that) => that._HAuthTicket;
+	    public static explicit operator uint(HAuthTicket that) => that.Ticket;
 
-	    public bool Equals(HAuthTicket other) => _HAuthTicket == other._HAuthTicket;
+	    public bool Equals(HAuthTicket other) => Ticket == other.Ticket;
 
-	    public int CompareTo(HAuthTicket other) => _HAuthTicket.CompareTo(other._HAuthTicket);
+	    public int CompareTo(HAuthTicket other) => Ticket.CompareTo(other.Ticket);
 	}
 }

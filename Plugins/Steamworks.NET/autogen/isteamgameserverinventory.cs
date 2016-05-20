@@ -88,7 +88,7 @@ namespace Steamworks {
 		/// <para> currently equipped cosmetic items and serialize this to a buffer, and</para>
 		/// <para> then transmit this buffer to other players upon joining a game.</para>
 		/// </summary>
-		public static bool GetItemsByID(out SteamInventoryResult pResultHandle, SteamItemInstanceID[] pInstanceIDs, uint unCountInstanceIDs) {
+		public static bool GetItemsByID(out SteamInventoryResult pResultHandle, SteamItemInstanceId[] pInstanceIDs, uint unCountInstanceIDs) {
 			InteropHelp.TestIfAvailableGameServer();
 			return NativeMethods.ISteamGameServerInventory_GetItemsByID(out pResultHandle, pInstanceIDs, unCountInstanceIDs);
 		}
@@ -185,7 +185,7 @@ namespace Steamworks {
 		/// <para> fully blocked via the Steamworks website to minimize support/abuse issues such as the</para>
 		/// <para> clasic "my brother borrowed my laptop and deleted all of my rare items".</para>
 		/// </summary>
-		public static bool ConsumeItem(out SteamInventoryResult pResultHandle, SteamItemInstanceID itemConsume, uint unQuantity) {
+		public static bool ConsumeItem(out SteamInventoryResult pResultHandle, SteamItemInstanceId itemConsume, uint unQuantity) {
 			InteropHelp.TestIfAvailableGameServer();
 			return NativeMethods.ISteamGameServerInventory_ConsumeItem(out pResultHandle, itemConsume, unQuantity);
 		}
@@ -200,7 +200,7 @@ namespace Steamworks {
 		/// <para> (Note: although GenerateItems may be hard or impossible to use securely in your game,</para>
 		/// <para> ExchangeItems is perfectly reasonable to use once the whitelists are set accordingly.)</para>
 		/// </summary>
-		public static bool ExchangeItems(out SteamInventoryResult pResultHandle, SteamItemDef[] pArrayGenerate, uint[] punArrayGenerateQuantity, uint unArrayGenerateLength, SteamItemInstanceID[] pArrayDestroy, uint[] punArrayDestroyQuantity, uint unArrayDestroyLength) {
+		public static bool ExchangeItems(out SteamInventoryResult pResultHandle, SteamItemDef[] pArrayGenerate, uint[] punArrayGenerateQuantity, uint unArrayGenerateLength, SteamItemInstanceId[] pArrayDestroy, uint[] punArrayDestroyQuantity, uint unArrayDestroyLength) {
 			InteropHelp.TestIfAvailableGameServer();
 			return NativeMethods.ISteamGameServerInventory_ExchangeItems(out pResultHandle, pArrayGenerate, punArrayGenerateQuantity, unArrayGenerateLength, pArrayDestroy, punArrayDestroyQuantity, unArrayDestroyLength);
 		}
@@ -211,7 +211,7 @@ namespace Steamworks {
 		/// <para> quantity from one stack into another stack of identical items. To split one stack into</para>
 		/// <para> two, pass SteamItemInstanceIDInvalid for itemIdDest and a new item will be generated.</para>
 		/// </summary>
-		public static bool TransferItemQuantity(out SteamInventoryResult pResultHandle, SteamItemInstanceID itemIdSource, uint unQuantity, SteamItemInstanceID itemIdDest) {
+		public static bool TransferItemQuantity(out SteamInventoryResult pResultHandle, SteamItemInstanceId itemIdSource, uint unQuantity, SteamItemInstanceId itemIdDest) {
 			InteropHelp.TestIfAvailableGameServer();
 			return NativeMethods.ISteamGameServerInventory_TransferItemQuantity(out pResultHandle, itemIdSource, unQuantity, itemIdDest);
 		}
@@ -263,7 +263,7 @@ namespace Steamworks {
 		/// <para> item instance id numbers and quantities of the received items.</para>
 		/// <para> (Note: new item instance IDs are generated whenever an item changes ownership.)</para>
 		/// </summary>
-		public static bool TradeItems(out SteamInventoryResult pResultHandle, SteamId steamIDTradePartner, SteamItemInstanceID[] pArrayGive, uint[] pArrayGiveQuantity, uint nArrayGiveLength, SteamItemInstanceID[] pArrayGet, uint[] pArrayGetQuantity, uint nArrayGetLength) {
+		public static bool TradeItems(out SteamInventoryResult pResultHandle, SteamId steamIDTradePartner, SteamItemInstanceId[] pArrayGive, uint[] pArrayGiveQuantity, uint nArrayGiveLength, SteamItemInstanceId[] pArrayGet, uint[] pArrayGetQuantity, uint nArrayGetLength) {
 			InteropHelp.TestIfAvailableGameServer();
 			return NativeMethods.ISteamGameServerInventory_TradeItems(out pResultHandle, steamIDTradePartner, pArrayGive, pArrayGiveQuantity, nArrayGiveLength, pArrayGet, pArrayGetQuantity, nArrayGetLength);
 		}
@@ -303,16 +303,16 @@ namespace Steamworks {
 		/// <para> Note that some properties (for example, "name") may be localized and will depend</para>
 		/// <para> on the current Steam language settings (see ISteamApps::GetCurrentGameLanguage).</para>
 		/// <para> Property names are always composed of ASCII letters, numbers, and/or underscores.</para>
-		/// <para> Pass a NULL pointer for pchPropertyName to get a comma - separated list of available</para>
+		/// <para> Pass a NULL pointer for PropertyName to get a comma - separated list of available</para>
 		/// <para> property names.</para>
 		/// </summary>
-		public static bool GetItemDefinitionProperty(SteamItemDef iDefinition, string pchPropertyName, out string pchValueBuffer, ref uint punValueBufferSize) {
+		public static bool GetItemDefinitionProperty(SteamItemDef iDefinition, string PropertyName, out string ValueBuffer, ref uint punValueBufferSize) {
 			InteropHelp.TestIfAvailableGameServer();
-			var pchValueBuffer2 = Marshal.AllocHGlobal((int)punValueBufferSize);
-			using (var pchPropertyName2 = new InteropHelp.UTF8StringHandle(pchPropertyName)) {
-				var ret = NativeMethods.ISteamGameServerInventory_GetItemDefinitionProperty(iDefinition, pchPropertyName2, pchValueBuffer2, ref punValueBufferSize);
-				pchValueBuffer = ret ? InteropHelp.PtrToStringUTF8(pchValueBuffer2) : null;
-				Marshal.FreeHGlobal(pchValueBuffer2);
+			var ValueBuffer2 = Marshal.AllocHGlobal((int)punValueBufferSize);
+			using (var PropertyName2 = new InteropHelp.UTF8StringHandle(PropertyName)) {
+				var ret = NativeMethods.ISteamGameServerInventory_GetItemDefinitionProperty(iDefinition, PropertyName2, ValueBuffer2, ref punValueBufferSize);
+				ValueBuffer = ret ? InteropHelp.PtrToStringUTF8(ValueBuffer2) : null;
+				Marshal.FreeHGlobal(ValueBuffer2);
 				return ret;
 			}
 		}

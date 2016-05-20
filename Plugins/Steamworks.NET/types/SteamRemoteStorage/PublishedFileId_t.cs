@@ -7,28 +7,28 @@
 namespace Steamworks {
 	public struct PublishedFileId : System.IEquatable<PublishedFileId>, System.IComparable<PublishedFileId> {
 		public static readonly PublishedFileId Invalid = new PublishedFileId(0);
-		public ulong _PublishedFileId;
+	    public readonly ulong Id;
 
 		public PublishedFileId(ulong value) {
-			_PublishedFileId = value;
+			Id = value;
 		}
 
-		public override string ToString() => _PublishedFileId.ToString();
+		public override string ToString() => Id.ToString();
 
 	    public override bool Equals(object other) => other is PublishedFileId && this == (PublishedFileId)other;
 
-	    public override int GetHashCode() => _PublishedFileId.GetHashCode();
+	    public override int GetHashCode() => Id.GetHashCode();
 
-	    public static bool operator ==(PublishedFileId x, PublishedFileId y) => x._PublishedFileId == y._PublishedFileId;
+	    public static bool operator ==(PublishedFileId x, PublishedFileId y) => x.Id == y.Id;
 
 	    public static bool operator !=(PublishedFileId x, PublishedFileId y) => !(x == y);
 
 	    public static explicit operator PublishedFileId(ulong value) => new PublishedFileId(value);
 
-	    public static explicit operator ulong(PublishedFileId that) => that._PublishedFileId;
+	    public static explicit operator ulong(PublishedFileId that) => that.Id;
 
-	    public bool Equals(PublishedFileId other) => _PublishedFileId == other._PublishedFileId;
+	    public bool Equals(PublishedFileId other) => Id == other.Id;
 
-	    public int CompareTo(PublishedFileId other) => _PublishedFileId.CompareTo(other._PublishedFileId);
+	    public int CompareTo(PublishedFileId other) => Id.CompareTo(other.Id);
 	}
 }

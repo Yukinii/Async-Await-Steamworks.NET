@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using Steamworks;
+using Steamworks.Steamworks.NET;
 
 namespace PlayGround
 {
@@ -107,33 +108,33 @@ namespace PlayGround
             }
             else
             {
-                Console.WriteLine($"{item._PublishedFileId} already installed.");
+                Console.WriteLine($"{item.Id} already installed.");
             }
         }
 
         private async void QueueDownload(PublishedFileId item)
         {
-            var details = await SteamUGC.GetItemDetailsAsync(item);
-            Console.WriteLine($"{details.Key._details._rgchDescription} - Is {(details.Value ? "" : "not")} on your hdd!");
+            var kvp = await SteamUGC.GetItemDetailsAsync(item);
+            Console.WriteLine($"{kvp.Key.Details.Description} - Is {(kvp.Value ? "" : "not")} on your hdd!");
 
             if (!SteamUGC.DownloadItem(item, true))
                 return;
 
             Console.WriteLine("Download queued");
-            PendingDownloads.Add(details.Key._details.PublishedField._PublishedFileId, details.Key._details._rgchTitle);
+            PendingDownloads.Add(kvp.Key.Details.Field.Id, kvp.Key.Details.Title);
         }
 
         private void OnDownloadCompleted(DownloadItemResult param)
         {
             string name;
-            if (PendingDownloads.TryGetValue(param.PublishedField._PublishedFileId, out name))
+            if (PendingDownloads.TryGetValue(param.PublishedField.Id, out name))
                 Console.WriteLine($"{name} - download result: {param.ResultType}");
         }
 
         private async void ItemInstalled(ItemInstalled param)
         {
             var details = await SteamUGC.GetItemDetailsAsync(param.PublishedFileId);
-            Console.WriteLine("Installed: "+details.Key._details._rgchTitle);
+            Console.WriteLine("Installed: "+details.Key.Details.Title);
         }
 
         public void Update() => SteamAPI.RunCallbacks();

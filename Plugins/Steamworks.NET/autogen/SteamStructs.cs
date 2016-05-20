@@ -12,34 +12,35 @@ namespace Steamworks {
 	[StructLayout(LayoutKind.Sequential, Pack = 1)]
 	public struct ControllerAnalogActionData {
 		// Type of data coming from this action, this will match what got specified in the action set
-		public EControllerSourceMode eMode;
+		public readonly EControllerSourceMode Mode;
 		
 		// The current state of this action; will be delta updates for mouse actions
-		public float x, y;
-		
-		// Whether or not this action is currently available to be bound in the active action set
+		public readonly float x;
+	    public readonly float y;
+
+	    // Whether or not this action is currently available to be bound in the active action set
 		[MarshalAs(UnmanagedType.I1)]
-		public bool bActive;
+		public readonly bool Active;
 	}
 
 	[StructLayout(LayoutKind.Sequential, Pack = 1)]
 	public struct ControllerDigitalActionData {
 		// The current state of this action; will be true if currently pressed
 		[MarshalAs(UnmanagedType.I1)]
-		public bool bState;
+		public readonly bool State;
 		
 		// Whether or not this action is currently available to be bound in the active action set
 		[MarshalAs(UnmanagedType.I1)]
-		public bool bActive;
+		public bool Active;
 	}
 
 	// friend game played information
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	public struct FriendGameInfo {
-		public CGameID _gameId;
-		public uint _unGameIP;
-		public ushort _usGamePort;
-		public ushort _usQueryPort;
+		public GameId _gameId;
+		public readonly uint GameIP;
+		public readonly ushort GamePort;
+		public readonly ushort QueryPort;
 		public SteamId _steamIDLobby;
 	}
 
@@ -47,75 +48,75 @@ namespace Steamworks {
 	// Purpose: information about user sessions
 	//-----------------------------------------------------------------------------
 	public struct FriendSessionStateInfo {
-		public uint _uiOnlineSessionInstances;
-		public byte _uiPublishedToFriendsSessionInstance;
+		public uint OnlineSessionInstances;
+		public byte PublishedToFriendsSessionInstance;
 	}
 
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	public struct SteamItemDetails {
-		public SteamItemInstanceID _itemId;
+		public SteamItemInstanceId _itemId;
 		public SteamItemDef _iDefinition;
-		public ushort _unQuantity;
-		public ushort _unFlags; // see ESteamItemFlags
+		public ushort Quantity;
+		public ushort Flags; // see ESteamItemFlags
 	}
 
 	// connection state to a specified user, returned by GetP2PSessionState()
 	// this is under-the-hood info about what's going on with a SendP2PPacket(), shouldn't be needed except for debuggin
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	public struct P2PSessionState {
-		public byte _bConnectionActive;		// true if we've got an active open connection
-		public byte _bConnecting;			// true if we're currently trying to establish a connection
-		public byte _eP2PSessionError;		// last error recorded (see enum above)
-		public byte _bUsingRelay;			// true if it's going through a relay server (TURN)
-		public int _nBytesQueuedForSend;
-		public int _nPacketsQueuedForSend;
-		public uint _nRemoteIP;				// potential IP:Port of remote host. Could be TURN server.
-		public ushort _nRemotePort;			// Only exists for compatibility with older authentication api's
+		public byte ConnectionActive;		// true if we've got an active open connection
+		public byte Connecting;			// true if we're currently trying to establish a connection
+		public byte P2PSessionError;		// last error recorded (see enum above)
+		public byte UsingRelay;			// true if it's going through a relay server (TURN)
+		public int BytesQueuedForSend;
+		public int PacketsQueuedForSend;
+		public uint RemoteIP;				// potential IP:Port of remote host. Could be TURN server.
+		public ushort RemotePort;			// Only exists for compatibility with older authentication api's
 	}
 
 	//-----------------------------------------------------------------------------
 	// Purpose: Structure that contains an array of const char * strings and the number of those strings
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	public struct SteamParamStringArray {
 		public IntPtr _ppStrings;
-		public int _nNumStrings;
+		public int NumStrings;
 	}
 
 	// Details for a single published file/UGC
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	public struct SteamUGCDetails {
-		public PublishedFileId PublishedField;
+		public PublishedFileId Field;
 		public ResultType ResultType;												// The result of the operation.
-		public EWorkshopFileType _eFileType;									// Type of the file
-		public AppId _nCreatorAppID;										// ID of the app that created this file.
-		public AppId _nConsumerAppID;										// ID of the app that will consume this file.
+		public EWorkshopFileType FileType;									// Type of the file
+		public AppId CreatorAppID;										// ID of the app that created this file.
+		public AppId ConsumerAppID;										// ID of the app that will consume this file.
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = Constants.PublishedDocumentTitleMax)]
-		public string _rgchTitle;				// title of document
+		public string Title;				// title of document
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = Constants.PublishedDocumentDescriptionMax)]
-		public string _rgchDescription;	// description of document
-		public ulong _ulSteamIDOwner;										// Steam ID of the user who created this content.
-		public uint _rtimeCreated;											// time when the published file was created
-		public uint _rtimeUpdated;											// time when the published file was last updated
-		public uint _rtimeAddedToUserList;									// time when the user added the published file to their list (not always applicable)
-		public ERemoteStoragePublishedFileVisibility _eVisibility;			// visibility
+		public string Description;	// description of document
+		public ulong SteamIDOwner;										// Steam ID of the user who created this content.
+		public uint timeCreated;											// time when the published file was created
+		public uint timeUpdated;											// time when the published file was last updated
+		public uint timeAddedToUserList;									// time when the user added the published file to their list (not always applicable)
+		public ERemoteStoragePublishedFileVisibility Visibility;			// visibility
 		[MarshalAs(UnmanagedType.I1)]
-		public bool _bBanned;													// whether the file was banned
+		public bool Banned;													// whether the file was banned
 		[MarshalAs(UnmanagedType.I1)]
-		public bool _bAcceptedForUse;											// developer has specifically flagged this item as accepted in the Workshop
+		public bool AcceptedForUse;											// developer has specifically flagged this item as accepted in the Workshop
 		[MarshalAs(UnmanagedType.I1)]
-		public bool _bTagsTruncated;											// whether the list of tags was too long to be returned in the provided buffer
+		public bool TagsTruncated;											// whether the list of tags was too long to be returned in the provided buffer
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = Constants.TagListMax)]
-		public string _rgchTags;								// comma separated list of all tags associated with this file
+		public string Tags;								// comma separated list of all tags associated with this file
 		// file/url information
 		public UGCHandle _hFile;											// The handle of the primary file
 		public UGCHandle _hPreviewFile;										// The handle of the preview file
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = Constants.FilenameMax)]
-		public string _pchFileName;							// The cloud filename of the primary file
-		public int _nFileSize;												// Size of the primary file
-		public int _nPreviewFileSize;										// Size of the preview file
+		public string _FileName;							// The cloud filename of the primary file
+		public int FileSize;												// Size of the primary file
+		public int PreviewFileSize;										// Size of the preview file
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = Constants.PublishedFileURLMax)]
-		public string _rgchURL;						// URL (for a video or a website)
+		public string URL;						// URL (for a video or a website)
 		// voting information
 		public uint _unVotesUp;												// number of votes up
 		public uint _unVotesDown;											// number of votes down
@@ -126,7 +127,7 @@ namespace Steamworks {
 
 	// structure that contains client callback data
 	// see callbacks documentation for more details
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	public struct CallbackMsg {
 		public int _hSteamUser;
 		public int _iCallback;
@@ -135,11 +136,11 @@ namespace Steamworks {
 	}
 
 	// a single entry in a leaderboard, as returned by GetDownloadedLeaderboardEntry()
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	public struct LeaderboardEntry {
-		public SteamId _steamIDUser; // user with the entry - use SteamFriends()->GetFriendPersonaName() & SteamFriends()->GetFriendAvatar() to get more info
-		public int _nGlobalRank;	// [1..N], where N is the number of users with an entry in the leaderboard
-		public int _nScore;			// score as set in the leaderboard
+		public SteamId _userId; // user with the entry - use SteamFriends()->GetFriendPersonaName() & SteamFriends()->GetFriendAvatar() to get more info
+		public int GlobalRank;	// [1..N], where N is the number of users with an entry in the leaderboard
+		public int Score;			// score as set in the leaderboard
 		public int _cDetails;		// number of int32 details available for this entry
 		public UGCHandle _hUGC;		// handle for UGC attached to the entry
 	}

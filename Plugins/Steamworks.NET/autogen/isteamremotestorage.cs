@@ -16,31 +16,31 @@ namespace Steamworks {
 		/// <para> iterate the files, the filename returned will be "foo.bar".</para>
 		/// <para> file operations</para>
 		/// </summary>
-		public static bool FileWrite(string pchFile, byte[] pvData, int Data) {
+		public static bool FileWrite(string File, byte[] pvData, int Data) {
 			InteropHelp.TestIfAvailableClient();
-			using (var pchFile2 = new InteropHelp.UTF8StringHandle(pchFile)) {
-				return NativeMethods.ISteamRemoteStorage_FileWrite(pchFile2, pvData, Data);
+			using (var File2 = new InteropHelp.UTF8StringHandle(File)) {
+				return NativeMethods.ISteamRemoteStorage_FileWrite(File2, pvData, Data);
 			}
 		}
 
-		public static int FileRead(string pchFile, byte[] pvData, int DataToRead) {
+		public static int FileRead(string File, byte[] pvData, int DataToRead) {
 			InteropHelp.TestIfAvailableClient();
-			using (var pchFile2 = new InteropHelp.UTF8StringHandle(pchFile)) {
-				return NativeMethods.ISteamRemoteStorage_FileRead(pchFile2, pvData, DataToRead);
+			using (var File2 = new InteropHelp.UTF8StringHandle(File)) {
+				return NativeMethods.ISteamRemoteStorage_FileRead(File2, pvData, DataToRead);
 			}
 		}
 
-		public static SteamAPICall FileWriteAsync(string pchFile, byte[] pvData, uint Data) {
+		public static SteamAPICall FileWriteAsync(string File, byte[] pvData, uint Data) {
 			InteropHelp.TestIfAvailableClient();
-			using (var pchFile2 = new InteropHelp.UTF8StringHandle(pchFile)) {
-				return (SteamAPICall)NativeMethods.ISteamRemoteStorage_FileWriteAsync(pchFile2, pvData, Data);
+			using (var File2 = new InteropHelp.UTF8StringHandle(File)) {
+				return (SteamAPICall)NativeMethods.ISteamRemoteStorage_FileWriteAsync(File2, pvData, Data);
 			}
 		}
 
-		public static SteamAPICall FileReadAsync(string pchFile, uint nOffset, uint ToRead) {
+		public static SteamAPICall FileReadAsync(string File, uint nOffset, uint ToRead) {
 			InteropHelp.TestIfAvailableClient();
-			using (var pchFile2 = new InteropHelp.UTF8StringHandle(pchFile)) {
-				return (SteamAPICall)NativeMethods.ISteamRemoteStorage_FileReadAsync(pchFile2, nOffset, ToRead);
+			using (var File2 = new InteropHelp.UTF8StringHandle(File)) {
+				return (SteamAPICall)NativeMethods.ISteamRemoteStorage_FileReadAsync(File2, nOffset, ToRead);
 			}
 		}
 
@@ -49,41 +49,41 @@ namespace Steamworks {
 			return NativeMethods.ISteamRemoteStorage_FileReadAsyncComplete(hReadCall, pvBuffer, ToRead);
 		}
 
-		public static bool FileForget(string pchFile) {
+		public static bool FileForget(string File) {
 			InteropHelp.TestIfAvailableClient();
-			using (var pchFile2 = new InteropHelp.UTF8StringHandle(pchFile)) {
-				return NativeMethods.ISteamRemoteStorage_FileForget(pchFile2);
+			using (var File2 = new InteropHelp.UTF8StringHandle(File)) {
+				return NativeMethods.ISteamRemoteStorage_FileForget(File2);
 			}
 		}
 
-		public static bool FileDelete(string pchFile) {
+		public static bool FileDelete(string File) {
 			InteropHelp.TestIfAvailableClient();
-			using (var pchFile2 = new InteropHelp.UTF8StringHandle(pchFile)) {
-				return NativeMethods.ISteamRemoteStorage_FileDelete(pchFile2);
+			using (var File2 = new InteropHelp.UTF8StringHandle(File)) {
+				return NativeMethods.ISteamRemoteStorage_FileDelete(File2);
 			}
 		}
 
-		public static SteamAPICall FileShare(string pchFile) {
+		public static SteamAPICall FileShare(string File) {
 			InteropHelp.TestIfAvailableClient();
-			using (var pchFile2 = new InteropHelp.UTF8StringHandle(pchFile)) {
-				return (SteamAPICall)NativeMethods.ISteamRemoteStorage_FileShare(pchFile2);
+			using (var File2 = new InteropHelp.UTF8StringHandle(File)) {
+				return (SteamAPICall)NativeMethods.ISteamRemoteStorage_FileShare(File2);
 			}
 		}
 
-		public static bool SetSyncPlatforms(string pchFile, ERemoteStoragePlatform eRemoteStoragePlatform) {
+		public static bool SetSyncPlatforms(string File, ERemoteStoragePlatform eRemoteStoragePlatform) {
 			InteropHelp.TestIfAvailableClient();
-			using (var pchFile2 = new InteropHelp.UTF8StringHandle(pchFile)) {
-				return NativeMethods.ISteamRemoteStorage_SetSyncPlatforms(pchFile2, eRemoteStoragePlatform);
+			using (var File2 = new InteropHelp.UTF8StringHandle(File)) {
+				return NativeMethods.ISteamRemoteStorage_SetSyncPlatforms(File2, eRemoteStoragePlatform);
 			}
 		}
 
 		/// <summary>
 		/// <para> file operations that cause network IO</para>
 		/// </summary>
-		public static UGCFileWriteStreamHandle FileWriteStreamOpen(string pchFile) {
+		public static UGCFileWriteStreamHandle FileWriteStreamOpen(string File) {
 			InteropHelp.TestIfAvailableClient();
-			using (var pchFile2 = new InteropHelp.UTF8StringHandle(pchFile)) {
-				return (UGCFileWriteStreamHandle)NativeMethods.ISteamRemoteStorage_FileWriteStreamOpen(pchFile2);
+			using (var File2 = new InteropHelp.UTF8StringHandle(File)) {
+				return (UGCFileWriteStreamHandle)NativeMethods.ISteamRemoteStorage_FileWriteStreamOpen(File2);
 			}
 		}
 
@@ -105,38 +105,38 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> file information</para>
 		/// </summary>
-		public static bool FileExists(string pchFile) {
+		public static bool FileExists(string File) {
 			InteropHelp.TestIfAvailableClient();
-			using (var pchFile2 = new InteropHelp.UTF8StringHandle(pchFile)) {
-				return NativeMethods.ISteamRemoteStorage_FileExists(pchFile2);
+			using (var File2 = new InteropHelp.UTF8StringHandle(File)) {
+				return NativeMethods.ISteamRemoteStorage_FileExists(File2);
 			}
 		}
 
-		public static bool FilePersisted(string pchFile) {
+		public static bool FilePersisted(string File) {
 			InteropHelp.TestIfAvailableClient();
-			using (var pchFile2 = new InteropHelp.UTF8StringHandle(pchFile)) {
-				return NativeMethods.ISteamRemoteStorage_FilePersisted(pchFile2);
+			using (var File2 = new InteropHelp.UTF8StringHandle(File)) {
+				return NativeMethods.ISteamRemoteStorage_FilePersisted(File2);
 			}
 		}
 
-		public static int GetFileSize(string pchFile) {
+		public static int GetFileSize(string File) {
 			InteropHelp.TestIfAvailableClient();
-			using (var pchFile2 = new InteropHelp.UTF8StringHandle(pchFile)) {
-				return NativeMethods.ISteamRemoteStorage_GetFileSize(pchFile2);
+			using (var File2 = new InteropHelp.UTF8StringHandle(File)) {
+				return NativeMethods.ISteamRemoteStorage_GetFileSize(File2);
 			}
 		}
 
-		public static long GetFileTimestamp(string pchFile) {
+		public static long GetFileTimestamp(string File) {
 			InteropHelp.TestIfAvailableClient();
-			using (var pchFile2 = new InteropHelp.UTF8StringHandle(pchFile)) {
-				return NativeMethods.ISteamRemoteStorage_GetFileTimestamp(pchFile2);
+			using (var File2 = new InteropHelp.UTF8StringHandle(File)) {
+				return NativeMethods.ISteamRemoteStorage_GetFileTimestamp(File2);
 			}
 		}
 
-		public static ERemoteStoragePlatform GetSyncPlatforms(string pchFile) {
+		public static ERemoteStoragePlatform GetSyncPlatforms(string File) {
 			InteropHelp.TestIfAvailableClient();
-			using (var pchFile2 = new InteropHelp.UTF8StringHandle(pchFile)) {
-				return NativeMethods.ISteamRemoteStorage_GetSyncPlatforms(pchFile2);
+			using (var File2 = new InteropHelp.UTF8StringHandle(File)) {
+				return NativeMethods.ISteamRemoteStorage_GetSyncPlatforms(File2);
 			}
 		}
 
@@ -246,20 +246,20 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> Indicate this file should be downloaded in the next sync</para>
 		/// </summary>
-		public static bool FileFetch(string pchFile) {
+		public static bool FileFetch(string File) {
 			InteropHelp.TestIfAvailableClient();
-			using (var pchFile2 = new InteropHelp.UTF8StringHandle(pchFile)) {
-				return NativeMethods.ISteamRemoteStorage_FileFetch(pchFile2);
+			using (var File2 = new InteropHelp.UTF8StringHandle(File)) {
+				return NativeMethods.ISteamRemoteStorage_FileFetch(File2);
 			}
 		}
 
 		/// <summary>
 		/// <para> Indicate this file should be persisted in the next sync</para>
 		/// </summary>
-		public static bool FilePersist(string pchFile) {
+		public static bool FilePersist(string File) {
 			InteropHelp.TestIfAvailableClient();
-			using (var pchFile2 = new InteropHelp.UTF8StringHandle(pchFile)) {
-				return NativeMethods.ISteamRemoteStorage_FilePersist(pchFile2);
+			using (var File2 = new InteropHelp.UTF8StringHandle(File)) {
+				return NativeMethods.ISteamRemoteStorage_FilePersist(File2);
 			}
 		}
 
@@ -290,13 +290,13 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> publishing UGC</para>
 		/// </summary>
-		public static SteamAPICall PublishWorkshopFile(string pchFile, string pchPreviewFile, AppId nConsumerAppId, string pchTitle, string pchDescription, ERemoteStoragePublishedFileVisibility eVisibility, System.Collections.Generic.IList<string> pTags, EWorkshopFileType eWorkshopFileType) {
+		public static SteamAPICall PublishWorkshopFile(string File, string PreviewFile, AppId nConsumerAppId, string Title, string Description, ERemoteStoragePublishedFileVisibility eVisibility, System.Collections.Generic.IList<string> pTags, EWorkshopFileType eWorkshopFileType) {
 			InteropHelp.TestIfAvailableClient();
-			using (var pchFile2 = new InteropHelp.UTF8StringHandle(pchFile))
-			using (var pchPreviewFile2 = new InteropHelp.UTF8StringHandle(pchPreviewFile))
-			using (var pchTitle2 = new InteropHelp.UTF8StringHandle(pchTitle))
-			using (var pchDescription2 = new InteropHelp.UTF8StringHandle(pchDescription)) {
-				return (SteamAPICall)NativeMethods.ISteamRemoteStorage_PublishWorkshopFile(pchFile2, pchPreviewFile2, nConsumerAppId, pchTitle2, pchDescription2, eVisibility, new InteropHelp.SteamParamStringArray(pTags), eWorkshopFileType);
+			using (var File2 = new InteropHelp.UTF8StringHandle(File))
+			using (var PreviewFile2 = new InteropHelp.UTF8StringHandle(PreviewFile))
+			using (var Title2 = new InteropHelp.UTF8StringHandle(Title))
+			using (var Description2 = new InteropHelp.UTF8StringHandle(Description)) {
+				return (SteamAPICall)NativeMethods.ISteamRemoteStorage_PublishWorkshopFile(File2, PreviewFile2, nConsumerAppId, Title2, Description2, eVisibility, new InteropHelp.SteamParamStringArray(pTags), eWorkshopFileType);
 			}
 		}
 
@@ -305,31 +305,31 @@ namespace Steamworks {
 			return (PublishedFileUpdateHandle)NativeMethods.ISteamRemoteStorage_CreatePublishedFileUpdateRequest(unPublishedFileId);
 		}
 
-		public static bool UpdatePublishedFileFile(PublishedFileUpdateHandle updateHandle, string pchFile) {
+		public static bool UpdatePublishedFileFile(PublishedFileUpdateHandle updateHandle, string File) {
 			InteropHelp.TestIfAvailableClient();
-			using (var pchFile2 = new InteropHelp.UTF8StringHandle(pchFile)) {
-				return NativeMethods.ISteamRemoteStorage_UpdatePublishedFileFile(updateHandle, pchFile2);
+			using (var File2 = new InteropHelp.UTF8StringHandle(File)) {
+				return NativeMethods.ISteamRemoteStorage_UpdatePublishedFileFile(updateHandle, File2);
 			}
 		}
 
-		public static bool UpdatePublishedFilePreviewFile(PublishedFileUpdateHandle updateHandle, string pchPreviewFile) {
+		public static bool UpdatePublishedFilePreviewFile(PublishedFileUpdateHandle updateHandle, string PreviewFile) {
 			InteropHelp.TestIfAvailableClient();
-			using (var pchPreviewFile2 = new InteropHelp.UTF8StringHandle(pchPreviewFile)) {
-				return NativeMethods.ISteamRemoteStorage_UpdatePublishedFilePreviewFile(updateHandle, pchPreviewFile2);
+			using (var PreviewFile2 = new InteropHelp.UTF8StringHandle(PreviewFile)) {
+				return NativeMethods.ISteamRemoteStorage_UpdatePublishedFilePreviewFile(updateHandle, PreviewFile2);
 			}
 		}
 
-		public static bool UpdatePublishedFileTitle(PublishedFileUpdateHandle updateHandle, string pchTitle) {
+		public static bool UpdatePublishedFileTitle(PublishedFileUpdateHandle updateHandle, string Title) {
 			InteropHelp.TestIfAvailableClient();
-			using (var pchTitle2 = new InteropHelp.UTF8StringHandle(pchTitle)) {
-				return NativeMethods.ISteamRemoteStorage_UpdatePublishedFileTitle(updateHandle, pchTitle2);
+			using (var Title2 = new InteropHelp.UTF8StringHandle(Title)) {
+				return NativeMethods.ISteamRemoteStorage_UpdatePublishedFileTitle(updateHandle, Title2);
 			}
 		}
 
-		public static bool UpdatePublishedFileDescription(PublishedFileUpdateHandle updateHandle, string pchDescription) {
+		public static bool UpdatePublishedFileDescription(PublishedFileUpdateHandle updateHandle, string Description) {
 			InteropHelp.TestIfAvailableClient();
-			using (var pchDescription2 = new InteropHelp.UTF8StringHandle(pchDescription)) {
-				return NativeMethods.ISteamRemoteStorage_UpdatePublishedFileDescription(updateHandle, pchDescription2);
+			using (var Description2 = new InteropHelp.UTF8StringHandle(Description)) {
+				return NativeMethods.ISteamRemoteStorage_UpdatePublishedFileDescription(updateHandle, Description2);
 			}
 		}
 
@@ -386,10 +386,10 @@ namespace Steamworks {
 			return (SteamAPICall)NativeMethods.ISteamRemoteStorage_UnsubscribePublishedFile(unPublishedFileId);
 		}
 
-		public static bool UpdatePublishedFileSetChangeDescription(PublishedFileUpdateHandle updateHandle, string pchChangeDescription) {
+		public static bool UpdatePublishedFileSetChangeDescription(PublishedFileUpdateHandle updateHandle, string ChangeDescription) {
 			InteropHelp.TestIfAvailableClient();
-			using (var pchChangeDescription2 = new InteropHelp.UTF8StringHandle(pchChangeDescription)) {
-				return NativeMethods.ISteamRemoteStorage_UpdatePublishedFileSetChangeDescription(updateHandle, pchChangeDescription2);
+			using (var ChangeDescription2 = new InteropHelp.UTF8StringHandle(ChangeDescription)) {
+				return NativeMethods.ISteamRemoteStorage_UpdatePublishedFileSetChangeDescription(updateHandle, ChangeDescription2);
 			}
 		}
 
@@ -413,14 +413,14 @@ namespace Steamworks {
 			return (SteamAPICall)NativeMethods.ISteamRemoteStorage_EnumerateUserSharedWorkshopFiles(steamId, unStartIndex, new InteropHelp.SteamParamStringArray(pRequiredTags), new InteropHelp.SteamParamStringArray(pExcludedTags));
 		}
 
-		public static SteamAPICall PublishVideo(EWorkshopVideoProvider eVideoProvider, string pchVideoAccount, string pchVideoIdentifier, string pchPreviewFile, AppId nConsumerAppId, string pchTitle, string pchDescription, ERemoteStoragePublishedFileVisibility eVisibility, System.Collections.Generic.IList<string> pTags) {
+		public static SteamAPICall PublishVideo(EWorkshopVideoProvider eVideoProvider, string VideoAccount, string VideoIdentifier, string PreviewFile, AppId nConsumerAppId, string Title, string Description, ERemoteStoragePublishedFileVisibility eVisibility, System.Collections.Generic.IList<string> pTags) {
 			InteropHelp.TestIfAvailableClient();
-			using (var pchVideoAccount2 = new InteropHelp.UTF8StringHandle(pchVideoAccount))
-			using (var pchVideoIdentifier2 = new InteropHelp.UTF8StringHandle(pchVideoIdentifier))
-			using (var pchPreviewFile2 = new InteropHelp.UTF8StringHandle(pchPreviewFile))
-			using (var pchTitle2 = new InteropHelp.UTF8StringHandle(pchTitle))
-			using (var pchDescription2 = new InteropHelp.UTF8StringHandle(pchDescription)) {
-				return (SteamAPICall)NativeMethods.ISteamRemoteStorage_PublishVideo(eVideoProvider, pchVideoAccount2, pchVideoIdentifier2, pchPreviewFile2, nConsumerAppId, pchTitle2, pchDescription2, eVisibility, new InteropHelp.SteamParamStringArray(pTags));
+			using (var VideoAccount2 = new InteropHelp.UTF8StringHandle(VideoAccount))
+			using (var VideoIdentifier2 = new InteropHelp.UTF8StringHandle(VideoIdentifier))
+			using (var PreviewFile2 = new InteropHelp.UTF8StringHandle(PreviewFile))
+			using (var Title2 = new InteropHelp.UTF8StringHandle(Title))
+			using (var Description2 = new InteropHelp.UTF8StringHandle(Description)) {
+				return (SteamAPICall)NativeMethods.ISteamRemoteStorage_PublishVideo(eVideoProvider, VideoAccount2, VideoIdentifier2, PreviewFile2, nConsumerAppId, Title2, Description2, eVisibility, new InteropHelp.SteamParamStringArray(pTags));
 			}
 		}
 
@@ -442,10 +442,10 @@ namespace Steamworks {
 			return (SteamAPICall)NativeMethods.ISteamRemoteStorage_EnumeratePublishedWorkshopFiles(eEnumerationType, unStartIndex, unCount, unDays, new InteropHelp.SteamParamStringArray(pTags), new InteropHelp.SteamParamStringArray(pUserTags));
 		}
 
-		public static SteamAPICall UGCDownloadToLocation(UGCHandle hContent, string pchLocation, uint unPriority) {
+		public static SteamAPICall UGCDownloadToLocation(UGCHandle hContent, string Location, uint unPriority) {
 			InteropHelp.TestIfAvailableClient();
-			using (var pchLocation2 = new InteropHelp.UTF8StringHandle(pchLocation)) {
-				return (SteamAPICall)NativeMethods.ISteamRemoteStorage_UGCDownloadToLocation(hContent, pchLocation2, unPriority);
+			using (var Location2 = new InteropHelp.UTF8StringHandle(Location)) {
+				return (SteamAPICall)NativeMethods.ISteamRemoteStorage_UGCDownloadToLocation(hContent, Location2, unPriority);
 			}
 		}
 	}

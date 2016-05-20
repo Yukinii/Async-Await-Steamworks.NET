@@ -27,32 +27,20 @@
 	#warning You need to define STEAMWORKS_WIN, or STEAMWORKS_LIN_OSX. Refer to the readme for more details.
 #endif
 
-using System.Runtime.InteropServices;
-
 namespace Steamworks {
 	public static class Packsize {
 #if VALVE_CALLBACK_PACK_LARGE
-		public const int value = 8;
+		public const int Value = 8;
 #elif VALVE_CALLBACK_PACK_SMALL
 		public const int value = 4;
 #endif
 
 		public static bool Test() {
-			var sentinelSize = Marshal.SizeOf(typeof(ValvePackingSentinel));
-			var subscribedFilesSize = Marshal.SizeOf(typeof(RemoteStorageEnumerateUserSubscribedFilesResult));
 #if VALVE_CALLBACK_PACK_LARGE
 			return false;
 #elif VALVE_CALLBACK_PACK_SMALL
 			return sentinelSize == 24 && subscribedFilesSize == (1 + 1 + 1 + 50 + 100) * 4;
 #endif
 		}
-
-		[StructLayout(LayoutKind.Sequential, Pack = value)]
-		struct ValvePackingSentinel {
-		    readonly uint _u32;
-		    readonly ulong _u64;
-		    readonly ushort _u16;
-		    readonly double _d;
-		};
 	}
 }

@@ -13,10 +13,10 @@ namespace Steamworks {
 		/// <para> so this string must start with http:// or https:// and should look like http://store.steampowered.com/app/250/</para>
 		/// <para> or such.</para>
 		/// </summary>
-		public static HTTPRequestHandle CreateHTTPRequest(EhttpMethod eHTTPRequestMethod, string pchAbsoluteURL) {
+		public static HTTPRequestHandle CreateHTTPRequest(EhttpMethod eHTTPRequestMethod, string AbsoluteURL) {
 			InteropHelp.TestIfAvailableClient();
-			using (var pchAbsoluteURL2 = new InteropHelp.UTF8StringHandle(pchAbsoluteURL)) {
-				return (HTTPRequestHandle)NativeMethods.ISteamHTTP_CreateHTTPRequest(eHTTPRequestMethod, pchAbsoluteURL2);
+			using (var AbsoluteURL2 = new InteropHelp.UTF8StringHandle(AbsoluteURL)) {
+				return (HTTPRequestHandle)NativeMethods.ISteamHTTP_CreateHTTPRequest(eHTTPRequestMethod, AbsoluteURL2);
 			}
 		}
 
@@ -43,11 +43,11 @@ namespace Steamworks {
 		/// <para> Set a request header value for the request, must be called prior to sending the request.  Will</para>
 		/// <para> return false if the handle is invalid or the request is already sent.</para>
 		/// </summary>
-		public static bool SetHTTPRequestHeaderValue(HTTPRequestHandle hRequest, string pchHeaderName, string pchHeaderValue) {
+		public static bool SetHTTPRequestHeaderValue(HTTPRequestHandle hRequest, string HeaderName, string HeaderValue) {
 			InteropHelp.TestIfAvailableClient();
-			using (var pchHeaderName2 = new InteropHelp.UTF8StringHandle(pchHeaderName))
-			using (var pchHeaderValue2 = new InteropHelp.UTF8StringHandle(pchHeaderValue)) {
-				return NativeMethods.ISteamHTTP_SetHTTPRequestHeaderValue(hRequest, pchHeaderName2, pchHeaderValue2);
+			using (var HeaderName2 = new InteropHelp.UTF8StringHandle(HeaderName))
+			using (var HeaderValue2 = new InteropHelp.UTF8StringHandle(HeaderValue)) {
+				return NativeMethods.ISteamHTTP_SetHTTPRequestHeaderValue(hRequest, HeaderName2, HeaderValue2);
 			}
 		}
 
@@ -56,11 +56,11 @@ namespace Steamworks {
 		/// <para> when creating the request.  Must be called prior to sending the request.  Will return false if the</para>
 		/// <para> handle is invalid or the request is already sent.</para>
 		/// </summary>
-		public static bool SetHTTPRequestGetOrPostParameter(HTTPRequestHandle hRequest, string pchParamName, string pchParamValue) {
+		public static bool SetHTTPRequestGetOrPostParameter(HTTPRequestHandle hRequest, string ParamName, string ParamValue) {
 			InteropHelp.TestIfAvailableClient();
-			using (var pchParamName2 = new InteropHelp.UTF8StringHandle(pchParamName))
-			using (var pchParamValue2 = new InteropHelp.UTF8StringHandle(pchParamValue)) {
-				return NativeMethods.ISteamHTTP_SetHTTPRequestGetOrPostParameter(hRequest, pchParamName2, pchParamValue2);
+			using (var ParamName2 = new InteropHelp.UTF8StringHandle(ParamName))
+			using (var ParamValue2 = new InteropHelp.UTF8StringHandle(ParamValue)) {
+				return NativeMethods.ISteamHTTP_SetHTTPRequestGetOrPostParameter(hRequest, ParamName2, ParamValue2);
 			}
 		}
 
@@ -108,10 +108,10 @@ namespace Steamworks {
 		/// <para> returns the size of the header value if present so the caller and allocate a correctly sized buffer for</para>
 		/// <para> GetHTTPResponseHeaderValue.</para>
 		/// </summary>
-		public static bool GetHTTPResponseHeaderSize(HTTPRequestHandle hRequest, string pchHeaderName, out uint unResponseHeaderSize) {
+		public static bool GetHTTPResponseHeaderSize(HTTPRequestHandle hRequest, string HeaderName, out uint unResponseHeaderSize) {
 			InteropHelp.TestIfAvailableClient();
-			using (var pchHeaderName2 = new InteropHelp.UTF8StringHandle(pchHeaderName)) {
-				return NativeMethods.ISteamHTTP_GetHTTPResponseHeaderSize(hRequest, pchHeaderName2, out unResponseHeaderSize);
+			using (var HeaderName2 = new InteropHelp.UTF8StringHandle(HeaderName)) {
+				return NativeMethods.ISteamHTTP_GetHTTPResponseHeaderSize(hRequest, HeaderName2, out unResponseHeaderSize);
 			}
 		}
 
@@ -120,10 +120,10 @@ namespace Steamworks {
 		/// <para> header is not present or if your buffer is too small to contain it's value.  You should first call</para>
 		/// <para> BGetHTTPResponseHeaderSize to check for the presence of the header and to find out the size buffer needed.</para>
 		/// </summary>
-		public static bool GetHTTPResponseHeaderValue(HTTPRequestHandle hRequest, string pchHeaderName, byte[] pHeaderValueBuffer, uint unBufferSize) {
+		public static bool GetHTTPResponseHeaderValue(HTTPRequestHandle hRequest, string HeaderName, byte[] pHeaderValueBuffer, uint unBufferSize) {
 			InteropHelp.TestIfAvailableClient();
-			using (var pchHeaderName2 = new InteropHelp.UTF8StringHandle(pchHeaderName)) {
-				return NativeMethods.ISteamHTTP_GetHTTPResponseHeaderValue(hRequest, pchHeaderName2, pHeaderValueBuffer, unBufferSize);
+			using (var HeaderName2 = new InteropHelp.UTF8StringHandle(HeaderName)) {
+				return NativeMethods.ISteamHTTP_GetHTTPResponseHeaderValue(hRequest, HeaderName2, pHeaderValueBuffer, unBufferSize);
 			}
 		}
 
@@ -177,13 +177,13 @@ namespace Steamworks {
 
 		/// <summary>
 		/// <para> Sets the body for an HTTP Post request.  Will fail and return false on a GET request, and will fail if POST params</para>
-		/// <para> have already been set for the request.  Setting this raw body makes it the only contents for the post, the pchContentType</para>
+		/// <para> have already been set for the request.  Setting this raw body makes it the only contents for the post, the ContentType</para>
 		/// <para> parameter will set the content-type header for the request so the server may know how to interpret the body.</para>
 		/// </summary>
-		public static bool SetHTTPRequestRawPostBody(HTTPRequestHandle hRequest, string pchContentType, byte[] pubBody, uint unBodyLen) {
+		public static bool SetHTTPRequestRawPostBody(HTTPRequestHandle hRequest, string ContentType, byte[] pubBody, uint unBodyLen) {
 			InteropHelp.TestIfAvailableClient();
-			using (var pchContentType2 = new InteropHelp.UTF8StringHandle(pchContentType)) {
-				return NativeMethods.ISteamHTTP_SetHTTPRequestRawPostBody(hRequest, pchContentType2, pubBody, unBodyLen);
+			using (var ContentType2 = new InteropHelp.UTF8StringHandle(ContentType)) {
+				return NativeMethods.ISteamHTTP_SetHTTPRequestRawPostBody(hRequest, ContentType2, pubBody, unBodyLen);
 			}
 		}
 
@@ -210,12 +210,12 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> Adds a cookie to the specified cookie container that will be used with future requests.</para>
 		/// </summary>
-		public static bool SetCookie(HTTPCookieContainerHandle hCookieContainer, string pchHost, string pchUrl, string pchCookie) {
+		public static bool SetCookie(HTTPCookieContainerHandle hCookieContainer, string Host, string Url, string Cookie) {
 			InteropHelp.TestIfAvailableClient();
-			using (var pchHost2 = new InteropHelp.UTF8StringHandle(pchHost))
-			using (var pchUrl2 = new InteropHelp.UTF8StringHandle(pchUrl))
-			using (var pchCookie2 = new InteropHelp.UTF8StringHandle(pchCookie)) {
-				return NativeMethods.ISteamHTTP_SetCookie(hCookieContainer, pchHost2, pchUrl2, pchCookie2);
+			using (var Host2 = new InteropHelp.UTF8StringHandle(Host))
+			using (var Url2 = new InteropHelp.UTF8StringHandle(Url))
+			using (var Cookie2 = new InteropHelp.UTF8StringHandle(Cookie)) {
+				return NativeMethods.ISteamHTTP_SetCookie(hCookieContainer, Host2, Url2, Cookie2);
 			}
 		}
 
@@ -230,10 +230,10 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> Set the extra user agent info for a request, this doesn't clobber the normal user agent, it just adds the extra info on the end</para>
 		/// </summary>
-		public static bool SetHTTPRequestUserAgentInfo(HTTPRequestHandle hRequest, string pchUserAgentInfo) {
+		public static bool SetHTTPRequestUserAgentInfo(HTTPRequestHandle hRequest, string UserAgentInfo) {
 			InteropHelp.TestIfAvailableClient();
-			using (var pchUserAgentInfo2 = new InteropHelp.UTF8StringHandle(pchUserAgentInfo)) {
-				return NativeMethods.ISteamHTTP_SetHTTPRequestUserAgentInfo(hRequest, pchUserAgentInfo2);
+			using (var UserAgentInfo2 = new InteropHelp.UTF8StringHandle(UserAgentInfo)) {
+				return NativeMethods.ISteamHTTP_SetHTTPRequestUserAgentInfo(hRequest, UserAgentInfo2);
 			}
 		}
 

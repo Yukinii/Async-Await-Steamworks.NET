@@ -94,7 +94,6 @@ namespace Steamworks {
 		// The UTF-8 version has to be very generous to accomodate characters that get large when encoded
 		// in UTF-8.
 		public const int PersonaNameMax = 128;
-		public const int cwchPersonaNameMax = 32;
 		// size limit on chat room or member metadata
 		public const int ChatMetadataMax = 8192;
 		// size limits on Rich Presence data
@@ -127,8 +126,8 @@ namespace Steamworks {
 		public const int PublishedFileURLMax = 256;
 		public const int ScreenshotMaxTaggedUsers = 32;
 		public const int ScreenshotMaxTaggedPublishedFiles = 32;
-		public const int UFSTagTypeMax = 255;
-		public const int UFSTagValueMax = 255;
+		public const int UfsTagTypeMax = 255;
+		public const int UfsTagValueMax = 255;
 		// Required with of a thumbnail provided to AddScreenshotToLibrary.  If you do not provide a thumbnail
 		// one will be generated.
 		public const int ScreenshotThumbWidth = 200;
@@ -150,24 +149,24 @@ namespace Steamworks {
 		public const int MaxGameServerName = 64;
 		public const int MaxGameServerTags = 128;
 		public const int MaxGameServerGameData = 2048;
-		public const int SteamAccountIDMask = -1;
+		public const int SteamAccountIdMask = -1;
 		public const int SteamAccountInstanceMask = 0x000FFFFF;
 		// we allow 3 simultaneous user account instances right now, 1= desktop, 2 = console, 4 = web, 0 = all
 		public const int SteamUserDesktopInstance = 1;
 		public const int SteamUserConsoleInstance = 2;
 		public const int SteamUserWebInstance = 4;
 		public const int GameExtraInfoMax = 64;
-		public const int nSteamEncryptedAppTicketSymmetricKeyLen = 32;
+		public const int SteamEncryptedAppTicketSymmetricKeyLen = 32;
 		public const int SaltSize = 8;
-		public const ulong GIDNil = 0xffffffffffffffff;
-		public const ulong TxnIDNil = GIDNil;
-		public const ulong TxnIDUnknown = 0;
-		public const int uPackageIdFreeSub = 0x0;
-		public const int uPackageIdInvalid = -1;
-		public const ulong ulAssetClassIdInvalid = 0x0;
-		public const int uPhysicalItemIdInvalid = 0x0;
-		public const int uCellIDInvalid = -1;
-		public const int uPartnerIdInvalid = 0;
+		public const ulong GidNil = 0xffffffffffffffff;
+		public const ulong TxnIdNil = GidNil;
+		public const ulong TxnIdUnknown = 0;
+		public const int PackageIdFreeSub = 0x0;
+		public const int PackageIdInvalid = -1;
+		public const ulong AssetClassIdInvalid = 0x0;
+		public const int PhysicalItemIdInvalid = 0x0;
+		public const int CellIdInvalid = -1;
+		public const int PartnerIdInvalid = 0;
 		public const int STEAM_CONTROLLER_MAX_COUNT = 16;
 		public const int STEAM_CONTROLLER_MAX_ANALOG_ACTIONS = 16;
 		public const int STEAM_CONTROLLER_MAX_DIGITAL_ACTIONS = 128;
@@ -179,9 +178,9 @@ namespace Steamworks {
 		public const ushort MASTERSERVERUPDATERPORT_USEGAMESOCKETSHARE	= 0xFFFF;
 		public const int INVALID_HTTPREQUEST_HANDLE		= 0;
 		// maximum number of characters a lobby metadata key can be
-		public const byte nMaxLobbyKeyLength = 255;
+		public const byte MaxLobbyKeyLength = 255;
 		public const int SteamMusicNameMaxLength = 255;
-		public const int SteamMusicPNGMaxLength = 65535;
+		public const int SteamMusicPngMaxLength = 65535;
 		//-----------------------------------------------------------------------------
 		// Constants used for query ports.
 		//-----------------------------------------------------------------------------

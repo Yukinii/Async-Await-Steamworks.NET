@@ -7,13 +7,14 @@
 
 using System;
 using System.Runtime.InteropServices;
+using Steamworks.Steamworks.NET;
 
 namespace Steamworks {
 	// callbacks
 	//---------------------------------------------------------------------------------
 	// Purpose: Sent when a new app is installed
 	//---------------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamAppListCallbacks + 1)]
 	public struct SteamAppInstalled {
 		public const int Callback = Constants.SteamAppListCallbacks + 1;
@@ -23,7 +24,7 @@ namespace Steamworks {
 	//---------------------------------------------------------------------------------
 	// Purpose: Sent when an app is uninstalled
 	//---------------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamAppListCallbacks + 2)]
 	public struct SteamAppUninstalled {
 		public const int Callback = Constants.SteamAppListCallbacks + 2;
@@ -34,7 +35,7 @@ namespace Steamworks {
 	//-----------------------------------------------------------------------------
 	// Purpose: posted after the user gains ownership of DLC & that DLC is installed
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamAppsCallbacks + 5)]
 	public struct DLCInstalled {
 		public const int Callback = Constants.SteamAppsCallbacks + 5;
@@ -44,7 +45,7 @@ namespace Steamworks {
 	//-----------------------------------------------------------------------------
 	// Purpose: response to RegisterActivationCode()
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamAppsCallbacks + 8)]
 	public struct RegisterActivationCodeResponse {
 		public const int Callback = Constants.SteamAppsCallbacks + 8;
@@ -55,14 +56,14 @@ namespace Steamworks {
 	//-----------------------------------------------------------------------------
 	// Purpose: response to RegisterActivationCode()
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamAppsCallbacks + 13)]
 	public struct AppProofOfPurchaseKeyResponse {
 		public const int Callback = Constants.SteamAppsCallbacks + 13;
 		public ResultType ResultType;
 		public uint _appId;
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = Constants.AppProofOfPurchaseKeyMax)]
-		public string _rgchKey;
+		public string Key;
 	}
 
 	//---------------------------------------------------------------------------------
@@ -71,7 +72,7 @@ namespace Steamworks {
 	// while the game is already running.  The new params can be queried
 	// with GetLaunchQueryParam.
 	//---------------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value, Size = 1)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value, Size = 1)]
 	[CallbackIdentity(Constants.SteamAppsCallbacks + 14)]
 	public struct NewLaunchQueryParameters {
 		public const int Callback = Constants.SteamAppsCallbacks + 14;
@@ -81,45 +82,45 @@ namespace Steamworks {
 	//-----------------------------------------------------------------------------
 	// Purpose: called when a friends' status changes
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamFriendsCallbacks + 4)]
 	public struct PersonaStateChange {
 		public const int Callback = Constants.SteamFriendsCallbacks + 4;
 		
-		public ulong _ulSteamID;		// steamID of the friend who changed
-		public EPersonaChange _nChangeFlags;		// what's changed
+		public ulong SteamID;		// steamID of the friend who changed
+		public EPersonaChange ChangeFlags;		// what's changed
 	}
 
 	//-----------------------------------------------------------------------------
 	// Purpose: posted when game overlay activates or deactivates
 	//			the game can use this to be pause or resume single player games
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamFriendsCallbacks + 31)]
 	public struct GameOverlayActivated {
 		public const int Callback = Constants.SteamFriendsCallbacks + 31;
-		public byte _bActive;	// true if it's just been activated, false otherwise
+		public byte Active;	// true if it's just been activated, false otherwise
 	}
 
 	//-----------------------------------------------------------------------------
 	// Purpose: called when the user tries to join a different game server from their friends list
 	//			game client should attempt to connect to specified server when this is received
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamFriendsCallbacks + 32)]
 	public struct GameServerChangeRequested {
 		public const int Callback = Constants.SteamFriendsCallbacks + 32;
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
-		public string _rgchServer;		// server address ("127.0.0.1:27015", "tf2.valvesoftware.com")
+		public string Server;		// server address ("127.0.0.1:27015", "tf2.valvesoftware.com")
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
-		public string _rgchPassword;	// server password, if any
+		public string Password;	// server password, if any
 	}
 
 	//-----------------------------------------------------------------------------
 	// Purpose: called when the user tries to join a lobby from their friends list
 	//			game client should attempt to connect to specified lobby when this is received
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamFriendsCallbacks + 33)]
 	public struct GameLobbyJoinRequested {
 		public const int Callback = Constants.SteamFriendsCallbacks + 33;
@@ -150,13 +151,13 @@ namespace Steamworks {
 	//-----------------------------------------------------------------------------
 	// Purpose: marks the return of a request officer list call
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamFriendsCallbacks + 35)]
 	public struct ClanOfficerListResponse {
 		public const int Callback = Constants.SteamFriendsCallbacks + 35;
 		public SteamId _steamIDClan;
 		public int _cOfficers;
-		public byte _bSuccess;
+		public byte Success;
 	}
 
 	//-----------------------------------------------------------------------------
@@ -174,13 +175,13 @@ namespace Steamworks {
 	// Purpose: called when the user tries to join a game from their friends list
 	//			rich presence will have been set with the "connect" key which is set here
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamFriendsCallbacks + 37)]
 	public struct GameRichPresenceJoinRequested {
 		public const int Callback = Constants.SteamFriendsCallbacks + 37;
 		public SteamId _steamIDFriend;		// the friend they did the join via (will be invalid if not directly via a friend)
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = Constants.MaxRichPresenceValueLength)]
-		public string _rgchConnect;
+		public string Connect;
 	}
 
 	//-----------------------------------------------------------------------------
@@ -191,19 +192,19 @@ namespace Steamworks {
 	public struct GameConnectedClanChatMsg {
 		public const int Callback = Constants.SteamFriendsCallbacks + 38;
 		public SteamId _steamIDClanChat;
-		public SteamId _steamIDUser;
+		public SteamId _userId;
 		public int _iMessageID;
 	}
 
 	//-----------------------------------------------------------------------------
 	// Purpose: a user has joined a clan chat
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamFriendsCallbacks + 39)]
 	public struct GameConnectedChatJoin {
 		public const int Callback = Constants.SteamFriendsCallbacks + 39;
 		public SteamId _steamIDClanChat;
-		public SteamId _steamIDUser;
+		public SteamId _userId;
 	}
 
 	//-----------------------------------------------------------------------------
@@ -214,22 +215,22 @@ namespace Steamworks {
 	public struct GameConnectedChatLeave {
 		public const int Callback = Constants.SteamFriendsCallbacks + 40;
 		public SteamId _steamIDClanChat;
-		public SteamId _steamIDUser;
+		public SteamId _userId;
 		[MarshalAs(UnmanagedType.I1)]
-		public bool _bKicked;		// true if admin kicked
+		public bool Kicked;		// true if admin kicked
 		[MarshalAs(UnmanagedType.I1)]
-		public bool _bDropped;	// true if Steam connection dropped
+		public bool Dropped;	// true if Steam connection dropped
 	}
 
 	//-----------------------------------------------------------------------------
 	// Purpose: a DownloadClanActivityCounts() call has finished
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamFriendsCallbacks + 41)]
 	public struct DownloadClanActivityCountsResult {
 		public const int Callback = Constants.SteamFriendsCallbacks + 41;
 		[MarshalAs(UnmanagedType.I1)]
-		public bool _bSuccess;
+		public bool Success;
 	}
 
 	//-----------------------------------------------------------------------------
@@ -240,7 +241,7 @@ namespace Steamworks {
 	public struct JoinClanChatRoomCompletionResult {
 		public const int Callback = Constants.SteamFriendsCallbacks + 42;
 		public SteamId _steamIDClanChat;
-		public EChatRoomEnterResponse _eChatRoomEnterResponse;
+		public EChatRoomEnterResponse ChatRoomEnterResponse;
 	}
 
 	//-----------------------------------------------------------------------------
@@ -250,7 +251,7 @@ namespace Steamworks {
 	[CallbackIdentity(Constants.SteamFriendsCallbacks + 43)]
 	public struct GameConnectedFriendChatMsg {
 		public const int Callback = Constants.SteamFriendsCallbacks + 43;
-		public SteamId _steamIDUser;
+		public SteamId _userId;
 		public int _iMessageID;
 	}
 
@@ -260,7 +261,7 @@ namespace Steamworks {
 		public const int Callback = Constants.SteamFriendsCallbacks + 44;
 		public ResultType ResultType;
 		public SteamId _steamID;
-		public int _nCount;
+		public int Count;
 	}
 
 	[StructLayout(LayoutKind.Sequential, Pack = 4)]
@@ -270,7 +271,7 @@ namespace Steamworks {
 		public ResultType ResultType;
 		public SteamId _steamID;
 		[MarshalAs(UnmanagedType.I1)]
-		public bool _bIsFollowing;
+		public bool IsFollowing;
 	}
 
 	[StructLayout(LayoutKind.Sequential, Pack = 4)]
@@ -279,37 +280,37 @@ namespace Steamworks {
 		public const int Callback = Constants.SteamFriendsCallbacks + 46;
 		public ResultType ResultType;
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = Constants.EnumerateFollowersMax)]
-		public SteamId[] _rgSteamID;
-		public int _nResultsReturned;
-		public int _nTotalResultCount;
+		public SteamId[] gSteamID;
+		public int ResultsReturned;
+		public int TotalResultCount;
 	}
 
 	//-----------------------------------------------------------------------------
 	// Purpose: reports the result of an attempt to change the user's persona name
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamFriendsCallbacks + 47)]
 	public struct SetPersonaNameResponse {
 		public const int Callback = Constants.SteamFriendsCallbacks + 47;
 		
 		[MarshalAs(UnmanagedType.I1)]
-		public bool _bSuccess; // true if name change succeeded completely.
+		public bool Success; // true if name change succeeded completely.
 		[MarshalAs(UnmanagedType.I1)]
-		public bool _bLocalSuccess; // true if name change was retained locally.  (We might not have been able to communicate with Steam)
+		public bool LocalSuccess; // true if name change was retained locally.  (We might not have been able to communicate with Steam)
 		public ResultType ResultType; // detailed result code
 	}
 
 	// callbacks
 	// callback notification - A new message is available for reading from the message queue
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamGameCoordinatorCallbacks + 1)]
 	public struct GCMessageAvailable {
 		public const int Callback = Constants.SteamGameCoordinatorCallbacks + 1;
-		public uint _nMessageSize;
+		public uint MessageSize;
 	}
 
 	// callback notification - A message failed to make it to the GC. It may be down temporarily
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value, Size = 1)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value, Size = 1)]
 	[CallbackIdentity(Constants.SteamGameCoordinatorCallbacks + 2)]
 	public struct GCMessageFailed {
 		public const int Callback = Constants.SteamGameCoordinatorCallbacks + 2;
@@ -320,7 +321,7 @@ namespace Steamworks {
 														// be connected to the internet but you want them to play (i.e LANs)
 	// callbacks
 	// client has been approved to connect to this game server
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamGameServerCallbacks + 1)]
 	public struct GSClientApprove {
 		public const int Callback = Constants.SteamGameServerCallbacks + 1;
@@ -334,9 +335,9 @@ namespace Steamworks {
 	public struct GSClientDeny {
 		public const int Callback = Constants.SteamGameServerCallbacks + 2;
 		public SteamId _SteamID;
-		public EDenyReason _eDenyReason;
+		public EDenyReason DenyReason;
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
-		public string _rgchOptionalText;
+		public string OptionalText;
 	}
 
 	// request the game server should kick the user
@@ -345,39 +346,39 @@ namespace Steamworks {
 	public struct GSClientKict {
 		public const int Callback = Constants.SteamGameServerCallbacks + 3;
 		public SteamId _SteamID;
-		public EDenyReason _eDenyReason;
+		public EDenyReason DenyReason;
 	}
 
 	// NOTE: callback values 4 and 5 are skipped because they are used for old deprecated callbacks,
 	// do not reuse them here.
 	// client achievement info
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamGameServerCallbacks + 6)]
 	public struct GSClientAchievementStatus {
 		public const int Callback = Constants.SteamGameServerCallbacks + 6;
 		public ulong _SteamID;
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
-		public string _pchAchievement;
+		public string _Achievement;
 		[MarshalAs(UnmanagedType.I1)]
-		public bool _bUnlocked;
+		public bool Unlocked;
 	}
 
 	// received when the game server requests to be displayed as secure (VAC protected)
-	// _bSecure is true if the game server should display itself as secure to users, false otherwise
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	// Secure is true if the game server should display itself as secure to users, false otherwise
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamUserCallbacks + 15)]
 	public struct GSPolicyResponse {
 		public const int Callback = Constants.SteamUserCallbacks + 15;
-		public byte _bSecure;
+		public byte Secure;
 	}
 
 	// GS gameplay stats info
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamGameServerCallbacks + 7)]
 	public struct GSGameplayStats {
 		public const int Callback = Constants.SteamGameServerCallbacks + 7;
 		public ResultType ResultType;					// ResultType of the call
-		public int _nRank;					// Overall rank of the server (0-based)
+		public int Rank;					// Overall rank of the server (0-based)
 		public uint _unTotalConnects;			// Total number of clients who have ever connected to the server
 		public uint _unTotalMinutesPlayed;		// Total number of minutes ever played on the server
 	}
@@ -390,35 +391,35 @@ namespace Steamworks {
 		public SteamId _SteamIDUser;
 		public SteamId _SteamIDGroup;
 		[MarshalAs(UnmanagedType.I1)]
-		public bool _bMember;
+		public bool Member;
 		[MarshalAs(UnmanagedType.I1)]
-		public bool _bOfficer;
+		public bool Officer;
 	}
 
 	// Sent as a reply to GetServerReputation()
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamGameServerCallbacks + 9)]
 	public struct GSReputation {
 		public const int Callback = Constants.SteamGameServerCallbacks + 9;
 		public ResultType ResultType;				// ResultType of the call;
 		public uint _unReputationScore;	// The reputation score for the game server
 		[MarshalAs(UnmanagedType.I1)]
-		public bool _bBanned;				// True if the server is banned from the Steam
+		public bool Banned;				// True if the server is banned from the Steam
 										// master servers
 		
-		// The following members are only filled out if _bBanned is true. They will all
+		// The following members are only filled out if Banned is true. They will all
 		// be set to zero otherwise. Master server bans are by IP so it is possible to be
 		// banned even when the score is good high if there is a bad server on another port.
 		// This information can be used to determine which server is bad.
 		
 		public uint _unBannedIP;		// The IP of the banned server
 		public ushort _usBannedPort;		// The port of the banned server
-		public ulong _ulBannedGameID;	// The game ID the banned server is serving
+		public ulong BannedGameID;	// The game ID the banned server is serving
 		public uint _unBanExpires;		// Time the ban expires, expressed in the Unix epoch (seconds since 1/1/1970)
 	}
 
 	// Sent as a reply to AssociateWithClan()
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamGameServerCallbacks + 10)]
 	public struct AssociateWithClanResult {
 		public const int Callback = Constants.SteamGameServerCallbacks + 10;
@@ -426,7 +427,7 @@ namespace Steamworks {
 	}
 
 	// Sent as a reply to ComputeNewPlayerCompatibility()
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamGameServerCallbacks + 11)]
 	public struct ComputeNewPlayerCompatibilityResult {
 		public const int Callback = Constants.SteamGameServerCallbacks + 11;
@@ -447,7 +448,7 @@ namespace Steamworks {
 	public struct GSStatsReceived {
 		public const int Callback = Constants.SteamGameServerStatsCallbacks;
 		public ResultType ResultType;		// Success / error fetching the stats
-		public SteamId _steamIDUser;	// The user for whom the stats are retrieved for
+		public SteamId _userId;	// The user for whom the stats are retrieved for
 	}
 
 	//-----------------------------------------------------------------------------
@@ -458,25 +459,25 @@ namespace Steamworks {
 	public struct GSStatsStored {
 		public const int Callback = Constants.SteamGameServerStatsCallbacks + 1;
 		public ResultType ResultType;		// success / error
-		public SteamId _steamIDUser;	// The user for whom the stats were stored
+		public SteamId _userId;	// The user for whom the stats were stored
 	}
 
 	//-----------------------------------------------------------------------------
 	// Purpose: Callback indicating that a user's stats have been unloaded.
 	//  Call RequestUserStats again to access stats for this user
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamUserStatsCallbacks + 8)]
 	public struct GSStatsUnloaded {
 		public const int Callback = Constants.SteamUserStatsCallbacks + 8;
-		public SteamId _steamIDUser;	// User whose stats have been unloaded
+		public SteamId _userId;	// User whose stats have been unloaded
 	}
 
 	// callbacks
 	//-----------------------------------------------------------------------------
 	// Purpose: The browser is ready for use
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamHTMLSurfaceCallbacks + 1)]
 	public struct HTML_BrowserReady {
 		public const int Callback = Constants.SteamHTMLSurfaceCallbacks + 1;
@@ -486,7 +487,7 @@ namespace Steamworks {
 	//-----------------------------------------------------------------------------
 	// Purpose: the browser has a pending paint
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamHTMLSurfaceCallbacks + 2)]
 	public struct HTML_NeedsPaint {
 		public const int Callback = Constants.SteamHTMLSurfaceCallbacks + 2;
@@ -508,14 +509,14 @@ namespace Steamworks {
 	// Purpose: The browser wanted to navigate to a new page
 	//   NOTE - you MUST call AllowStartRequest in response to this callback
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamHTMLSurfaceCallbacks + 3)]
 	public struct HTML_StartRequest {
 		public const int Callback = Constants.SteamHTMLSurfaceCallbacks + 3;
 		public HHTMLBrowser unBrowserHandle; // the handle of the surface navigating
-		public string pchURL; // the url they wish to navigate to
-		public string pchTarget; // the html link target type  (i.e _blank, _self, _parent, op )
-		public string pchPostData; // any posted data for the request
+		public string URL; // the url they wish to navigate to
+		public string Target; // the html link target type  (i.e lank, _self, _parent, op )
+		public string PostData; // any posted data for the request
 		[MarshalAs(UnmanagedType.I1)]
 		public bool bIsRedirect; // true if this was a http/html redirect from the last load request
 	}
@@ -523,7 +524,7 @@ namespace Steamworks {
 	//-----------------------------------------------------------------------------
 	// Purpose: The browser has been requested to close due to user interaction (usually from a javascript window.close() call)
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamHTMLSurfaceCallbacks + 4)]
 	public struct HTML_CloseBrowser {
 		public const int Callback = Constants.SteamHTMLSurfaceCallbacks + 4;
@@ -533,16 +534,16 @@ namespace Steamworks {
 	//-----------------------------------------------------------------------------
 	// Purpose: the browser is navigating to a new url
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamHTMLSurfaceCallbacks + 5)]
 	public struct HTML_URLChanged {
 		public const int Callback = Constants.SteamHTMLSurfaceCallbacks + 5;
 		public HHTMLBrowser unBrowserHandle; // the handle of the surface navigating
-		public string pchURL; // the url they wish to navigate to
-		public string pchPostData; // any posted data for the request
+		public string URL; // the url they wish to navigate to
+		public string PostData; // any posted data for the request
 		[MarshalAs(UnmanagedType.I1)]
 		public bool bIsRedirect; // true if this was a http/html redirect from the last load request
-		public string pchPageTitle; // the title of the page
+		public string PageTitle; // the title of the page
 		[MarshalAs(UnmanagedType.I1)]
 		public bool bNewNavigation; // true if this was from a fresh tab and not a click on an existing page
 	}
@@ -550,41 +551,41 @@ namespace Steamworks {
 	//-----------------------------------------------------------------------------
 	// Purpose: A page is finished loading
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamHTMLSurfaceCallbacks + 6)]
 	public struct HTML_FinishedRequest {
 		public const int Callback = Constants.SteamHTMLSurfaceCallbacks + 6;
 		public HHTMLBrowser unBrowserHandle; // the handle of the surface
-		public string pchURL; //
-		public string pchPageTitle; //
+		public string URL; //
+		public string PageTitle; //
 	}
 
 	//-----------------------------------------------------------------------------
 	// Purpose: a request to load this url in a new tab
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamHTMLSurfaceCallbacks + 7)]
 	public struct HTML_OpenLinkInNewTab {
 		public const int Callback = Constants.SteamHTMLSurfaceCallbacks + 7;
 		public HHTMLBrowser unBrowserHandle; // the handle of the surface
-		public string pchURL; //
+		public string URL; //
 	}
 
 	//-----------------------------------------------------------------------------
 	// Purpose: the page has a new title now
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamHTMLSurfaceCallbacks + 8)]
 	public struct HTML_ChangedTitle {
 		public const int Callback = Constants.SteamHTMLSurfaceCallbacks + 8;
 		public HHTMLBrowser unBrowserHandle; // the handle of the surface
-		public string pchTitle; //
+		public string Title; //
 	}
 
 	//-----------------------------------------------------------------------------
 	// Purpose: results from a search
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamHTMLSurfaceCallbacks + 9)]
 	public struct HTML_SearchResults {
 		public const int Callback = Constants.SteamHTMLSurfaceCallbacks + 9;
@@ -596,7 +597,7 @@ namespace Steamworks {
 	//-----------------------------------------------------------------------------
 	// Purpose: page history status changed on the ability to go backwards and forward
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamHTMLSurfaceCallbacks + 10)]
 	public struct HTML_CanGoBackAndForward {
 		public const int Callback = Constants.SteamHTMLSurfaceCallbacks + 10;
@@ -610,7 +611,7 @@ namespace Steamworks {
 	//-----------------------------------------------------------------------------
 	// Purpose: details on the visibility and size of the horizontal scrollbar
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamHTMLSurfaceCallbacks + 11)]
 	public struct HTML_HorizontalScroll {
 		public const int Callback = Constants.SteamHTMLSurfaceCallbacks + 11;
@@ -626,7 +627,7 @@ namespace Steamworks {
 	//-----------------------------------------------------------------------------
 	// Purpose: details on the visibility and size of the vertical scrollbar
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamHTMLSurfaceCallbacks + 12)]
 	public struct HTML_VerticalScroll {
 		public const int Callback = Constants.SteamHTMLSurfaceCallbacks + 12;
@@ -642,14 +643,14 @@ namespace Steamworks {
 	//-----------------------------------------------------------------------------
 	// Purpose: response to GetLinkAtPosition call
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamHTMLSurfaceCallbacks + 13)]
 	public struct HTML_LinkAtPosition {
 		public const int Callback = Constants.SteamHTMLSurfaceCallbacks + 13;
 		public HHTMLBrowser unBrowserHandle; // the handle of the surface
 		public uint x; // NOTE - Not currently set
 		public uint y; // NOTE - Not currently set
-		public string pchURL; //
+		public string URL; //
 		[MarshalAs(UnmanagedType.I1)]
 		public bool bInput; //
 		[MarshalAs(UnmanagedType.I1)]
@@ -660,48 +661,48 @@ namespace Steamworks {
 	// Purpose: show a Javascript alert dialog, call JSDialogResponse
 	//   when the user dismisses this dialog (or right away to ignore it)
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamHTMLSurfaceCallbacks + 14)]
 	public struct HTML_JSAlert {
 		public const int Callback = Constants.SteamHTMLSurfaceCallbacks + 14;
 		public HHTMLBrowser unBrowserHandle; // the handle of the surface
-		public string pchMessage; //
+		public string Message; //
 	}
 
 	//-----------------------------------------------------------------------------
 	// Purpose: show a Javascript confirmation dialog, call JSDialogResponse
 	//   when the user dismisses this dialog (or right away to ignore it)
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamHTMLSurfaceCallbacks + 15)]
 	public struct HTML_JSConfir {
 		public const int Callback = Constants.SteamHTMLSurfaceCallbacks + 15;
 		public HHTMLBrowser unBrowserHandle; // the handle of the surface
-		public string pchMessage; //
+		public string Message; //
 	}
 
 	//-----------------------------------------------------------------------------
 	// Purpose: when received show a file open dialog
 	//   then call FileLoadDialogResponse with the file(s) the user selected.
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamHTMLSurfaceCallbacks + 16)]
 	public struct HTML_FileOpenDialog {
 		public const int Callback = Constants.SteamHTMLSurfaceCallbacks + 16;
 		public HHTMLBrowser unBrowserHandle; // the handle of the surface
-		public string pchTitle; //
-		public string pchInitialFile; //
+		public string Title; //
+		public string InitialFile; //
 	}
 
 	//-----------------------------------------------------------------------------
 	// Purpose: a new html window has been created
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamHTMLSurfaceCallbacks + 21)]
 	public struct HTML_NewWindow {
 		public const int Callback = Constants.SteamHTMLSurfaceCallbacks + 21;
 		public HHTMLBrowser unBrowserHandle; // the handle of the current surface
-		public string pchURL; // the page to load
+		public string URL; // the page to load
 		public uint unX; // the x pos into the page to display the popup
 		public uint unY; // the y pos into the page to display the popup
 		public uint unWide; // the total width of the pBGRA texture
@@ -712,7 +713,7 @@ namespace Steamworks {
 	//-----------------------------------------------------------------------------
 	// Purpose: change the cursor to display
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamHTMLSurfaceCallbacks + 22)]
 	public struct HTML_SetCursor {
 		public const int Callback = Constants.SteamHTMLSurfaceCallbacks + 22;
@@ -723,40 +724,40 @@ namespace Steamworks {
 	//-----------------------------------------------------------------------------
 	// Purpose: informational message from the browser
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamHTMLSurfaceCallbacks + 23)]
 	public struct HTML_StatusText {
 		public const int Callback = Constants.SteamHTMLSurfaceCallbacks + 23;
 		public HHTMLBrowser unBrowserHandle; // the handle of the surface
-		public string pchMsg; // the EMouseCursor to display
+		public string Msg; // the EMouseCursor to display
 	}
 
 	//-----------------------------------------------------------------------------
 	// Purpose: show a tooltip
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamHTMLSurfaceCallbacks + 24)]
 	public struct HTML_ShowToolTip {
 		public const int Callback = Constants.SteamHTMLSurfaceCallbacks + 24;
 		public HHTMLBrowser unBrowserHandle; // the handle of the surface
-		public string pchMsg; // the EMouseCursor to display
+		public string Msg; // the EMouseCursor to display
 	}
 
 	//-----------------------------------------------------------------------------
 	// Purpose: update the text of an existing tooltip
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamHTMLSurfaceCallbacks + 25)]
 	public struct HTML_UpdateToolTip {
 		public const int Callback = Constants.SteamHTMLSurfaceCallbacks + 25;
 		public HHTMLBrowser unBrowserHandle; // the handle of the surface
-		public string pchMsg; // the EMouseCursor to display
+		public string Msg; // the EMouseCursor to display
 	}
 
 	//-----------------------------------------------------------------------------
 	// Purpose: hide the tooltip you are showing
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamHTMLSurfaceCallbacks + 26)]
 	public struct HTML_HideToolTip {
 		public const int Callback = Constants.SteamHTMLSurfaceCallbacks + 26;
@@ -764,7 +765,7 @@ namespace Steamworks {
 	}
 
 	// callbacks
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.ClientHTTPCallbacks + 1)]
 	public struct HTTPRequestCompleted {
 		public const int Callback = Constants.ClientHTTPCallbacks + 1;
@@ -774,21 +775,21 @@ namespace Steamworks {
 		
 		// Context value that the user defined on the request that this callback is associated with, 0 if
 		// no context value was set.
-		public ulong _ulContextValue;
+		public ulong ContextValue;
 		
 		// This will be true if we actually got any sort of response from the server (even an error).
 		// It will be false if we failed due to an internal error or client side network failure.
 		[MarshalAs(UnmanagedType.I1)]
-		public bool _bRequestSuccessful;
+		public bool RequestSuccessful;
 		
 		// Will be the HTTP status code value returned by the server, EhttpStatusCode200OK is the normal
 		// OK response, if you get something else you probably need to treat it as a failure.
-		public EhttpStatusCode _eStatusCode;
+		public EhttpStatusCode StatusCode;
 		
 		public uint _unBodySize; // Same as GetHTTPResponseBodySize()
 	}
 
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.ClientHTTPCallbacks + 2)]
 	public struct HTTPRequestHeadersReceived {
 		public const int Callback = Constants.ClientHTTPCallbacks + 2;
@@ -798,10 +799,10 @@ namespace Steamworks {
 		
 		// Context value that the user defined on the request that this callback is associated with, 0 if
 		// no context value was set.
-		public ulong _ulContextValue;
+		public ulong ContextValue;
 	}
 
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.ClientHTTPCallbacks + 3)]
 	public struct HTTPRequestDataReceived {
 		public const int Callback = Constants.ClientHTTPCallbacks + 3;
@@ -811,7 +812,7 @@ namespace Steamworks {
 		
 		// Context value that the user defined on the request that this callback is associated with, 0 if
 		// no context value was set.
-		public ulong _ulContextValue;
+		public ulong ContextValue;
 		
 		
 		// Offset to provide to GetHTTPStreamingResponseBodyData to get this chunk of data
@@ -824,7 +825,7 @@ namespace Steamworks {
 	// SteamInventoryResultReady callbacks are fired whenever asynchronous
 	// results transition from "Pending" to "OK" or an error state. There will
 	// always be exactly one callback per handle.
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.ClientInventoryCallbacks + 0)]
 	public struct SteamInventoryResultReady {
 		public const int Callback = Constants.ClientInventoryCallbacks + 0;
@@ -839,7 +840,7 @@ namespace Steamworks {
 	// the earlier result is already known to be stale/out-of-date.)
 	// The normal ResultReady callback will still be triggered immediately
 	// afterwards; this is an additional notification for your convenience.
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.ClientInventoryCallbacks + 1)]
 	public struct SteamInventoryFullUpdate {
 		public const int Callback = Constants.ClientInventoryCallbacks + 1;
@@ -850,7 +851,7 @@ namespace Steamworks {
 	// item definitions have been updated, which could be in response to
 	// LoadItemDefinitions() or any other async request which required
 	// a definition update in order to process results from the server.
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value, Size = 1)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value, Size = 1)]
 	[CallbackIdentity(Constants.ClientInventoryCallbacks + 2)]
 	public struct SteamInventoryDefinitionUpdate {
 		public const int Callback = Constants.ClientInventoryCallbacks + 2;
@@ -861,18 +862,18 @@ namespace Steamworks {
 	//-----------------------------------------------------------------------------
 	// Purpose: a server was added/removed from the favorites list, you should refresh now
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamMatchmakingCallbacks + 2)]
 	public struct FavoritesListChanged {
 		public const int Callback = Constants.SteamMatchmakingCallbacks + 2;
-		public uint _nIP; // an IP of 0 means reload the whole list, any other value means just one server
-		public uint _nQueryPort;
-		public uint _nConnPort;
+		public uint IP; // an IP of 0 means reload the whole list, any other value means just one server
+		public uint QueryPort;
+		public uint ConnPort;
 		public uint _appId;
-		public uint _nFlags;
+		public uint Flags;
 		[MarshalAs(UnmanagedType.I1)]
-		public bool _bAdd; // true if this is adding the entry, otherwise it is a remove
-		public AccountID _unAccountId;
+		public bool Add; // true if this is adding the entry, otherwise it is a remove
+		public AccountId _unAccountId;
 	}
 
 	//-----------------------------------------------------------------------------
@@ -883,14 +884,14 @@ namespace Steamworks {
 	//			if the user outside a game chooses to join, your game will be launched with the parameter "+connect_lobby <64-bit lobby id>",
 	//			or with the callback GameLobbyJoinRequested if they're already in-game
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamMatchmakingCallbacks + 3)]
 	public struct LobbyInvite {
 		public const int Callback = Constants.SteamMatchmakingCallbacks + 3;
 		
-		public ulong _ulSteamIDUser;		// Steam ID of the person making the invite
-		public ulong _ulSteamIDLobby;	// Steam ID of the Lobby
-		public ulong _ulGameID;			// GameID of the Lobby
+		public ulong SteamIDUser;		// Steam ID of the person making the invite
+		public ulong SteamIDLobby;	// Steam ID of the Lobby
+		public ulong GameID;			// GameID of the Lobby
 	}
 
 	//-----------------------------------------------------------------------------
@@ -898,31 +899,31 @@ namespace Steamworks {
 	//			_EChatRoomEnterResponse will be set to EChatRoomEnterResponseSuccess on success,
 	//			or a higher value on failure (see enum EChatRoomEnterResponse)
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamMatchmakingCallbacks + 4)]
 	public struct LobbyEnter {
 		public const int Callback = Constants.SteamMatchmakingCallbacks + 4;
 		
-		public ulong _ulSteamIDLobby;							// SteamId of the Lobby you have entered
-		public uint _rgfChatPermissions;						// Permissions of the current user
+		public ulong SteamIDLobby;							// SteamId of the Lobby you have entered
+		public uint gfChatPermissions;						// Permissions of the current user
 		[MarshalAs(UnmanagedType.I1)]
-		public bool _bLocked;										// If true, then only invited users may join
+		public bool Locked;										// If true, then only invited users may join
 		public uint _EChatRoomEnterResponse;	// EChatRoomEnterResponse
 	}
 
 	//-----------------------------------------------------------------------------
 	// Purpose: The lobby metadata has changed
-	//			if _ulSteamIDMember is the steamID of a lobby member, use GetLobbyMemberData() to access per-user details
-	//			if _ulSteamIDMember == _ulSteamIDLobby, use GetLobbyData() to access lobby metadata
+	//			if SteamIDMember is the steamID of a lobby member, use GetLobbyMemberData() to access per-user details
+	//			if SteamIDMember == SteamIDLobby, use GetLobbyData() to access lobby metadata
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamMatchmakingCallbacks + 5)]
 	public struct LobbyDataUpdate {
 		public const int Callback = Constants.SteamMatchmakingCallbacks + 5;
 		
-		public ulong _ulSteamIDLobby;		// steamID of the Lobby
-		public ulong _ulSteamIDMember;		// steamID of the member whose data changed, or the room itself
-		public byte _bSuccess;				// true if we lobby data was successfully changed;
+		public ulong SteamIDLobby;		// steamID of the Lobby
+		public ulong SteamIDMember;		// steamID of the member whose data changed, or the room itself
+		public byte Success;				// true if we lobby data was successfully changed;
 										// will only be false if RequestLobbyData() was called on a lobby that no longer exists
 	}
 
@@ -930,30 +931,30 @@ namespace Steamworks {
 	// Purpose: The lobby chat room state has changed
 	//			this is usually sent when a user has joined or left the lobby
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamMatchmakingCallbacks + 6)]
 	public struct LobbyChatUpdate {
 		public const int Callback = Constants.SteamMatchmakingCallbacks + 6;
 		
-		public ulong _ulSteamIDLobby;			// Lobby ID
-		public ulong _ulSteamIDUserChanged;		// user who's status in the lobby just changed - can be recipient
-		public ulong _ulSteamIDMakingChange;		// Chat member who made the change (different from SteamIDUserChange if kicking, muting, etc.)
+		public ulong SteamIDLobby;			// Lobby ID
+		public ulong SteamIDUserChanged;		// user who's status in the lobby just changed - can be recipient
+		public ulong SteamIDMakingChange;		// Chat member who made the change (different from SteamIDUserChange if kicking, muting, etc.)
 											// for example, if one user kicks another from the lobby, this will be set to the id of the user who initiated the kick
-		public uint _rgfChatMemberStateChange;	// bitfield of EChatMemberStateChange values
+		public uint gfChatMemberStateChange;	// bitfield of EChatMemberStateChange values
 	}
 
 	//-----------------------------------------------------------------------------
 	// Purpose: A chat message for this lobby has been sent
 	//			use GetLobbyChatEntry( _iChatID ) to retrieve the contents of this message
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamMatchmakingCallbacks + 7)]
 	public struct LobbyChatMsg {
 		public const int Callback = Constants.SteamMatchmakingCallbacks + 7;
 		
-		public ulong _ulSteamIDLobby;			// the lobby id this is in
-		public ulong _ulSteamIDUser;			// steamID of the user who has sent this message
-		public byte _eChatEntryType;			// type of message
+		public ulong SteamIDLobby;			// the lobby id this is in
+		public ulong SteamIDUser;			// steamID of the user who has sent this message
+		public byte ChatEntryType;			// type of message
 		public uint _iChatID;				// index of the chat entry to lookup
 	}
 
@@ -963,39 +964,39 @@ namespace Steamworks {
 	//			it's up to the individual clients to take action on this; the usual
 	//			game behavior is to leave the lobby and connect to the specified game server
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamMatchmakingCallbacks + 9)]
 	public struct LobbyGameCreated {
 		public const int Callback = Constants.SteamMatchmakingCallbacks + 9;
 		
-		public ulong _ulSteamIDLobby;		// the lobby we were in
-		public ulong _ulSteamIDGameServer;	// the new game server that has been created or found for the lobby members
+		public ulong SteamIDLobby;		// the lobby we were in
+		public ulong SteamIDGameServer;	// the new game server that has been created or found for the lobby members
 		public uint _unIP;					// IP & Port of the game server (if any)
 		public ushort _usPort;
 	}
 
 	//-----------------------------------------------------------------------------
 	// Purpose: Number of matching lobbies found
-	//			iterate the returned lobbies with GetLobbyByIndex(), from values 0 to _nLobbiesMatching-1
+	//			iterate the returned lobbies with GetLobbyByIndex(), from values 0 to LobbiesMatching-1
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamMatchmakingCallbacks + 10)]
 	public struct LobbyMatchList {
 		public const int Callback = Constants.SteamMatchmakingCallbacks + 10;
-		public uint _nLobbiesMatching;		// Number of lobbies that matched search criteria and we have SteamIDs for
+		public uint LobbiesMatching;		// Number of lobbies that matched search criteria and we have SteamIDs for
 	}
 
 	//-----------------------------------------------------------------------------
 	// Purpose: posted if a user is forcefully removed from a lobby
 	//			can occur if a user loses connection to Steam
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamMatchmakingCallbacks + 12)]
 	public struct LobbyKicked {
 		public const int Callback = Constants.SteamMatchmakingCallbacks + 12;
-		public ulong _ulSteamIDLobby;			// Lobby
-		public ulong _ulSteamIDAdmin;			// User who kicked you - possibly the ID of the lobby itself
-		public byte _bKickedDueToDisconnect;		// true if you were kicked from the lobby due to the user losing connection to Steam (currently always true)
+		public ulong SteamIDLobby;			// Lobby
+		public ulong SteamIDAdmin;			// User who kicked you - possibly the ID of the lobby itself
+		public byte KickedDueToDisconnect;		// true if you were kicked from the lobby due to the user losing connection to Steam (currently always true)
 	}
 
 	//-----------------------------------------------------------------------------
@@ -1004,7 +1005,7 @@ namespace Steamworks {
 	//			at this point, the lobby has been joined and is ready for use
 	//			a LobbyEnter callback will also be received (since the local user is joining their own lobby)
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamMatchmakingCallbacks + 13)]
 	public struct LobbyCreated {
 		public const int Callback = Constants.SteamMatchmakingCallbacks + 13;
@@ -1016,7 +1017,7 @@ namespace Steamworks {
 								// EResultAccessDenied - your game isn't set to allow lobbies, or your client does haven't rights to play the game
 								// EResultLimitExceeded - your game client has created too many lobbies
 		
-		public ulong _ulSteamIDLobby;		// chat room, zero if failed
+		public ulong SteamIDLobby;		// chat room, zero if failed
 	}
 
 	//-----------------------------------------------------------------------------
@@ -1025,7 +1026,7 @@ namespace Steamworks {
 	//			at this point, the lobby has been joined and is ready for use
 	//			a LobbyEnter callback will also be received (since the local user is joining their own lobby)
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamMatchmakingCallbacks + 16)]
 	public struct FavoritesListAccountsUpdated {
 		public const int Callback = Constants.SteamMatchmakingCallbacks + 16;
@@ -1034,13 +1035,13 @@ namespace Steamworks {
 	}
 
 	// callbacks
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value, Size = 1)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value, Size = 1)]
 	[CallbackIdentity(Constants.SteamMusicCallbacks + 1)]
 	public struct PlaybackStatusHasChanged {
 		public const int Callback = Constants.SteamMusicCallbacks + 1;
 	}
 
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamMusicCallbacks + 2)]
 	public struct VolumeHasChanged {
 		public const int Callback = Constants.SteamMusicCallbacks + 2;
@@ -1048,102 +1049,102 @@ namespace Steamworks {
 	}
 
 	// callbacks
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value, Size = 1)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value, Size = 1)]
 	[CallbackIdentity(Constants.SteamMusicRemoteCallbacks + 1)]
 	public struct MusicPlayerRemoteWillActivate {
 		public const int Callback = Constants.SteamMusicRemoteCallbacks + 1;
 	}
 
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value, Size = 1)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value, Size = 1)]
 	[CallbackIdentity(Constants.SteamMusicRemoteCallbacks + 2)]
 	public struct MusicPlayerRemoteWillDeactivate {
 		public const int Callback = Constants.SteamMusicRemoteCallbacks + 2;
 	}
 
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value, Size = 1)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value, Size = 1)]
 	[CallbackIdentity(Constants.SteamMusicRemoteCallbacks + 3)]
 	public struct MusicPlayerRemoteToFront {
 		public const int Callback = Constants.SteamMusicRemoteCallbacks + 3;
 	}
 
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value, Size = 1)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value, Size = 1)]
 	[CallbackIdentity(Constants.SteamMusicRemoteCallbacks + 4)]
 	public struct MusicPlayerWillQuit {
 		public const int Callback = Constants.SteamMusicRemoteCallbacks + 4;
 	}
 
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value, Size = 1)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value, Size = 1)]
 	[CallbackIdentity(Constants.SteamMusicRemoteCallbacks + 5)]
 	public struct MusicPlayerWantsPlay {
 		public const int Callback = Constants.SteamMusicRemoteCallbacks + 5;
 	}
 
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value, Size = 1)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value, Size = 1)]
 	[CallbackIdentity(Constants.SteamMusicRemoteCallbacks + 6)]
 	public struct MusicPlayerWantsPause {
 		public const int Callback = Constants.SteamMusicRemoteCallbacks + 6;
 	}
 
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value, Size = 1)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value, Size = 1)]
 	[CallbackIdentity(Constants.SteamMusicRemoteCallbacks + 7)]
 	public struct MusicPlayerWantsPlayPrevious {
 		public const int Callback = Constants.SteamMusicRemoteCallbacks + 7;
 	}
 
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value, Size = 1)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value, Size = 1)]
 	[CallbackIdentity(Constants.SteamMusicRemoteCallbacks + 8)]
 	public struct MusicPlayerWantsPlayNext {
 		public const int Callback = Constants.SteamMusicRemoteCallbacks + 8;
 	}
 
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamMusicRemoteCallbacks + 9)]
 	public struct MusicPlayerWantsShuffled {
 		public const int Callback = Constants.SteamMusicRemoteCallbacks + 9;
 		[MarshalAs(UnmanagedType.I1)]
-		public bool _bShuffled;
+		public bool Shuffled;
 	}
 
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamMusicRemoteCallbacks + 10)]
 	public struct MusicPlayerWantsLooped {
 		public const int Callback = Constants.SteamMusicRemoteCallbacks + 10;
 		[MarshalAs(UnmanagedType.I1)]
-		public bool _bLooped;
+		public bool Looped;
 	}
 
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamMusicCallbacks + 11)]
 	public struct MusicPlayerWantsVolume {
 		public const int Callback = Constants.SteamMusicCallbacks + 11;
 		public float _flNewVolume;
 	}
 
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamMusicCallbacks + 12)]
 	public struct MusicPlayerSelectsQueueEntry {
 		public const int Callback = Constants.SteamMusicCallbacks + 12;
 		public int nID;
 	}
 
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamMusicCallbacks + 13)]
 	public struct MusicPlayerSelectsPlaylistEntry {
 		public const int Callback = Constants.SteamMusicCallbacks + 13;
 		public int nID;
 	}
 
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamMusicRemoteCallbacks + 14)]
 	public struct MusicPlayerWantsPlayingRepeatStatus {
 		public const int Callback = Constants.SteamMusicRemoteCallbacks + 14;
-		public int _nPlayingRepeatStatus;
+		public int PlayingRepeatStatus;
 	}
 
 	// callbacks
 	// callback notification - a user wants to talk to us over the P2P channel via the SendP2PPacket() API
 	// in response, a call to AcceptP2PPacketsFromUser() needs to be made, if you want to talk with them
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamNetworkingCallbacks + 2)]
 	public struct P2PSessionRequest {
 		public const int Callback = Constants.SteamNetworkingCallbacks + 2;
@@ -1158,7 +1159,7 @@ namespace Steamworks {
 	public struct P2PSessionConnectFail {
 		public const int Callback = Constants.SteamNetworkingCallbacks + 3;
 		public SteamId _steamIDRemote;			// user we were sending packets to
-		public byte _eP2PSessionError;			// EP2PSessionError indicating why we're having trouble
+		public byte P2PSessionError;			// EP2PSessionError indicating why we're having trouble
 	}
 
 	// callback notification - status of a socket has changed
@@ -1170,7 +1171,7 @@ namespace Steamworks {
 		public SNetSocket _hSocket;				// the socket used to send/receive data to the remote host
 		public SNetListenSocket _hListenSocket;	// this is the server socket that we were listening on; NULL if this was an outgoing connection
 		public SteamId _steamIDRemote;			// remote steamID we have connected to, if it has one
-		public int _eSNetSocketState;				// socket state, ESNetSocketState
+		public int SNetSocketState;				// socket state, ESNetSocketState
 	}
 
 	// callbacks
@@ -1178,7 +1179,7 @@ namespace Steamworks {
 	// Purpose: sent when the local file cache is fully synced with the server for an app
 	//          That means that an application can be started and has all latest files
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.ClientRemoteStorageCallbacks + 1)]
 	public struct RemoteStorageAppSyncedClient {
 		public const int Callback = Constants.ClientRemoteStorageCallbacks + 1;
@@ -1191,7 +1192,7 @@ namespace Steamworks {
 	// Purpose: sent when the server is fully synced with the local file cache for an app
 	//          That means that we can shutdown Steam and our data is stored on the server
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.ClientRemoteStorageCallbacks + 2)]
 	public struct RemoteStorageAppSyncedServer {
 		public const int Callback = Constants.ClientRemoteStorageCallbacks + 2;
@@ -1204,17 +1205,17 @@ namespace Steamworks {
 	// Purpose: Status of up and downloads during a sync session
 	//
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.ClientRemoteStorageCallbacks + 3)]
 	public struct RemoteStorageAppSyncProgress {
 		public const int Callback = Constants.ClientRemoteStorageCallbacks + 3;
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = Constants.FilenameMax)]
-		public string _rgchCurrentFile;				// Current file being transferred
+		public string CurrentFile;				// Current file being transferred
 		public AppId _appId;							// App this info relates to
 		public uint _uBytesTransferredThisChunk;		// Bytes transferred this chunk
 		public double _dAppPercentComplete;				// Percent complete that this app's transfers are
 		[MarshalAs(UnmanagedType.I1)]
-		public bool _bUploading;							// if false, downloading
+		public bool Uploading;							// if false, downloading
 	}
 
 	//
@@ -1224,7 +1225,7 @@ namespace Steamworks {
 	// Purpose: Sent after we've determined the list of files that are out of sync
 	//          with the server.
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.ClientRemoteStorageCallbacks + 5)]
 	public struct RemoteStorageAppSyncStatusChect {
 		public const int Callback = Constants.ClientRemoteStorageCallbacks + 5;
@@ -1235,7 +1236,7 @@ namespace Steamworks {
 	//-----------------------------------------------------------------------------
 	// Purpose: Sent after a conflict resolution attempt.
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.ClientRemoteStorageCallbacks + 6)]
 	public struct RemoteStorageConflictResolution {
 		public const int Callback = Constants.ClientRemoteStorageCallbacks + 6;
@@ -1246,34 +1247,34 @@ namespace Steamworks {
 	//-----------------------------------------------------------------------------
 	// Purpose: The result of a call to FileShare()
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.ClientRemoteStorageCallbacks + 7)]
 	public struct RemoteStorageFileShareResult {
 		public const int Callback = Constants.ClientRemoteStorageCallbacks + 7;
 		public ResultType ResultType;			// The result of the operation
 		public UGCHandle _hFile;		// The handle that can be shared with users and features
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = Constants.FilenameMax)]
-		public string _rgchFilename; // The name of the file that was shared
+		public string Filename; // The name of the file that was shared
 	}
 
 	// ClientRemoteStorageCallbacks + 8 is deprecated! Do not reuse
 	//-----------------------------------------------------------------------------
 	// Purpose: The result of a call to PublishFile()
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.ClientRemoteStorageCallbacks + 9)]
 	public struct RemoteStoragePublishFileResult {
 		public const int Callback = Constants.ClientRemoteStorageCallbacks + 9;
 		public ResultType ResultType;				// The result of the operation.
 		public PublishedFileId PublishedField;
 		[MarshalAs(UnmanagedType.I1)]
-		public bool _bUserNeedsToAcceptWorkshopLegalAgreement;
+		public bool UserNeedsToAcceptWorkshopLegalAgreement;
 	}
 
 	//-----------------------------------------------------------------------------
 	// Purpose: The result of a call to DeletePublishedFile()
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.ClientRemoteStorageCallbacks + 11)]
 	public struct RemoteStorageDeletePublishedFileResult {
 		public const int Callback = Constants.ClientRemoteStorageCallbacks + 11;
@@ -1284,21 +1285,21 @@ namespace Steamworks {
 	//-----------------------------------------------------------------------------
 	// Purpose: The result of a call to EnumerateUserPublishedFiles()
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.ClientRemoteStorageCallbacks + 12)]
 	public struct RemoteStorageEnumerateUserPublishedFilesResult {
 		public const int Callback = Constants.ClientRemoteStorageCallbacks + 12;
 		public ResultType ResultType;				// The result of the operation.
-		public int _nResultsReturned;
-		public int _nTotalResultCount;
+		public int ResultsReturned;
+		public int TotalResultCount;
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = Constants.EnumeratePublishedFilesMaxResults)]
-		public PublishedFileId[] _rgPublishedFileId;
+		public PublishedFileId[] gPublishedFileId;
 	}
 
 	//-----------------------------------------------------------------------------
 	// Purpose: The result of a call to SubscribePublishedFile()
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.ClientRemoteStorageCallbacks + 13)]
 	public struct RemoteStorageSubscribePublishedFileResult {
 		public const int Callback = Constants.ClientRemoteStorageCallbacks + 13;
@@ -1309,23 +1310,23 @@ namespace Steamworks {
 	//-----------------------------------------------------------------------------
 	// Purpose: The result of a call to EnumerateSubscribePublishedFiles()
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.ClientRemoteStorageCallbacks + 14)]
 	public struct RemoteStorageEnumerateUserSubscribedFilesResult {
 		public const int Callback = Constants.ClientRemoteStorageCallbacks + 14;
 		public ResultType ResultType;				// The result of the operation.
-		public int _nResultsReturned;
-		public int _nTotalResultCount;
+		public int ResultsReturned;
+		public int TotalResultCount;
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = Constants.EnumeratePublishedFilesMaxResults)]
-		public PublishedFileId[] _rgPublishedFileId;
+		public PublishedFileId[] gPublishedFileId;
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = Constants.EnumeratePublishedFilesMaxResults)]
-		public uint[] _rgRTimeSubscribed;
+		public uint[] gRTimeSubscribed;
 	}
 
 	//-----------------------------------------------------------------------------
 	// Purpose: The result of a call to UnsubscribePublishedFile()
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.ClientRemoteStorageCallbacks + 15)]
 	public struct RemoteStorageUnsubscribePublishedFileResult {
 		public const int Callback = Constants.ClientRemoteStorageCallbacks + 15;
@@ -1336,104 +1337,104 @@ namespace Steamworks {
 	//-----------------------------------------------------------------------------
 	// Purpose: The result of a call to CommitPublishedFileUpdate()
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.ClientRemoteStorageCallbacks + 16)]
 	public struct RemoteStorageUpdatePublishedFileResult {
 		public const int Callback = Constants.ClientRemoteStorageCallbacks + 16;
 		public ResultType ResultType;				// The result of the operation.
 		public PublishedFileId PublishedField;
 		[MarshalAs(UnmanagedType.I1)]
-		public bool _bUserNeedsToAcceptWorkshopLegalAgreement;
+		public bool UserNeedsToAcceptWorkshopLegalAgreement;
 	}
 
 	//-----------------------------------------------------------------------------
 	// Purpose: The result of a call to UGCDownload()
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.ClientRemoteStorageCallbacks + 17)]
 	public struct RemoteStorageDownloadUGCResult {
 		public const int Callback = Constants.ClientRemoteStorageCallbacks + 17;
 		public ResultType ResultType;				// The result of the operation.
 		public UGCHandle _hFile;			// The handle to the file that was attempted to be downloaded.
 		public AppId _appId;				// ID of the app that created this file.
-		public int _nSizeInBytes;			// The size of the file that was downloaded, in bytes.
+		public int SizeInBytes;			// The size of the file that was downloaded, in bytes.
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = Constants.FilenameMax)]
-		public string _pchFileName;		// The name of the file that was downloaded.
-		public ulong _ulSteamIDOwner;		// Steam ID of the user who created this content.
+		public string _FileName;		// The name of the file that was downloaded.
+		public ulong SteamIDOwner;		// Steam ID of the user who created this content.
 	}
 
 	//-----------------------------------------------------------------------------
 	// Purpose: The result of a call to GetPublishedFileDetails()
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.ClientRemoteStorageCallbacks + 18)]
 	public struct RemoteStorageGetPublishedFileDetailsResult {
 		public const int Callback = Constants.ClientRemoteStorageCallbacks + 18;
 		public ResultType ResultType;				// The result of the operation.
 		public PublishedFileId PublishedField;
-		public AppId _nCreatorAppID;		// ID of the app that created this file.
-		public AppId _nConsumerAppID;		// ID of the app that will consume this file.
+		public AppId CreatorAppID;		// ID of the app that created this file.
+		public AppId ConsumerAppID;		// ID of the app that will consume this file.
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = Constants.PublishedDocumentTitleMax)]
-		public string _rgchTitle;		// title of document
+		public string Title;		// title of document
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = Constants.PublishedDocumentDescriptionMax)]
-		public string _rgchDescription;	// description of document
+		public string Description;	// description of document
 		public UGCHandle _hFile;			// The handle of the primary file
 		public UGCHandle _hPreviewFile;		// The handle of the preview file
-		public ulong _ulSteamIDOwner;		// Steam ID of the user who created this content.
-		public uint _rtimeCreated;			// time when the published file was created
-		public uint _rtimeUpdated;			// time when the published file was last updated
-		public ERemoteStoragePublishedFileVisibility _eVisibility;
+		public ulong SteamIDOwner;		// Steam ID of the user who created this content.
+		public uint timeCreated;			// time when the published file was created
+		public uint timeUpdated;			// time when the published file was last updated
+		public ERemoteStoragePublishedFileVisibility Visibility;
 		[MarshalAs(UnmanagedType.I1)]
-		public bool _bBanned;
+		public bool Banned;
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = Constants.TagListMax)]
-		public string _rgchTags;	// comma separated list of all tags associated with this file
+		public string Tags;	// comma separated list of all tags associated with this file
 		[MarshalAs(UnmanagedType.I1)]
-		public bool _bTagsTruncated;			// whether the list of tags was too long to be returned in the provided buffer
+		public bool TagsTruncated;			// whether the list of tags was too long to be returned in the provided buffer
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = Constants.FilenameMax)]
-		public string _pchFileName;		// The name of the primary file
-		public int _nFileSize;				// Size of the primary file
-		public int _nPreviewFileSize;		// Size of the preview file
+		public string _FileName;		// The name of the primary file
+		public int FileSize;				// Size of the primary file
+		public int PreviewFileSize;		// Size of the preview file
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = Constants.PublishedFileURLMax)]
-		public string _rgchURL;	// URL (for a video or a website)
-		public EWorkshopFileType _eFileType;	// Type of the file
+		public string URL;	// URL (for a video or a website)
+		public EWorkshopFileType FileType;	// Type of the file
 		[MarshalAs(UnmanagedType.I1)]
-		public bool _bAcceptedForUse;			// developer has specifically flagged this item as accepted in the Workshop
+		public bool AcceptedForUse;			// developer has specifically flagged this item as accepted in the Workshop
 	}
 
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.ClientRemoteStorageCallbacks + 19)]
 	public struct RemoteStorageEnumerateWorkshopFilesResult {
 		public const int Callback = Constants.ClientRemoteStorageCallbacks + 19;
 		public ResultType ResultType;
-		public int _nResultsReturned;
-		public int _nTotalResultCount;
+		public int ResultsReturned;
+		public int TotalResultCount;
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = Constants.EnumeratePublishedFilesMaxResults)]
-		public PublishedFileId[] _rgPublishedFileId;
+		public PublishedFileId[] gPublishedFileId;
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = Constants.EnumeratePublishedFilesMaxResults)]
-		public float[] _rgScore;
-		public AppId _nAppId;
+		public float[] gScore;
+		public AppId AppId;
 		public uint _unStartIndex;
 	}
 
 	//-----------------------------------------------------------------------------
 	// Purpose: The result of GetPublishedItemVoteDetails
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.ClientRemoteStorageCallbacks + 20)]
 	public struct RemoteStorageGetPublishedItemVoteDetailsResult {
 		public const int Callback = Constants.ClientRemoteStorageCallbacks + 20;
 		public ResultType ResultType;
 		public PublishedFileId _unPublishedFileId;
-		public int _nVotesFor;
-		public int _nVotesAgainst;
-		public int _nReports;
+		public int VotesFor;
+		public int VotesAgainst;
+		public int Reports;
 		public float _fScore;
 	}
 
 	//-----------------------------------------------------------------------------
 	// Purpose: User subscribed to a file for the app (from within the app or on the web)
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.ClientRemoteStorageCallbacks + 21)]
 	public struct RemoteStoragePublishedFileSubscribed {
 		public const int Callback = Constants.ClientRemoteStorageCallbacks + 21;
@@ -1444,7 +1445,7 @@ namespace Steamworks {
 	//-----------------------------------------------------------------------------
 	// Purpose: User unsubscribed from a file for the app (from within the app or on the web)
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.ClientRemoteStorageCallbacks + 22)]
 	public struct RemoteStoragePublishedFileUnsubscribed {
 		public const int Callback = Constants.ClientRemoteStorageCallbacks + 22;
@@ -1455,7 +1456,7 @@ namespace Steamworks {
 	//-----------------------------------------------------------------------------
 	// Purpose: Published file that a user owns was deleted (from within the app or the web)
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.ClientRemoteStorageCallbacks + 23)]
 	public struct RemoteStoragePublishedFileDeleted {
 		public const int Callback = Constants.ClientRemoteStorageCallbacks + 23;
@@ -1466,7 +1467,7 @@ namespace Steamworks {
 	//-----------------------------------------------------------------------------
 	// Purpose: The result of a call to UpdateUserPublishedItemVote()
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.ClientRemoteStorageCallbacks + 24)]
 	public struct RemoteStorageUpdateUserPublishedItemVoteResult {
 		public const int Callback = Constants.ClientRemoteStorageCallbacks + 24;
@@ -1477,65 +1478,65 @@ namespace Steamworks {
 	//-----------------------------------------------------------------------------
 	// Purpose: The result of a call to GetUserPublishedItemVoteDetails()
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.ClientRemoteStorageCallbacks + 25)]
 	public struct RemoteStorageUserVoteDetails {
 		public const int Callback = Constants.ClientRemoteStorageCallbacks + 25;
 		public ResultType ResultType;				// The result of the operation.
 		public PublishedFileId PublishedField;	// The published file id
-		public EWorkshopVote _eVote;			// what the user voted
+		public EWorkshopVote Vote;			// what the user voted
 	}
 
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.ClientRemoteStorageCallbacks + 26)]
 	public struct RemoteStorageEnumerateUserSharedWorkshopFilesResult {
 		public const int Callback = Constants.ClientRemoteStorageCallbacks + 26;
 		public ResultType ResultType;				// The result of the operation.
-		public int _nResultsReturned;
-		public int _nTotalResultCount;
+		public int ResultsReturned;
+		public int TotalResultCount;
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = Constants.EnumeratePublishedFilesMaxResults)]
-		public PublishedFileId[] _rgPublishedFileId;
+		public PublishedFileId[] gPublishedFileId;
 	}
 
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.ClientRemoteStorageCallbacks + 27)]
 	public struct RemoteStorageSetUserPublishedFileActionResult {
 		public const int Callback = Constants.ClientRemoteStorageCallbacks + 27;
 		public ResultType ResultType;				// The result of the operation.
 		public PublishedFileId PublishedField;	// The published file id
-		public EWorkshopFileAction _eAction;	// the action that was attempted
+		public EWorkshopFileAction Action;	// the action that was attempted
 	}
 
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.ClientRemoteStorageCallbacks + 28)]
 	public struct RemoteStorageEnumeratePublishedFilesByUserActionResult {
 		public const int Callback = Constants.ClientRemoteStorageCallbacks + 28;
 		public ResultType ResultType;				// The result of the operation.
-		public EWorkshopFileAction _eAction;	// the action that was filtered on
-		public int _nResultsReturned;
-		public int _nTotalResultCount;
+		public EWorkshopFileAction Action;	// the action that was filtered on
+		public int ResultsReturned;
+		public int TotalResultCount;
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = Constants.EnumeratePublishedFilesMaxResults)]
-		public PublishedFileId[] _rgPublishedFileId;
+		public PublishedFileId[] gPublishedFileId;
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = Constants.EnumeratePublishedFilesMaxResults)]
-		public uint[] _rgRTimeUpdated;
+		public uint[] gRTimeUpdated;
 	}
 
 	//-----------------------------------------------------------------------------
 	// Purpose: Called periodically while a PublishWorkshopFile is in progress
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.ClientRemoteStorageCallbacks + 29)]
 	public struct RemoteStoragePublishFileProgress {
 		public const int Callback = Constants.ClientRemoteStorageCallbacks + 29;
 		public double _dPercentFile;
 		[MarshalAs(UnmanagedType.I1)]
-		public bool _bPreview;
+		public bool Preview;
 	}
 
 	//-----------------------------------------------------------------------------
 	// Purpose: Called when the content for a published file is updated
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.ClientRemoteStorageCallbacks + 30)]
 	public struct RemoteStoragePublishedFileUpdated {
 		public const int Callback = Constants.ClientRemoteStorageCallbacks + 30;
@@ -1547,7 +1548,7 @@ namespace Steamworks {
 	//-----------------------------------------------------------------------------
 	// Purpose: Called when a FileWriteAsync completes
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.ClientRemoteStorageCallbacks + 31)]
 	public struct RemoteStorageFileWriteAsyncComplete {
 		public const int Callback = Constants.ClientRemoteStorageCallbacks + 31;
@@ -1557,13 +1558,13 @@ namespace Steamworks {
 	//-----------------------------------------------------------------------------
 	// Purpose: Called when a FileReadAsync completes
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.ClientRemoteStorageCallbacks + 32)]
 	public struct RemoteStorageFileReadAsyncComplete {
 		public const int Callback = Constants.ClientRemoteStorageCallbacks + 32;
 		public SteamAPICall _hFileReadAsync;		// call handle of the async read which was made
 		public ResultType ResultType;						// result
-		public uint _nOffset;						// offset in the file this read was at
+		public uint Offset;						// offset in the file this read was at
 		public uint _cubRead;						// amount read - will the <= the amount requested
 	}
 
@@ -1572,7 +1573,7 @@ namespace Steamworks {
 	// Purpose: Screenshot successfully written or otherwise added to the library
 	// and can now be tagged
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamScreenshotsCallbacks + 1)]
 	public struct ScreenshotReady {
 		public const int Callback = Constants.SteamScreenshotsCallbacks + 1;
@@ -1585,7 +1586,7 @@ namespace Steamworks {
 	// HookScreenshots() has been called, in which case Steam will not take
 	// the screenshot itself.
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value, Size = 1)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value, Size = 1)]
 	[CallbackIdentity(Constants.SteamScreenshotsCallbacks + 2)]
 	public struct ScreenshotRequested {
 		public const int Callback = Constants.SteamScreenshotsCallbacks + 2;
@@ -1594,7 +1595,7 @@ namespace Steamworks {
 	//-----------------------------------------------------------------------------
 	// Purpose: Callback for querying UGC
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.ClientUGCCallbacks + 1)]
 	public struct SteamUGCQueryCompleted {
 		public const int Callback = Constants.ClientUGCCallbacks + 1;
@@ -1603,50 +1604,50 @@ namespace Steamworks {
 		public uint _unNumResultsReturned;
 		public uint _unTotalMatchingResults;
 		[MarshalAs(UnmanagedType.I1)]
-		public bool _bCachedData;	// indicates whether this data was retrieved from the local on-disk cache
+		public bool CachedData;	// indicates whether this data was retrieved from the local on-disk cache
 	}
 
 	//-----------------------------------------------------------------------------
 	// Purpose: Callback for requesting details on one piece of UGC
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.ClientUGCCallbacks + 2)]
 	public struct SteamUGCRequestUGCDetailsResult {
 		public const int Callback = Constants.ClientUGCCallbacks + 2;
-		public SteamUGCDetails _details;
+		public SteamUGCDetails Details;
 		[MarshalAs(UnmanagedType.I1)]
-		public bool _bCachedData; // indicates whether this data was retrieved from the local on-disk cache
+		public bool CachedData; // indicates whether this data was retrieved from the local on-disk cache
 	}
 
 	//-----------------------------------------------------------------------------
 	// Purpose: result for ISteamUGC::CreateItem()
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.ClientUGCCallbacks + 3)]
 	public struct CreateItemResult {
 		public const int Callback = Constants.ClientUGCCallbacks + 3;
 		public ResultType ResultType;
 		public PublishedFileId PublishedField; // new item got this UGC PublishFileID
 		[MarshalAs(UnmanagedType.I1)]
-		public bool _bUserNeedsToAcceptWorkshopLegalAgreement;
+		public bool UserNeedsToAcceptWorkshopLegalAgreement;
 	}
 
 	//-----------------------------------------------------------------------------
 	// Purpose: result for ISteamUGC::SubmitItemUpdate()
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.ClientUGCCallbacks + 4)]
 	public struct SubmitItemUpdateResult {
 		public const int Callback = Constants.ClientUGCCallbacks + 4;
 		public ResultType ResultType;
 		[MarshalAs(UnmanagedType.I1)]
-		public bool _bUserNeedsToAcceptWorkshopLegalAgreement;
+		public bool UserNeedsToAcceptWorkshopLegalAgreement;
 	}
 
 	//-----------------------------------------------------------------------------
 	// Purpose: a Workshop item has been installed or updated
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.ClientUGCCallbacks + 5)]
 	public struct ItemInstalled {
 		public const int Callback = Constants.ClientUGCCallbacks + 5;
@@ -1657,7 +1658,7 @@ namespace Steamworks {
 	//-----------------------------------------------------------------------------
 	// Purpose: result of DownloadItem(), existing item files can be accessed again
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.ClientUGCCallbacks + 6)]
 	public struct DownloadItemResult {
 		public const int Callback = Constants.ClientUGCCallbacks + 6;
@@ -1669,48 +1670,48 @@ namespace Steamworks {
 	//-----------------------------------------------------------------------------
 	// Purpose: result of AddItemToFavorites() or RemoveItemFromFavorites()
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.ClientUGCCallbacks + 7)]
 	public struct UserFavoriteItemsListChanged {
 		public const int Callback = Constants.ClientUGCCallbacks + 7;
 		public PublishedFileId PublishedField;
 		public ResultType ResultType;
 		[MarshalAs(UnmanagedType.I1)]
-		public bool _bWasAddRequest;
+		public bool WasAddRequest;
 	}
 
 	//-----------------------------------------------------------------------------
 	// Purpose: The result of a call to SetUserItemVote()
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.ClientUGCCallbacks + 8)]
 	public struct SetUserItemVoteResult {
 		public const int Callback = Constants.ClientUGCCallbacks + 8;
 		public PublishedFileId PublishedField;
 		public ResultType ResultType;
 		[MarshalAs(UnmanagedType.I1)]
-		public bool _bVoteUp;
+		public bool VoteUp;
 	}
 
 	//-----------------------------------------------------------------------------
 	// Purpose: The result of a call to GetUserItemVote()
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.ClientUGCCallbacks + 9)]
 	public struct GetUserItemVoteResult {
 		public const int Callback = Constants.ClientUGCCallbacks + 9;
 		public PublishedFileId PublishedField;
 		public ResultType ResultType;
 		[MarshalAs(UnmanagedType.I1)]
-		public bool _bVotedUp;
+		public bool VotedUp;
 		[MarshalAs(UnmanagedType.I1)]
-		public bool _bVotedDown;
+		public bool VotedDown;
 		[MarshalAs(UnmanagedType.I1)]
-		public bool _bVoteSkipped;
+		public bool VoteSkipped;
 	}
 
 	// callbacks
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.ClientUnifiedMessagesCallbacks + 1)]
 	public struct SteamUnifiedMessagesSendMethodResult {
 		public const int Callback = Constants.ClientUnifiedMessagesCallbacks + 1;
@@ -1728,7 +1729,7 @@ namespace Steamworks {
 	//			only be seen if the user has dropped connection due to a networking issue
 	//			or a Steam server update
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value, Size = 1)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value, Size = 1)]
 	[CallbackIdentity(Constants.SteamUserCallbacks + 1)]
 	public struct SteamServersConnected {
 		public const int Callback = Constants.SteamUserCallbacks + 1;
@@ -1739,20 +1740,20 @@ namespace Steamworks {
 	//			this will occur periodically if the Steam client is not connected,
 	//			and has failed in it's retry to establish a connection
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamUserCallbacks + 2)]
 	public struct SteamServerConnectFailure {
 		public const int Callback = Constants.SteamUserCallbacks + 2;
 		public ResultType ResultType;
 		[MarshalAs(UnmanagedType.I1)]
-		public bool _bStillRetrying;
+		public bool StillRetrying;
 	}
 
 	//-----------------------------------------------------------------------------
 	// Purpose: called if the client has lost connection to the Steam servers
 	//			real-time services will be disabled until a matching SteamServersConnected has been posted
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamUserCallbacks + 3)]
 	public struct SteamServersDisconnected {
 		public const int Callback = Constants.SteamUserCallbacks + 3;
@@ -1765,7 +1766,7 @@ namespace Steamworks {
 	//			The game client should immediately disconnect upon receiving this message.
 	//			This can usually occur if the user doesn't have rights to play on the game server.
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamUserCallbacks + 13)]
 	public struct ClientGameServerDeny {
 		public const int Callback = Constants.SteamUserCallbacks + 13;
@@ -1773,7 +1774,7 @@ namespace Steamworks {
 		public uint _uAppID;
 		public uint _unGameServerIP;
 		public ushort _usGameServerPort;
-		public ushort _bSecure;
+		public ushort Secure;
 		public uint _uReason;
 	}
 
@@ -1782,17 +1783,17 @@ namespace Steamworks {
 	//			When getting this message the client should disconnect from Steam, reset any stored Steam state and reconnect.
 	//			This usually occurs in the rare event the Steam client has some kind of fatal error.
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamUserCallbacks + 17)]
 	public struct IPCFailure {
 		public const int Callback = Constants.SteamUserCallbacks + 17;
-		public byte _eFailureType;
+		public byte FailureType;
 	}
 
 	//-----------------------------------------------------------------------------
 	// Purpose: Signaled whenever licenses change
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value, Size = 1)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value, Size = 1)]
 	[CallbackIdentity(Constants.SteamUserCallbacks + 25)]
 	public struct LicensesUpdated {
 		public const int Callback = Constants.SteamUserCallbacks + 25;
@@ -1806,27 +1807,27 @@ namespace Steamworks {
 	public struct ValidateAuthTicketResponse {
 		public const int Callback = Constants.SteamUserCallbacks + 43;
 		public SteamId _SteamID;
-		public EAuthSessionResponse _eAuthSessionResponse;
-		public SteamId _OwnerSteamID; // different from _SteamID if borrowed
+		public EAuthSessionResponse AuthSessionResponse;
+		public SteamId _OwnerSteamID; // different from Id if borrowed
 	}
 
 	//-----------------------------------------------------------------------------
 	// Purpose: called when a user has responded to a microtransaction authorization request
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamUserCallbacks + 52)]
 	public struct MicroTxnAuthorizationResponse {
 		public const int Callback = Constants.SteamUserCallbacks + 52;
 		
 		public uint _uappId;			// AppID for this microtransaction
-		public ulong _ulOrderID;			// OrderID provided for the microtransaction
-		public byte _bAuthorized;		// if user authorized transaction
+		public ulong OrderID;			// OrderID provided for the microtransaction
+		public byte Authorized;		// if user authorized transaction
 	}
 
 	//-----------------------------------------------------------------------------
 	// Purpose: ResultType from RequestEncryptedAppTicket
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamUserCallbacks + 54)]
 	public struct EncryptedAppTicketResponse {
 		public const int Callback = Constants.SteamUserCallbacks + 54;
@@ -1837,7 +1838,7 @@ namespace Steamworks {
 	//-----------------------------------------------------------------------------
 	// callback for GetAuthSessionTicket
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamUserCallbacks + 63)]
 	public struct GetAuthSessionTicketResponse {
 		public const int Callback = Constants.SteamUserCallbacks + 63;
@@ -1848,7 +1849,7 @@ namespace Steamworks {
 	//-----------------------------------------------------------------------------
 	// Purpose: sent to your game in response to a steam://gamewebcallback/ command
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamUserCallbacks + 64)]
 	public struct GameWebCallbact {
 		public const int Callback = Constants.SteamUserCallbacks + 64;
@@ -1859,7 +1860,7 @@ namespace Steamworks {
 	//-----------------------------------------------------------------------------
 	// Purpose: sent to your game in response to ISteamUser::RequestStoreAuthURL
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamUserCallbacks + 65)]
 	public struct StoreAuthURLResponse {
 		public const int Callback = Constants.SteamUserCallbacks + 65;
@@ -1872,65 +1873,65 @@ namespace Steamworks {
 	// Purpose: called when the latests stats and achievements have been received
 	//			from the server
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Explicit, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Explicit, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamUserStatsCallbacks + 1)]
 	public struct UserStatsReceived {
 		public const int Callback = Constants.SteamUserStatsCallbacks + 1;
 		[FieldOffset(0)]
-		public ulong _nGameID;		// Game these stats are for
+		public ulong GameID;		// Game these stats are for
 		[FieldOffset(8)]
 		public ResultType ResultType;		// Success / error fetching the stats
 		[FieldOffset(12)]
-		public SteamId _steamIDUser;	// The user for whom the stats are retrieved for
+		public SteamId _userId;	// The user for whom the stats are retrieved for
 	}
 
 	//-----------------------------------------------------------------------------
 	// Purpose: result of a request to store the user stats for a game
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamUserStatsCallbacks + 2)]
 	public struct UserStatsStored {
 		public const int Callback = Constants.SteamUserStatsCallbacks + 2;
-		public ulong _nGameID;		// Game these stats are for
+		public ulong GameID;		// Game these stats are for
 		public ResultType ResultType;		// success / error
 	}
 
 	//-----------------------------------------------------------------------------
 	// Purpose: result of a request to store the achievements for a game, or an
-	//			"indicate progress" call. If both _nCurProgress and _nMaxProgress
+	//			"indicate progress" call. If both CurProgress and MaxProgress
 	//			are zero, that means the achievement has been fully unlocked.
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamUserStatsCallbacks + 3)]
 	public struct UserAchievementStored {
 		public const int Callback = Constants.SteamUserStatsCallbacks + 3;
 		
-		public ulong _nGameID;				// Game this is for
+		public ulong GameID;				// Game this is for
 		[MarshalAs(UnmanagedType.I1)]
-		public bool _bGroupAchievement;	// if this is a "group" achievement
+		public bool GroupAchievement;	// if this is a "group" achievement
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = Constants.StatNameMax)]
-		public string _rgchAchievementName;		// name of the achievement
-		public uint _nCurProgress;			// current progress towards the achievement
-		public uint _nMaxProgress;			// "out of" this many
+		public string AchievementName;		// name of the achievement
+		public uint CurProgress;			// current progress towards the achievement
+		public uint MaxProgress;			// "out of" this many
 	}
 
 	//-----------------------------------------------------------------------------
 	// Purpose: call result for finding a leaderboard, returned as a result of FindOrCreateLeaderboard() or FindLeaderboard()
 	//			use CCallResult<> to map this async result to a member function
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamUserStatsCallbacks + 4)]
 	public struct LeaderboardFindResult {
 		public const int Callback = Constants.SteamUserStatsCallbacks + 4;
 		public SteamLeaderboard _hSteamLeaderboard;	// handle to the leaderboard serarched for, 0 if no leaderboard found
-		public byte _bLeaderboardFound;				// 0 if no leaderboard found
+		public byte LeaderboardFound;				// 0 if no leaderboard found
 	}
 
 	//-----------------------------------------------------------------------------
 	// Purpose: call result indicating scores for a leaderboard have been downloaded and are ready to be retrieved, returned as a result of DownloadLeaderboardEntries()
 	//			use CCallResult<> to map this async result to a member function
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamUserStatsCallbacks + 5)]
 	public struct LeaderboardScoresDownloaded {
 		public const int Callback = Constants.SteamUserStatsCallbacks + 5;
@@ -1943,23 +1944,23 @@ namespace Steamworks {
 	// Purpose: call result indicating scores has been uploaded, returned as a result of UploadLeaderboardScore()
 	//			use CCallResult<> to map this async result to a member function
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamUserStatsCallbacks + 6)]
 	public struct LeaderboardScoreUploaded {
 		public const int Callback = Constants.SteamUserStatsCallbacks + 6;
-		public byte _bSuccess;			// 1 if the call was successful
+		public byte Success;			// 1 if the call was successful
 		public SteamLeaderboard _hSteamLeaderboard;	// the leaderboard handle that was
-		public int _nScore;				// the score that was attempted to set
-		public byte _bScoreChanged;		// true if the score in the leaderboard change, false if the existing score was better
-		public int _nGlobalRankNew;		// the new global rank of the user in this leaderboard
-		public int _nGlobalRankPrevious;	// the previous global rank of the user in this leaderboard; 0 if the user had no existing entry in the leaderboard
+		public int Score;				// the score that was attempted to set
+		public byte ScoreChanged;		// true if the score in the leaderboard change, false if the existing score was better
+		public int GlobalRankNew;		// the new global rank of the user in this leaderboard
+		public int GlobalRankPrevious;	// the previous global rank of the user in this leaderboard; 0 if the user had no existing entry in the leaderboard
 	}
 
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamUserStatsCallbacks + 7)]
 	public struct NumberOfCurrentPlayers {
 		public const int Callback = Constants.SteamUserStatsCallbacks + 7;
-		public byte _bSuccess;			// 1 if the call was successful
+		public byte Success;			// 1 if the call was successful
 		public int _cPlayers;			// Number of players currently playing
 	}
 
@@ -1967,45 +1968,45 @@ namespace Steamworks {
 	// Purpose: Callback indicating that a user's stats have been unloaded.
 	//  Call RequestUserStats again to access stats for this user
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamUserStatsCallbacks + 8)]
 	public struct UserStatsUnloaded {
 		public const int Callback = Constants.SteamUserStatsCallbacks + 8;
-		public SteamId _steamIDUser;	// User whose stats have been unloaded
+		public SteamId _userId;	// User whose stats have been unloaded
 	}
 
 	//-----------------------------------------------------------------------------
 	// Purpose: Callback indicating that an achievement icon has been fetched
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamUserStatsCallbacks + 9)]
 	public struct UserAchievementIconFetched {
 		public const int Callback = Constants.SteamUserStatsCallbacks + 9;
 		
-		public CGameID _nGameID;				// Game this is for
+		public GameId GameID;				// Game this is for
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = Constants.StatNameMax)]
-		public string _rgchAchievementName;		// name of the achievement
+		public string AchievementName;		// name of the achievement
 		[MarshalAs(UnmanagedType.I1)]
-		public bool _bAchieved;		// Is the icon for the achieved or not achieved version?
-		public int _nIconHandle;		// Handle to the image, which can be used in SteamUtils()->GetImageRGBA(), 0 means no image is set for the achievement
+		public bool Achieved;		// Is the icon for the achieved or not achieved version?
+		public int IconHandle;		// Handle to the image, which can be used in SteamUtils()->GetImageRGBA(), 0 means no image is set for the achievement
 	}
 
 	//-----------------------------------------------------------------------------
 	// Purpose: Callback indicating that global achievement percentages are fetched
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamUserStatsCallbacks + 10)]
 	public struct GlobalAchievementPercentagesReady {
 		public const int Callback = Constants.SteamUserStatsCallbacks + 10;
 		
-		public ulong _nGameID;				// Game this is for
+		public ulong GameID;				// Game this is for
 		public ResultType ResultType;				// ResultType of the operation
 	}
 
 	//-----------------------------------------------------------------------------
 	// Purpose: call result indicating UGC has been uploaded, returned as a result of SetLeaderboardUGC()
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamUserStatsCallbacks + 11)]
 	public struct LeaderboardUGCSet {
 		public const int Callback = Constants.SteamUserStatsCallbacks + 11;
@@ -2017,11 +2018,11 @@ namespace Steamworks {
 	// Purpose: callback indicating global stats have been received.
 	//	Returned as a result of RequestGlobalStats()
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamUserStatsCallbacks + 12)]
 	public struct GlobalStatsReceived {
 		public const int Callback = Constants.SteamUserStatsCallbacks + 12;
-		public ulong _nGameID;				// Game global stats were requested for
+		public ulong GameID;				// Game global stats were requested for
 		public ResultType ResultType;				// The result of the request
 	}
 
@@ -2029,7 +2030,7 @@ namespace Steamworks {
 	//-----------------------------------------------------------------------------
 	// Purpose: The country of the user changed
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value, Size = 1)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value, Size = 1)]
 	[CallbackIdentity(Constants.SteamUtilsCallbacks + 1)]
 	public struct IPCountry {
 		public const int Callback = Constants.SteamUtilsCallbacks + 1;
@@ -2038,17 +2039,17 @@ namespace Steamworks {
 	//-----------------------------------------------------------------------------
 	// Purpose: Fired when running on a laptop and less than 10 minutes of battery is left, fires then every minute
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamUtilsCallbacks + 2)]
 	public struct LowBatteryPower {
 		public const int Callback = Constants.SteamUtilsCallbacks + 2;
-		public byte _nMinutesBatteryLeft;
+		public byte MinutesBatteryLeft;
 	}
 
 	//-----------------------------------------------------------------------------
 	// Purpose: called when a SteamAsyncCall has completed (or failed)
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamUtilsCallbacks + 3)]
 	public struct SteamAPICallCompleted {
 		public const int Callback = Constants.SteamUtilsCallbacks + 3;
@@ -2058,7 +2059,7 @@ namespace Steamworks {
 	//-----------------------------------------------------------------------------
 	// called when Steam wants to shutdown
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value, Size = 1)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value, Size = 1)]
 	[CallbackIdentity(Constants.SteamUtilsCallbacks + 4)]
 	public struct SteamShutdown {
 		public const int Callback = Constants.SteamUtilsCallbacks + 4;
@@ -2067,47 +2068,47 @@ namespace Steamworks {
 	//-----------------------------------------------------------------------------
 	// callback for CheckFileSignature
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamUtilsCallbacks + 5)]
 	public struct CheckFileSignature {
 		public const int Callback = Constants.SteamUtilsCallbacks + 5;
-		public ECheckFileSignature _eCheckFileSignature;
+		public ECheckFileSignature ECheckFileSignature;
 	}
 
 	// SteamUtilsCallbacks + 13 is taken
 	//-----------------------------------------------------------------------------
 	// Big Picture gamepad text input has been closed
 	//-----------------------------------------------------------------------------
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.SteamUtilsCallbacks + 14)]
 	public struct GamepadTextInputDismissed {
 		public const int Callback = Constants.SteamUtilsCallbacks + 14;
 		[MarshalAs(UnmanagedType.I1)]
-		public bool _bSubmitted;										// true if user entered & accepted text (Call ISteamUtils::GetEnteredGamepadTextInput() for text), false if canceled input
+		public bool Submitted;										// true if user entered & accepted text (Call ISteamUtils::GetEnteredGamepadTextInput() for text), false if canceled input
 		public uint _unSubmittedText;
 	}
 
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value, Size = 1)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value, Size = 1)]
 	[CallbackIdentity(Constants.ClientVideoCallbacks + 4)]
 	public struct BroadcastUploadStart {
 		public const int Callback = Constants.ClientVideoCallbacks + 4;
 	}
 
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.ClientVideoCallbacks + 5)]
 	public struct BroadcastUploadStop {
 		public const int Callback = Constants.ClientVideoCallbacks + 5;
 		public EBroadcastUploadResult Result;
 	}
 
-	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	[CallbackIdentity(Constants.ClientVideoCallbacks + 11)]
 	public struct GetVideoURLResult {
 		public const int Callback = Constants.ClientVideoCallbacks + 11;
 		public ResultType ResultType;
 		public AppId _unVideoAppID;
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
-		public string _rgchURL;
+		public string URL;
 	}
 
 }

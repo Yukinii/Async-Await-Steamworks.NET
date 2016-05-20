@@ -124,7 +124,7 @@ namespace Steamworks {
 		/// <para> creates a socket and begin connection to a remote destination</para>
 		/// <para> can connect via a known steamID (client or game server), or directly to an IP</para>
 		/// <para> on success will trigger a SocketStatusCallbact callback</para>
-		/// <para> on failure or timeout will trigger a SocketStatusCallbact callback with a failure code in _eSNetSocketState</para>
+		/// <para> on failure or timeout will trigger a SocketStatusCallbact callback with a failure code in SNetSocketState</para>
 		/// </summary>
 		public static SNetSocket CreateP2PConnectionSocket(SteamId steamIDTarget, int nVirtualPort, int nTimeoutSec, bool bAllowUseOfPacketRelay) {
 			InteropHelp.TestIfAvailableClient();

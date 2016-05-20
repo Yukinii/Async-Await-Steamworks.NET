@@ -7,28 +7,28 @@
 namespace Steamworks {
 	public struct AppId : System.IEquatable<AppId>, System.IComparable<AppId> {
 		public static readonly AppId Invalid = new AppId(0x0);
-		public uint _AppId;
+	    public readonly uint Id;
 
 		public AppId(uint value) {
-			_AppId = value;
+			Id = value;
 		}
 
-		public override string ToString() => _AppId.ToString();
+		public override string ToString() => Id.ToString();
 
 	    public override bool Equals(object other) => other is AppId && this == (AppId)other;
 
-	    public override int GetHashCode() => _AppId.GetHashCode();
+	    public override int GetHashCode() => Id.GetHashCode();
 
-	    public static bool operator ==(AppId x, AppId y) => x._AppId == y._AppId;
+	    public static bool operator ==(AppId x, AppId y) => x.Id == y.Id;
 
 	    public static bool operator !=(AppId x, AppId y) => !(x == y);
 
 	    public static explicit operator AppId(uint value) => new AppId(value);
 
-	    public static explicit operator uint(AppId that) => that._AppId;
+	    public static explicit operator uint(AppId that) => that.Id;
 
-	    public bool Equals(AppId other) => _AppId == other._AppId;
+	    public bool Equals(AppId other) => Id == other.Id;
 
-	    public int CompareTo(AppId other) => _AppId.CompareTo(other._AppId);
+	    public int CompareTo(AppId other) => Id.CompareTo(other.Id);
 	}
 }

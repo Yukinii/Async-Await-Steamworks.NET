@@ -44,11 +44,11 @@ namespace Steamworks {
 		}
 
 		public servernetadr _NetAdr;								
-		public int _nPing;											
+		public int Ping;											
 		[MarshalAs(UnmanagedType.I1)]
-		public bool _bHadSuccessfulResponse;						
+		public bool HadSuccessfulResponse;						
 		[MarshalAs(UnmanagedType.I1)]
-		public bool _bDoNotRefresh;									  
+		public bool DoNotRefresh;									  
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = Constants.MaxGameServerGameDir)]
 		private byte[] _szGameDir;										
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = Constants.MaxGameServerMapName)]
@@ -56,15 +56,15 @@ namespace Steamworks {
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = Constants.MaxGameServerGameDescription)]
 		private byte[] _szGameDescription;								
 		public uint _appId;												
-		public int _nPlayers;											
-		public int _nMaxPlayers;										
-		public int _nBotPlayers;										
+		public int Players;											
+		public int MaxPlayers;										
+		public int BotPlayers;										
 		[MarshalAs(UnmanagedType.I1)]
-		public bool _bPassword;											
+		public bool Password;											
 		[MarshalAs(UnmanagedType.I1)]
-		public bool _bSecure;											
-		public uint _ulTimeLastPlayed;									
-		public int	_nServerVersion;									                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+		public bool Secure;											
+		public uint TimeLastPlayed;									
+		public int	ServerVersion;									                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
 
 		// Game server name
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = Constants.MaxGameServerName)]

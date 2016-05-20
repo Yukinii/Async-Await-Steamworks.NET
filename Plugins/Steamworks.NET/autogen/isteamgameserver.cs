@@ -12,10 +12,10 @@ namespace Steamworks {
 		/// <para> may not be changed after logged in.</para>
 		/// <para>/ This is called by SteamGameServer_Init, and you will usually not need to call it directly</para>
 		/// </summary>
-		public static bool InitGameServer(uint unIP, ushort usGamePort, ushort usQueryPort, uint unFlags, AppId nGameAppId, string pchVersionString) {
+		public static bool InitGameServer(uint unIP, ushort usGamePort, ushort usQueryPort, uint unFlags, AppId nGameAppId, string VersionString) {
 			InteropHelp.TestIfAvailableGameServer();
-			using (var pchVersionString2 = new InteropHelp.UTF8StringHandle(pchVersionString)) {
-				return NativeMethods.ISteamGameServer_InitGameServer(unIP, usGamePort, usQueryPort, unFlags, nGameAppId, pchVersionString2);
+			using (var VersionString2 = new InteropHelp.UTF8StringHandle(VersionString)) {
+				return NativeMethods.ISteamGameServer_InitGameServer(unIP, usGamePort, usQueryPort, unFlags, nGameAppId, VersionString2);
 			}
 		}
 
@@ -219,10 +219,10 @@ namespace Steamworks {
 		/// <para>/</para>
 		/// <para>/ @see MaxGameServerTags</para>
 		/// </summary>
-		public static void SetGameTags(string pchGameTags) {
+		public static void SetGameTags(string GameTags) {
 			InteropHelp.TestIfAvailableGameServer();
-			using (var pchGameTags2 = new InteropHelp.UTF8StringHandle(pchGameTags)) {
-				NativeMethods.ISteamGameServer_SetGameTags(pchGameTags2);
+			using (var GameTags2 = new InteropHelp.UTF8StringHandle(GameTags)) {
+				NativeMethods.ISteamGameServer_SetGameTags(GameTags2);
 			}
 		}
 
@@ -234,10 +234,10 @@ namespace Steamworks {
 		/// <para>/</para>
 		/// <para>/ @see MaxGameServerGameData</para>
 		/// </summary>
-		public static void SetGameData(string pchGameData) {
+		public static void SetGameData(string GameData) {
 			InteropHelp.TestIfAvailableGameServer();
-			using (var pchGameData2 = new InteropHelp.UTF8StringHandle(pchGameData)) {
-				NativeMethods.ISteamGameServer_SetGameData(pchGameData2);
+			using (var GameData2 = new InteropHelp.UTF8StringHandle(GameData)) {
+				NativeMethods.ISteamGameServer_SetGameData(GameData2);
 			}
 		}
 
@@ -282,21 +282,21 @@ namespace Steamworks {
 		/// <para> track which users are currently on which servers for the purposes of preventing a single</para>
 		/// <para> account being logged into multiple servers, showing who is currently on a server, etc.</para>
 		/// </summary>
-		public static void SendUserDisconnect(SteamId steamIDUser) {
+		public static void SendUserDisconnect(SteamId userId) {
 			InteropHelp.TestIfAvailableGameServer();
-			NativeMethods.ISteamGameServer_SendUserDisconnect(steamIDUser);
+			NativeMethods.ISteamGameServer_SendUserDisconnect(userId);
 		}
 
 		/// <summary>
 		/// <para> Update the data to be displayed in the server browser and matchmaking interfaces for a user</para>
 		/// <para> currently connected to the server.  For regular users you must call this after you receive a</para>
 		/// <para> GSUserValidationSuccess callback.</para>
-		/// <para> Return Value: true if successful, false if failure (ie, steamIDUser wasn't for an active player)</para>
+		/// <para> Return Value: true if successful, false if failure (ie, userId wasn't for an active player)</para>
 		/// </summary>
-		public static bool BUpdateUserData(SteamId steamIDUser, string pchPlayerName, uint uScore) {
+		public static bool BUpdateUserData(SteamId userId, string PlayerName, uint uScore) {
 			InteropHelp.TestIfAvailableGameServer();
-			using (var pchPlayerName2 = new InteropHelp.UTF8StringHandle(pchPlayerName)) {
-				return NativeMethods.ISteamGameServer_BUpdateUserData(steamIDUser, pchPlayerName2, uScore);
+			using (var PlayerName2 = new InteropHelp.UTF8StringHandle(PlayerName)) {
+				return NativeMethods.ISteamGameServer_BUpdateUserData(userId, PlayerName2, uScore);
 			}
 		}
 
@@ -349,9 +349,9 @@ namespace Steamworks {
 		/// <para> Ask if a user in in the specified group, results returns async by GSUserGroupStatus</para>
 		/// <para> returns false if we're not connected to the steam servers and thus cannot ask</para>
 		/// </summary>
-		public static bool RequestUserGroupStatus(SteamId steamIDUser, SteamId steamIDGroup) {
+		public static bool RequestUserGroupStatus(SteamId userId, SteamId steamIDGroup) {
 			InteropHelp.TestIfAvailableGameServer();
-			return NativeMethods.ISteamGameServer_RequestUserGroupStatus(steamIDUser, steamIDGroup);
+			return NativeMethods.ISteamGameServer_RequestUserGroupStatus(userId, steamIDGroup);
 		}
 
 		/// <summary>
@@ -391,9 +391,9 @@ namespace Steamworks {
 		/// <para> Call this when a packet that starts with 0xFFFFFFFF comes in. That means</para>
 		/// <para> it's for us.</para>
 		/// </summary>
-		public static bool HandleIncomingPacket(byte[] pData, int cbData, uint srcIP, ushort srcPort) {
+		public static bool HandleIncomingPacket(byte[] data, int cbData, uint srcIP, ushort srcPort) {
 			InteropHelp.TestIfAvailableGameServer();
-			return NativeMethods.ISteamGameServer_HandleIncomingPacket(pData, cbData, srcIP, srcPort);
+			return NativeMethods.ISteamGameServer_HandleIncomingPacket(data, cbData, srcIP, srcPort);
 		}
 
 		/// <summary>

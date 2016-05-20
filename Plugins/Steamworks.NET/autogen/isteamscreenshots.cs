@@ -22,11 +22,11 @@ namespace Steamworks {
 		/// <para> The return value is a handle that is valid for the duration of the game process and can be used to apply tags.</para>
 		/// <para> JPEG, TGA, and PNG formats are supported.</para>
 		/// </summary>
-		public static ScreenshotHandle AddScreenshotToLibrary(string pchFilename, string pchThumbnailFilename, int nWidth, int nHeight) {
+		public static ScreenshotHandle AddScreenshotToLibrary(string Filename, string ThumbnailFilename, int nWidth, int nHeight) {
 			InteropHelp.TestIfAvailableClient();
-			using (var pchFilename2 = new InteropHelp.UTF8StringHandle(pchFilename))
-			using (var pchThumbnailFilename2 = new InteropHelp.UTF8StringHandle(pchThumbnailFilename)) {
-				return (ScreenshotHandle)NativeMethods.ISteamScreenshots_AddScreenshotToLibrary(pchFilename2, pchThumbnailFilename2, nWidth, nHeight);
+			using (var Filename2 = new InteropHelp.UTF8StringHandle(Filename))
+			using (var ThumbnailFilename2 = new InteropHelp.UTF8StringHandle(ThumbnailFilename)) {
+				return (ScreenshotHandle)NativeMethods.ISteamScreenshots_AddScreenshotToLibrary(Filename2, ThumbnailFilename2, nWidth, nHeight);
 			}
 		}
 
@@ -51,10 +51,10 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> Sets metadata about a screenshot's location (for example, the name of the map)</para>
 		/// </summary>
-		public static bool SetLocation(ScreenshotHandle hScreenshot, string pchLocation) {
+		public static bool SetLocation(ScreenshotHandle hScreenshot, string Location) {
 			InteropHelp.TestIfAvailableClient();
-			using (var pchLocation2 = new InteropHelp.UTF8StringHandle(pchLocation)) {
-				return NativeMethods.ISteamScreenshots_SetLocation(hScreenshot, pchLocation2);
+			using (var Location2 = new InteropHelp.UTF8StringHandle(Location)) {
+				return NativeMethods.ISteamScreenshots_SetLocation(hScreenshot, Location2);
 			}
 		}
 

@@ -184,11 +184,11 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> Activates the Big Picture text input dialog which only supports gamepad input</para>
 		/// </summary>
-		public static bool ShowGamepadTextInput(EGamepadTextInputMode eInputMode, EGamepadTextInputLineMode eLineInputMode, string pchDescription, uint unCharMax, string pchExistingText) {
+		public static bool ShowGamepadTextInput(EGamepadTextInputMode eInputMode, EGamepadTextInputLineMode eLineInputMode, string Description, uint unCharMax, string ExistingText) {
 			InteropHelp.TestIfAvailableGameServer();
-			using (var pchDescription2 = new InteropHelp.UTF8StringHandle(pchDescription))
-			using (var pchExistingText2 = new InteropHelp.UTF8StringHandle(pchExistingText)) {
-				return NativeMethods.ISteamGameServerUtils_ShowGamepadTextInput(eInputMode, eLineInputMode, pchDescription2, unCharMax, pchExistingText2);
+			using (var Description2 = new InteropHelp.UTF8StringHandle(Description))
+			using (var ExistingText2 = new InteropHelp.UTF8StringHandle(ExistingText)) {
+				return NativeMethods.ISteamGameServerUtils_ShowGamepadTextInput(eInputMode, eLineInputMode, Description2, unCharMax, ExistingText2);
 			}
 		}
 
@@ -199,16 +199,7 @@ namespace Steamworks {
 			InteropHelp.TestIfAvailableGameServer();
 			return NativeMethods.ISteamGameServerUtils_GetEnteredGamepadTextLength();
 		}
-
-		public static bool GetEnteredGamepadTextInput(out string pchText, uint Text) {
-			InteropHelp.TestIfAvailableGameServer();
-			var pchText2 = Marshal.AllocHGlobal((int)Text);
-			var ret = NativeMethods.ISteamGameServerUtils_GetEnteredGamepadTextInput(pchText2, Text);
-			pchText = ret ? InteropHelp.PtrToStringUTF8(pchText2) : null;
-			Marshal.FreeHGlobal(pchText2);
-			return ret;
-		}
-
+        
 		/// <summary>
 		/// <para> returns the language the steam client is running in, you probably want ISteamApps::GetCurrentGameLanguage instead, this is for very special usage cases</para>
 		/// </summary>

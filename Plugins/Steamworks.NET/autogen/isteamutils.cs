@@ -43,7 +43,7 @@ namespace Steamworks {
 		/// <para> returns the 2 digit ISO 3166-1-alpha-2 format country code this client is running in (as looked up via an IP-to-location database)</para>
 		/// <para> e.g "US" or "UK".</para>
 		/// </summary>
-		public static string GetIPCountry() {
+		public static string GetIpCountry() {
 			InteropHelp.TestIfAvailableClient();
 			return InteropHelp.PtrToStringUTF8(NativeMethods.ISteamUtils_GetIPCountry());
 		}
@@ -69,9 +69,9 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> returns the IP of the reporting server for valve - currently only used in Source engine games</para>
 		/// </summary>
-		public static bool GetCSERIPPort(out uint unIP, out ushort usPort) {
+		public static bool GetCseripPort(out uint ip, out ushort usPort) {
 			InteropHelp.TestIfAvailableClient();
-			return NativeMethods.ISteamUtils_GetCSERIPPort(out unIP, out usPort);
+			return NativeMethods.ISteamUtils_GetCSERIPPort(out ip, out usPort);
 		}
 
 		/// <summary>
@@ -85,7 +85,7 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> returns the appID of the current process</para>
 		/// </summary>
-		public static AppId GetAppID() {
+		public static AppId GetAppId() {
 			InteropHelp.TestIfAvailableClient();
 			return (AppId)NativeMethods.ISteamUtils_GetAppID();
 		}
@@ -113,9 +113,9 @@ namespace Steamworks {
 			return NativeMethods.ISteamUtils_GetAPICallFailureReason(hSteamAPICall);
 		}
 
-		public static bool GetAPICallResult(SteamAPICall hSteamAPICall, IntPtr pCallback, int Callback, int iCallbackExpected, out bool pbFailed) {
+		public static bool GetAPICallResult(SteamAPICall hSteamAPICall, IntPtr pCallback, int callback, int iCallbackExpected, out bool pbFailed) {
 			InteropHelp.TestIfAvailableClient();
-			return NativeMethods.ISteamUtils_GetAPICallResult(hSteamAPICall, pCallback, Callback, iCallbackExpected, out pbFailed);
+			return NativeMethods.ISteamUtils_GetAPICallResult(hSteamAPICall, pCallback, callback, iCallbackExpected, out pbFailed);
 		}
 
 		/// <summary>
@@ -124,7 +124,7 @@ namespace Steamworks {
 		/// <para> Every IPC call is at minimum a thread context switch if not a process one so you want to rate</para>
 		/// <para> control how often you do them.</para>
 		/// </summary>
-		public static uint GetIPCCallCount() {
+		public static uint GetIpcCallCount() {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamUtils_GetIPCCallCount();
 		}
@@ -184,11 +184,11 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> Activates the Big Picture text input dialog which only supports gamepad input</para>
 		/// </summary>
-		public static bool ShowGamepadTextInput(EGamepadTextInputMode eInputMode, EGamepadTextInputLineMode eLineInputMode, string pchDescription, uint unCharMax, string pchExistingText) {
+		public static bool ShowGamepadTextInput(EGamepadTextInputMode eInputMode, EGamepadTextInputLineMode eLineInputMode, string Description, uint unCharMax, string ExistingText) {
 			InteropHelp.TestIfAvailableClient();
-			using (var pchDescription2 = new InteropHelp.UTF8StringHandle(pchDescription))
-			using (var pchExistingText2 = new InteropHelp.UTF8StringHandle(pchExistingText)) {
-				return NativeMethods.ISteamUtils_ShowGamepadTextInput(eInputMode, eLineInputMode, pchDescription2, unCharMax, pchExistingText2);
+			using (var Description2 = new InteropHelp.UTF8StringHandle(Description))
+			using (var ExistingText2 = new InteropHelp.UTF8StringHandle(ExistingText)) {
+				return NativeMethods.ISteamUtils_ShowGamepadTextInput(eInputMode, eLineInputMode, Description2, unCharMax, ExistingText2);
 			}
 		}
 
@@ -199,16 +199,7 @@ namespace Steamworks {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamUtils_GetEnteredGamepadTextLength();
 		}
-
-		public static bool GetEnteredGamepadTextInput(out string pchText, uint Text) {
-			InteropHelp.TestIfAvailableClient();
-			var pchText2 = Marshal.AllocHGlobal((int)Text);
-			var ret = NativeMethods.ISteamUtils_GetEnteredGamepadTextInput(pchText2, Text);
-			pchText = ret ? InteropHelp.PtrToStringUTF8(pchText2) : null;
-			Marshal.FreeHGlobal(pchText2);
-			return ret;
-		}
-
+        
 		/// <summary>
 		/// <para> returns the language the steam client is running in, you probably want ISteamApps::GetCurrentGameLanguage instead, this is for very special usage cases</para>
 		/// </summary>

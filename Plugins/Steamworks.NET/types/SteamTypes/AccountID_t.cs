@@ -5,29 +5,29 @@
 // Changes to this file will be reverted when you update Steamworks.NET
 
 namespace Steamworks {
-	public struct AccountID : System.IEquatable<AccountID>, System.IComparable<AccountID> {
-		public uint _AccountID;
+	public struct AccountId : System.IEquatable<AccountId>, System.IComparable<AccountId> {
+	    public readonly uint Id;
 
-		public AccountID(uint value) {
-			_AccountID = value;
+		public AccountId(uint value) {
+			Id = value;
 		}
 
-		public override string ToString() => _AccountID.ToString();
+		public override string ToString() => Id.ToString();
 
-	    public override bool Equals(object other) => other is AccountID && this == (AccountID)other;
+	    public override bool Equals(object other) => other is AccountId && this == (AccountId)other;
 
-	    public override int GetHashCode() => _AccountID.GetHashCode();
+	    public override int GetHashCode() => Id.GetHashCode();
 
-	    public static bool operator ==(AccountID x, AccountID y) => x._AccountID == y._AccountID;
+	    public static bool operator ==(AccountId x, AccountId y) => x.Id == y.Id;
 
-	    public static bool operator !=(AccountID x, AccountID y) => !(x == y);
+	    public static bool operator !=(AccountId x, AccountId y) => !(x == y);
 
-	    public static explicit operator AccountID(uint value) => new AccountID(value);
+	    public static explicit operator AccountId(uint value) => new AccountId(value);
 
-	    public static explicit operator uint(AccountID that) => that._AccountID;
+	    public static explicit operator uint(AccountId that) => that.Id;
 
-	    public bool Equals(AccountID other) => _AccountID == other._AccountID;
+	    public bool Equals(AccountId other) => Id == other.Id;
 
-	    public int CompareTo(AccountID other) => _AccountID.CompareTo(other._AccountID);
+	    public int CompareTo(AccountId other) => Id.CompareTo(other.Id);
 	}
 }

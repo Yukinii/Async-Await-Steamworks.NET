@@ -7,28 +7,28 @@
 namespace Steamworks {
 	public struct ScreenshotHandle : System.IEquatable<ScreenshotHandle>, System.IComparable<ScreenshotHandle> {
 		public static readonly ScreenshotHandle Invalid = new ScreenshotHandle(0);
-		public uint _ScreenshotHandle;
+	    public readonly uint Handle;
 
 		public ScreenshotHandle(uint value) {
-			_ScreenshotHandle = value;
+			Handle = value;
 		}
 
-		public override string ToString() => _ScreenshotHandle.ToString();
+		public override string ToString() => Handle.ToString();
 
 	    public override bool Equals(object other) => other is ScreenshotHandle && this == (ScreenshotHandle)other;
 
-	    public override int GetHashCode() => _ScreenshotHandle.GetHashCode();
+	    public override int GetHashCode() => Handle.GetHashCode();
 
-	    public static bool operator ==(ScreenshotHandle x, ScreenshotHandle y) => x._ScreenshotHandle == y._ScreenshotHandle;
+	    public static bool operator ==(ScreenshotHandle x, ScreenshotHandle y) => x.Handle == y.Handle;
 
 	    public static bool operator !=(ScreenshotHandle x, ScreenshotHandle y) => !(x == y);
 
 	    public static explicit operator ScreenshotHandle(uint value) => new ScreenshotHandle(value);
 
-	    public static explicit operator uint(ScreenshotHandle that) => that._ScreenshotHandle;
+	    public static explicit operator uint(ScreenshotHandle that) => that.Handle;
 
-	    public bool Equals(ScreenshotHandle other) => _ScreenshotHandle == other._ScreenshotHandle;
+	    public bool Equals(ScreenshotHandle other) => Handle == other.Handle;
 
-	    public int CompareTo(ScreenshotHandle other) => _ScreenshotHandle.CompareTo(other._ScreenshotHandle);
+	    public int CompareTo(ScreenshotHandle other) => Handle.CompareTo(other.Handle);
 	}
 }

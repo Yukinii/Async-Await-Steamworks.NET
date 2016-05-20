@@ -180,7 +180,7 @@ namespace Steamworks
         AddToCartAndShow = 2,
     }
 
-    // used in PersonaStateChange::_nChangeFlags to describe what's changed about a user
+    // used in PersonaStateChange::ChangeFlags to describe what's changed about a user
     // these flags describe what the client has learned has changed recently, so on startup you'll see a name, avatar & relationship change for every friend
     [Flags]
     public enum EPersonaChange

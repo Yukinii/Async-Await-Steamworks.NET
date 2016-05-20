@@ -23,7 +23,7 @@ namespace Steamworks {
 	// to cancel any in-progress queries so you don't get a callback into the destructed
 	// object and crash.
 	//-----------------------------------------------------------------------------
-	public class ISteamMatchmakingServerListResponse {
+	public class SteamMatchmakingServerListResponse {
 		// Server has responded ok with updated data
 		public delegate void ServerResponded(HServerListRequest hRequest, int iServer);
 		// Server has failed to respond
@@ -38,7 +38,7 @@ namespace Steamworks {
 		private readonly ServerFailedToRespond _ServerFailedToRespond;
 		private readonly RefreshComplete _RefreshComplete;
 
-		public ISteamMatchmakingServerListResponse(ServerResponded onServerResponded, ServerFailedToRespond onServerFailedToRespond, RefreshComplete onRefreshComplete) {
+		public SteamMatchmakingServerListResponse(ServerResponded onServerResponded, ServerFailedToRespond onServerFailedToRespond, RefreshComplete onRefreshComplete) {
 			if (onServerResponded == null || onServerFailedToRespond == null || onRefreshComplete == null) {
 				throw new ArgumentNullException();
 			}
@@ -58,7 +58,7 @@ namespace Steamworks {
 			_pGCHandle = GCHandle.Alloc(_pVTable, GCHandleType.Pinned);
 		}
 
-		~ISteamMatchmakingServerListResponse() {
+		~SteamMatchmakingServerListResponse() {
 			if (_pVTable != IntPtr.Zero) {
 				Marshal.FreeHGlobal(_pVTable);
 			}
@@ -112,7 +112,7 @@ namespace Steamworks {
 			public InternalRefreshComplete VTRefreshComplete;
 		}
 
-		public static explicit operator IntPtr(ISteamMatchmakingServerListResponse that) => that._pGCHandle.AddrOfPinnedObject();
+		public static explicit operator IntPtr(SteamMatchmakingServerListResponse that) => that._pGCHandle.AddrOfPinnedObject();
 	};
 
 	//-----------------------------------------------------------------------------
@@ -125,82 +125,8 @@ namespace Steamworks {
 	// which is in progress.  Failure to cancel in progress queries when destructing
 	// a callback handler may result in a crash when a callback later occurs.
 	//-----------------------------------------------------------------------------
-	public class SteamMatchmakingPingResponse {
-		// Server has responded successfully and has updated data
-		public delegate void ServerResponded(gameserverite server);
 
-		// Server failed to respond to the ping request
-		public delegate void ServerFailedToRespond();
-
-		private readonly VTable _VTable;
-		private readonly IntPtr _pVTable;
-		private GCHandle _pGCHandle;
-		private readonly ServerResponded _ServerResponded;
-		private readonly ServerFailedToRespond _ServerFailedToRespond;
-
-		public SteamMatchmakingPingResponse(ServerResponded onServerResponded, ServerFailedToRespond onServerFailedToRespond) {
-			if (onServerResponded == null || onServerFailedToRespond == null) {
-				throw new ArgumentNullException();
-			}
-			_ServerResponded = onServerResponded;
-			_ServerFailedToRespond = onServerFailedToRespond;
-
-			_VTable = new VTable
-			{
-				VTServerResponded = InternalOnServerResponded,
-				VTServerFailedToRespond = InternalOnServerFailedToRespond,
-			};
-			_pVTable = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(VTable)));
-			Marshal.StructureToPtr(_VTable, _pVTable, false);
-
-			_pGCHandle = GCHandle.Alloc(_pVTable, GCHandleType.Pinned);
-		}
-
-		~SteamMatchmakingPingResponse() {
-			if (_pVTable != IntPtr.Zero) {
-				Marshal.FreeHGlobal(_pVTable);
-			}
-
-			if (_pGCHandle.IsAllocated) {
-				_pGCHandle.Free();
-			}
-		}
-
-#if NOTHISPTR
-		[UnmanagedFunctionPointer(CallingConvention.StdCall)]
-		private delegate void InternalServerResponded(gameserverite server);
-		[UnmanagedFunctionPointer(CallingConvention.StdCall)]
-		private delegate void InternalServerFailedToRespond();
-		private void InternalOnServerResponded(gameserverite server) {
-			_ServerResponded(server);
-		}
-		private void InternalOnServerFailedToRespond() {
-			_ServerFailedToRespond();
-		}
-#else
-		[UnmanagedFunctionPointer(CallingConvention.ThisCall)]
-		private delegate void InternalServerResponded(IntPtr thisptr, gameserverite server);
-		[UnmanagedFunctionPointer(CallingConvention.ThisCall)]
-		private delegate void InternalServerFailedToRespond(IntPtr thisptr);
-		private void InternalOnServerResponded(IntPtr thisptr, gameserverite server) => _ServerResponded(server);
-	    private void InternalOnServerFailedToRespond(IntPtr thisptr) => _ServerFailedToRespond();
-#endif
-
-		[StructLayout(LayoutKind.Sequential)]
-		private class VTable {
-			[NonSerialized]
-			[MarshalAs(UnmanagedType.FunctionPtr)]
-			public InternalServerResponded VTServerResponded;
-
-			[NonSerialized]
-			[MarshalAs(UnmanagedType.FunctionPtr)]
-			public InternalServerFailedToRespond VTServerFailedToRespond;
-		}
-
-		public static explicit operator IntPtr(SteamMatchmakingPingResponse that) => that._pGCHandle.AddrOfPinnedObject();
-	};
-
-	//-----------------------------------------------------------------------------
+    //-----------------------------------------------------------------------------
 	// Purpose: Callback interface for receiving responses after requesting details on
 	// who is playing on a particular server.
 	//
@@ -211,104 +137,8 @@ namespace Steamworks {
 	// which is in progress.  Failure to cancel in progress queries when destructing
 	// a callback handler may result in a crash when a callback later occurs.
 	//-----------------------------------------------------------------------------
-	public class SteamMatchmakingPlayersResponse {
-		// Got data on a new player on the server -- you'll get this callback once per player
-		// on the server which you have requested player data on.
-		public delegate void AddPlayerToList(string name, int nScore, float flTimePlayed);
 
-		// The server failed to respond to the request for player details
-		public delegate void PlayersFailedToRespond();
-
-		// The server has finished responding to the player details request 
-		// (ie, you won't get anymore AddPlayerToList callbacks)
-		public delegate void PlayersRefreshComplete();
-
-		private readonly VTable _VTable;
-		private readonly IntPtr _pVTable;
-		private GCHandle _pGCHandle;
-		private readonly AddPlayerToList _AddPlayerToList;
-		private readonly PlayersFailedToRespond _PlayersFailedToRespond;
-		private readonly PlayersRefreshComplete _PlayersRefreshComplete;
-
-		public SteamMatchmakingPlayersResponse(AddPlayerToList onAddPlayerToList, PlayersFailedToRespond onPlayersFailedToRespond, PlayersRefreshComplete onPlayersRefreshComplete) {
-			if (onAddPlayerToList == null || onPlayersFailedToRespond == null || onPlayersRefreshComplete == null) {
-				throw new ArgumentNullException();
-			}
-			_AddPlayerToList = onAddPlayerToList;
-			_PlayersFailedToRespond = onPlayersFailedToRespond;
-			_PlayersRefreshComplete = onPlayersRefreshComplete;
-			
-			_VTable = new VTable
-			{
-				_VTAddPlayerToList = InternalOnAddPlayerToList,
-				_VTPlayersFailedToRespond = InternalOnPlayersFailedToRespond,
-				_VTPlayersRefreshComplete = InternalOnPlayersRefreshComplete
-			};
-			_pVTable = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(VTable)));
-			Marshal.StructureToPtr(_VTable, _pVTable, false);
-
-			_pGCHandle = GCHandle.Alloc(_pVTable, GCHandleType.Pinned);
-		}
-
-		~SteamMatchmakingPlayersResponse() {
-			if (_pVTable != IntPtr.Zero) {
-				Marshal.FreeHGlobal(_pVTable);
-			}
-
-			if (_pGCHandle.IsAllocated) {
-				_pGCHandle.Free();
-			}
-		}
-		
-#if NOTHISPTR
-		[UnmanagedFunctionPointer(CallingConvention.StdCall)]
-		public delegate void InternalAddPlayerToList(IntPtr name, int nScore, float flTimePlayed);
-		[UnmanagedFunctionPointer(CallingConvention.StdCall)]
-		public delegate void InternalPlayersFailedToRespond();
-		[UnmanagedFunctionPointer(CallingConvention.StdCall)]
-		public delegate void InternalPlayersRefreshComplete();
-		private void InternalOnAddPlayerToList(IntPtr name, int nScore, float flTimePlayed) {
-			_AddPlayerToList(InteropHelp.PtrToStringUTF8(name), nScore, flTimePlayed);
-		}
-		private void InternalOnPlayersFailedToRespond() {
-			_PlayersFailedToRespond();
-		}
-		private void InternalOnPlayersRefreshComplete() {
-			_PlayersRefreshComplete();
-		}
-#else
-		[UnmanagedFunctionPointer(CallingConvention.ThisCall)]
-		public delegate void InternalAddPlayerToList(IntPtr thisptr, IntPtr name, int nScore, float flTimePlayed);
-		[UnmanagedFunctionPointer(CallingConvention.ThisCall)]
-		public delegate void InternalPlayersFailedToRespond(IntPtr thisptr);
-		[UnmanagedFunctionPointer(CallingConvention.ThisCall)]
-		public delegate void InternalPlayersRefreshComplete(IntPtr thisptr);
-		private void InternalOnAddPlayerToList(IntPtr thisptr, IntPtr name, int nScore, float flTimePlayed) => _AddPlayerToList(InteropHelp.PtrToStringUTF8(name), nScore, flTimePlayed);
-
-	    private void InternalOnPlayersFailedToRespond(IntPtr thisptr) => _PlayersFailedToRespond();
-
-	    private void InternalOnPlayersRefreshComplete(IntPtr thisptr) => _PlayersRefreshComplete();
-#endif
-
-		[StructLayout(LayoutKind.Sequential)]
-		private class VTable {
-			[NonSerialized]
-			[MarshalAs(UnmanagedType.FunctionPtr)]
-			public InternalAddPlayerToList _VTAddPlayerToList;
-
-			[NonSerialized]
-			[MarshalAs(UnmanagedType.FunctionPtr)]
-			public InternalPlayersFailedToRespond _VTPlayersFailedToRespond;
-
-			[NonSerialized]
-			[MarshalAs(UnmanagedType.FunctionPtr)]
-			public InternalPlayersRefreshComplete _VTPlayersRefreshComplete;
-		}
-
-		public static explicit operator IntPtr(SteamMatchmakingPlayersResponse that) => that._pGCHandle.AddrOfPinnedObject();
-	};
-
-	//-----------------------------------------------------------------------------
+    //-----------------------------------------------------------------------------
 	// Purpose: Callback interface for receiving responses after requesting rules
 	// details on a particular server.
 	//

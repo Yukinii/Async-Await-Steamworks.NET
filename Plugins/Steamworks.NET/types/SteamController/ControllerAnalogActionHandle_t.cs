@@ -6,28 +6,28 @@
 
 namespace Steamworks {
 	public struct ControllerAnalogActionHandle : System.IEquatable<ControllerAnalogActionHandle>, System.IComparable<ControllerAnalogActionHandle> {
-		public ulong _ControllerAnalogActionHandle;
+		public readonly ulong Handle;
 
 		public ControllerAnalogActionHandle(ulong value) {
-			_ControllerAnalogActionHandle = value;
+			Handle = value;
 		}
 
-		public override string ToString() => _ControllerAnalogActionHandle.ToString();
+		public override string ToString() => Handle.ToString();
 
 	    public override bool Equals(object other) => other is ControllerAnalogActionHandle && this == (ControllerAnalogActionHandle)other;
 
-	    public override int GetHashCode() => _ControllerAnalogActionHandle.GetHashCode();
+	    public override int GetHashCode() => Handle.GetHashCode();
 
-	    public static bool operator ==(ControllerAnalogActionHandle x, ControllerAnalogActionHandle y) => x._ControllerAnalogActionHandle == y._ControllerAnalogActionHandle;
+	    public static bool operator ==(ControllerAnalogActionHandle x, ControllerAnalogActionHandle y) => x.Handle == y.Handle;
 
 	    public static bool operator !=(ControllerAnalogActionHandle x, ControllerAnalogActionHandle y) => !(x == y);
 
 	    public static explicit operator ControllerAnalogActionHandle(ulong value) => new ControllerAnalogActionHandle(value);
 
-	    public static explicit operator ulong(ControllerAnalogActionHandle that) => that._ControllerAnalogActionHandle;
+	    public static explicit operator ulong(ControllerAnalogActionHandle that) => that.Handle;
 
-	    public bool Equals(ControllerAnalogActionHandle other) => _ControllerAnalogActionHandle == other._ControllerAnalogActionHandle;
+	    public bool Equals(ControllerAnalogActionHandle other) => Handle == other.Handle;
 
-	    public int CompareTo(ControllerAnalogActionHandle other) => _ControllerAnalogActionHandle.CompareTo(other._ControllerAnalogActionHandle);
+	    public int CompareTo(ControllerAnalogActionHandle other) => Handle.CompareTo(other.Handle);
 	}
 }

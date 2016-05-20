@@ -7,28 +7,28 @@
 namespace Steamworks {
 	public struct FriendsGroupID : System.IEquatable<FriendsGroupID>, System.IComparable<FriendsGroupID> {
 		public static readonly FriendsGroupID Invalid = new FriendsGroupID(-1);
-		public short _FriendsGroupID;
+		public readonly short Id;
 
 		public FriendsGroupID(short value) {
-			_FriendsGroupID = value;
+			Id = value;
 		}
 
-		public override string ToString() => _FriendsGroupID.ToString();
+		public override string ToString() => Id.ToString();
 
 	    public override bool Equals(object other) => other is FriendsGroupID && this == (FriendsGroupID)other;
 
-	    public override int GetHashCode() => _FriendsGroupID.GetHashCode();
+	    public override int GetHashCode() => Id.GetHashCode();
 
-	    public static bool operator ==(FriendsGroupID x, FriendsGroupID y) => x._FriendsGroupID == y._FriendsGroupID;
+	    public static bool operator ==(FriendsGroupID x, FriendsGroupID y) => x.Id == y.Id;
 
 	    public static bool operator !=(FriendsGroupID x, FriendsGroupID y) => !(x == y);
 
 	    public static explicit operator FriendsGroupID(short value) => new FriendsGroupID(value);
 
-	    public static explicit operator short(FriendsGroupID that) => that._FriendsGroupID;
+	    public static explicit operator short(FriendsGroupID that) => that.Id;
 
-	    public bool Equals(FriendsGroupID other) => _FriendsGroupID == other._FriendsGroupID;
+	    public bool Equals(FriendsGroupID other) => Id == other.Id;
 
-	    public int CompareTo(FriendsGroupID other) => _FriendsGroupID.CompareTo(other._FriendsGroupID);
+	    public int CompareTo(FriendsGroupID other) => Id.CompareTo(other.Id);
 	}
 }

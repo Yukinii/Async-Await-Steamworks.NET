@@ -45,7 +45,7 @@ namespace Steamworks {
 		/// <para> void *pAuthBlob - a pointer to empty memory that will be filled in with the authentication token.</para>
 		/// <para> int MaxAuthBlob - the number of bytes of allocated memory in pBlob. Should be at least 2048 bytes.</para>
 		/// <para> SteamId gameServerId - the steamID of the game server, received from the game server by the client</para>
-		/// <para> CGameID gameId - the ID of the current game. For games without mods, this is just CGameID( &lt;appID&gt; )</para>
+		/// <para> GameId gameId - the ID of the current game. For games without mods, this is just GameId( &lt;appID&gt; )</para>
 		/// <para> uint32 serverIP, uint16 usPortServer - the IP address of the game server</para>
 		/// <para> bool bSecure - whether or not the client thinks that the game server is reporting itself as secure (i.e. VAC is running)</para>
 		/// <para> return value - returns the number of bytes written to pBlob. If the return is 0, then the buffer passed in was too small, and the call has failed</para>
@@ -69,26 +69,13 @@ namespace Steamworks {
 		/// <para> Legacy functions</para>
 		/// <para> used by only a few games to track usage events</para>
 		/// </summary>
-		public static void TrackAppUsageEvent(CGameID gameId, int eAppUsageEvent, string pchExtraInfo = "") {
+		public static void TrackAppUsageEvent(GameId gameId, int eAppUsageEvent, string ExtraInfo = "") {
 			InteropHelp.TestIfAvailableClient();
-			using (var pchExtraInfo2 = new InteropHelp.UTF8StringHandle(pchExtraInfo)) {
-				NativeMethods.ISteamUser_TrackAppUsageEvent(gameId, eAppUsageEvent, pchExtraInfo2);
+			using (var ExtraInfo2 = new InteropHelp.UTF8StringHandle(ExtraInfo)) {
+				NativeMethods.ISteamUser_TrackAppUsageEvent(gameId, eAppUsageEvent, ExtraInfo2);
 			}
 		}
-
-		/// <summary>
-		/// <para> get the local storage folder for current Steam account to write application data, e.g. save games, configs etc.</para>
-		/// <para> this will usually be something like "C:\Progam Files\Steam\userdata\&lt;SteamId&gt;\&lt;AppID&gt;\local"</para>
-		/// </summary>
-		public static bool GetUserDataFolder(out string pchBuffer, int buffer) {
-			InteropHelp.TestIfAvailableClient();
-			var pchBuffer2 = Marshal.AllocHGlobal(buffer);
-			var ret = NativeMethods.ISteamUser_GetUserDataFolder(pchBuffer2, buffer);
-			pchBuffer = ret ? InteropHelp.PtrToStringUTF8(pchBuffer2) : null;
-			Marshal.FreeHGlobal(pchBuffer2);
-			return ret;
-		}
-
+        
 		/// <summary>
 		/// <para> Starts voice recording. Once started, use GetVoice() to get the data</para>
 		/// </summary>
@@ -223,12 +210,12 @@ namespace Steamworks {
 
 		/// <summary>
 		/// <para> Requests a ticket encrypted with an app specific shared key</para>
-		/// <para> pDataToInclude, cbDataToInclude will be encrypted into the ticket</para>
+		/// <para> dataToInclude, cbDataToInclude will be encrypted into the ticket</para>
 		/// <para> ( This is asynchronous, you must wait for the ticket to be completed by the server )</para>
 		/// </summary>
-		public static SteamAPICall RequestEncryptedAppTicket(byte[] pDataToInclude, int cbDataToInclude) {
+		public static SteamAPICall RequestEncryptedAppTicket(byte[] dataToInclude, int cbDataToInclude) {
 			InteropHelp.TestIfAvailableClient();
-			return (SteamAPICall)NativeMethods.ISteamUser_RequestEncryptedAppTicket(pDataToInclude, cbDataToInclude);
+			return (SteamAPICall)NativeMethods.ISteamUser_RequestEncryptedAppTicket(dataToInclude, cbDataToInclude);
 		}
 
 		/// <summary>
@@ -269,10 +256,10 @@ namespace Steamworks {
 		/// <para> NOTE 2: The resulting authorization cookie has an expiration time of one day,</para>
 		/// <para> so it would be a good idea to request and visit a new auth URL every 12 hours.</para>
 		/// </summary>
-		public static SteamAPICall RequestStoreAuthURL(string pchRedirectURL) {
+		public static SteamAPICall RequestStoreAuthURL(string RedirectURL) {
 			InteropHelp.TestIfAvailableClient();
-			using (var pchRedirectURL2 = new InteropHelp.UTF8StringHandle(pchRedirectURL)) {
-				return (SteamAPICall)NativeMethods.ISteamUser_RequestStoreAuthURL(pchRedirectURL2);
+			using (var RedirectURL2 = new InteropHelp.UTF8StringHandle(RedirectURL)) {
+				return (SteamAPICall)NativeMethods.ISteamUser_RequestStoreAuthURL(RedirectURL2);
 			}
 		}
 #if _PS3
@@ -294,16 +281,16 @@ namespace Steamworks {
 		/// <para> Initiates a request to logon with a specific steam username/password and create a PSN account link at</para>
 		/// <para> the same time.  Should call this only if LogOn() has failed and indicated the PSN account is unlinked.</para>
 		/// <para> PARAMS: bInteractive - If set tells Steam to go ahead and show the PS3 NetStart dialog if needed to</para>
-		/// <para> prompt the user for network setup/PSN logon before initiating the Steam side of the logon.  pchUserName</para>
-		/// <para> should be the users Steam username, and pchPassword should be the users Steam password.</para>
+		/// <para> prompt the user for network setup/PSN logon before initiating the Steam side of the logon.  UserName</para>
+		/// <para> should be the users Steam username, and Password should be the users Steam password.</para>
 		/// <para> Listen for SteamServersConnected or SteamServerConnectFailure for status.  SteamServerConnectFailure</para>
 		/// <para> may return with ResultType EResultOtherAccountAlreadyLinked if already linked to another account.</para>
 		/// </summary>
-		public static void LogOnAndLinkSteamAccountToPSN(bool bInteractive, string pchUserName, string pchPassword) {
+		public static void LogOnAndLinkSteamAccountToPSN(bool bInteractive, string UserName, string Password) {
 			InteropHelp.TestIfAvailableClient();
-			using (var pchUserName2 = new InteropHelp.UTF8StringHandle(pchUserName))
-			using (var pchPassword2 = new InteropHelp.UTF8StringHandle(pchPassword)) {
-				NativeMethods.ISteamUser_LogOnAndLinkSteamAccountToPSN(bInteractive, pchUserName2, pchPassword2);
+			using (var UserName2 = new InteropHelp.UTF8StringHandle(UserName))
+			using (var Password2 = new InteropHelp.UTF8StringHandle(Password)) {
+				NativeMethods.ISteamUser_LogOnAndLinkSteamAccountToPSN(bInteractive, UserName2, Password2);
 			}
 		}
 

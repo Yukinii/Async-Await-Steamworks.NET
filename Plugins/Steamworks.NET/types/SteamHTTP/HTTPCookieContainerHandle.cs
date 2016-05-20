@@ -7,28 +7,28 @@
 namespace Steamworks {
 	public struct HTTPCookieContainerHandle : System.IEquatable<HTTPCookieContainerHandle>, System.IComparable<HTTPCookieContainerHandle> {
 		public static readonly HTTPCookieContainerHandle Invalid = new HTTPCookieContainerHandle(0);
-		public uint _HTTPCookieContainerHandle;
+		public readonly uint Handle;
 
 		public HTTPCookieContainerHandle(uint value) {
-			_HTTPCookieContainerHandle = value;
+			Handle = value;
 		}
 
-		public override string ToString() => _HTTPCookieContainerHandle.ToString();
+		public override string ToString() => Handle.ToString();
 
 	    public override bool Equals(object other) => other is HTTPCookieContainerHandle && this == (HTTPCookieContainerHandle)other;
 
-	    public override int GetHashCode() => _HTTPCookieContainerHandle.GetHashCode();
+	    public override int GetHashCode() => Handle.GetHashCode();
 
-	    public static bool operator ==(HTTPCookieContainerHandle x, HTTPCookieContainerHandle y) => x._HTTPCookieContainerHandle == y._HTTPCookieContainerHandle;
+	    public static bool operator ==(HTTPCookieContainerHandle x, HTTPCookieContainerHandle y) => x.Handle == y.Handle;
 
 	    public static bool operator !=(HTTPCookieContainerHandle x, HTTPCookieContainerHandle y) => !(x == y);
 
 	    public static explicit operator HTTPCookieContainerHandle(uint value) => new HTTPCookieContainerHandle(value);
 
-	    public static explicit operator uint(HTTPCookieContainerHandle that) => that._HTTPCookieContainerHandle;
+	    public static explicit operator uint(HTTPCookieContainerHandle that) => that.Handle;
 
-	    public bool Equals(HTTPCookieContainerHandle other) => _HTTPCookieContainerHandle == other._HTTPCookieContainerHandle;
+	    public bool Equals(HTTPCookieContainerHandle other) => Handle == other.Handle;
 
-	    public int CompareTo(HTTPCookieContainerHandle other) => _HTTPCookieContainerHandle.CompareTo(other._HTTPCookieContainerHandle);
+	    public int CompareTo(HTTPCookieContainerHandle other) => Handle.CompareTo(other.Handle);
 	}
 }

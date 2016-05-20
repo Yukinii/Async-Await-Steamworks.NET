@@ -12,7 +12,7 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> Query UGC associated with a user. Creator app id or consumer app id must be valid and be set to the current running app. unPage should start at 1.</para>
 		/// </summary>
-		public static UGCQueryHandle CreateQueryUserUGCRequest(AccountID accountId, UserUGCList listType, MatchingUGCType eMatchingUGCType, UGCListSortOrder eSortOrder, AppId nCreatorAppID, AppId nConsumerAppID, uint unPage) {
+		public static UGCQueryHandle CreateQueryUserUGCRequest(AccountId accountId, UserUGCList listType, MatchingUGCType eMatchingUGCType, UGCListSortOrder eSortOrder, AppId nCreatorAppID, AppId nConsumerAppID, uint unPage) {
 			InteropHelp.TestIfAvailableGameServer();
 			return (UGCQueryHandle)NativeMethods.ISteamGameServerUGC_CreateQueryUserUGCRequest(accountId, listType, eMatchingUGCType, eSortOrder, nCreatorAppID, nConsumerAppID, unPage);
 		}
@@ -49,21 +49,21 @@ namespace Steamworks {
 			return NativeMethods.ISteamGameServerUGC_GetQueryUGCResult(handle, index, out pDetails);
 		}
 
-		public static bool GetQueryUGCPreviewURL(UGCQueryHandle handle, uint index, out string pchURL, uint URLSize) {
+		public static bool GetQueryUGCPreviewURL(UGCQueryHandle handle, uint index, out string URL, uint URLSize) {
 			InteropHelp.TestIfAvailableGameServer();
-			var pchURL2 = Marshal.AllocHGlobal((int)URLSize);
-			var ret = NativeMethods.ISteamGameServerUGC_GetQueryUGCPreviewURL(handle, index, pchURL2, URLSize);
-			pchURL = ret ? InteropHelp.PtrToStringUTF8(pchURL2) : null;
-			Marshal.FreeHGlobal(pchURL2);
+			var URL2 = Marshal.AllocHGlobal((int)URLSize);
+			var ret = NativeMethods.ISteamGameServerUGC_GetQueryUGCPreviewURL(handle, index, URL2, URLSize);
+			URL = ret ? InteropHelp.PtrToStringUTF8(URL2) : null;
+			Marshal.FreeHGlobal(URL2);
 			return ret;
 		}
 
-		public static bool GetQueryUGCMetadata(UGCQueryHandle handle, uint index, out string pchMetadata, uint Metadatasize) {
+		public static bool GetQueryUGCMetadata(UGCQueryHandle handle, uint index, out string Metadata, uint Metadatasize) {
 			InteropHelp.TestIfAvailableGameServer();
-			var pchMetadata2 = Marshal.AllocHGlobal((int)Metadatasize);
-			var ret = NativeMethods.ISteamGameServerUGC_GetQueryUGCMetadata(handle, index, pchMetadata2, Metadatasize);
-			pchMetadata = ret ? InteropHelp.PtrToStringUTF8(pchMetadata2) : null;
-			Marshal.FreeHGlobal(pchMetadata2);
+			var Metadata2 = Marshal.AllocHGlobal((int)Metadatasize);
+			var ret = NativeMethods.ISteamGameServerUGC_GetQueryUGCMetadata(handle, index, Metadata2, Metadatasize);
+			Metadata = ret ? InteropHelp.PtrToStringUTF8(Metadata2) : null;
+			Marshal.FreeHGlobal(Metadata2);
 			return ret;
 		}
 
@@ -82,12 +82,12 @@ namespace Steamworks {
 			return NativeMethods.ISteamGameServerUGC_GetQueryUGCNumAdditionalPreviews(handle, index);
 		}
 
-		public static bool GetQueryUGCAdditionalPreview(UGCQueryHandle handle, uint index, uint previewIndex, out string pchURLOrVideoID, uint URLSize, out bool pbIsImage) {
+		public static bool GetQueryUGCAdditionalPreview(UGCQueryHandle handle, uint index, uint previewIndex, out string URLOrVideoID, uint URLSize, out bool pbIsImage) {
 			InteropHelp.TestIfAvailableGameServer();
-			var pchURLOrVideoID2 = Marshal.AllocHGlobal((int)URLSize);
-			var ret = NativeMethods.ISteamGameServerUGC_GetQueryUGCAdditionalPreview(handle, index, previewIndex, pchURLOrVideoID2, URLSize, out pbIsImage);
-			pchURLOrVideoID = ret ? InteropHelp.PtrToStringUTF8(pchURLOrVideoID2) : null;
-			Marshal.FreeHGlobal(pchURLOrVideoID2);
+			var URLOrVideoID2 = Marshal.AllocHGlobal((int)URLSize);
+			var ret = NativeMethods.ISteamGameServerUGC_GetQueryUGCAdditionalPreview(handle, index, previewIndex, URLOrVideoID2, URLSize, out pbIsImage);
+			URLOrVideoID = ret ? InteropHelp.PtrToStringUTF8(URLOrVideoID2) : null;
+			Marshal.FreeHGlobal(URLOrVideoID2);
 			return ret;
 		}
 
@@ -96,15 +96,15 @@ namespace Steamworks {
 			return NativeMethods.ISteamGameServerUGC_GetQueryUGCNumKeyValueTags(handle, index);
 		}
 
-		public static bool GetQueryUGCKeyValueTag(UGCQueryHandle handle, uint index, uint keyValueTagIndex, out string pchKey, uint KeySize, out string pchValue, uint ValueSize) {
+		public static bool GetQueryUGCKeyValueTag(UGCQueryHandle handle, uint index, uint keyValueTagIndex, out string Key, uint KeySize, out string Value, uint ValueSize) {
 			InteropHelp.TestIfAvailableGameServer();
-			var pchKey2 = Marshal.AllocHGlobal((int)KeySize);
-			var pchValue2 = Marshal.AllocHGlobal((int)ValueSize);
-			var ret = NativeMethods.ISteamGameServerUGC_GetQueryUGCKeyValueTag(handle, index, keyValueTagIndex, pchKey2, KeySize, pchValue2, ValueSize);
-			pchKey = ret ? InteropHelp.PtrToStringUTF8(pchKey2) : null;
-			Marshal.FreeHGlobal(pchKey2);
-			pchValue = ret ? InteropHelp.PtrToStringUTF8(pchValue2) : null;
-			Marshal.FreeHGlobal(pchValue2);
+			var Key2 = Marshal.AllocHGlobal((int)KeySize);
+			var Value2 = Marshal.AllocHGlobal((int)ValueSize);
+			var ret = NativeMethods.ISteamGameServerUGC_GetQueryUGCKeyValueTag(handle, index, keyValueTagIndex, Key2, KeySize, Value2, ValueSize);
+			Key = ret ? InteropHelp.PtrToStringUTF8(Key2) : null;
+			Marshal.FreeHGlobal(Key2);
+			Value = ret ? InteropHelp.PtrToStringUTF8(Value2) : null;
+			Marshal.FreeHGlobal(Value2);
 			return ret;
 		}
 
@@ -163,10 +163,10 @@ namespace Steamworks {
 			return NativeMethods.ISteamGameServerUGC_SetReturnTotalOnly(handle, bReturnTotalOnly);
 		}
 
-		public static bool SetLanguage(UGCQueryHandle handle, string pchLanguage) {
+		public static bool SetLanguage(UGCQueryHandle handle, string Language) {
 			InteropHelp.TestIfAvailableGameServer();
-			using (var pchLanguage2 = new InteropHelp.UTF8StringHandle(pchLanguage)) {
-				return NativeMethods.ISteamGameServerUGC_SetLanguage(handle, pchLanguage2);
+			using (var Language2 = new InteropHelp.UTF8StringHandle(Language)) {
+				return NativeMethods.ISteamGameServerUGC_SetLanguage(handle, Language2);
 			}
 		}
 
@@ -241,40 +241,40 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> change the title of an UGC item</para>
 		/// </summary>
-		public static bool SetItemTitle(UGCUpdateHandle handle, string pchTitle) {
+		public static bool SetItemTitle(UGCUpdateHandle handle, string Title) {
 			InteropHelp.TestIfAvailableGameServer();
-			using (var pchTitle2 = new InteropHelp.UTF8StringHandle(pchTitle)) {
-				return NativeMethods.ISteamGameServerUGC_SetItemTitle(handle, pchTitle2);
+			using (var Title2 = new InteropHelp.UTF8StringHandle(Title)) {
+				return NativeMethods.ISteamGameServerUGC_SetItemTitle(handle, Title2);
 			}
 		}
 
 		/// <summary>
 		/// <para> change the description of an UGC item</para>
 		/// </summary>
-		public static bool SetItemDescription(UGCUpdateHandle handle, string pchDescription) {
+		public static bool SetItemDescription(UGCUpdateHandle handle, string Description) {
 			InteropHelp.TestIfAvailableGameServer();
-			using (var pchDescription2 = new InteropHelp.UTF8StringHandle(pchDescription)) {
-				return NativeMethods.ISteamGameServerUGC_SetItemDescription(handle, pchDescription2);
+			using (var Description2 = new InteropHelp.UTF8StringHandle(Description)) {
+				return NativeMethods.ISteamGameServerUGC_SetItemDescription(handle, Description2);
 			}
 		}
 
 		/// <summary>
 		/// <para> specify the language of the title or description that will be set</para>
 		/// </summary>
-		public static bool SetItemUpdateLanguage(UGCUpdateHandle handle, string pchLanguage) {
+		public static bool SetItemUpdateLanguage(UGCUpdateHandle handle, string Language) {
 			InteropHelp.TestIfAvailableGameServer();
-			using (var pchLanguage2 = new InteropHelp.UTF8StringHandle(pchLanguage)) {
-				return NativeMethods.ISteamGameServerUGC_SetItemUpdateLanguage(handle, pchLanguage2);
+			using (var Language2 = new InteropHelp.UTF8StringHandle(Language)) {
+				return NativeMethods.ISteamGameServerUGC_SetItemUpdateLanguage(handle, Language2);
 			}
 		}
 
 		/// <summary>
 		/// <para> change the metadata of an UGC item (max = DeveloperMetadataMax)</para>
 		/// </summary>
-		public static bool SetItemMetadata(UGCUpdateHandle handle, string pchMetaData) {
+		public static bool SetItemMetadata(UGCUpdateHandle handle, string MetaData) {
 			InteropHelp.TestIfAvailableGameServer();
-			using (var pchMetaData2 = new InteropHelp.UTF8StringHandle(pchMetaData)) {
-				return NativeMethods.ISteamGameServerUGC_SetItemMetadata(handle, pchMetaData2);
+			using (var MetaData2 = new InteropHelp.UTF8StringHandle(MetaData)) {
+				return NativeMethods.ISteamGameServerUGC_SetItemMetadata(handle, MetaData2);
 			}
 		}
 
@@ -317,31 +317,31 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> remove any existing key-value tags with the specified key</para>
 		/// </summary>
-		public static bool RemoveItemKeyValueTags(UGCUpdateHandle handle, string pchKey) {
+		public static bool RemoveItemKeyValueTags(UGCUpdateHandle handle, string Key) {
 			InteropHelp.TestIfAvailableGameServer();
-			using (var pchKey2 = new InteropHelp.UTF8StringHandle(pchKey)) {
-				return NativeMethods.ISteamGameServerUGC_RemoveItemKeyValueTags(handle, pchKey2);
+			using (var Key2 = new InteropHelp.UTF8StringHandle(Key)) {
+				return NativeMethods.ISteamGameServerUGC_RemoveItemKeyValueTags(handle, Key2);
 			}
 		}
 
 		/// <summary>
 		/// <para> add new key-value tags for the item. Note that there can be multiple values for a tag.</para>
 		/// </summary>
-		public static bool AddItemKeyValueTag(UGCUpdateHandle handle, string pchKey, string pchValue) {
+		public static bool AddItemKeyValueTag(UGCUpdateHandle handle, string Key, string Value) {
 			InteropHelp.TestIfAvailableGameServer();
-			using (var pchKey2 = new InteropHelp.UTF8StringHandle(pchKey))
-			using (var pchValue2 = new InteropHelp.UTF8StringHandle(pchValue)) {
-				return NativeMethods.ISteamGameServerUGC_AddItemKeyValueTag(handle, pchKey2, pchValue2);
+			using (var Key2 = new InteropHelp.UTF8StringHandle(Key))
+			using (var Value2 = new InteropHelp.UTF8StringHandle(Value)) {
+				return NativeMethods.ISteamGameServerUGC_AddItemKeyValueTag(handle, Key2, Value2);
 			}
 		}
 
 		/// <summary>
 		/// <para> commit update process started with StartItemUpdate()</para>
 		/// </summary>
-		public static SteamAPICall SubmitItemUpdate(UGCUpdateHandle handle, string pchChangeNote) {
+		public static SteamAPICall SubmitItemUpdate(UGCUpdateHandle handle, string ChangeNote) {
 			InteropHelp.TestIfAvailableGameServer();
-			using (var pchChangeNote2 = new InteropHelp.UTF8StringHandle(pchChangeNote)) {
-				return (SteamAPICall)NativeMethods.ISteamGameServerUGC_SubmitItemUpdate(handle, pchChangeNote2);
+			using (var ChangeNote2 = new InteropHelp.UTF8StringHandle(ChangeNote)) {
+				return (SteamAPICall)NativeMethods.ISteamGameServerUGC_SubmitItemUpdate(handle, ChangeNote2);
 			}
 		}
 
@@ -415,14 +415,14 @@ namespace Steamworks {
 
 		/// <summary>
 		/// <para> get info about currently installed content on disc for items that have EItemStateInstalled set</para>
-		/// <para> if EItemStateLegacyItem is set, pchFolder contains the path to the legacy file itself (not a folder)</para>
+		/// <para> if EItemStateLegacyItem is set, Folder contains the path to the legacy file itself (not a folder)</para>
 		/// </summary>
-		public static bool GetItemInstallInfo(PublishedFileId fileId, out ulong punSizeOnDisk, out string pchFolder, uint FolderSize, out uint punTimeStamp) {
+		public static bool GetItemInstallInfo(PublishedFileId fileId, out ulong punSizeOnDisk, out string Folder, uint FolderSize, out uint punTimeStamp) {
 			InteropHelp.TestIfAvailableGameServer();
-			var pchFolder2 = Marshal.AllocHGlobal((int)FolderSize);
-			var ret = NativeMethods.ISteamGameServerUGC_GetItemInstallInfo(fileId, out punSizeOnDisk, pchFolder2, FolderSize, out punTimeStamp);
-			pchFolder = ret ? InteropHelp.PtrToStringUTF8(pchFolder2) : null;
-			Marshal.FreeHGlobal(pchFolder2);
+			var Folder2 = Marshal.AllocHGlobal((int)FolderSize);
+			var ret = NativeMethods.ISteamGameServerUGC_GetItemInstallInfo(fileId, out punSizeOnDisk, Folder2, FolderSize, out punTimeStamp);
+			Folder = ret ? InteropHelp.PtrToStringUTF8(Folder2) : null;
+			Marshal.FreeHGlobal(Folder2);
 			return ret;
 		}
 

@@ -28,10 +28,10 @@ namespace Steamworks {
 		/// <para> If the name change fails to happen on the server, then an additional global PersonaStateChange will be posted</para>
 		/// <para> to change the name back, in addition to the SetPersonaNameResponse callback.</para>
 		/// </summary>
-		public static SteamAPICall SetPersonaName(string pchPersonaName) {
+		public static SteamAPICall SetPersonaName(string PersonaName) {
 			InteropHelp.TestIfAvailableClient();
-			using (var pchPersonaName2 = new InteropHelp.UTF8StringHandle(pchPersonaName)) {
-				return (SteamAPICall)NativeMethods.ISteamFriends_SetPersonaName(pchPersonaName2);
+			using (var PersonaName2 = new InteropHelp.UTF8StringHandle(PersonaName)) {
+				return (SteamAPICall)NativeMethods.ISteamFriends_SetPersonaName(PersonaName2);
 			}
 		}
 
@@ -229,29 +229,29 @@ namespace Steamworks {
 		}
 
 		/// <summary>
-		/// <para> returns true if the local user can see that steamIDUser is a member or in steamIDSource</para>
+		/// <para> returns true if the local user can see that userId is a member or in steamIDSource</para>
 		/// </summary>
-		public static bool IsUserInSource(SteamId steamIDUser, SteamId steamIDSource) {
+		public static bool IsUserInSource(SteamId userId, SteamId steamIDSource) {
 			InteropHelp.TestIfAvailableClient();
-			return NativeMethods.ISteamFriends_IsUserInSource(steamIDUser, steamIDSource);
+			return NativeMethods.ISteamFriends_IsUserInSource(userId, steamIDSource);
 		}
 
 		/// <summary>
 		/// <para> User is in a game pressing the talk button (will suppress the microphone for all voice comms from the Steam friends UI)</para>
 		/// </summary>
-		public static void SetInGameVoiceSpeaking(SteamId steamIDUser, bool bSpeaking) {
+		public static void SetInGameVoiceSpeaking(SteamId userId, bool bSpeaking) {
 			InteropHelp.TestIfAvailableClient();
-			NativeMethods.ISteamFriends_SetInGameVoiceSpeaking(steamIDUser, bSpeaking);
+			NativeMethods.ISteamFriends_SetInGameVoiceSpeaking(userId, bSpeaking);
 		}
 
 		/// <summary>
 		/// <para> activates the game overlay, with an optional dialog to open</para>
 		/// <para> valid options are "Friends", "Community", "Players", "Settings", "OfficialGameGroup", "Stats", "Achievements"</para>
 		/// </summary>
-		public static void ActivateGameOverlay(string pchDialog) {
+		public static void ActivateGameOverlay(string Dialog) {
 			InteropHelp.TestIfAvailableClient();
-			using (var pchDialog2 = new InteropHelp.UTF8StringHandle(pchDialog)) {
-				NativeMethods.ISteamFriends_ActivateGameOverlay(pchDialog2);
+			using (var Dialog2 = new InteropHelp.UTF8StringHandle(Dialog)) {
+				NativeMethods.ISteamFriends_ActivateGameOverlay(Dialog2);
 			}
 		}
 
@@ -268,10 +268,10 @@ namespace Steamworks {
 		/// <para>		"friendrequestaccept" - opens the overlay in minimal mode prompting the user to accept an incoming friend invite</para>
 		/// <para>		"friendrequestignore" - opens the overlay in minimal mode prompting the user to ignore an incoming friend invite</para>
 		/// </summary>
-		public static void ActivateGameOverlayToUser(string pchDialog, SteamId steamID) {
+		public static void ActivateGameOverlayToUser(string Dialog, SteamId steamID) {
 			InteropHelp.TestIfAvailableClient();
-			using (var pchDialog2 = new InteropHelp.UTF8StringHandle(pchDialog)) {
-				NativeMethods.ISteamFriends_ActivateGameOverlayToUser(pchDialog2, steamID);
+			using (var Dialog2 = new InteropHelp.UTF8StringHandle(Dialog)) {
+				NativeMethods.ISteamFriends_ActivateGameOverlayToUser(Dialog2, steamID);
 			}
 		}
 
@@ -279,10 +279,10 @@ namespace Steamworks {
 		/// <para> activates game overlay web browser directly to the specified URL</para>
 		/// <para> full address with protocol type is required, e.g. http://www.steamgames.com/</para>
 		/// </summary>
-		public static void ActivateGameOverlayToWebPage(string pchURL) {
+		public static void ActivateGameOverlayToWebPage(string URL) {
 			InteropHelp.TestIfAvailableClient();
-			using (var pchURL2 = new InteropHelp.UTF8StringHandle(pchURL)) {
-				NativeMethods.ISteamFriends_ActivateGameOverlayToWebPage(pchURL2);
+			using (var URL2 = new InteropHelp.UTF8StringHandle(URL)) {
+				NativeMethods.ISteamFriends_ActivateGameOverlayToWebPage(URL2);
 			}
 		}
 
@@ -298,9 +298,9 @@ namespace Steamworks {
 		/// <para> Mark a target user as 'played with'. This is a client-side only feature that requires that the calling user is</para>
 		/// <para> in game</para>
 		/// </summary>
-		public static void SetPlayedWith(SteamId steamIDUserPlayedWith) {
+		public static void SetPlayedWith(SteamId userIdPlayedWith) {
 			InteropHelp.TestIfAvailableClient();
-			NativeMethods.ISteamFriends_SetPlayedWith(steamIDUserPlayedWith);
+			NativeMethods.ISteamFriends_SetPlayedWith(userIdPlayedWith);
 		}
 
 		/// <summary>
@@ -343,9 +343,9 @@ namespace Steamworks {
 		/// <para> if returns true, it means that data is being requested, and a PersonaStateChanged callback will be posted when it's retrieved</para>
 		/// <para> if returns false, it means that we already have all the details about that user, and functions can be called immediately</para>
 		/// </summary>
-		public static bool RequestUserInformation(SteamId steamIDUser, bool bRequireNameOnly) {
+		public static bool RequestUserInformation(SteamId userId, bool bRequireNameOnly) {
 			InteropHelp.TestIfAvailableClient();
-			return NativeMethods.ISteamFriends_RequestUserInformation(steamIDUser, bRequireNameOnly);
+			return NativeMethods.ISteamFriends_RequestUserInformation(userId, bRequireNameOnly);
 		}
 
 		/// <summary>
@@ -408,11 +408,11 @@ namespace Steamworks {
 		/// <para> You can iterate the current set of keys for a friend with GetFriendRichPresenceKeyCount()</para>
 		/// <para> and GetFriendRichPresenceKeyByIndex() (typically only used for debugging)</para>
 		/// </summary>
-		public static bool SetRichPresence(string pchKey, string pchValue) {
+		public static bool SetRichPresence(string Key, string Value) {
 			InteropHelp.TestIfAvailableClient();
-			using (var pchKey2 = new InteropHelp.UTF8StringHandle(pchKey))
-			using (var pchValue2 = new InteropHelp.UTF8StringHandle(pchValue)) {
-				return NativeMethods.ISteamFriends_SetRichPresence(pchKey2, pchValue2);
+			using (var Key2 = new InteropHelp.UTF8StringHandle(Key))
+			using (var Value2 = new InteropHelp.UTF8StringHandle(Value)) {
+				return NativeMethods.ISteamFriends_SetRichPresence(Key2, Value2);
 			}
 		}
 
@@ -421,10 +421,10 @@ namespace Steamworks {
 			NativeMethods.ISteamFriends_ClearRichPresence();
 		}
 
-		public static string GetFriendRichPresence(SteamId steamIDFriend, string pchKey) {
+		public static string GetFriendRichPresence(SteamId steamIDFriend, string Key) {
 			InteropHelp.TestIfAvailableClient();
-			using (var pchKey2 = new InteropHelp.UTF8StringHandle(pchKey)) {
-				return InteropHelp.PtrToStringUTF8(NativeMethods.ISteamFriends_GetFriendRichPresence(steamIDFriend, pchKey2));
+			using (var Key2 = new InteropHelp.UTF8StringHandle(Key)) {
+				return InteropHelp.PtrToStringUTF8(NativeMethods.ISteamFriends_GetFriendRichPresence(steamIDFriend, Key2));
 			}
 		}
 
@@ -448,14 +448,14 @@ namespace Steamworks {
 
 		/// <summary>
 		/// <para> rich invite support</para>
-		/// <para> if the target accepts the invite, the pchConnectString gets added to the command-line for launching the game</para>
+		/// <para> if the target accepts the invite, the ConnectString gets added to the command-line for launching the game</para>
 		/// <para> if the game is already running, a GameRichPresenceJoinRequested callback is posted containing the connect string</para>
 		/// <para> invites can only be sent to friends</para>
 		/// </summary>
-		public static bool InviteUserToGame(SteamId steamIDFriend, string pchConnectString) {
+		public static bool InviteUserToGame(SteamId steamIDFriend, string ConnectString) {
 			InteropHelp.TestIfAvailableClient();
-			using (var pchConnectString2 = new InteropHelp.UTF8StringHandle(pchConnectString)) {
-				return NativeMethods.ISteamFriends_InviteUserToGame(steamIDFriend, pchConnectString2);
+			using (var ConnectString2 = new InteropHelp.UTF8StringHandle(ConnectString)) {
+				return NativeMethods.ISteamFriends_InviteUserToGame(steamIDFriend, ConnectString2);
 			}
 		}
 
@@ -510,25 +510,25 @@ namespace Steamworks {
 			return (SteamId)NativeMethods.ISteamFriends_GetChatMemberByIndex(steamIDClan, iUser);
 		}
 
-		public static bool SendClanChatMessage(SteamId steamIDClanChat, string pchText) {
+		public static bool SendClanChatMessage(SteamId steamIDClanChat, string Text) {
 			InteropHelp.TestIfAvailableClient();
-			using (var pchText2 = new InteropHelp.UTF8StringHandle(pchText)) {
-				return NativeMethods.ISteamFriends_SendClanChatMessage(steamIDClanChat, pchText2);
+			using (var Text2 = new InteropHelp.UTF8StringHandle(Text)) {
+				return NativeMethods.ISteamFriends_SendClanChatMessage(steamIDClanChat, Text2);
 			}
 		}
 
-		public static int GetClanChatMessage(SteamId steamIDClanChat, int iMessage, out string prgchText, int TextMax, out EChatEntryType peChatEntryType, out SteamId psteamidChatter) {
+		public static int GetClanChatMessage(SteamId steamIDClanChat, int iMessage, out string prText, int TextMax, out EChatEntryType peChatEntryType, out SteamId psteamidChatter) {
 			InteropHelp.TestIfAvailableClient();
-			var prgchText2 = Marshal.AllocHGlobal(TextMax);
-			var ret = NativeMethods.ISteamFriends_GetClanChatMessage(steamIDClanChat, iMessage, prgchText2, TextMax, out peChatEntryType, out psteamidChatter);
-			prgchText = ret != 0 ? InteropHelp.PtrToStringUTF8(prgchText2) : null;
-			Marshal.FreeHGlobal(prgchText2);
+			var prText2 = Marshal.AllocHGlobal(TextMax);
+			var ret = NativeMethods.ISteamFriends_GetClanChatMessage(steamIDClanChat, iMessage, prText2, TextMax, out peChatEntryType, out psteamidChatter);
+			prText = ret != 0 ? InteropHelp.PtrToStringUTF8(prText2) : null;
+			Marshal.FreeHGlobal(prText2);
 			return ret;
 		}
 
-		public static bool IsClanChatAdmin(SteamId steamIDClanChat, SteamId steamIDUser) {
+		public static bool IsClanChatAdmin(SteamId steamIDClanChat, SteamId userId) {
 			InteropHelp.TestIfAvailableClient();
-			return NativeMethods.ISteamFriends_IsClanChatAdmin(steamIDClanChat, steamIDUser);
+			return NativeMethods.ISteamFriends_IsClanChatAdmin(steamIDClanChat, userId);
 		}
 
 		/// <summary>
@@ -558,10 +558,10 @@ namespace Steamworks {
 			return NativeMethods.ISteamFriends_SetListenForFriendsMessages(bInterceptEnabled);
 		}
 
-		public static bool ReplyToFriendMessage(SteamId steamIDFriend, string pchMsgToSend) {
+		public static bool ReplyToFriendMessage(SteamId steamIDFriend, string MsgToSend) {
 			InteropHelp.TestIfAvailableClient();
-			using (var pchMsgToSend2 = new InteropHelp.UTF8StringHandle(pchMsgToSend)) {
-				return NativeMethods.ISteamFriends_ReplyToFriendMessage(steamIDFriend, pchMsgToSend2);
+			using (var MsgToSend2 = new InteropHelp.UTF8StringHandle(MsgToSend)) {
+				return NativeMethods.ISteamFriends_ReplyToFriendMessage(steamIDFriend, MsgToSend2);
 			}
 		}
 

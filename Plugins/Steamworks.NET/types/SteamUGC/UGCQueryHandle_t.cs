@@ -7,7 +7,7 @@
 namespace Steamworks {
 	public struct UGCQueryHandle : System.IEquatable<UGCQueryHandle>, System.IComparable<UGCQueryHandle> {
 		public static readonly UGCQueryHandle Invalid = new UGCQueryHandle(0xffffffffffffffff);
-		public readonly ulong _UGCQueryHandle;
+	    private readonly ulong _UGCQueryHandle;
 
 		public UGCQueryHandle(ulong value) {
 			_UGCQueryHandle = value;

@@ -8,11 +8,11 @@
 
 namespace Steamworks {
 	public static class Version {
-		public const string SteamworksNETVersion = "9.0.0";
-		public const string SteamworksSDKVersion = "1.36";
-		public const string SteamAPIDLLVersion = "03.27.76.74";
-		public const int SteamAPIDLLSize = 217168;
-		public const int SteamAPI64DLLSize = 239184;
+		public const string SteamworksNetVersion = "9.0.0";
+		public const string SteamworksSdkVersion = "1.36";
+		public const string SteamApidllVersion = "03.27.76.74";
+		public const int SteamApidllSize = 217168;
+		public const int SteamAPI64DllSize = 239184;
 	}
 
 	public static class SteamAPI {
@@ -137,20 +137,20 @@ namespace Steamworks {
 		// - The version string is usually in the form x.x.x.x, and is used by the master server to detect when the
 		//		server is out of date.  (Only servers with the latest version will be listed.)
 #if VERSION_SAFE_STEAM_API_INTERFACES
-		public static bool InitSafe(uint unIP, ushort usSteamPort, ushort usGamePort, ushort usQueryPort, EServerMode eServerMode, string pchVersionString) {
+		public static bool InitSafe(uint ip, ushort usSteamPort, ushort usGamePort, ushort usQueryPort, EServerMode eServerMode, string versionString) {
 			InteropHelp.TestIfPlatformSupported();
-			using (var pchVersionString2 = new InteropHelp.UTF8StringHandle(pchVersionString)) {
-				return NativeMethods.SteamGameServer_InitSafe(unIP, usSteamPort, usGamePort, usQueryPort, eServerMode, pchVersionString2);
+			using (var versionString2 = new InteropHelp.UTF8StringHandle(versionString)) {
+				return NativeMethods.SteamGameServer_InitSafe(ip, usSteamPort, usGamePort, usQueryPort, eServerMode, versionString2);
 			}
 		}
 
 		// [Steamworks.NET] This is for Ease of use, since we don't need to care about the differences between them in C#.
-		public static bool Init(uint unIP, ushort usSteamPort, ushort usGamePort, ushort usQueryPort, EServerMode eServerMode, string pchVersionString) => InitSafe(unIP, usSteamPort, usGamePort, usQueryPort, eServerMode, pchVersionString);
+		public static bool Init(uint ip, ushort usSteamPort, ushort usGamePort, ushort usQueryPort, EServerMode eServerMode, string versionString) => InitSafe(ip, usSteamPort, usGamePort, usQueryPort, eServerMode, versionString);
 #else
-		public static bool Init(uint unIP, ushort usSteamPort, ushort usGamePort, ushort usQueryPort, EServerMode eServerMode, string pchVersionString) {
+		public static bool Init(uint ip, ushort usSteamPort, ushort usGamePort, ushort usQueryPort, EServerMode eServerMode, string VersionString) {
 			InteropHelp.TestIfPlatformSupported();
-			using (var pchVersionString2 = new InteropHelp.UTF8StringHandle(pchVersionString)) {
-				return NativeMethods.SteamGameServer_Init(unIP, usSteamPort, usGamePort, usQueryPort, eServerMode, pchVersionString2);
+			using (var VersionString2 = new InteropHelp.UTF8StringHandle(VersionString)) {
+				return NativeMethods.SteamGameServer_Init(ip, usSteamPort, usGamePort, usQueryPort, eServerMode, VersionString2);
 		`	}
 		}
 #endif
@@ -169,7 +169,7 @@ namespace Steamworks {
 			return NativeMethods.SteamGameServer_BSecure();
 		}
 
-		public static SteamId GetSteamID() {
+		public static SteamId GetSteamId() {
 			InteropHelp.TestIfPlatformSupported();
 			return (SteamId)NativeMethods.SteamGameServer_GetSteamID();
 		}
@@ -186,44 +186,44 @@ namespace Steamworks {
 	}
 
 	public static class SteamEncryptedAppTicket {
-		public static bool BDecryptTicket(byte[] rgubTicketEncrypted, uint TicketEncrypted, byte[] rgubTicketDecrypted, ref uint pcubTicketDecrypted, byte[] rgubKey, int Key) {
+		public static bool BDecryptTicket(byte[] rgubTicketEncrypted, uint ticketEncrypted, byte[] rgubTicketDecrypted, ref uint pcubTicketDecrypted, byte[] rgubKey, int key) {
 			InteropHelp.TestIfPlatformSupported();
-			return NativeMethods.BDecryptTicket(rgubTicketEncrypted, TicketEncrypted, rgubTicketDecrypted, ref pcubTicketDecrypted, rgubKey, Key);
+			return NativeMethods.BDecryptTicket(rgubTicketEncrypted, ticketEncrypted, rgubTicketDecrypted, ref pcubTicketDecrypted, rgubKey, key);
 		}
 
-		public static bool BIsTicketForApp(byte[] rgubTicketDecrypted, uint TicketDecrypted, AppId appId) {
+		public static bool BIsTicketForApp(byte[] rgubTicketDecrypted, uint ticketDecrypted, AppId appId) {
 			InteropHelp.TestIfPlatformSupported();
-			return NativeMethods.BIsTicketForApp(rgubTicketDecrypted, TicketDecrypted, appId);
+			return NativeMethods.BIsTicketForApp(rgubTicketDecrypted, ticketDecrypted, appId);
 		}
 
-		public static uint GetTicketIssueTime(byte[] rgubTicketDecrypted, uint TicketDecrypted) {
+		public static uint GetTicketIssueTime(byte[] rgubTicketDecrypted, uint ticketDecrypted) {
 			InteropHelp.TestIfPlatformSupported();
-			return NativeMethods.GetTicketIssueTime(rgubTicketDecrypted, TicketDecrypted);
+			return NativeMethods.GetTicketIssueTime(rgubTicketDecrypted, ticketDecrypted);
 		}
 
-		public static void GetTicketSteamID(byte[] rgubTicketDecrypted, uint TicketDecrypted, out SteamId psteamID) {
+		public static void GetTicketSteamId(byte[] rgubTicketDecrypted, uint ticketDecrypted, out SteamId steamId) {
 			InteropHelp.TestIfPlatformSupported();
-			NativeMethods.GetTicketSteamID(rgubTicketDecrypted, TicketDecrypted, out psteamID);
+			NativeMethods.GetTicketSteamID(rgubTicketDecrypted, ticketDecrypted, out steamId);
 		}
 
-		public static uint GetTicketAppID(byte[] rgubTicketDecrypted, uint TicketDecrypted) {
+		public static uint GetTicketAppId(byte[] rgubTicketDecrypted, uint ticketDecrypted) {
 			InteropHelp.TestIfPlatformSupported();
-			return NativeMethods.GetTicketAppID(rgubTicketDecrypted, TicketDecrypted);
+			return NativeMethods.GetTicketAppID(rgubTicketDecrypted, ticketDecrypted);
 		}
 
-		public static bool BUserOwnsAppInTicket(byte[] rgubTicketDecrypted, uint TicketDecrypted, AppId appId) {
+		public static bool BUserOwnsAppInTicket(byte[] rgubTicketDecrypted, uint ticketDecrypted, AppId appId) {
 			InteropHelp.TestIfPlatformSupported();
-			return NativeMethods.BUserOwnsAppInTicket(rgubTicketDecrypted, TicketDecrypted, appId);
+			return NativeMethods.BUserOwnsAppInTicket(rgubTicketDecrypted, ticketDecrypted, appId);
 		}
 
-		public static bool BUserIsVacBanned(byte[] rgubTicketDecrypted, uint TicketDecrypted) {
+		public static bool BUserIsVacBanned(byte[] rgubTicketDecrypted, uint ticketDecrypted) {
 			InteropHelp.TestIfPlatformSupported();
-			return NativeMethods.BUserIsVacBanned(rgubTicketDecrypted, TicketDecrypted);
+			return NativeMethods.BUserIsVacBanned(rgubTicketDecrypted, ticketDecrypted);
 		}
 
-		public static byte[] GetUserVariableData(byte[] rgubTicketDecrypted, uint TicketDecrypted, out uint pcubUserData) {
+		public static byte[] GetUserVariableData(byte[] rgubTicketDecrypted, uint ticketDecrypted, out uint pcubUserData) {
 			InteropHelp.TestIfPlatformSupported();
-			var punSecretData = NativeMethods.GetUserVariableData(rgubTicketDecrypted, TicketDecrypted, out pcubUserData);
+			var punSecretData = NativeMethods.GetUserVariableData(rgubTicketDecrypted, ticketDecrypted, out pcubUserData);
 			var ret = new byte[pcubUserData];
 			System.Runtime.InteropServices.Marshal.Copy(punSecretData, ret, 0, (int)pcubUserData);
 			return ret;

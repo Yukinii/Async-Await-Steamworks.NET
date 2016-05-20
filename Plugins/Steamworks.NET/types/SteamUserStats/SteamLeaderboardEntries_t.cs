@@ -6,46 +6,28 @@
 
 namespace Steamworks {
 	public struct SteamLeaderboardEntries_t : System.IEquatable<SteamLeaderboardEntries_t>, System.IComparable<SteamLeaderboardEntries_t> {
-		public ulong m_SteamLeaderboardEntries;
+		public ulong _SteamLeaderboardEntries;
 
 		public SteamLeaderboardEntries_t(ulong value) {
-			m_SteamLeaderboardEntries = value;
+			_SteamLeaderboardEntries = value;
 		}
 
-		public override string ToString() {
-			return m_SteamLeaderboardEntries.ToString();
-		}
+		public override string ToString() => _SteamLeaderboardEntries.ToString();
 
-		public override bool Equals(object other) {
-			return other is SteamLeaderboardEntries_t && this == (SteamLeaderboardEntries_t)other;
-		}
+	    public override bool Equals(object other) => other is SteamLeaderboardEntries_t && this == (SteamLeaderboardEntries_t)other;
 
-		public override int GetHashCode() {
-			return m_SteamLeaderboardEntries.GetHashCode();
-		}
+	    public override int GetHashCode() => _SteamLeaderboardEntries.GetHashCode();
 
-		public static bool operator ==(SteamLeaderboardEntries_t x, SteamLeaderboardEntries_t y) {
-			return x.m_SteamLeaderboardEntries == y.m_SteamLeaderboardEntries;
-		}
+	    public static bool operator ==(SteamLeaderboardEntries_t x, SteamLeaderboardEntries_t y) => x._SteamLeaderboardEntries == y._SteamLeaderboardEntries;
 
-		public static bool operator !=(SteamLeaderboardEntries_t x, SteamLeaderboardEntries_t y) {
-			return !(x == y);
-		}
+	    public static bool operator !=(SteamLeaderboardEntries_t x, SteamLeaderboardEntries_t y) => !(x == y);
 
-		public static explicit operator SteamLeaderboardEntries_t(ulong value) {
-			return new SteamLeaderboardEntries_t(value);
-		}
+	    public static explicit operator SteamLeaderboardEntries_t(ulong value) => new SteamLeaderboardEntries_t(value);
 
-		public static explicit operator ulong(SteamLeaderboardEntries_t that) {
-			return that.m_SteamLeaderboardEntries;
-		}
+	    public static explicit operator ulong(SteamLeaderboardEntries_t that) => that._SteamLeaderboardEntries;
 
-		public bool Equals(SteamLeaderboardEntries_t other) {
-			return m_SteamLeaderboardEntries == other.m_SteamLeaderboardEntries;
-		}
+	    public bool Equals(SteamLeaderboardEntries_t other) => _SteamLeaderboardEntries == other._SteamLeaderboardEntries;
 
-		public int CompareTo(SteamLeaderboardEntries_t other) {
-			return m_SteamLeaderboardEntries.CompareTo(other.m_SteamLeaderboardEntries);
-		}
+	    public int CompareTo(SteamLeaderboardEntries_t other) => _SteamLeaderboardEntries.CompareTo(other._SteamLeaderboardEntries);
 	}
 }

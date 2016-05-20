@@ -1,0 +1,4 @@
+x:\Users\domi\Desktop\GIT\Steamworks.NET\Standalone\bin\x64\OSX-Linux\Steamworks.NET.dll
+x:\Users\domi\Desktop\GIT\Steamworks.NET\Standalone\bin\x64\OSX-Linux\Steamworks.NET.pdb
+x:\Users\domi\Desktop\GIT\Steamworks.NET\Standalone\obj\x64\OSX-Linux\Steamworks.NET.dll
+x:\Users\domi\Desktop\GIT\Steamworks.NET\Standalone\obj\x64\OSX-Linux\Steamworks.NET.pdb

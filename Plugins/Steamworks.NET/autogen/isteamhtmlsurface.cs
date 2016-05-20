@@ -6,7 +6,6 @@
 // Changes to this file will be reverted when you update Steamworks.NET
 
 using System;
-using System.Runtime.InteropServices;
 
 namespace Steamworks {
 	public static class SteamHTMLSurface {
@@ -122,17 +121,17 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> Mouse click and mouse movement commands</para>
 		/// </summary>
-		public static void MouseUp(HHTMLBrowser unBrowserHandle, EHTMLMouseButton eMouseButton) {
+		public static void MouseUp(HHTMLBrowser unBrowserHandle, EhtmlMouseButton eMouseButton) {
 			InteropHelp.TestIfAvailableClient();
 			NativeMethods.ISteamHTMLSurface_MouseUp(unBrowserHandle, eMouseButton);
 		}
 
-		public static void MouseDown(HHTMLBrowser unBrowserHandle, EHTMLMouseButton eMouseButton) {
+		public static void MouseDown(HHTMLBrowser unBrowserHandle, EhtmlMouseButton eMouseButton) {
 			InteropHelp.TestIfAvailableClient();
 			NativeMethods.ISteamHTMLSurface_MouseDown(unBrowserHandle, eMouseButton);
 		}
 
-		public static void MouseDoubleClick(HHTMLBrowser unBrowserHandle, EHTMLMouseButton eMouseButton) {
+		public static void MouseDoubleClick(HHTMLBrowser unBrowserHandle, EhtmlMouseButton eMouseButton) {
 			InteropHelp.TestIfAvailableClient();
 			NativeMethods.ISteamHTMLSurface_MouseDoubleClick(unBrowserHandle, eMouseButton);
 		}
@@ -156,12 +155,12 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> keyboard interactions, native keycode is the virtual key code value from your OS</para>
 		/// </summary>
-		public static void KeyDown(HHTMLBrowser unBrowserHandle, uint nNativeKeyCode, EHTMLKeyModifiers eHTMLKeyModifiers) {
+		public static void KeyDown(HHTMLBrowser unBrowserHandle, uint nNativeKeyCode, EhtmlKeyModifiers eHTMLKeyModifiers) {
 			InteropHelp.TestIfAvailableClient();
 			NativeMethods.ISteamHTMLSurface_KeyDown(unBrowserHandle, nNativeKeyCode, eHTMLKeyModifiers);
 		}
 
-		public static void KeyUp(HHTMLBrowser unBrowserHandle, uint nNativeKeyCode, EHTMLKeyModifiers eHTMLKeyModifiers) {
+		public static void KeyUp(HHTMLBrowser unBrowserHandle, uint nNativeKeyCode, EhtmlKeyModifiers eHTMLKeyModifiers) {
 			InteropHelp.TestIfAvailableClient();
 			NativeMethods.ISteamHTMLSurface_KeyUp(unBrowserHandle, nNativeKeyCode, eHTMLKeyModifiers);
 		}
@@ -169,7 +168,7 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> cUnicodeChar is the unicode character point for this keypress (and potentially multiple chars per press)</para>
 		/// </summary>
-		public static void KeyChar(HHTMLBrowser unBrowserHandle, uint cUnicodeChar, EHTMLKeyModifiers eHTMLKeyModifiers) {
+		public static void KeyChar(HHTMLBrowser unBrowserHandle, uint cUnicodeChar, EhtmlKeyModifiers eHTMLKeyModifiers) {
 			InteropHelp.TestIfAvailableClient();
 			NativeMethods.ISteamHTMLSurface_KeyChar(unBrowserHandle, cUnicodeChar, eHTMLKeyModifiers);
 		}
@@ -269,7 +268,7 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> Enable/disable low-resource background mode, where javascript and repaint timers are throttled, resources are</para>
 		/// <para> more aggressively purged from memory, and audio/video elements are paused. When background mode is enabled,</para>
-		/// <para> all HTML5 video and audio objects will execute ".pause()" and gain the property "._steam_background_paused = 1".</para>
+		/// <para> all HTML5 video and audio objects will execute ".pause()" and gain the property "._stea_background_paused = 1".</para>
 		/// <para> When background mode is disabled, any video or audio objects with that property will resume with ".play()".</para>
 		/// </summary>
 		public static void SetBackgroundMode(HHTMLBrowser unBrowserHandle, bool bBackgroundMode) {
@@ -291,7 +290,7 @@ namespace Steamworks {
 		}
 
 		/// <summary>
-		/// <para> You MUST call this in response to a HTML_JSAlert_t or HTML_JSConfirm_t callback</para>
+		/// <para> You MUST call this in response to a HTML_JSAlert_t or HTML_JSConfir_t callback</para>
 		/// <para>  Set bResult to true for the OK option of a confirm, use false otherwise</para>
 		/// </summary>
 		public static void JSDialogResponse(HHTMLBrowser unBrowserHandle, bool bResult) {

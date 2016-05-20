@@ -27,7 +27,6 @@
 	#warning You need to define STEAMWORKS_WIN, or STEAMWORKS_LIN_OSX. Refer to the readme for more details.
 #endif
 
-using System;
 using System.Runtime.InteropServices;
 
 namespace Steamworks {
@@ -39,24 +38,22 @@ namespace Steamworks {
 #endif
 
 		public static bool Test() {
-			int sentinelSize = Marshal.SizeOf(typeof(ValvePackingSentinel_t));
-			int subscribedFilesSize = Marshal.SizeOf(typeof(RemoteStorageEnumerateUserSubscribedFilesResult_t));
+			var sentinelSize = Marshal.SizeOf(typeof(ValvePackingSentinel_t));
+			var subscribedFilesSize = Marshal.SizeOf(typeof(RemoteStorageEnumerateUserSubscribedFilesResult_t));
 #if VALVE_CALLBACK_PACK_LARGE
 			if (sentinelSize != 32 || subscribedFilesSize != (1 + 1 + 1 + 50 + 100) * 4 + 4)
 				return false;
 #elif VALVE_CALLBACK_PACK_SMALL
-			if (sentinelSize != 24 || subscribedFilesSize != (1 + 1 + 1 + 50 + 100) * 4)
-				return false;
+			return sentinelSize == 24 && subscribedFilesSize == (1 + 1 + 1 + 50 + 100) * 4;
 #endif
-			return true;
 		}
 
-		[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
+		[StructLayout(LayoutKind.Sequential, Pack = value)]
 		struct ValvePackingSentinel_t {
-			uint m_u32;
-			ulong m_u64;
-			ushort m_u16;
-			double m_d;
+		    readonly uint _u32;
+		    readonly ulong _u64;
+		    readonly ushort _u16;
+		    readonly double _d;
 		};
 	}
 }

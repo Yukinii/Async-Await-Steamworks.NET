@@ -6,46 +6,28 @@
 
 namespace Steamworks {
 	public struct ControllerHandle_t : System.IEquatable<ControllerHandle_t>, System.IComparable<ControllerHandle_t> {
-		public ulong m_ControllerHandle;
+		public ulong _ControllerHandle;
 
 		public ControllerHandle_t(ulong value) {
-			m_ControllerHandle = value;
+			_ControllerHandle = value;
 		}
 
-		public override string ToString() {
-			return m_ControllerHandle.ToString();
-		}
+		public override string ToString() => _ControllerHandle.ToString();
 
-		public override bool Equals(object other) {
-			return other is ControllerHandle_t && this == (ControllerHandle_t)other;
-		}
+	    public override bool Equals(object other) => other is ControllerHandle_t && this == (ControllerHandle_t)other;
 
-		public override int GetHashCode() {
-			return m_ControllerHandle.GetHashCode();
-		}
+	    public override int GetHashCode() => _ControllerHandle.GetHashCode();
 
-		public static bool operator ==(ControllerHandle_t x, ControllerHandle_t y) {
-			return x.m_ControllerHandle == y.m_ControllerHandle;
-		}
+	    public static bool operator ==(ControllerHandle_t x, ControllerHandle_t y) => x._ControllerHandle == y._ControllerHandle;
 
-		public static bool operator !=(ControllerHandle_t x, ControllerHandle_t y) {
-			return !(x == y);
-		}
+	    public static bool operator !=(ControllerHandle_t x, ControllerHandle_t y) => !(x == y);
 
-		public static explicit operator ControllerHandle_t(ulong value) {
-			return new ControllerHandle_t(value);
-		}
+	    public static explicit operator ControllerHandle_t(ulong value) => new ControllerHandle_t(value);
 
-		public static explicit operator ulong(ControllerHandle_t that) {
-			return that.m_ControllerHandle;
-		}
+	    public static explicit operator ulong(ControllerHandle_t that) => that._ControllerHandle;
 
-		public bool Equals(ControllerHandle_t other) {
-			return m_ControllerHandle == other.m_ControllerHandle;
-		}
+	    public bool Equals(ControllerHandle_t other) => _ControllerHandle == other._ControllerHandle;
 
-		public int CompareTo(ControllerHandle_t other) {
-			return m_ControllerHandle.CompareTo(other.m_ControllerHandle);
-		}
+	    public int CompareTo(ControllerHandle_t other) => _ControllerHandle.CompareTo(other._ControllerHandle);
 	}
 }

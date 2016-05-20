@@ -7,46 +7,28 @@
 namespace Steamworks {
 	public struct ManifestId_t : System.IEquatable<ManifestId_t>, System.IComparable<ManifestId_t> {
 		public static readonly ManifestId_t Invalid = new ManifestId_t(0x0);
-		public ulong m_ManifestId;
+		public ulong _ManifestId;
 
 		public ManifestId_t(ulong value) {
-			m_ManifestId = value;
+			_ManifestId = value;
 		}
 
-		public override string ToString() {
-			return m_ManifestId.ToString();
-		}
+		public override string ToString() => _ManifestId.ToString();
 
-		public override bool Equals(object other) {
-			return other is ManifestId_t && this == (ManifestId_t)other;
-		}
+	    public override bool Equals(object other) => other is ManifestId_t && this == (ManifestId_t)other;
 
-		public override int GetHashCode() {
-			return m_ManifestId.GetHashCode();
-		}
+	    public override int GetHashCode() => _ManifestId.GetHashCode();
 
-		public static bool operator ==(ManifestId_t x, ManifestId_t y) {
-			return x.m_ManifestId == y.m_ManifestId;
-		}
+	    public static bool operator ==(ManifestId_t x, ManifestId_t y) => x._ManifestId == y._ManifestId;
 
-		public static bool operator !=(ManifestId_t x, ManifestId_t y) {
-			return !(x == y);
-		}
+	    public static bool operator !=(ManifestId_t x, ManifestId_t y) => !(x == y);
 
-		public static explicit operator ManifestId_t(ulong value) {
-			return new ManifestId_t(value);
-		}
+	    public static explicit operator ManifestId_t(ulong value) => new ManifestId_t(value);
 
-		public static explicit operator ulong(ManifestId_t that) {
-			return that.m_ManifestId;
-		}
+	    public static explicit operator ulong(ManifestId_t that) => that._ManifestId;
 
-		public bool Equals(ManifestId_t other) {
-			return m_ManifestId == other.m_ManifestId;
-		}
+	    public bool Equals(ManifestId_t other) => _ManifestId == other._ManifestId;
 
-		public int CompareTo(ManifestId_t other) {
-			return m_ManifestId.CompareTo(other.m_ManifestId);
-		}
+	    public int CompareTo(ManifestId_t other) => _ManifestId.CompareTo(other._ManifestId);
 	}
 }

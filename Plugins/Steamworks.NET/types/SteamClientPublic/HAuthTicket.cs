@@ -7,46 +7,28 @@
 namespace Steamworks {
 	public struct HAuthTicket : System.IEquatable<HAuthTicket>, System.IComparable<HAuthTicket> {
 		public static readonly HAuthTicket Invalid = new HAuthTicket(0);
-		public uint m_HAuthTicket;
+		public uint _HAuthTicket;
 
 		public HAuthTicket(uint value) {
-			m_HAuthTicket = value;
+			_HAuthTicket = value;
 		}
 
-		public override string ToString() {
-			return m_HAuthTicket.ToString();
-		}
+		public override string ToString() => _HAuthTicket.ToString();
 
-		public override bool Equals(object other) {
-			return other is HAuthTicket && this == (HAuthTicket)other;
-		}
+	    public override bool Equals(object other) => other is HAuthTicket && this == (HAuthTicket)other;
 
-		public override int GetHashCode() {
-			return m_HAuthTicket.GetHashCode();
-		}
+	    public override int GetHashCode() => _HAuthTicket.GetHashCode();
 
-		public static bool operator ==(HAuthTicket x, HAuthTicket y) {
-			return x.m_HAuthTicket == y.m_HAuthTicket;
-		}
+	    public static bool operator ==(HAuthTicket x, HAuthTicket y) => x._HAuthTicket == y._HAuthTicket;
 
-		public static bool operator !=(HAuthTicket x, HAuthTicket y) {
-			return !(x == y);
-		}
+	    public static bool operator !=(HAuthTicket x, HAuthTicket y) => !(x == y);
 
-		public static explicit operator HAuthTicket(uint value) {
-			return new HAuthTicket(value);
-		}
+	    public static explicit operator HAuthTicket(uint value) => new HAuthTicket(value);
 
-		public static explicit operator uint(HAuthTicket that) {
-			return that.m_HAuthTicket;
-		}
+	    public static explicit operator uint(HAuthTicket that) => that._HAuthTicket;
 
-		public bool Equals(HAuthTicket other) {
-			return m_HAuthTicket == other.m_HAuthTicket;
-		}
+	    public bool Equals(HAuthTicket other) => _HAuthTicket == other._HAuthTicket;
 
-		public int CompareTo(HAuthTicket other) {
-			return m_HAuthTicket.CompareTo(other.m_HAuthTicket);
-		}
+	    public int CompareTo(HAuthTicket other) => _HAuthTicket.CompareTo(other._HAuthTicket);
 	}
 }

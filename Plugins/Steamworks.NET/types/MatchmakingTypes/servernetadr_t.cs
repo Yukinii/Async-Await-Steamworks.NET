@@ -9,96 +9,70 @@ namespace Steamworks {
 	// namely: its IP, its connection port, and its query port.
 	//[StructLayout(LayoutKind.Sequential)]
 	public struct servernetadr_t {
-		private ushort m_usConnectionPort;	// (in HOST byte order)
-		private ushort m_usQueryPort;
-		private uint m_unIP;
+		private ushort _usConnectionPort;	// (in HOST byte order)
+		private ushort _usQueryPort;
+		private uint _unIP;
 
 		public void Init(uint ip, ushort usQueryPort, ushort usConnectionPort) {
-			m_unIP = ip;
-			m_usQueryPort = usQueryPort;
-			m_usConnectionPort = usConnectionPort;
+			_unIP = ip;
+			_usQueryPort = usQueryPort;
+			_usConnectionPort = usConnectionPort;
 		}
 
 #if NETADR_H
 		public netadr_t GetIPAndQueryPort() {
-			return netadr_t( m_unIP, m_usQueryPort );
+			return netadr_t( _unIP, _usQueryPort );
 		}
 #endif
 		
 		// Access the query port.
-		public ushort GetQueryPort() {
-			return m_usQueryPort;
-		}
+		public ushort GetQueryPort() => _usQueryPort;
 
-		public void SetQueryPort(ushort usPort) {
-			m_usQueryPort = usPort;
+	    public void SetQueryPort(ushort usPort) {
+			_usQueryPort = usPort;
 		}
 
 		// Access the connection port.
-		public ushort GetConnectionPort() {
-			return m_usConnectionPort;
-		}
+		public ushort GetConnectionPort() => _usConnectionPort;
 
-		public void SetConnectionPort(ushort usPort) {
-			m_usConnectionPort = usPort;
+	    public void SetConnectionPort(ushort usPort) {
+			_usConnectionPort = usPort;
 		}
 
 		// Access the IP
-		public uint GetIP() {
-			return m_unIP;
-		}
+		public uint GetIP() => _unIP;
 
-		public void SetIP(uint unIP) {
-			m_unIP = unIP;
+	    public void SetIP(uint unIP) {
+			_unIP = unIP;
 		}
 
 		// This gets the 'a.b.c.d:port' string with the connection port (instead of the query port).
-		public string GetConnectionAddressString() {
-			return ToString(m_unIP, m_usConnectionPort);
-		}
+		public string GetConnectionAddressString() => ToString(_unIP, _usConnectionPort);
 
-		public string GetQueryAddressString() {
-			return ToString(m_unIP, m_usQueryPort);
-		}
+	    public string GetQueryAddressString() => ToString(_unIP, _usQueryPort);
 
-		public static string ToString(uint unIP, ushort usPort) {
+	    public static string ToString(uint unIP, ushort usPort) {
 #if VALVE_BIG_ENDIAN
 		return string.Format("{0}.{1}.{2}.{3}:{4}", unIP & 0xFFul, (unIP >> 8) & 0xFFul, (unIP >> 16) & 0xFFul, (unIP >> 24) & 0xFFul, usPort);
 #else
-		return string.Format("{0}.{1}.{2}.{3}:{4}", (unIP >> 24) & 0xFFul, (unIP >> 16) & 0xFFul, (unIP >> 8) & 0xFFul, unIP & 0xFFul, usPort);
+		return $"{(unIP >> 24) & 0xFFul}.{(unIP >> 16) & 0xFFul}.{(unIP >> 8) & 0xFFul}.{unIP & 0xFFul}:{usPort}";
 #endif
 		}
 
-		public static bool operator <(servernetadr_t x, servernetadr_t y) {
-			return (x.m_unIP < y.m_unIP) || (x.m_unIP == y.m_unIP && x.m_usQueryPort < y.m_usQueryPort);
-		}
+		public static bool operator <(servernetadr_t x, servernetadr_t y) => (x._unIP < y._unIP) || (x._unIP == y._unIP && x._usQueryPort < y._usQueryPort);
 
-		public static bool operator >(servernetadr_t x, servernetadr_t y) {
-			return (x.m_unIP > y.m_unIP) || (x.m_unIP == y.m_unIP && x.m_usQueryPort > y.m_usQueryPort);
-		}
+	    public static bool operator >(servernetadr_t x, servernetadr_t y) => (x._unIP > y._unIP) || (x._unIP == y._unIP && x._usQueryPort > y._usQueryPort);
 
-		public override bool Equals(object other) {
-			return other is servernetadr_t && this == (servernetadr_t)other;
-		}
+	    public override bool Equals(object other) => other is servernetadr_t && this == (servernetadr_t)other;
 
-		public override int GetHashCode() {
-			return m_unIP.GetHashCode() + m_usQueryPort.GetHashCode() + m_usConnectionPort.GetHashCode();
-		}
+	    public override int GetHashCode() => _unIP.GetHashCode() + _usQueryPort.GetHashCode() + _usConnectionPort.GetHashCode();
 
-		public static bool operator ==(servernetadr_t x, servernetadr_t y) {
-			return (x.m_unIP == y.m_unIP) && (x.m_usQueryPort == y.m_usQueryPort) && (x.m_usConnectionPort == y.m_usConnectionPort);
-		}
+	    public static bool operator ==(servernetadr_t x, servernetadr_t y) => (x._unIP == y._unIP) && (x._usQueryPort == y._usQueryPort) && (x._usConnectionPort == y._usConnectionPort);
 
-		public static bool operator !=(servernetadr_t x, servernetadr_t y) {
-			return !(x == y);
-		}
+	    public static bool operator !=(servernetadr_t x, servernetadr_t y) => !(x == y);
 
-		public bool Equals(servernetadr_t other) {
-			return (m_unIP == other.m_unIP) && (m_usQueryPort == other.m_usQueryPort) && (m_usConnectionPort == other.m_usConnectionPort);
-		}
+	    public bool Equals(servernetadr_t other) => (_unIP == other._unIP) && (_usQueryPort == other._usQueryPort) && (_usConnectionPort == other._usConnectionPort);
 
-		public int CompareTo(servernetadr_t other) {
-			return m_unIP.CompareTo(other.m_unIP) + m_usQueryPort.CompareTo(other.m_usQueryPort) + m_usConnectionPort.CompareTo(other.m_usConnectionPort);
-		}
+	    public int CompareTo(servernetadr_t other) => _unIP.CompareTo(other._unIP) + _usQueryPort.CompareTo(other._usQueryPort) + _usConnectionPort.CompareTo(other._usConnectionPort);
 	}
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Runtime.InteropServices;
+using Steamworks.Steamworks.NET;
 
 namespace Steamworks {
 	public static class SteamMatchmaking {
@@ -27,25 +28,25 @@ namespace Steamworks {
 		/// <para> *punFlags specify whether the game server was stored as an explicit favorite or in the history of connections</para>
 		/// <para> *pRTime32LastPlayedOnServer is filled in the with the Unix time the favorite was added</para>
 		/// </summary>
-		public static bool GetFavoriteGame(int iGame, out AppId_t pnAppID, out uint pnIP, out ushort pnConnPort, out ushort pnQueryPort, out uint punFlags, out uint pRTime32LastPlayedOnServer) {
+		public static bool GetFavoriteGame(int iGame, out AppId_t pappId, out uint pnIP, out ushort pnConnPort, out ushort pnQueryPort, out uint punFlags, out uint pRTime32LastPlayedOnServer) {
 			InteropHelp.TestIfAvailableClient();
-			return NativeMethods.ISteamMatchmaking_GetFavoriteGame(iGame, out pnAppID, out pnIP, out pnConnPort, out pnQueryPort, out punFlags, out pRTime32LastPlayedOnServer);
+			return NativeMethods.ISteamMatchmaking_GetFavoriteGame(iGame, out pappId, out pnIP, out pnConnPort, out pnQueryPort, out punFlags, out pRTime32LastPlayedOnServer);
 		}
 
 		/// <summary>
 		/// <para> adds the game server to the local list; updates the time played of the server if it already exists in the list</para>
 		/// </summary>
-		public static int AddFavoriteGame(AppId_t nAppID, uint nIP, ushort nConnPort, ushort nQueryPort, uint unFlags, uint rTime32LastPlayedOnServer) {
+		public static int AddFavoriteGame(AppId_t appId, uint nIP, ushort nConnPort, ushort nQueryPort, uint unFlags, uint rTime32LastPlayedOnServer) {
 			InteropHelp.TestIfAvailableClient();
-			return NativeMethods.ISteamMatchmaking_AddFavoriteGame(nAppID, nIP, nConnPort, nQueryPort, unFlags, rTime32LastPlayedOnServer);
+			return NativeMethods.ISteamMatchmaking_AddFavoriteGame(appId, nIP, nConnPort, nQueryPort, unFlags, rTime32LastPlayedOnServer);
 		}
 
 		/// <summary>
 		/// <para> removes the game server from the local storage; returns true if one was removed</para>
 		/// </summary>
-		public static bool RemoveFavoriteGame(AppId_t nAppID, uint nIP, ushort nConnPort, ushort nQueryPort, uint unFlags) {
+		public static bool RemoveFavoriteGame(AppId_t appId, uint nIP, ushort nConnPort, ushort nQueryPort, uint unFlags) {
 			InteropHelp.TestIfAvailableClient();
-			return NativeMethods.ISteamMatchmaking_RemoveFavoriteGame(nAppID, nIP, nConnPort, nQueryPort, unFlags);
+			return NativeMethods.ISteamMatchmaking_RemoveFavoriteGame(appId, nIP, nConnPort, nQueryPort, unFlags);
 		}
 
 		/// <summary>
@@ -56,15 +57,15 @@ namespace Steamworks {
 		/// <para> results will be returned by LobbyMatchList_t callback &amp; call result, with the number of lobbies found</para>
 		/// <para> this will never return lobbies that are full</para>
 		/// <para> to add more filter, the filter calls below need to be call before each and every RequestLobbyList() call</para>
-		/// <para> use the CCallResult&lt;&gt; object in steam_api.h to match the SteamAPICall_t call result to a function in an object, e.g.</para>
+		/// <para> use the CCallResult&lt;&gt; object in stea_api.h to match the SteamAPICall_t call result to a function in an object, e.g.</para>
 		/// <para>		class CMyLobbyListManager</para>
 		/// <para>		{</para>
-		/// <para>			CCallResult&lt;CMyLobbyListManager, LobbyMatchList_t&gt; m_CallResultLobbyMatchList;</para>
+		/// <para>			CCallResult&lt;CMyLobbyListManager, LobbyMatchList_t&gt; _CallResultLobbyMatchList;</para>
 		/// <para>			void FindLobbies()</para>
 		/// <para>			{</para>
 		/// <para>				// SteamMatchmaking()-&gt;AddRequestLobbyListFilter*() functions would be called here, before RequestLobbyList()</para>
 		/// <para>				SteamAPICall_t hSteamAPICall = SteamMatchmaking()-&gt;RequestLobbyList();</para>
-		/// <para>				m_CallResultLobbyMatchList.Set( hSteamAPICall, this, &amp;CMyLobbyListManager::OnLobbyMatchList );</para>
+		/// <para>				_CallResultLobbyMatchList.Set( hSteamAPICall, this, &amp;CMyLobbyListManager::OnLobbyMatchList );</para>
 		/// <para>			}</para>
 		/// <para>			void OnLobbyMatchList( LobbyMatchList_t *pLobbyMatchList, bool bIOFailure )</para>
 		/// <para>			{</para>
@@ -142,7 +143,7 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> returns the CSteamID of a lobby, as retrieved by a RequestLobbyList call</para>
 		/// <para> should only be called after a LobbyMatchList_t callback is received</para>
-		/// <para> iLobby is of the range [0, LobbyMatchList_t::m_nLobbiesMatching)</para>
+		/// <para> iLobby is of the range [0, LobbyMatchList_t::_nLobbiesMatching)</para>
 		/// <para> the returned CSteamID::IsValid() will be false if iLobby is out of range</para>
 		/// </summary>
 		public static CSteamID GetLobbyByIndex(int iLobby) {
@@ -166,7 +167,7 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> Joins an existing lobby</para>
 		/// <para> this is an asynchronous request</para>
-		/// <para> results will be returned by LobbyEnter_t callback &amp; call result, check m_EChatRoomEnterResponse to see if was successful</para>
+		/// <para> results will be returned by LobbyEnter_t callback &amp; call result, check _EChatRoomEnterResponse to see if was successful</para>
 		/// <para> lobby metadata is available to use immediately on this call completing</para>
 		/// </summary>
 		public static SteamAPICall_t JoinLobby(CSteamID steamIDLobby) {
@@ -258,9 +259,9 @@ namespace Steamworks {
 		/// </summary>
 		public static bool GetLobbyDataByIndex(CSteamID steamIDLobby, int iLobbyData, out string pchKey, int cchKeyBufferSize, out string pchValue, int cchValueBufferSize) {
 			InteropHelp.TestIfAvailableClient();
-			IntPtr pchKey2 = Marshal.AllocHGlobal(cchKeyBufferSize);
-			IntPtr pchValue2 = Marshal.AllocHGlobal(cchValueBufferSize);
-			bool ret = NativeMethods.ISteamMatchmaking_GetLobbyDataByIndex(steamIDLobby, iLobbyData, pchKey2, cchKeyBufferSize, pchValue2, cchValueBufferSize);
+			var pchKey2 = Marshal.AllocHGlobal(cchKeyBufferSize);
+			var pchValue2 = Marshal.AllocHGlobal(cchValueBufferSize);
+			var ret = NativeMethods.ISteamMatchmaking_GetLobbyDataByIndex(steamIDLobby, iLobbyData, pchKey2, cchKeyBufferSize, pchValue2, cchValueBufferSize);
 			pchKey = ret ? InteropHelp.PtrToStringUTF8(pchKey2) : null;
 			Marshal.FreeHGlobal(pchKey2);
 			pchValue = ret ? InteropHelp.PtrToStringUTF8(pchValue2) : null;
@@ -313,7 +314,7 @@ namespace Steamworks {
 
 		/// <summary>
 		/// <para> Get a chat message as specified in a LobbyChatMsg_t callback</para>
-		/// <para> iChatID is the LobbyChatMsg_t::m_iChatID value in the callback</para>
+		/// <para> iChatID is the LobbyChatMsg_t::_iChatID value in the callback</para>
 		/// <para> *pSteamIDUser is filled in with the CSteamID of the member</para>
 		/// <para> *pvData is filled in with the message itself</para>
 		/// <para> return value is the number of bytes written into the buffer</para>
@@ -330,7 +331,7 @@ namespace Steamworks {
 		/// <para> this is an asynchronous call</para>
 		/// <para> returns false if the local user is not connected to the Steam servers</para>
 		/// <para> results will be returned by a LobbyDataUpdate_t callback</para>
-		/// <para> if the specified lobby doesn't exist, LobbyDataUpdate_t::m_bSuccess will be set to false</para>
+		/// <para> if the specified lobby doesn't exist, LobbyDataUpdate_t::_bSuccess will be set to false</para>
 		/// </summary>
 		public static bool RequestLobbyData(CSteamID steamIDLobby) {
 			InteropHelp.TestIfAvailableClient();
@@ -539,9 +540,9 @@ namespace Steamworks {
 		/// <para> values by calling GetServerCount().  You will also receive index values in</para>
 		/// <para> ISteamMatchmakingServerListResponse::ServerResponded() callbacks</para>
 		/// </summary>
-		public static gameserveritem_t GetServerDetails(HServerListRequest hRequest, int iServer) {
+		public static gameserverite_t GetServerDetails(HServerListRequest hRequest, int iServer) {
 			InteropHelp.TestIfAvailableClient();
-			return (gameserveritem_t)Marshal.PtrToStructure(NativeMethods.ISteamMatchmakingServers_GetServerDetails(hRequest, iServer), typeof(gameserveritem_t));
+			return (gameserverite_t)Marshal.PtrToStructure(NativeMethods.ISteamMatchmakingServers_GetServerDetails(hRequest, iServer), typeof(gameserverite_t));
 		}
 
 		/// <summary>
@@ -599,7 +600,7 @@ namespace Steamworks {
 		/// <para>-----------------------------------------------------------------------------</para>
 		/// <para> Request updated ping time and other details from a single server</para>
 		/// </summary>
-		public static HServerQuery PingServer(uint unIP, ushort usPort, ISteamMatchmakingPingResponse pRequestServersResponse) {
+		public static HServerQuery PingServer(uint unIP, ushort usPort, SteamMatchmakingPingResponse pRequestServersResponse) {
 			InteropHelp.TestIfAvailableClient();
 			return (HServerQuery)NativeMethods.ISteamMatchmakingServers_PingServer(unIP, usPort, (IntPtr)pRequestServersResponse);
 		}
@@ -607,7 +608,7 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> Request the list of players currently playing on a server</para>
 		/// </summary>
-		public static HServerQuery PlayerDetails(uint unIP, ushort usPort, ISteamMatchmakingPlayersResponse pRequestServersResponse) {
+		public static HServerQuery PlayerDetails(uint unIP, ushort usPort, SteamMatchmakingPlayersResponse pRequestServersResponse) {
 			InteropHelp.TestIfAvailableClient();
 			return (HServerQuery)NativeMethods.ISteamMatchmakingServers_PlayerDetails(unIP, usPort, (IntPtr)pRequestServersResponse);
 		}
@@ -615,7 +616,7 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> Request the list of rules that the server is running (See ISteamGameServer::SetKeyValue() to set the rules server side)</para>
 		/// </summary>
-		public static HServerQuery ServerRules(uint unIP, ushort usPort, ISteamMatchmakingRulesResponse pRequestServersResponse) {
+		public static HServerQuery ServerRules(uint unIP, ushort usPort, SteamMatchmakingRulesResponse pRequestServersResponse) {
 			InteropHelp.TestIfAvailableClient();
 			return (HServerQuery)NativeMethods.ISteamMatchmakingServers_ServerRules(unIP, usPort, (IntPtr)pRequestServersResponse);
 		}

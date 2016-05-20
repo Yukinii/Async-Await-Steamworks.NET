@@ -6,46 +6,28 @@
 
 namespace Steamworks {
 	public struct HSteamUser : System.IEquatable<HSteamUser>, System.IComparable<HSteamUser> {
-		public int m_HSteamUser;
+		public int _HSteamUser;
 
 		public HSteamUser(int value) {
-			m_HSteamUser = value;
+			_HSteamUser = value;
 		}
 
-		public override string ToString() {
-			return m_HSteamUser.ToString();
-		}
+		public override string ToString() => _HSteamUser.ToString();
 
-		public override bool Equals(object other) {
-			return other is HSteamUser && this == (HSteamUser)other;
-		}
+	    public override bool Equals(object other) => other is HSteamUser && this == (HSteamUser)other;
 
-		public override int GetHashCode() {
-			return m_HSteamUser.GetHashCode();
-		}
+	    public override int GetHashCode() => _HSteamUser.GetHashCode();
 
-		public static bool operator ==(HSteamUser x, HSteamUser y) {
-			return x.m_HSteamUser == y.m_HSteamUser;
-		}
+	    public static bool operator ==(HSteamUser x, HSteamUser y) => x._HSteamUser == y._HSteamUser;
 
-		public static bool operator !=(HSteamUser x, HSteamUser y) {
-			return !(x == y);
-		}
+	    public static bool operator !=(HSteamUser x, HSteamUser y) => !(x == y);
 
-		public static explicit operator HSteamUser(int value) {
-			return new HSteamUser(value);
-		}
+	    public static explicit operator HSteamUser(int value) => new HSteamUser(value);
 
-		public static explicit operator int(HSteamUser that) {
-			return that.m_HSteamUser;
-		}
+	    public static explicit operator int(HSteamUser that) => that._HSteamUser;
 
-		public bool Equals(HSteamUser other) {
-			return m_HSteamUser == other.m_HSteamUser;
-		}
+	    public bool Equals(HSteamUser other) => _HSteamUser == other._HSteamUser;
 
-		public int CompareTo(HSteamUser other) {
-			return m_HSteamUser.CompareTo(other.m_HSteamUser);
-		}
+	    public int CompareTo(HSteamUser other) => _HSteamUser.CompareTo(other._HSteamUser);
 	}
 }

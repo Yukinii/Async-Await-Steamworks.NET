@@ -36,41 +36,41 @@ namespace Steamworks {
 	// friend game played information
 	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
 	public struct FriendGameInfo_t {
-		public CGameID m_gameID;
-		public uint m_unGameIP;
-		public ushort m_usGamePort;
-		public ushort m_usQueryPort;
-		public CSteamID m_steamIDLobby;
+		public CGameID _gameID;
+		public uint _unGameIP;
+		public ushort _usGamePort;
+		public ushort _usQueryPort;
+		public CSteamID _steamIDLobby;
 	}
 
 	//-----------------------------------------------------------------------------
 	// Purpose: information about user sessions
 	//-----------------------------------------------------------------------------
 	public struct FriendSessionStateInfo_t {
-		public uint m_uiOnlineSessionInstances;
-		public byte m_uiPublishedToFriendsSessionInstance;
+		public uint _uiOnlineSessionInstances;
+		public byte _uiPublishedToFriendsSessionInstance;
 	}
 
 	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
 	public struct SteamItemDetails_t {
-		public SteamItemInstanceID_t m_itemId;
-		public SteamItemDef_t m_iDefinition;
-		public ushort m_unQuantity;
-		public ushort m_unFlags; // see ESteamItemFlags
+		public SteamItemInstanceID_t _itemId;
+		public SteamItemDef_t _iDefinition;
+		public ushort _unQuantity;
+		public ushort _unFlags; // see ESteamItemFlags
 	}
 
 	// connection state to a specified user, returned by GetP2PSessionState()
 	// this is under-the-hood info about what's going on with a SendP2PPacket(), shouldn't be needed except for debuggin
 	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
 	public struct P2PSessionState_t {
-		public byte m_bConnectionActive;		// true if we've got an active open connection
-		public byte m_bConnecting;			// true if we're currently trying to establish a connection
-		public byte m_eP2PSessionError;		// last error recorded (see enum above)
-		public byte m_bUsingRelay;			// true if it's going through a relay server (TURN)
-		public int m_nBytesQueuedForSend;
-		public int m_nPacketsQueuedForSend;
-		public uint m_nRemoteIP;				// potential IP:Port of remote host. Could be TURN server.
-		public ushort m_nRemotePort;			// Only exists for compatibility with older authentication api's
+		public byte _bConnectionActive;		// true if we've got an active open connection
+		public byte _bConnecting;			// true if we're currently trying to establish a connection
+		public byte _eP2PSessionError;		// last error recorded (see enum above)
+		public byte _bUsingRelay;			// true if it's going through a relay server (TURN)
+		public int _nBytesQueuedForSend;
+		public int _nPacketsQueuedForSend;
+		public uint _nRemoteIP;				// potential IP:Port of remote host. Could be TURN server.
+		public ushort _nRemotePort;			// Only exists for compatibility with older authentication api's
 	}
 
 	//-----------------------------------------------------------------------------
@@ -78,70 +78,70 @@ namespace Steamworks {
 	//-----------------------------------------------------------------------------
 	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
 	public struct SteamParamStringArray_t {
-		public IntPtr m_ppStrings;
-		public int m_nNumStrings;
+		public IntPtr _ppStrings;
+		public int _nNumStrings;
 	}
 
 	// Details for a single published file/UGC
 	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
 	public struct SteamUGCDetails_t {
-		public PublishedFileId_t m_nPublishedFileId;
-		public EResult m_eResult;												// The result of the operation.
-		public EWorkshopFileType m_eFileType;									// Type of the file
-		public AppId_t m_nCreatorAppID;										// ID of the app that created this file.
-		public AppId_t m_nConsumerAppID;										// ID of the app that will consume this file.
+		public PublishedFileId_t _nPublishedFileId;
+		public EResult _eResult;												// The result of the operation.
+		public EWorkshopFileType _eFileType;									// Type of the file
+		public AppId_t _nCreatorAppID;										// ID of the app that created this file.
+		public AppId_t _nConsumerAppID;										// ID of the app that will consume this file.
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = Constants.k_cchPublishedDocumentTitleMax)]
-		public string m_rgchTitle;				// title of document
+		public string _rgchTitle;				// title of document
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = Constants.k_cchPublishedDocumentDescriptionMax)]
-		public string m_rgchDescription;	// description of document
-		public ulong m_ulSteamIDOwner;										// Steam ID of the user who created this content.
-		public uint m_rtimeCreated;											// time when the published file was created
-		public uint m_rtimeUpdated;											// time when the published file was last updated
-		public uint m_rtimeAddedToUserList;									// time when the user added the published file to their list (not always applicable)
-		public ERemoteStoragePublishedFileVisibility m_eVisibility;			// visibility
+		public string _rgchDescription;	// description of document
+		public ulong _ulSteamIDOwner;										// Steam ID of the user who created this content.
+		public uint _rtimeCreated;											// time when the published file was created
+		public uint _rtimeUpdated;											// time when the published file was last updated
+		public uint _rtimeAddedToUserList;									// time when the user added the published file to their list (not always applicable)
+		public ERemoteStoragePublishedFileVisibility _eVisibility;			// visibility
 		[MarshalAs(UnmanagedType.I1)]
-		public bool m_bBanned;													// whether the file was banned
+		public bool _bBanned;													// whether the file was banned
 		[MarshalAs(UnmanagedType.I1)]
-		public bool m_bAcceptedForUse;											// developer has specifically flagged this item as accepted in the Workshop
+		public bool _bAcceptedForUse;											// developer has specifically flagged this item as accepted in the Workshop
 		[MarshalAs(UnmanagedType.I1)]
-		public bool m_bTagsTruncated;											// whether the list of tags was too long to be returned in the provided buffer
+		public bool _bTagsTruncated;											// whether the list of tags was too long to be returned in the provided buffer
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = Constants.k_cchTagListMax)]
-		public string m_rgchTags;								// comma separated list of all tags associated with this file
+		public string _rgchTags;								// comma separated list of all tags associated with this file
 		// file/url information
-		public UGCHandle_t m_hFile;											// The handle of the primary file
-		public UGCHandle_t m_hPreviewFile;										// The handle of the preview file
+		public UGCHandle_t _hFile;											// The handle of the primary file
+		public UGCHandle_t _hPreviewFile;										// The handle of the preview file
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = Constants.k_cchFilenameMax)]
-		public string m_pchFileName;							// The cloud filename of the primary file
-		public int m_nFileSize;												// Size of the primary file
-		public int m_nPreviewFileSize;										// Size of the preview file
+		public string _pchFileName;							// The cloud filename of the primary file
+		public int _nFileSize;												// Size of the primary file
+		public int _nPreviewFileSize;										// Size of the preview file
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = Constants.k_cchPublishedFileURLMax)]
-		public string m_rgchURL;						// URL (for a video or a website)
+		public string _rgchURL;						// URL (for a video or a website)
 		// voting information
-		public uint m_unVotesUp;												// number of votes up
-		public uint m_unVotesDown;											// number of votes down
-		public float m_flScore;												// calculated score
+		public uint _unVotesUp;												// number of votes up
+		public uint _unVotesDown;											// number of votes down
+		public float _flScore;												// calculated score
 		// collection details
-		public uint m_unNumChildren;
+		public uint _unNumChildren;
 	}
 
 	// structure that contains client callback data
 	// see callbacks documentation for more details
 	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
 	public struct CallbackMsg_t {
-		public int m_hSteamUser;
-		public int m_iCallback;
-		public IntPtr m_pubParam;
-		public int m_cubParam;
+		public int _hSteamUser;
+		public int _iCallback;
+		public IntPtr _pubParam;
+		public int _cubParam;
 	}
 
 	// a single entry in a leaderboard, as returned by GetDownloadedLeaderboardEntry()
 	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
 	public struct LeaderboardEntry_t {
-		public CSteamID m_steamIDUser; // user with the entry - use SteamFriends()->GetFriendPersonaName() & SteamFriends()->GetFriendAvatar() to get more info
-		public int m_nGlobalRank;	// [1..N], where N is the number of users with an entry in the leaderboard
-		public int m_nScore;			// score as set in the leaderboard
-		public int m_cDetails;		// number of int32 details available for this entry
-		public UGCHandle_t m_hUGC;		// handle for UGC attached to the entry
+		public CSteamID _steamIDUser; // user with the entry - use SteamFriends()->GetFriendPersonaName() & SteamFriends()->GetFriendAvatar() to get more info
+		public int _nGlobalRank;	// [1..N], where N is the number of users with an entry in the leaderboard
+		public int _nScore;			// score as set in the leaderboard
+		public int _cDetails;		// number of int32 details available for this entry
+		public UGCHandle_t _hUGC;		// handle for UGC attached to the entry
 	}
 
 	/// Store key/value pair used in matchmaking queries.
@@ -152,13 +152,13 @@ namespace Steamworks {
 	[StructLayout(LayoutKind.Sequential)]
 	public struct MatchMakingKeyValuePair_t {
 		MatchMakingKeyValuePair_t(string strKey, string strValue) {
-			m_szKey = strKey;
-			m_szValue = strValue;
+			_szKey = strKey;
+			_szValue = strValue;
 		}
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
-		public string m_szKey;
+		public string _szKey;
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
-		public string m_szValue;
+		public string _szValue;
 	}
 
 }

@@ -5,10 +5,9 @@
 // Changes to this file will be reverted when you update Steamworks.NET
 
 using System;
-using System.Runtime.InteropServices;
 
 namespace Steamworks {
-	class CallbackIdentities {
+    static class CallbackIdentities {
 		public static int GetCallbackIdentity(Type callbackStruct) {
 			foreach (CallbackIdentityAttribute attribute in callbackStruct.GetCustomAttributes(typeof(CallbackIdentityAttribute), false)) {
 				return attribute.Identity;
@@ -18,8 +17,8 @@ namespace Steamworks {
 		}
 	}
 
-	[AttributeUsage(AttributeTargets.Struct, AllowMultiple = false)]
-	internal class CallbackIdentityAttribute : System.Attribute {
+	[AttributeUsage(AttributeTargets.Struct)]
+	internal class CallbackIdentityAttribute : Attribute {
 		public int Identity { get; set; }
 		public CallbackIdentityAttribute(int callbackNum) {
 			Identity = callbackNum;

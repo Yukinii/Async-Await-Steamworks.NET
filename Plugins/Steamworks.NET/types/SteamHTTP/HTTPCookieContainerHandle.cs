@@ -7,46 +7,28 @@
 namespace Steamworks {
 	public struct HTTPCookieContainerHandle : System.IEquatable<HTTPCookieContainerHandle>, System.IComparable<HTTPCookieContainerHandle> {
 		public static readonly HTTPCookieContainerHandle Invalid = new HTTPCookieContainerHandle(0);
-		public uint m_HTTPCookieContainerHandle;
+		public uint _HTTPCookieContainerHandle;
 
 		public HTTPCookieContainerHandle(uint value) {
-			m_HTTPCookieContainerHandle = value;
+			_HTTPCookieContainerHandle = value;
 		}
 
-		public override string ToString() {
-			return m_HTTPCookieContainerHandle.ToString();
-		}
+		public override string ToString() => _HTTPCookieContainerHandle.ToString();
 
-		public override bool Equals(object other) {
-			return other is HTTPCookieContainerHandle && this == (HTTPCookieContainerHandle)other;
-		}
+	    public override bool Equals(object other) => other is HTTPCookieContainerHandle && this == (HTTPCookieContainerHandle)other;
 
-		public override int GetHashCode() {
-			return m_HTTPCookieContainerHandle.GetHashCode();
-		}
+	    public override int GetHashCode() => _HTTPCookieContainerHandle.GetHashCode();
 
-		public static bool operator ==(HTTPCookieContainerHandle x, HTTPCookieContainerHandle y) {
-			return x.m_HTTPCookieContainerHandle == y.m_HTTPCookieContainerHandle;
-		}
+	    public static bool operator ==(HTTPCookieContainerHandle x, HTTPCookieContainerHandle y) => x._HTTPCookieContainerHandle == y._HTTPCookieContainerHandle;
 
-		public static bool operator !=(HTTPCookieContainerHandle x, HTTPCookieContainerHandle y) {
-			return !(x == y);
-		}
+	    public static bool operator !=(HTTPCookieContainerHandle x, HTTPCookieContainerHandle y) => !(x == y);
 
-		public static explicit operator HTTPCookieContainerHandle(uint value) {
-			return new HTTPCookieContainerHandle(value);
-		}
+	    public static explicit operator HTTPCookieContainerHandle(uint value) => new HTTPCookieContainerHandle(value);
 
-		public static explicit operator uint(HTTPCookieContainerHandle that) {
-			return that.m_HTTPCookieContainerHandle;
-		}
+	    public static explicit operator uint(HTTPCookieContainerHandle that) => that._HTTPCookieContainerHandle;
 
-		public bool Equals(HTTPCookieContainerHandle other) {
-			return m_HTTPCookieContainerHandle == other.m_HTTPCookieContainerHandle;
-		}
+	    public bool Equals(HTTPCookieContainerHandle other) => _HTTPCookieContainerHandle == other._HTTPCookieContainerHandle;
 
-		public int CompareTo(HTTPCookieContainerHandle other) {
-			return m_HTTPCookieContainerHandle.CompareTo(other.m_HTTPCookieContainerHandle);
-		}
+	    public int CompareTo(HTTPCookieContainerHandle other) => _HTTPCookieContainerHandle.CompareTo(other._HTTPCookieContainerHandle);
 	}
 }

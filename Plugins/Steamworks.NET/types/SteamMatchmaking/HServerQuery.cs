@@ -7,46 +7,28 @@
 namespace Steamworks {
 	public struct HServerQuery : System.IEquatable<HServerQuery>, System.IComparable<HServerQuery> {
 		public static readonly HServerQuery Invalid = new HServerQuery(-1);
-		public int m_HServerQuery;
+		public int _HServerQuery;
 
 		public HServerQuery(int value) {
-			m_HServerQuery = value;
+			_HServerQuery = value;
 		}
 
-		public override string ToString() {
-			return m_HServerQuery.ToString();
-		}
+		public override string ToString() => _HServerQuery.ToString();
 
-		public override bool Equals(object other) {
-			return other is HServerQuery && this == (HServerQuery)other;
-		}
+	    public override bool Equals(object other) => other is HServerQuery && this == (HServerQuery)other;
 
-		public override int GetHashCode() {
-			return m_HServerQuery.GetHashCode();
-		}
+	    public override int GetHashCode() => _HServerQuery.GetHashCode();
 
-		public static bool operator ==(HServerQuery x, HServerQuery y) {
-			return x.m_HServerQuery == y.m_HServerQuery;
-		}
+	    public static bool operator ==(HServerQuery x, HServerQuery y) => x._HServerQuery == y._HServerQuery;
 
-		public static bool operator !=(HServerQuery x, HServerQuery y) {
-			return !(x == y);
-		}
+	    public static bool operator !=(HServerQuery x, HServerQuery y) => !(x == y);
 
-		public static explicit operator HServerQuery(int value) {
-			return new HServerQuery(value);
-		}
+	    public static explicit operator HServerQuery(int value) => new HServerQuery(value);
 
-		public static explicit operator int(HServerQuery that) {
-			return that.m_HServerQuery;
-		}
+	    public static explicit operator int(HServerQuery that) => that._HServerQuery;
 
-		public bool Equals(HServerQuery other) {
-			return m_HServerQuery == other.m_HServerQuery;
-		}
+	    public bool Equals(HServerQuery other) => _HServerQuery == other._HServerQuery;
 
-		public int CompareTo(HServerQuery other) {
-			return m_HServerQuery.CompareTo(other.m_HServerQuery);
-		}
+	    public int CompareTo(HServerQuery other) => _HServerQuery.CompareTo(other._HServerQuery);
 	}
 }

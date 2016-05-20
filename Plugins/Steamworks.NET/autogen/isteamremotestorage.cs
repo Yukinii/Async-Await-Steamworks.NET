@@ -6,7 +6,6 @@
 // Changes to this file will be reverted when you update Steamworks.NET
 
 using System;
-using System.Runtime.InteropServices;
 
 namespace Steamworks {
 	public static class SteamRemoteStorage {
@@ -200,11 +199,11 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> Gets metadata for a file after it has been downloaded. This is the same metadata given in the RemoteStorageDownloadUGCResult_t call result</para>
 		/// </summary>
-		public static bool GetUGCDetails(UGCHandle_t hContent, out AppId_t pnAppID, out string ppchName, out int pnFileSizeInBytes, out CSteamID pSteamIDOwner) {
+		public static bool GetUGCDetails(UGCHandle_t hContent, out AppId_t pappId, out string pname, out int pnFileSizeInBytes, out CSteamID pSteamIDOwner) {
 			InteropHelp.TestIfAvailableClient();
-			IntPtr ppchName2;
-			bool ret = NativeMethods.ISteamRemoteStorage_GetUGCDetails(hContent, out pnAppID, out ppchName2, out pnFileSizeInBytes, out pSteamIDOwner);
-			ppchName = ret ? InteropHelp.PtrToStringUTF8(ppchName2) : null;
+			IntPtr pname2;
+			var ret = NativeMethods.ISteamRemoteStorage_GetUGCDetails(hContent, out pappId, out pname2, out pnFileSizeInBytes, out pSteamIDOwner);
+			pname = ret ? InteropHelp.PtrToStringUTF8(pname2) : null;
 			return ret;
 		}
 
@@ -216,7 +215,7 @@ namespace Steamworks {
 		/// <para> unless UGCDownload is called again.</para>
 		/// <para> For especially large files (anything over 100MB) it is a requirement that the file is read in chunks.</para>
 		/// </summary>
-		public static int UGCRead(UGCHandle_t hContent, byte[] pvData, int cubDataToRead, uint cOffset, EUGCReadAction eAction) {
+		public static int UGCRead(UGCHandle_t hContent, byte[] pvData, int cubDataToRead, uint cOffset, EugcReadAction eAction) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamRemoteStorage_UGCRead(hContent, pvData, cubDataToRead, cOffset, eAction);
 		}

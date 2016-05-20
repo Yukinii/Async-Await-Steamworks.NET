@@ -6,46 +6,28 @@
 
 namespace Steamworks {
 	public struct ControllerActionSetHandle_t : System.IEquatable<ControllerActionSetHandle_t>, System.IComparable<ControllerActionSetHandle_t> {
-		public ulong m_ControllerActionSetHandle;
+		public ulong _ControllerActionSetHandle;
 
 		public ControllerActionSetHandle_t(ulong value) {
-			m_ControllerActionSetHandle = value;
+			_ControllerActionSetHandle = value;
 		}
 
-		public override string ToString() {
-			return m_ControllerActionSetHandle.ToString();
-		}
+		public override string ToString() => _ControllerActionSetHandle.ToString();
 
-		public override bool Equals(object other) {
-			return other is ControllerActionSetHandle_t && this == (ControllerActionSetHandle_t)other;
-		}
+	    public override bool Equals(object other) => other is ControllerActionSetHandle_t && this == (ControllerActionSetHandle_t)other;
 
-		public override int GetHashCode() {
-			return m_ControllerActionSetHandle.GetHashCode();
-		}
+	    public override int GetHashCode() => _ControllerActionSetHandle.GetHashCode();
 
-		public static bool operator ==(ControllerActionSetHandle_t x, ControllerActionSetHandle_t y) {
-			return x.m_ControllerActionSetHandle == y.m_ControllerActionSetHandle;
-		}
+	    public static bool operator ==(ControllerActionSetHandle_t x, ControllerActionSetHandle_t y) => x._ControllerActionSetHandle == y._ControllerActionSetHandle;
 
-		public static bool operator !=(ControllerActionSetHandle_t x, ControllerActionSetHandle_t y) {
-			return !(x == y);
-		}
+	    public static bool operator !=(ControllerActionSetHandle_t x, ControllerActionSetHandle_t y) => !(x == y);
 
-		public static explicit operator ControllerActionSetHandle_t(ulong value) {
-			return new ControllerActionSetHandle_t(value);
-		}
+	    public static explicit operator ControllerActionSetHandle_t(ulong value) => new ControllerActionSetHandle_t(value);
 
-		public static explicit operator ulong(ControllerActionSetHandle_t that) {
-			return that.m_ControllerActionSetHandle;
-		}
+	    public static explicit operator ulong(ControllerActionSetHandle_t that) => that._ControllerActionSetHandle;
 
-		public bool Equals(ControllerActionSetHandle_t other) {
-			return m_ControllerActionSetHandle == other.m_ControllerActionSetHandle;
-		}
+	    public bool Equals(ControllerActionSetHandle_t other) => _ControllerActionSetHandle == other._ControllerActionSetHandle;
 
-		public int CompareTo(ControllerActionSetHandle_t other) {
-			return m_ControllerActionSetHandle.CompareTo(other.m_ControllerActionSetHandle);
-		}
+	    public int CompareTo(ControllerActionSetHandle_t other) => _ControllerActionSetHandle.CompareTo(other._ControllerActionSetHandle);
 	}
 }

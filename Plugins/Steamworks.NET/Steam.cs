@@ -29,22 +29,20 @@ namespace Steamworks {
 		// Returns: true if your executable was NOT launched through the Steam client. This function will
 		//          then start your application through the client. Your current process should exit.
 		//
-		//          false if your executable was started through the Steam client or a steam_appid.txt file
+		//          false if your executable was started through the Steam client or a stea_appid.txt file
 		//          is present in your game's directory (for development). Your current process should continue.
 		//
 		// NOTE: This function should be used only if you are using CEG or not using Steam's DRM. Once applied
 		//       to your executable, Steam's DRM will handle restarting through Steam if necessary.
-		public static bool RestartAppIfNecessary(AppId_t unOwnAppID) {
+		public static bool RestartAppIfNecessary(AppId_t unOwappId) {
 			InteropHelp.TestIfPlatformSupported();
-			return NativeMethods.SteamAPI_RestartAppIfNecessary(unOwnAppID);
+			return NativeMethods.SteamAPI_RestartAppIfNecessary(unOwappId);
 		}
 
 #if VERSION_SAFE_STEAM_API_INTERFACES
-		public static bool InitSafe() {
-			return Init();
-		}
+		public static bool InitSafe() => Init();
 
-		// [Steamworks.NET] This is for Ease of use, since we don't need to care about the differences between them in C#.
+	    // [Steamworks.NET] This is for Ease of use, since we don't need to care about the differences between them in C#.
 		public static bool Init() {
 			InteropHelp.TestIfPlatformSupported();
 			return NativeMethods.SteamAPI_InitSafe();
@@ -109,7 +107,7 @@ namespace Steamworks {
 		// returns the HSteamUser of the last user to dispatch a callback
 		public static HSteamUser GetHSteamUserCurrent() {
 			InteropHelp.TestIfPlatformSupported();
-			return (HSteamUser)NativeMethods.Steam_GetHSteamUserCurrent();
+			return (HSteamUser)NativeMethods.Stea_GetHSteamUserCurrent();
 		}
 		
 		// returns the pipe we are communicating to Steam with
@@ -147,9 +145,7 @@ namespace Steamworks {
 		}
 
 		// [Steamworks.NET] This is for Ease of use, since we don't need to care about the differences between them in C#.
-		public static bool Init(uint unIP, ushort usSteamPort, ushort usGamePort, ushort usQueryPort, EServerMode eServerMode, string pchVersionString) {
-			return InitSafe(unIP, usSteamPort, usGamePort, usQueryPort, eServerMode, pchVersionString);
-		}
+		public static bool Init(uint unIP, ushort usSteamPort, ushort usGamePort, ushort usQueryPort, EServerMode eServerMode, string pchVersionString) => InitSafe(unIP, usSteamPort, usGamePort, usQueryPort, eServerMode, pchVersionString);
 #else
 		public static bool Init(uint unIP, ushort usSteamPort, ushort usGamePort, ushort usQueryPort, EServerMode eServerMode, string pchVersionString) {
 			InteropHelp.TestIfPlatformSupported();
@@ -195,9 +191,9 @@ namespace Steamworks {
 			return NativeMethods.BDecryptTicket(rgubTicketEncrypted, cubTicketEncrypted, rgubTicketDecrypted, ref pcubTicketDecrypted, rgubKey, cubKey);
 		}
 
-		public static bool BIsTicketForApp(byte[] rgubTicketDecrypted, uint cubTicketDecrypted, AppId_t nAppID) {
+		public static bool BIsTicketForApp(byte[] rgubTicketDecrypted, uint cubTicketDecrypted, AppId_t appId) {
 			InteropHelp.TestIfPlatformSupported();
-			return NativeMethods.BIsTicketForApp(rgubTicketDecrypted, cubTicketDecrypted, nAppID);
+			return NativeMethods.BIsTicketForApp(rgubTicketDecrypted, cubTicketDecrypted, appId);
 		}
 
 		public static uint GetTicketIssueTime(byte[] rgubTicketDecrypted, uint cubTicketDecrypted) {
@@ -215,9 +211,9 @@ namespace Steamworks {
 			return NativeMethods.GetTicketAppID(rgubTicketDecrypted, cubTicketDecrypted);
 		}
 
-		public static bool BUserOwnsAppInTicket(byte[] rgubTicketDecrypted, uint cubTicketDecrypted, AppId_t nAppID) {
+		public static bool BUserOwnsAppInTicket(byte[] rgubTicketDecrypted, uint cubTicketDecrypted, AppId_t appId) {
 			InteropHelp.TestIfPlatformSupported();
-			return NativeMethods.BUserOwnsAppInTicket(rgubTicketDecrypted, cubTicketDecrypted, nAppID);
+			return NativeMethods.BUserOwnsAppInTicket(rgubTicketDecrypted, cubTicketDecrypted, appId);
 		}
 
 		public static bool BUserIsVacBanned(byte[] rgubTicketDecrypted, uint cubTicketDecrypted) {
@@ -227,8 +223,8 @@ namespace Steamworks {
 
 		public static byte[] GetUserVariableData(byte[] rgubTicketDecrypted, uint cubTicketDecrypted, out uint pcubUserData) {
 			InteropHelp.TestIfPlatformSupported();
-			System.IntPtr punSecretData = NativeMethods.GetUserVariableData(rgubTicketDecrypted, cubTicketDecrypted, out pcubUserData);
-			byte[] ret = new byte[pcubUserData];
+			var punSecretData = NativeMethods.GetUserVariableData(rgubTicketDecrypted, cubTicketDecrypted, out pcubUserData);
+			var ret = new byte[pcubUserData];
 			System.Runtime.InteropServices.Marshal.Copy(punSecretData, ret, 0, (int)pcubUserData);
 			return ret;
 		}

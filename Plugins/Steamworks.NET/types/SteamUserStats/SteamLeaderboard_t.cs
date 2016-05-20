@@ -6,46 +6,28 @@
 
 namespace Steamworks {
 	public struct SteamLeaderboard_t : System.IEquatable<SteamLeaderboard_t>, System.IComparable<SteamLeaderboard_t> {
-		public ulong m_SteamLeaderboard;
+		public ulong _SteamLeaderboard;
 
 		public SteamLeaderboard_t(ulong value) {
-			m_SteamLeaderboard = value;
+			_SteamLeaderboard = value;
 		}
 
-		public override string ToString() {
-			return m_SteamLeaderboard.ToString();
-		}
+		public override string ToString() => _SteamLeaderboard.ToString();
 
-		public override bool Equals(object other) {
-			return other is SteamLeaderboard_t && this == (SteamLeaderboard_t)other;
-		}
+	    public override bool Equals(object other) => other is SteamLeaderboard_t && this == (SteamLeaderboard_t)other;
 
-		public override int GetHashCode() {
-			return m_SteamLeaderboard.GetHashCode();
-		}
+	    public override int GetHashCode() => _SteamLeaderboard.GetHashCode();
 
-		public static bool operator ==(SteamLeaderboard_t x, SteamLeaderboard_t y) {
-			return x.m_SteamLeaderboard == y.m_SteamLeaderboard;
-		}
+	    public static bool operator ==(SteamLeaderboard_t x, SteamLeaderboard_t y) => x._SteamLeaderboard == y._SteamLeaderboard;
 
-		public static bool operator !=(SteamLeaderboard_t x, SteamLeaderboard_t y) {
-			return !(x == y);
-		}
+	    public static bool operator !=(SteamLeaderboard_t x, SteamLeaderboard_t y) => !(x == y);
 
-		public static explicit operator SteamLeaderboard_t(ulong value) {
-			return new SteamLeaderboard_t(value);
-		}
+	    public static explicit operator SteamLeaderboard_t(ulong value) => new SteamLeaderboard_t(value);
 
-		public static explicit operator ulong(SteamLeaderboard_t that) {
-			return that.m_SteamLeaderboard;
-		}
+	    public static explicit operator ulong(SteamLeaderboard_t that) => that._SteamLeaderboard;
 
-		public bool Equals(SteamLeaderboard_t other) {
-			return m_SteamLeaderboard == other.m_SteamLeaderboard;
-		}
+	    public bool Equals(SteamLeaderboard_t other) => _SteamLeaderboard == other._SteamLeaderboard;
 
-		public int CompareTo(SteamLeaderboard_t other) {
-			return m_SteamLeaderboard.CompareTo(other.m_SteamLeaderboard);
-		}
+	    public int CompareTo(SteamLeaderboard_t other) => _SteamLeaderboard.CompareTo(other._SteamLeaderboard);
 	}
 }

@@ -6,7 +6,6 @@
 // Changes to this file will be reverted when you update Steamworks.NET
 
 using System;
-using System.Runtime.InteropServices;
 
 namespace Steamworks {
 	public static class SteamNetworking {
@@ -18,12 +17,12 @@ namespace Steamworks {
 		/// <para> UDP-like, unreliable and a max packet size of 1200 bytes</para>
 		/// <para> the first packet send may be delayed as the NAT-traversal code runs</para>
 		/// <para> if we can't get through to the user, an error will be posted via the callback P2PSessionConnectFail_t</para>
-		/// <para> see EP2PSend enum above for the descriptions of the different ways of sending packets</para>
+		/// <para> see Ep2PSend enum above for the descriptions of the different ways of sending packets</para>
 		/// <para> nChannel is a routing number you can use to help route message to different systems 	- you'll have to call ReadP2PPacket()</para>
 		/// <para> with the same channel number in order to retrieve the data on the other end</para>
 		/// <para> using different channels to talk to the same user will still use the same underlying p2p connection, saving on resources</para>
 		/// </summary>
-		public static bool SendP2PPacket(CSteamID steamIDRemote, byte[] pubData, uint cubData, EP2PSend eP2PSendType, int nChannel = 0) {
+		public static bool SendP2PPacket(CSteamID steamIDRemote, byte[] pubData, uint cubData, Ep2PSend eP2PSendType, int nChannel = 0) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamNetworking_SendP2PPacket(steamIDRemote, pubData, cubData, eP2PSendType, nChannel);
 		}
@@ -125,7 +124,7 @@ namespace Steamworks {
 		/// <para> creates a socket and begin connection to a remote destination</para>
 		/// <para> can connect via a known steamID (client or game server), or directly to an IP</para>
 		/// <para> on success will trigger a SocketStatusCallback_t callback</para>
-		/// <para> on failure or timeout will trigger a SocketStatusCallback_t callback with a failure code in m_eSNetSocketState</para>
+		/// <para> on failure or timeout will trigger a SocketStatusCallback_t callback with a failure code in _eSNetSocketState</para>
 		/// </summary>
 		public static SNetSocket_t CreateP2PConnectionSocket(CSteamID steamIDTarget, int nVirtualPort, int nTimeoutSec, bool bAllowUseOfPacketRelay) {
 			InteropHelp.TestIfAvailableClient();
@@ -232,7 +231,7 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> returns true to describe how the socket ended up connecting</para>
 		/// </summary>
-		public static ESNetSocketConnectionType GetSocketConnectionType(SNetSocket_t hSocket) {
+		public static EsNetSocketConnectionType GetSocketConnectionType(SNetSocket_t hSocket) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamNetworking_GetSocketConnectionType(hSocket);
 		}

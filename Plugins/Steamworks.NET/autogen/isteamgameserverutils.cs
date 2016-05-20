@@ -101,14 +101,14 @@ namespace Steamworks {
 
 		/// <summary>
 		/// <para> API asynchronous call results</para>
-		/// <para> can be used directly, but more commonly used via the callback dispatch API (see steam_api.h)</para>
+		/// <para> can be used directly, but more commonly used via the callback dispatch API (see stea_api.h)</para>
 		/// </summary>
 		public static bool IsAPICallCompleted(SteamAPICall_t hSteamAPICall, out bool pbFailed) {
 			InteropHelp.TestIfAvailableGameServer();
 			return NativeMethods.ISteamGameServerUtils_IsAPICallCompleted(hSteamAPICall, out pbFailed);
 		}
 
-		public static ESteamAPICallFailure GetAPICallFailureReason(SteamAPICall_t hSteamAPICall) {
+		public static ESteamApiCallFailure GetAPICallFailureReason(SteamAPICall_t hSteamAPICall) {
 			InteropHelp.TestIfAvailableGameServer();
 			return NativeMethods.ISteamGameServerUtils_GetAPICallFailureReason(hSteamAPICall);
 		}
@@ -202,8 +202,8 @@ namespace Steamworks {
 
 		public static bool GetEnteredGamepadTextInput(out string pchText, uint cchText) {
 			InteropHelp.TestIfAvailableGameServer();
-			IntPtr pchText2 = Marshal.AllocHGlobal((int)cchText);
-			bool ret = NativeMethods.ISteamGameServerUtils_GetEnteredGamepadTextInput(pchText2, cchText);
+			var pchText2 = Marshal.AllocHGlobal((int)cchText);
+			var ret = NativeMethods.ISteamGameServerUtils_GetEnteredGamepadTextInput(pchText2, cchText);
 			pchText = ret ? InteropHelp.PtrToStringUTF8(pchText2) : null;
 			Marshal.FreeHGlobal(pchText2);
 			return ret;

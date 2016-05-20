@@ -6,7 +6,7 @@
 
 namespace Steamworks {
 	public struct CGameID : System.IEquatable<CGameID>, System.IComparable<CGameID> {
-		public ulong m_GameID;
+		public ulong _GameID;
 
 		public enum EGameIDType {
 			k_EGameIDTypeApp = 0,
@@ -16,50 +16,36 @@ namespace Steamworks {
 		};
 
 		public CGameID(ulong GameID) {
-			m_GameID = GameID;
+			_GameID = GameID;
 		}
 
-		public CGameID(AppId_t nAppID) {
-			m_GameID = 0;
-			SetAppID(nAppID);
+		public CGameID(AppId_t appId) {
+			_GameID = 0;
+			SetAppID(appId);
 		}
 
-		public CGameID(AppId_t nAppID, uint nModID) {
-			m_GameID = 0;
-			SetAppID(nAppID);
+		public CGameID(AppId_t appId, uint nModID) {
+			_GameID = 0;
+			SetAppID(appId);
 			SetType(EGameIDType.k_EGameIDTypeGameMod);
 			SetModID(nModID);
 		}
 
-		public bool IsSteamApp() {
-			return Type() == EGameIDType.k_EGameIDTypeApp;
-		}
+		public bool IsSteamApp() => Type() == EGameIDType.k_EGameIDTypeApp;
 
-		public bool IsMod() {
-			return Type() == EGameIDType.k_EGameIDTypeGameMod;
-		}
+	    public bool IsMod() => Type() == EGameIDType.k_EGameIDTypeGameMod;
 
-		public bool IsShortcut() {
-			return Type() == EGameIDType.k_EGameIDTypeShortcut;
-		}
+	    public bool IsShortcut() => Type() == EGameIDType.k_EGameIDTypeShortcut;
 
-		public bool IsP2PFile() {
-			return Type() == EGameIDType.k_EGameIDTypeP2P;
-		}
+	    public bool IsP2PFile() => Type() == EGameIDType.k_EGameIDTypeP2P;
 
-		public AppId_t AppID() {
-			return new AppId_t((uint)(m_GameID & 0xFFFFFFul));
-		}
+	    public AppId_t AppID() => new AppId_t((uint)(_GameID & 0xFFFFFFul));
 
-		public EGameIDType Type() {
-			return (EGameIDType)((m_GameID >> 24) & 0xFFul);
-		}
+	    public EGameIDType Type() => (EGameIDType)((_GameID >> 24) & 0xFFul);
 
-		public uint ModID() {
-			return (uint)((m_GameID >> 32) & 0xFFFFFFFFul);
-		}
-		
-		public bool IsValid() {
+	    public uint ModID() => (uint)((_GameID >> 32) & 0xFFFFFFFFul);
+
+	    public bool IsValid() {
 			// Each type has it's own invalid fixed point:
 			switch (Type()) {
 				case EGameIDType.k_EGameIDTypeApp:
@@ -80,62 +66,46 @@ namespace Steamworks {
 		}
 
 		public void Reset() {
-			m_GameID = 0;
+			_GameID = 0;
 		}
 
 		public void Set(ulong GameID) {
-			m_GameID = GameID;
+			_GameID = GameID;
 		}
 
 		#region Private Setters for internal use
 		private void SetAppID(AppId_t other) {
-			m_GameID = (m_GameID & ~(0xFFFFFFul << (ushort)0)) | (((ulong)(other) & 0xFFFFFFul) << (ushort)0);
+			_GameID = (_GameID & ~(0xFFFFFFul << 0)) | (((ulong)(other) & 0xFFFFFFul) << 0);
 		}
 
 		private void SetType(EGameIDType other) {
-			m_GameID = (m_GameID & ~(0xFFul << (ushort)24)) | (((ulong)(other) & 0xFFul) << (ushort)24);
+			_GameID = (_GameID & ~(0xFFul << 24)) | (((ulong)(other) & 0xFFul) << 24);
 		}
 
 		private void SetModID(uint other) {
-			m_GameID = (m_GameID & ~(0xFFFFFFFFul << (ushort)32)) | (((ulong)(other) & 0xFFFFFFFFul) << (ushort)32);
+			_GameID = (_GameID & ~(0xFFFFFFFFul << 32)) | ((other & 0xFFFFFFFFul) << 32);
 		}
 		#endregion
 
 		#region Overrides
-		public override string ToString() {
-			return m_GameID.ToString();
-		}
+		public override string ToString() => _GameID.ToString();
 
-		public override bool Equals(object other) {
-			return other is CGameID && this == (CGameID)other;
-		}
+	    public override bool Equals(object other) => other is CGameID && this == (CGameID)other;
 
-		public override int GetHashCode() {
-			return m_GameID.GetHashCode();
-		}
+	    public override int GetHashCode() => _GameID.GetHashCode();
 
-		public static bool operator ==(CGameID x, CGameID y) {
-			return x.m_GameID == y.m_GameID;
-		}
+	    public static bool operator ==(CGameID x, CGameID y) => x._GameID == y._GameID;
 
-		public static bool operator !=(CGameID x, CGameID y) {
-			return !(x == y);
-		}
+	    public static bool operator !=(CGameID x, CGameID y) => !(x == y);
 
-		public static explicit operator CGameID(ulong value) {
-			return new CGameID(value);
-		}
-		public static explicit operator ulong(CGameID that) {
-			return that.m_GameID;
-		}
+	    public static explicit operator CGameID(ulong value) => new CGameID(value);
 
-		public bool Equals(CGameID other) {
-			return m_GameID == other.m_GameID;
-		}
+	    public static explicit operator ulong(CGameID that) => that._GameID;
 
-		public int CompareTo(CGameID other) {
-			return m_GameID.CompareTo(other.m_GameID);
-		}
-		#endregion
+	    public bool Equals(CGameID other) => _GameID == other._GameID;
+
+	    public int CompareTo(CGameID other) => _GameID.CompareTo(other._GameID);
+
+	    #endregion
 	}
 }

@@ -12,83 +12,69 @@ namespace Steamworks {
 	// Purpose: Data describing a single server
 	//-----------------------------------------------------------------------------
 	[StructLayout(LayoutKind.Sequential, Size = 372, Pack = 4)]
-	public class gameserveritem_t {
-		public string GetGameDir() {
-			return Encoding.UTF8.GetString(m_szGameDir, 0, System.Array.IndexOf<byte>(m_szGameDir, 0));
+	public class gameserverite_t {
+		public string GetGameDir() => Encoding.UTF8.GetString(_szGameDir, 0, System.Array.IndexOf<byte>(_szGameDir, 0));
+
+	    public void SetGameDir(string dir) {
+			_szGameDir = Encoding.UTF8.GetBytes(dir + '\0');
 		}
 
-		public void SetGameDir(string dir) {
-			m_szGameDir = Encoding.UTF8.GetBytes(dir + '\0');
+		public string GetMap() => Encoding.UTF8.GetString(_szMap, 0, System.Array.IndexOf<byte>(_szMap, 0));
+
+	    public void SetMap(string map) {
+			_szMap = Encoding.UTF8.GetBytes(map + '\0');
 		}
 
-		public string GetMap() {
-			return Encoding.UTF8.GetString(m_szMap, 0, System.Array.IndexOf<byte>(m_szMap, 0));
+		public string GetGameDescription() => Encoding.UTF8.GetString(_szGameDescription, 0, System.Array.IndexOf<byte>(_szGameDescription, 0));
+
+	    public void SetGameDescription(string desc) {
+			_szGameDescription = Encoding.UTF8.GetBytes(desc + '\0');
 		}
 
-		public void SetMap(string map) {
-			m_szMap = Encoding.UTF8.GetBytes(map + '\0');
+		public string GetServerName() => _szServerName[0] == 0 ? _NetAdr.GetConnectionAddressString() : Encoding.UTF8.GetString(_szServerName, 0, System.Array.IndexOf<byte>(_szServerName, 0));
+
+	    public void SetServerName(string name) {
+			_szServerName = Encoding.UTF8.GetBytes(name + '\0');
 		}
 
-		public string GetGameDescription() {
-			return Encoding.UTF8.GetString(m_szGameDescription, 0, System.Array.IndexOf<byte>(m_szGameDescription, 0));
+		public string GetGameTags() => Encoding.UTF8.GetString(_szGameTags, 0, System.Array.IndexOf<byte>(_szGameTags, 0));
+
+	    public void SetGameTags(string tags) {
+			_szGameTags = Encoding.UTF8.GetBytes(tags + '\0');
 		}
 
-		public void SetGameDescription(string desc) {
-			m_szGameDescription = Encoding.UTF8.GetBytes(desc + '\0');
-		}
-
-		public string GetServerName() {
-			// Use the IP address as the name if nothing is set yet.
-			if (m_szServerName[0] == 0)
-				return m_NetAdr.GetConnectionAddressString();
-			else
-				return Encoding.UTF8.GetString(m_szServerName, 0, System.Array.IndexOf<byte>(m_szServerName, 0));
-		}
-
-		public void SetServerName(string name) {
-			m_szServerName = Encoding.UTF8.GetBytes(name + '\0');
-		}
-
-		public string GetGameTags() {
-			return Encoding.UTF8.GetString(m_szGameTags, 0, System.Array.IndexOf<byte>(m_szGameTags, 0));
-		}
-
-		public void SetGameTags(string tags) {
-			m_szGameTags = Encoding.UTF8.GetBytes(tags + '\0');
-		}
-
-		public servernetadr_t m_NetAdr;										///< IP/Query Port/Connection Port for this server
-		public int m_nPing;													///< current ping time in milliseconds
+		public servernetadr_t _NetAdr;								
+		public int _nPing;											
 		[MarshalAs(UnmanagedType.I1)]
-		public bool m_bHadSuccessfulResponse;								///< server has responded successfully in the past
+		public bool _bHadSuccessfulResponse;						
 		[MarshalAs(UnmanagedType.I1)]
-		public bool m_bDoNotRefresh;										///< server is marked as not responding and should no longer be refreshed
+		public bool _bDoNotRefresh;									  
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = Constants.k_cbMaxGameServerGameDir)]
-		private byte[] m_szGameDir;											///< current game directory
+		private byte[] _szGameDir;										
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = Constants.k_cbMaxGameServerMapName)]
-		private byte[] m_szMap;												///< current map
+		private byte[] _szMap;												
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = Constants.k_cbMaxGameServerGameDescription)]
-		private byte[] m_szGameDescription;									///< game description
-		public uint m_nAppID;												///< Steam App ID of this server
-		public int m_nPlayers;												///< total number of players currently on the server.  INCLUDES BOTS!!
-		public int m_nMaxPlayers;											///< Maximum players that can join this server
-		public int m_nBotPlayers;											///< Number of bots (i.e simulated players) on this server
+		private byte[] _szGameDescription;								
+		public uint _appId;												
+		public int _nPlayers;											
+		public int _nMaxPlayers;										
+		public int _nBotPlayers;										
 		[MarshalAs(UnmanagedType.I1)]
-		public bool m_bPassword;											///< true if this server needs a password to join
+		public bool _bPassword;											
 		[MarshalAs(UnmanagedType.I1)]
-		public bool m_bSecure;												///< Is this server protected by VAC
-		public uint m_ulTimeLastPlayed;										///< time (in unix time) when this server was last played on (for favorite/history servers)
-		public int	m_nServerVersion;										///< server version as reported to Steam
+		public bool _bSecure;											
+		public uint _ulTimeLastPlayed;									
+		public int	_nServerVersion;									                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
 
 		// Game server name
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = Constants.k_cbMaxGameServerName)]
-		private byte[] m_szServerName;
+		private byte[] _szServerName;
 
 		// the tags this server exposes
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = Constants.k_cbMaxGameServerTags)]
-		private byte[] m_szGameTags;
+		private byte[] _szGameTags;
 
 		// steamID of the game server - invalid if it's doesn't have one (old server, or not connected to Steam)
-		public CSteamID m_steamID;
+		public CSteamID _steamID;
 	}
 }

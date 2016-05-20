@@ -42,17 +42,17 @@ Compare the following two screenshots to the two I took with this wrapper and yo
 
 Steamworks.NET
 
-<p align="left">
-  <img src="http://img.prntscr.com/img?url=http://i.imgur.com/JDrHtfZ.png" width="450"/>
-  <img src="http://img.prntscr.com/img?url=http://i.imgur.com/LXDlcsR.png" width="450"/>
+<p align="center">
+  <img src="http://img.prntscr.com/img?url=http://i.imgur.com/JDrHtfZ.png" width="350"/>
+  <img src="http://img.prntscr.com/img?url=http://i.imgur.com/LXDlcsR.png" width="250"/>
 </p>
 
 
 Steamworks.NET Async/Await
 
-<p align="left">
-  <img src="http://img.prntscr.com/img?url=http://i.imgur.com/X05A8c2.png" width="450"/>
-  <img src="http://img.prntscr.com/img?url=http://i.imgur.com/OOzvNev.png" width="450"/>
+<p align="center">
+  <img src="http://img.prntscr.com/img?url=http://i.imgur.com/X05A8c2.png" width="350"/>
+  <img src="http://img.prntscr.com/img?url=http://i.imgur.com/OOzvNev.png" width="250"/>
 </p>
 
 

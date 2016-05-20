@@ -24,17 +24,17 @@ namespace Steamworks {
 
 		/// <summary>
 		/// <para> Create a browser object for display of a html page, when creation is complete the call handle</para>
-		/// <para> will return a HTML_BrowserReady_t callback for the HHTMLBrowser of your new browser.</para>
+		/// <para> will return a HTML_BrowserReady callback for the HHTMLBrowser of your new browser.</para>
 		/// <para>   The user agent string is a substring to be added to the general user agent string so you can</para>
 		/// <para> identify your client on web servers.</para>
 		/// <para>   The userCSS string lets you apply a CSS style sheet to every displayed page, leave null if</para>
 		/// <para> you do not require this functionality.</para>
 		/// </summary>
-		public static SteamAPICall_t CreateBrowser(string pchUserAgent, string pchUserCSS) {
+		public static SteamAPICall CreateBrowser(string pchUserAgent, string pchUserCSS) {
 			InteropHelp.TestIfAvailableClient();
 			using (var pchUserAgent2 = new InteropHelp.UTF8StringHandle(pchUserAgent))
 			using (var pchUserCSS2 = new InteropHelp.UTF8StringHandle(pchUserCSS)) {
-				return (SteamAPICall_t)NativeMethods.ISteamHTMLSurface_CreateBrowser(pchUserAgent2, pchUserCSS2);
+				return (SteamAPICall)NativeMethods.ISteamHTMLSurface_CreateBrowser(pchUserAgent2, pchUserCSS2);
 			}
 		}
 
@@ -47,7 +47,7 @@ namespace Steamworks {
 		}
 
 		/// <summary>
-		/// <para> Navigate to this URL, results in a HTML_StartRequest_t as the request commences</para>
+		/// <para> Navigate to this URL, results in a HTML_StartRequest as the request commences</para>
 		/// </summary>
 		public static void LoadURL(HHTMLBrowser unBrowserHandle, string pchURL, string pchPostData) {
 			InteropHelp.TestIfAvailableClient();
@@ -279,7 +279,7 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> CALLBACKS</para>
 		/// <para>  These set of functions are used as responses to callback requests</para>
-		/// <para> You MUST call this in response to a HTML_StartRequest_t callback</para>
+		/// <para> You MUST call this in response to a HTML_StartRequest callback</para>
 		/// <para>  Set bAllowed to true to allow this navigation, false to cancel it and stay</para>
 		/// <para> on the current page. You can use this feature to limit the valid pages</para>
 		/// <para> allowed in your HTML surface.</para>
@@ -290,7 +290,7 @@ namespace Steamworks {
 		}
 
 		/// <summary>
-		/// <para> You MUST call this in response to a HTML_JSAlert_t or HTML_JSConfir_t callback</para>
+		/// <para> You MUST call this in response to a HTML_JSAlert or HTML_JSConfir callback</para>
 		/// <para>  Set bResult to true for the OK option of a confirm, use false otherwise</para>
 		/// </summary>
 		public static void JSDialogResponse(HHTMLBrowser unBrowserHandle, bool bResult) {
@@ -299,7 +299,7 @@ namespace Steamworks {
 		}
 
 		/// <summary>
-		/// <para> You MUST call this in response to a HTML_FileOpenDialog_t callback</para>
+		/// <para> You MUST call this in response to a HTML_FileOpenDialog callback</para>
 		/// </summary>
 		public static void FileLoadDialogResponse(HHTMLBrowser unBrowserHandle, IntPtr pchSelectedFiles) {
 			InteropHelp.TestIfAvailableClient();

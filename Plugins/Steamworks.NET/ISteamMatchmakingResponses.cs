@@ -127,7 +127,7 @@ namespace Steamworks {
 	//-----------------------------------------------------------------------------
 	public class SteamMatchmakingPingResponse {
 		// Server has responded successfully and has updated data
-		public delegate void ServerResponded(gameserverite_t server);
+		public delegate void ServerResponded(gameserverite server);
 
 		// Server failed to respond to the ping request
 		public delegate void ServerFailedToRespond();
@@ -168,10 +168,10 @@ namespace Steamworks {
 
 #if NOTHISPTR
 		[UnmanagedFunctionPointer(CallingConvention.StdCall)]
-		private delegate void InternalServerResponded(gameserverite_t server);
+		private delegate void InternalServerResponded(gameserverite server);
 		[UnmanagedFunctionPointer(CallingConvention.StdCall)]
 		private delegate void InternalServerFailedToRespond();
-		private void InternalOnServerResponded(gameserverite_t server) {
+		private void InternalOnServerResponded(gameserverite server) {
 			_ServerResponded(server);
 		}
 		private void InternalOnServerFailedToRespond() {
@@ -179,10 +179,10 @@ namespace Steamworks {
 		}
 #else
 		[UnmanagedFunctionPointer(CallingConvention.ThisCall)]
-		private delegate void InternalServerResponded(IntPtr thisptr, gameserverite_t server);
+		private delegate void InternalServerResponded(IntPtr thisptr, gameserverite server);
 		[UnmanagedFunctionPointer(CallingConvention.ThisCall)]
 		private delegate void InternalServerFailedToRespond(IntPtr thisptr);
-		private void InternalOnServerResponded(IntPtr thisptr, gameserverite_t server) => _ServerResponded(server);
+		private void InternalOnServerResponded(IntPtr thisptr, gameserverite server) => _ServerResponded(server);
 	    private void InternalOnServerFailedToRespond(IntPtr thisptr) => _ServerFailedToRespond();
 #endif
 

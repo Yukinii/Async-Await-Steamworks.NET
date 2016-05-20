@@ -21,7 +21,7 @@ namespace Steamworks {
 		}
 
 		/// <summary>
-		/// <para> Set a context value for the request, which will be returned in the HTTPRequestCompleted_t callback after</para>
+		/// <para> Set a context value for the request, which will be returned in the HTTPRequestCompleted callback after</para>
 		/// <para> sending the request.  This is just so the caller can easily keep track of which callbacks go with which request data.</para>
 		/// </summary>
 		public static bool SetHTTPRequestContextValue(HTTPRequestHandle hRequest, ulong ulContextValue) {
@@ -70,17 +70,17 @@ namespace Steamworks {
 		/// <para> Note: If the user is in offline mode in Steam, then this will add a only-if-cached cache-control</para>
 		/// <para> header and only do a local cache lookup rather than sending any actual remote request.</para>
 		/// </summary>
-		public static bool SendHTTPRequest(HTTPRequestHandle hRequest, out SteamAPICall_t pCallHandle) {
+		public static bool SendHTTPRequest(HTTPRequestHandle hRequest, out SteamAPICall pCallHandle) {
 			InteropHelp.TestIfAvailableGameServer();
 			return NativeMethods.ISteamGameServerHTTP_SendHTTPRequest(hRequest, out pCallHandle);
 		}
 
 		/// <summary>
 		/// <para> Sends the HTTP request, will return false on a bad handle, otherwise use SteamCallHandle to wait on</para>
-		/// <para> asynchronous response via callback for completion, and listen for HTTPRequestHeadersReceived_t and</para>
-		/// <para> HTTPRequestDataReceived_t callbacks while streaming.</para>
+		/// <para> asynchronous response via callback for completion, and listen for HTTPRequestHeadersReceived and</para>
+		/// <para> HTTPRequestDataReceived callbacks while streaming.</para>
 		/// </summary>
-		public static bool SendHTTPRequestAndStreamResponse(HTTPRequestHandle hRequest, out SteamAPICall_t pCallHandle) {
+		public static bool SendHTTPRequestAndStreamResponse(HTTPRequestHandle hRequest, out SteamAPICall pCallHandle) {
 			InteropHelp.TestIfAvailableGameServer();
 			return NativeMethods.ISteamGameServerHTTP_SendHTTPRequestAndStreamResponse(hRequest, out pCallHandle);
 		}
@@ -104,7 +104,7 @@ namespace Steamworks {
 		}
 
 		/// <summary>
-		/// <para> Checks if a response header is present in a HTTP response given a handle from HTTPRequestCompleted_t, also</para>
+		/// <para> Checks if a response header is present in a HTTP response given a handle from HTTPRequestCompleted, also</para>
 		/// <para> returns the size of the header value if present so the caller and allocate a correctly sized buffer for</para>
 		/// <para> GetHTTPResponseHeaderValue.</para>
 		/// </summary>
@@ -116,7 +116,7 @@ namespace Steamworks {
 		}
 
 		/// <summary>
-		/// <para> Gets header values from a HTTP response given a handle from HTTPRequestCompleted_t, will return false if the</para>
+		/// <para> Gets header values from a HTTP response given a handle from HTTPRequestCompleted, will return false if the</para>
 		/// <para> header is not present or if your buffer is too small to contain it's value.  You should first call</para>
 		/// <para> BGetHTTPResponseHeaderSize to check for the presence of the header and to find out the size buffer needed.</para>
 		/// </summary>
@@ -128,7 +128,7 @@ namespace Steamworks {
 		}
 
 		/// <summary>
-		/// <para> Gets the size of the body data from a HTTP response given a handle from HTTPRequestCompleted_t, will return false if the</para>
+		/// <para> Gets the size of the body data from a HTTP response given a handle from HTTPRequestCompleted, will return false if the</para>
 		/// <para> handle is invalid.</para>
 		/// </summary>
 		public static bool GetHTTPResponseBodySize(HTTPRequestHandle hRequest, out uint unBodySize) {
@@ -137,7 +137,7 @@ namespace Steamworks {
 		}
 
 		/// <summary>
-		/// <para> Gets the body data from a HTTP response given a handle from HTTPRequestCompleted_t, will return false if the</para>
+		/// <para> Gets the body data from a HTTP response given a handle from HTTPRequestCompleted, will return false if the</para>
 		/// <para> handle is invalid or is to a streaming response, or if the provided buffer is not the correct size.  Use BGetHTTPResponseBodySize first to find out</para>
 		/// <para> the correct buffer size to use.</para>
 		/// </summary>
@@ -147,9 +147,9 @@ namespace Steamworks {
 		}
 
 		/// <summary>
-		/// <para> Gets the body data from a streaming HTTP response given a handle from HTTPRequestDataReceived_t. Will return false if the</para>
+		/// <para> Gets the body data from a streaming HTTP response given a handle from HTTPRequestDataReceived. Will return false if the</para>
 		/// <para> handle is invalid or is to a non-streaming response (meaning it wasn't sent with SendHTTPRequestAndStreamResponse), or if the buffer size and offset</para>
-		/// <para> do not match the size and offset sent in HTTPRequestDataReceived_t.</para>
+		/// <para> do not match the size and offset sent in HTTPRequestDataReceived.</para>
 		/// </summary>
 		public static bool GetHTTPStreamingResponseBodyData(HTTPRequestHandle hRequest, uint cOffset, byte[] pBodyDataBuffer, uint unBufferSize) {
 			InteropHelp.TestIfAvailableGameServer();
@@ -157,7 +157,7 @@ namespace Steamworks {
 		}
 
 		/// <summary>
-		/// <para> Releases an HTTP response handle, should always be called to free resources after receiving a HTTPRequestCompleted_t</para>
+		/// <para> Releases an HTTP response handle, should always be called to free resources after receiving a HTTPRequestCompleted</para>
 		/// <para> callback and finishing using the response.</para>
 		/// </summary>
 		public static bool ReleaseHTTPRequest(HTTPRequestHandle hRequest) {

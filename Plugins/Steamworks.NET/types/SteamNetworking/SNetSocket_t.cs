@@ -5,29 +5,29 @@
 // Changes to this file will be reverted when you update Steamworks.NET
 
 namespace Steamworks {
-	public struct SNetSocket_t : System.IEquatable<SNetSocket_t>, System.IComparable<SNetSocket_t> {
+	public struct SNetSocket : System.IEquatable<SNetSocket>, System.IComparable<SNetSocket> {
 		public uint _SNetSocket;
 
-		public SNetSocket_t(uint value) {
+		public SNetSocket(uint value) {
 			_SNetSocket = value;
 		}
 
 		public override string ToString() => _SNetSocket.ToString();
 
-	    public override bool Equals(object other) => other is SNetSocket_t && this == (SNetSocket_t)other;
+	    public override bool Equals(object other) => other is SNetSocket && this == (SNetSocket)other;
 
 	    public override int GetHashCode() => _SNetSocket.GetHashCode();
 
-	    public static bool operator ==(SNetSocket_t x, SNetSocket_t y) => x._SNetSocket == y._SNetSocket;
+	    public static bool operator ==(SNetSocket x, SNetSocket y) => x._SNetSocket == y._SNetSocket;
 
-	    public static bool operator !=(SNetSocket_t x, SNetSocket_t y) => !(x == y);
+	    public static bool operator !=(SNetSocket x, SNetSocket y) => !(x == y);
 
-	    public static explicit operator SNetSocket_t(uint value) => new SNetSocket_t(value);
+	    public static explicit operator SNetSocket(uint value) => new SNetSocket(value);
 
-	    public static explicit operator uint(SNetSocket_t that) => that._SNetSocket;
+	    public static explicit operator uint(SNetSocket that) => that._SNetSocket;
 
-	    public bool Equals(SNetSocket_t other) => _SNetSocket == other._SNetSocket;
+	    public bool Equals(SNetSocket other) => _SNetSocket == other._SNetSocket;
 
-	    public int CompareTo(SNetSocket_t other) => _SNetSocket.CompareTo(other._SNetSocket);
+	    public int CompareTo(SNetSocket other) => _SNetSocket.CompareTo(other._SNetSocket);
 	}
 }

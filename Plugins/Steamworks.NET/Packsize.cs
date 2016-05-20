@@ -38,19 +38,17 @@ namespace Steamworks {
 #endif
 
 		public static bool Test() {
-			var sentinelSize = Marshal.SizeOf(typeof(ValvePackingSentinel_t));
-			var subscribedFilesSize = Marshal.SizeOf(typeof(RemoteStorageEnumerateUserSubscribedFilesResult_t));
+			var sentinelSize = Marshal.SizeOf(typeof(ValvePackingSentinel));
+			var subscribedFilesSize = Marshal.SizeOf(typeof(RemoteStorageEnumerateUserSubscribedFilesResult));
 #if VALVE_CALLBACK_PACK_LARGE
-			if (sentinelSize != 32 || subscribedFilesSize != (1 + 1 + 1 + 50 + 100) * 4 + 4)
-				return false;
+			return false;
 #elif VALVE_CALLBACK_PACK_SMALL
 			return sentinelSize == 24 && subscribedFilesSize == (1 + 1 + 1 + 50 + 100) * 4;
 #endif
-		    return false;
 		}
 
 		[StructLayout(LayoutKind.Sequential, Pack = value)]
-		struct ValvePackingSentinel_t {
+		struct ValvePackingSentinel {
 		    readonly uint _u32;
 		    readonly ulong _u64;
 		    readonly ushort _u16;

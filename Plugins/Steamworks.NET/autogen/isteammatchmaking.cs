@@ -54,28 +54,28 @@ namespace Steamworks {
 		/// <para> Game lobby functions</para>
 		/// <para> Get a list of relevant lobbies</para>
 		/// <para> this is an asynchronous request</para>
-		/// <para> results will be returned by LobbyMatchList_t callback &amp; call result, with the number of lobbies found</para>
+		/// <para> results will be returned by LobbyMatchList callback &amp; call result, with the number of lobbies found</para>
 		/// <para> this will never return lobbies that are full</para>
 		/// <para> to add more filter, the filter calls below need to be call before each and every RequestLobbyList() call</para>
-		/// <para> use the CCallResult&lt;&gt; object in stea_api.h to match the SteamAPICall_t call result to a function in an object, e.g.</para>
+		/// <para> use the CCallResult&lt;&gt; object in stea_api.h to match the SteamAPICall call result to a function in an object, e.g.</para>
 		/// <para>		class CMyLobbyListManager</para>
 		/// <para>		{</para>
-		/// <para>			CCallResult&lt;CMyLobbyListManager, LobbyMatchList_t&gt; _CallResultLobbyMatchList;</para>
+		/// <para>			CCallResult&lt;CMyLobbyListManager, LobbyMatchList&gt; _CallResultLobbyMatchList;</para>
 		/// <para>			void FindLobbies()</para>
 		/// <para>			{</para>
 		/// <para>				// SteamMatchmaking()-&gt;AddRequestLobbyListFilter*() functions would be called here, before RequestLobbyList()</para>
-		/// <para>				SteamAPICall_t hSteamAPICall = SteamMatchmaking()-&gt;RequestLobbyList();</para>
+		/// <para>				SteamAPICall hSteamAPICall = SteamMatchmaking()-&gt;RequestLobbyList();</para>
 		/// <para>				_CallResultLobbyMatchList.Set( hSteamAPICall, this, &amp;CMyLobbyListManager::OnLobbyMatchList );</para>
 		/// <para>			}</para>
-		/// <para>			void OnLobbyMatchList( LobbyMatchList_t *pLobbyMatchList, bool bIOFailure )</para>
+		/// <para>			void OnLobbyMatchList( LobbyMatchList *pLobbyMatchList, bool bIOFailure )</para>
 		/// <para>			{</para>
 		/// <para>				// lobby list has be retrieved from Steam back-end, use results</para>
 		/// <para>			}</para>
 		/// <para>		}</para>
 		/// </summary>
-		public static SteamAPICall_t RequestLobbyList() {
+		public static SteamAPICall RequestLobbyList() {
 			InteropHelp.TestIfAvailableClient();
-			return (SteamAPICall_t)NativeMethods.ISteamMatchmaking_RequestLobbyList();
+			return (SteamAPICall)NativeMethods.ISteamMatchmaking_RequestLobbyList();
 		}
 
 		/// <summary>
@@ -135,64 +135,64 @@ namespace Steamworks {
 			NativeMethods.ISteamMatchmaking_AddRequestLobbyListResultCountFilter(cMaxResults);
 		}
 
-		public static void AddRequestLobbyListCompatibleMembersFilter(CSteamID steamIDLobby) {
+		public static void AddRequestLobbyListCompatibleMembersFilter(SteamId steamIDLobby) {
 			InteropHelp.TestIfAvailableClient();
 			NativeMethods.ISteamMatchmaking_AddRequestLobbyListCompatibleMembersFilter(steamIDLobby);
 		}
 
 		/// <summary>
-		/// <para> returns the CSteamID of a lobby, as retrieved by a RequestLobbyList call</para>
-		/// <para> should only be called after a LobbyMatchList_t callback is received</para>
-		/// <para> iLobby is of the range [0, LobbyMatchList_t::_nLobbiesMatching)</para>
-		/// <para> the returned CSteamID::IsValid() will be false if iLobby is out of range</para>
+		/// <para> returns the SteamId of a lobby, as retrieved by a RequestLobbyList call</para>
+		/// <para> should only be called after a LobbyMatchList callback is received</para>
+		/// <para> iLobby is of the range [0, LobbyMatchList::_nLobbiesMatching)</para>
+		/// <para> the returned SteamId::IsValid() will be false if iLobby is out of range</para>
 		/// </summary>
-		public static CSteamID GetLobbyByIndex(int iLobby) {
+		public static SteamId GetLobbyByIndex(int iLobby) {
 			InteropHelp.TestIfAvailableClient();
-			return (CSteamID)NativeMethods.ISteamMatchmaking_GetLobbyByIndex(iLobby);
+			return (SteamId)NativeMethods.ISteamMatchmaking_GetLobbyByIndex(iLobby);
 		}
 
 		/// <summary>
 		/// <para> Create a lobby on the Steam servers.</para>
-		/// <para> If private, then the lobby will not be returned by any RequestLobbyList() call; the CSteamID</para>
+		/// <para> If private, then the lobby will not be returned by any RequestLobbyList() call; the SteamId</para>
 		/// <para> of the lobby will need to be communicated via game channels or via InviteUserToLobby()</para>
 		/// <para> this is an asynchronous request</para>
-		/// <para> results will be returned by LobbyCreated_t callback and call result; lobby is joined &amp; ready to use at this point</para>
-		/// <para> a LobbyEnter_t callback will also be received (since the local user is joining their own lobby)</para>
+		/// <para> results will be returned by LobbyCreated callback and call result; lobby is joined &amp; ready to use at this point</para>
+		/// <para> a LobbyEnter callback will also be received (since the local user is joining their own lobby)</para>
 		/// </summary>
-		public static SteamAPICall_t CreateLobby(ELobbyType eLobbyType, int cMaxMembers) {
+		public static SteamAPICall CreateLobby(ELobbyType eLobbyType, int cMaxMembers) {
 			InteropHelp.TestIfAvailableClient();
-			return (SteamAPICall_t)NativeMethods.ISteamMatchmaking_CreateLobby(eLobbyType, cMaxMembers);
+			return (SteamAPICall)NativeMethods.ISteamMatchmaking_CreateLobby(eLobbyType, cMaxMembers);
 		}
 
 		/// <summary>
 		/// <para> Joins an existing lobby</para>
 		/// <para> this is an asynchronous request</para>
-		/// <para> results will be returned by LobbyEnter_t callback &amp; call result, check _EChatRoomEnterResponse to see if was successful</para>
+		/// <para> results will be returned by LobbyEnter callback &amp; call result, check _EChatRoomEnterResponse to see if was successful</para>
 		/// <para> lobby metadata is available to use immediately on this call completing</para>
 		/// </summary>
-		public static SteamAPICall_t JoinLobby(CSteamID steamIDLobby) {
+		public static SteamAPICall JoinLobby(SteamId steamIDLobby) {
 			InteropHelp.TestIfAvailableClient();
-			return (SteamAPICall_t)NativeMethods.ISteamMatchmaking_JoinLobby(steamIDLobby);
+			return (SteamAPICall)NativeMethods.ISteamMatchmaking_JoinLobby(steamIDLobby);
 		}
 
 		/// <summary>
 		/// <para> Leave a lobby; this will take effect immediately on the client side</para>
-		/// <para> other users in the lobby will be notified by a LobbyChatUpdate_t callback</para>
+		/// <para> other users in the lobby will be notified by a LobbyChatUpdate callback</para>
 		/// </summary>
-		public static void LeaveLobby(CSteamID steamIDLobby) {
+		public static void LeaveLobby(SteamId steamIDLobby) {
 			InteropHelp.TestIfAvailableClient();
 			NativeMethods.ISteamMatchmaking_LeaveLobby(steamIDLobby);
 		}
 
 		/// <summary>
 		/// <para> Invite another user to the lobby</para>
-		/// <para> the target user will receive a LobbyInvite_t callback</para>
+		/// <para> the target user will receive a LobbyInvite callback</para>
 		/// <para> will return true if the invite is successfully sent, whether or not the target responds</para>
 		/// <para> returns false if the local user is not connected to the Steam servers</para>
-		/// <para> if the other user clicks the join link, a GameLobbyJoinRequested_t will be posted if the user is in-game,</para>
+		/// <para> if the other user clicks the join link, a GameLobbyJoinRequested will be posted if the user is in-game,</para>
 		/// <para> or if the game isn't running yet the game will be launched with the parameter +connect_lobby &lt;64-bit lobby id&gt;</para>
 		/// </summary>
-		public static bool InviteUserToLobby(CSteamID steamIDLobby, CSteamID steamIDInvitee) {
+		public static bool InviteUserToLobby(SteamId steamIDLobby, SteamId steamIDInvitee) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamMatchmaking_InviteUserToLobby(steamIDLobby, steamIDInvitee);
 		}
@@ -204,19 +204,19 @@ namespace Steamworks {
 		/// <para> and accessible via ISteamFriends interface</para>
 		/// <para> returns the number of users in the specified lobby</para>
 		/// </summary>
-		public static int GetNumLobbyMembers(CSteamID steamIDLobby) {
+		public static int GetNumLobbyMembers(SteamId steamIDLobby) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamMatchmaking_GetNumLobbyMembers(steamIDLobby);
 		}
 
 		/// <summary>
-		/// <para> returns the CSteamID of a user in the lobby</para>
+		/// <para> returns the SteamId of a user in the lobby</para>
 		/// <para> iMember is of range [0,GetNumLobbyMembers())</para>
 		/// <para> note that the current user must be in a lobby to retrieve CSteamIDs of other users in that lobby</para>
 		/// </summary>
-		public static CSteamID GetLobbyMemberByIndex(CSteamID steamIDLobby, int iMember) {
+		public static SteamId GetLobbyMemberByIndex(SteamId steamIDLobby, int iMember) {
 			InteropHelp.TestIfAvailableClient();
-			return (CSteamID)NativeMethods.ISteamMatchmaking_GetLobbyMemberByIndex(steamIDLobby, iMember);
+			return (SteamId)NativeMethods.ISteamMatchmaking_GetLobbyMemberByIndex(steamIDLobby, iMember);
 		}
 
 		/// <summary>
@@ -224,7 +224,7 @@ namespace Steamworks {
 		/// <para> takes a simple key, and returns the string associated with it</para>
 		/// <para> "" will be returned if no value is set, or if steamIDLobby is invalid</para>
 		/// </summary>
-		public static string GetLobbyData(CSteamID steamIDLobby, string pchKey) {
+		public static string GetLobbyData(SteamId steamIDLobby, string pchKey) {
 			InteropHelp.TestIfAvailableClient();
 			using (var pchKey2 = new InteropHelp.UTF8StringHandle(pchKey)) {
 				return InteropHelp.PtrToStringUTF8(NativeMethods.ISteamMatchmaking_GetLobbyData(steamIDLobby, pchKey2));
@@ -236,9 +236,9 @@ namespace Steamworks {
 		/// <para> each user in the lobby will be broadcast this new value, and any new users joining will receive any existing data</para>
 		/// <para> this can be used to set lobby names, map, etc.</para>
 		/// <para> to reset a key, just set it to ""</para>
-		/// <para> other users in the lobby will receive notification of the lobby data change via a LobbyDataUpdate_t callback</para>
+		/// <para> other users in the lobby will receive notification of the lobby data change via a LobbyDataUpdate callback</para>
 		/// </summary>
-		public static bool SetLobbyData(CSteamID steamIDLobby, string pchKey, string pchValue) {
+		public static bool SetLobbyData(SteamId steamIDLobby, string pchKey, string pchValue) {
 			InteropHelp.TestIfAvailableClient();
 			using (var pchKey2 = new InteropHelp.UTF8StringHandle(pchKey))
 			using (var pchValue2 = new InteropHelp.UTF8StringHandle(pchValue)) {
@@ -249,7 +249,7 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> returns the number of metadata keys set on the specified lobby</para>
 		/// </summary>
-		public static int GetLobbyDataCount(CSteamID steamIDLobby) {
+		public static int GetLobbyDataCount(SteamId steamIDLobby) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamMatchmaking_GetLobbyDataCount(steamIDLobby);
 		}
@@ -257,11 +257,11 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> returns a lobby metadata key/values pair by index, of range [0, GetLobbyDataCount())</para>
 		/// </summary>
-		public static bool GetLobbyDataByIndex(CSteamID steamIDLobby, int iLobbyData, out string pchKey, int cchKeyBufferSize, out string pchValue, int cchValueBufferSize) {
+		public static bool GetLobbyDataByIndex(SteamId steamIDLobby, int iLobbyData, out string pchKey, int KeyBufferSize, out string pchValue, int ValueBufferSize) {
 			InteropHelp.TestIfAvailableClient();
-			var pchKey2 = Marshal.AllocHGlobal(cchKeyBufferSize);
-			var pchValue2 = Marshal.AllocHGlobal(cchValueBufferSize);
-			var ret = NativeMethods.ISteamMatchmaking_GetLobbyDataByIndex(steamIDLobby, iLobbyData, pchKey2, cchKeyBufferSize, pchValue2, cchValueBufferSize);
+			var pchKey2 = Marshal.AllocHGlobal(KeyBufferSize);
+			var pchValue2 = Marshal.AllocHGlobal(ValueBufferSize);
+			var ret = NativeMethods.ISteamMatchmaking_GetLobbyDataByIndex(steamIDLobby, iLobbyData, pchKey2, KeyBufferSize, pchValue2, ValueBufferSize);
 			pchKey = ret ? InteropHelp.PtrToStringUTF8(pchKey2) : null;
 			Marshal.FreeHGlobal(pchKey2);
 			pchValue = ret ? InteropHelp.PtrToStringUTF8(pchValue2) : null;
@@ -272,7 +272,7 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> removes a metadata key from the lobby</para>
 		/// </summary>
-		public static bool DeleteLobbyData(CSteamID steamIDLobby, string pchKey) {
+		public static bool DeleteLobbyData(SteamId steamIDLobby, string pchKey) {
 			InteropHelp.TestIfAvailableClient();
 			using (var pchKey2 = new InteropHelp.UTF8StringHandle(pchKey)) {
 				return NativeMethods.ISteamMatchmaking_DeleteLobbyData(steamIDLobby, pchKey2);
@@ -282,7 +282,7 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> Gets per-user metadata for someone in this lobby</para>
 		/// </summary>
-		public static string GetLobbyMemberData(CSteamID steamIDLobby, CSteamID steamIDUser, string pchKey) {
+		public static string GetLobbyMemberData(SteamId steamIDLobby, SteamId steamIDUser, string pchKey) {
 			InteropHelp.TestIfAvailableClient();
 			using (var pchKey2 = new InteropHelp.UTF8StringHandle(pchKey)) {
 				return InteropHelp.PtrToStringUTF8(NativeMethods.ISteamMatchmaking_GetLobbyMemberData(steamIDLobby, steamIDUser, pchKey2));
@@ -292,7 +292,7 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> Sets per-user metadata (for the local user implicitly)</para>
 		/// </summary>
-		public static void SetLobbyMemberData(CSteamID steamIDLobby, string pchKey, string pchValue) {
+		public static void SetLobbyMemberData(SteamId steamIDLobby, string pchKey, string pchValue) {
 			InteropHelp.TestIfAvailableClient();
 			using (var pchKey2 = new InteropHelp.UTF8StringHandle(pchKey))
 			using (var pchValue2 = new InteropHelp.UTF8StringHandle(pchValue)) {
@@ -302,26 +302,26 @@ namespace Steamworks {
 
 		/// <summary>
 		/// <para> Broadcasts a chat message to the all the users in the lobby</para>
-		/// <para> users in the lobby (including the local user) will receive a LobbyChatMsg_t callback</para>
+		/// <para> users in the lobby (including the local user) will receive a LobbyChatMsg callback</para>
 		/// <para> returns true if the message is successfully sent</para>
 		/// <para> pvMsgBody can be binary or text data, up to 4k</para>
-		/// <para> if pvMsgBody is text, cubMsgBody should be strlen( text ) + 1, to include the null terminator</para>
+		/// <para> if pvMsgBody is text, MsgBody should be strlen( text ) + 1, to include the null terminator</para>
 		/// </summary>
-		public static bool SendLobbyChatMsg(CSteamID steamIDLobby, byte[] pvMsgBody, int cubMsgBody) {
+		public static bool SendLobbyChatMsg(SteamId steamIDLobby, byte[] pvMsgBody, int MsgBody) {
 			InteropHelp.TestIfAvailableClient();
-			return NativeMethods.ISteamMatchmaking_SendLobbyChatMsg(steamIDLobby, pvMsgBody, cubMsgBody);
+			return NativeMethods.ISteamMatchmaking_SendLobbyChatMsg(steamIDLobby, pvMsgBody, MsgBody);
 		}
 
 		/// <summary>
-		/// <para> Get a chat message as specified in a LobbyChatMsg_t callback</para>
-		/// <para> iChatID is the LobbyChatMsg_t::_iChatID value in the callback</para>
-		/// <para> *pSteamIDUser is filled in with the CSteamID of the member</para>
+		/// <para> Get a chat message as specified in a LobbyChatMsg callback</para>
+		/// <para> iChatID is the LobbyChatMsg::_iChatID value in the callback</para>
+		/// <para> *pSteamIDUser is filled in with the SteamId of the member</para>
 		/// <para> *pvData is filled in with the message itself</para>
 		/// <para> return value is the number of bytes written into the buffer</para>
 		/// </summary>
-		public static int GetLobbyChatEntry(CSteamID steamIDLobby, int iChatID, out CSteamID pSteamIDUser, byte[] pvData, int cubData, out EChatEntryType peChatEntryType) {
+		public static int GetLobbyChatEntry(SteamId steamIDLobby, int iChatID, out SteamId pSteamIDUser, byte[] pvData, int Data, out EChatEntryType peChatEntryType) {
 			InteropHelp.TestIfAvailableClient();
-			return NativeMethods.ISteamMatchmaking_GetLobbyChatEntry(steamIDLobby, iChatID, out pSteamIDUser, pvData, cubData, out peChatEntryType);
+			return NativeMethods.ISteamMatchmaking_GetLobbyChatEntry(steamIDLobby, iChatID, out pSteamIDUser, pvData, Data, out peChatEntryType);
 		}
 
 		/// <summary>
@@ -330,10 +330,10 @@ namespace Steamworks {
 		/// <para> this will send down all the metadata associated with a lobby</para>
 		/// <para> this is an asynchronous call</para>
 		/// <para> returns false if the local user is not connected to the Steam servers</para>
-		/// <para> results will be returned by a LobbyDataUpdate_t callback</para>
-		/// <para> if the specified lobby doesn't exist, LobbyDataUpdate_t::_bSuccess will be set to false</para>
+		/// <para> results will be returned by a LobbyDataUpdate callback</para>
+		/// <para> if the specified lobby doesn't exist, LobbyDataUpdate::_bSuccess will be set to false</para>
 		/// </summary>
-		public static bool RequestLobbyData(CSteamID steamIDLobby) {
+		public static bool RequestLobbyData(SteamId steamIDLobby) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamMatchmaking_RequestLobbyData(steamIDLobby);
 		}
@@ -343,7 +343,7 @@ namespace Steamworks {
 		/// <para> usually at this point, the users will join the specified game server</para>
 		/// <para> either the IP/Port or the steamID of the game server has to be valid, depending on how you want the clients to be able to connect</para>
 		/// </summary>
-		public static void SetLobbyGameServer(CSteamID steamIDLobby, uint unGameServerIP, ushort unGameServerPort, CSteamID steamIDGameServer) {
+		public static void SetLobbyGameServer(SteamId steamIDLobby, uint unGameServerIP, ushort unGameServerPort, SteamId steamIDGameServer) {
 			InteropHelp.TestIfAvailableClient();
 			NativeMethods.ISteamMatchmaking_SetLobbyGameServer(steamIDLobby, unGameServerIP, unGameServerPort, steamIDGameServer);
 		}
@@ -351,7 +351,7 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> returns the details of a game server set in a lobby - returns false if there is no game server set, or that lobby doesn't exist</para>
 		/// </summary>
-		public static bool GetLobbyGameServer(CSteamID steamIDLobby, out uint punGameServerIP, out ushort punGameServerPort, out CSteamID psteamIDGameServer) {
+		public static bool GetLobbyGameServer(SteamId steamIDLobby, out uint punGameServerIP, out ushort punGameServerPort, out SteamId psteamIDGameServer) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamMatchmaking_GetLobbyGameServer(steamIDLobby, out punGameServerIP, out punGameServerPort, out psteamIDGameServer);
 		}
@@ -359,7 +359,7 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> set the limit on the # of users who can join the lobby</para>
 		/// </summary>
-		public static bool SetLobbyMemberLimit(CSteamID steamIDLobby, int cMaxMembers) {
+		public static bool SetLobbyMemberLimit(SteamId steamIDLobby, int cMaxMembers) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamMatchmaking_SetLobbyMemberLimit(steamIDLobby, cMaxMembers);
 		}
@@ -367,16 +367,16 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> returns the current limit on the # of users who can join the lobby; returns 0 if no limit is defined</para>
 		/// </summary>
-		public static int GetLobbyMemberLimit(CSteamID steamIDLobby) {
+		public static int GetLobbyMemberLimit(SteamId steamIDLobby) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamMatchmaking_GetLobbyMemberLimit(steamIDLobby);
 		}
 
 		/// <summary>
 		/// <para> updates which type of lobby it is</para>
-		/// <para> only lobbies that are k_ELobbyTypePublic or k_ELobbyTypeInvisible, and are set to joinable, will be returned by RequestLobbyList() calls</para>
+		/// <para> only lobbies that are ELobbyTypePublic or ELobbyTypeInvisible, and are set to joinable, will be returned by RequestLobbyList() calls</para>
 		/// </summary>
-		public static bool SetLobbyType(CSteamID steamIDLobby, ELobbyType eLobbyType) {
+		public static bool SetLobbyType(SteamId steamIDLobby, ELobbyType eLobbyType) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamMatchmaking_SetLobbyType(steamIDLobby, eLobbyType);
 		}
@@ -385,7 +385,7 @@ namespace Steamworks {
 		/// <para> sets whether or not a lobby is joinable - defaults to true for a new lobby</para>
 		/// <para> if set to false, no user can join, even if they are a friend or have been invited</para>
 		/// </summary>
-		public static bool SetLobbyJoinable(CSteamID steamIDLobby, bool bLobbyJoinable) {
+		public static bool SetLobbyJoinable(SteamId steamIDLobby, bool bLobbyJoinable) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamMatchmaking_SetLobbyJoinable(steamIDLobby, bLobbyJoinable);
 		}
@@ -396,9 +396,9 @@ namespace Steamworks {
 		/// <para> there always one lobby owner - if the current owner leaves, another user will become the owner</para>
 		/// <para> it is possible (bur rare) to join a lobby just as the owner is leaving, thus entering a lobby with self as the owner</para>
 		/// </summary>
-		public static CSteamID GetLobbyOwner(CSteamID steamIDLobby) {
+		public static SteamId GetLobbyOwner(SteamId steamIDLobby) {
 			InteropHelp.TestIfAvailableClient();
-			return (CSteamID)NativeMethods.ISteamMatchmaking_GetLobbyOwner(steamIDLobby);
+			return (SteamId)NativeMethods.ISteamMatchmaking_GetLobbyOwner(steamIDLobby);
 		}
 
 		/// <summary>
@@ -406,7 +406,7 @@ namespace Steamworks {
 		/// <para> you must be the lobby owner for this to succeed, and steamIDNewOwner must be in the lobby</para>
 		/// <para> after completion, the local user will no longer be the owner</para>
 		/// </summary>
-		public static bool SetLobbyOwner(CSteamID steamIDLobby, CSteamID steamIDNewOwner) {
+		public static bool SetLobbyOwner(SteamId steamIDLobby, SteamId steamIDNewOwner) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamMatchmaking_SetLobbyOwner(steamIDLobby, steamIDNewOwner);
 		}
@@ -415,7 +415,7 @@ namespace Steamworks {
 		/// <para> link two lobbies for the purposes of checking player compatibility</para>
 		/// <para> you must be the lobby owner of both lobbies</para>
 		/// </summary>
-		public static bool SetLinkedLobby(CSteamID steamIDLobby, CSteamID steamIDLobbyDependent) {
+		public static bool SetLinkedLobby(SteamId steamIDLobby, SteamId steamIDLobbyDependent) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamMatchmaking_SetLinkedLobby(steamIDLobby, steamIDLobbyDependent);
 		}
@@ -437,7 +437,7 @@ namespace Steamworks {
 		/// <para> Each call allocates a new asynchronous request object.</para>
 		/// <para> Request object must be released by calling ReleaseRequest( hServerListRequest )</para>
 		/// </summary>
-		public static HServerListRequest RequestInternetServerList(AppId iApp, MatchMakingKeyValuePair_t[] ppchFilters, uint nFilters, ISteamMatchmakingServerListResponse pRequestServersResponse) {
+		public static HServerListRequest RequestInternetServerList(AppId iApp, MatchMakingKeyValuePair[] ppchFilters, uint nFilters, ISteamMatchmakingServerListResponse pRequestServersResponse) {
 			InteropHelp.TestIfAvailableClient();
 			return (HServerListRequest)NativeMethods.ISteamMatchmakingServers_RequestInternetServerList(iApp, new MMKVPMarshaller(ppchFilters), nFilters, (IntPtr)pRequestServersResponse);
 		}
@@ -447,22 +447,22 @@ namespace Steamworks {
 			return (HServerListRequest)NativeMethods.ISteamMatchmakingServers_RequestLANServerList(iApp, (IntPtr)pRequestServersResponse);
 		}
 
-		public static HServerListRequest RequestFriendsServerList(AppId iApp, MatchMakingKeyValuePair_t[] ppchFilters, uint nFilters, ISteamMatchmakingServerListResponse pRequestServersResponse) {
+		public static HServerListRequest RequestFriendsServerList(AppId iApp, MatchMakingKeyValuePair[] ppchFilters, uint nFilters, ISteamMatchmakingServerListResponse pRequestServersResponse) {
 			InteropHelp.TestIfAvailableClient();
 			return (HServerListRequest)NativeMethods.ISteamMatchmakingServers_RequestFriendsServerList(iApp, new MMKVPMarshaller(ppchFilters), nFilters, (IntPtr)pRequestServersResponse);
 		}
 
-		public static HServerListRequest RequestFavoritesServerList(AppId iApp, MatchMakingKeyValuePair_t[] ppchFilters, uint nFilters, ISteamMatchmakingServerListResponse pRequestServersResponse) {
+		public static HServerListRequest RequestFavoritesServerList(AppId iApp, MatchMakingKeyValuePair[] ppchFilters, uint nFilters, ISteamMatchmakingServerListResponse pRequestServersResponse) {
 			InteropHelp.TestIfAvailableClient();
 			return (HServerListRequest)NativeMethods.ISteamMatchmakingServers_RequestFavoritesServerList(iApp, new MMKVPMarshaller(ppchFilters), nFilters, (IntPtr)pRequestServersResponse);
 		}
 
-		public static HServerListRequest RequestHistoryServerList(AppId iApp, MatchMakingKeyValuePair_t[] ppchFilters, uint nFilters, ISteamMatchmakingServerListResponse pRequestServersResponse) {
+		public static HServerListRequest RequestHistoryServerList(AppId iApp, MatchMakingKeyValuePair[] ppchFilters, uint nFilters, ISteamMatchmakingServerListResponse pRequestServersResponse) {
 			InteropHelp.TestIfAvailableClient();
 			return (HServerListRequest)NativeMethods.ISteamMatchmakingServers_RequestHistoryServerList(iApp, new MMKVPMarshaller(ppchFilters), nFilters, (IntPtr)pRequestServersResponse);
 		}
 
-		public static HServerListRequest RequestSpectatorServerList(AppId iApp, MatchMakingKeyValuePair_t[] ppchFilters, uint nFilters, ISteamMatchmakingServerListResponse pRequestServersResponse) {
+		public static HServerListRequest RequestSpectatorServerList(AppId iApp, MatchMakingKeyValuePair[] ppchFilters, uint nFilters, ISteamMatchmakingServerListResponse pRequestServersResponse) {
 			InteropHelp.TestIfAvailableClient();
 			return (HServerListRequest)NativeMethods.ISteamMatchmakingServers_RequestSpectatorServerList(iApp, new MMKVPMarshaller(ppchFilters), nFilters, (IntPtr)pRequestServersResponse);
 		}
@@ -477,7 +477,7 @@ namespace Steamworks {
 		}
 
 		/// <summary>
-		/// <para> the filter operation codes that go in the key part of MatchMakingKeyValuePair_t should be one of these:</para>
+		/// <para> the filter operation codes that go in the key part of MatchMakingKeyValuePair should be one of these:</para>
 		/// <para>		"map"</para>
 		/// <para>			- Server passes the filter if the server is playing the specified map.</para>
 		/// <para>		"gamedataand"</para>
@@ -523,7 +523,7 @@ namespace Steamworks {
 		/// <para>			- Server passes the filter if the server's query address matches the specified IP or IP:port.</para>
 		/// <para>		"gameaddr"</para>
 		/// <para>			- Server passes the filter if the server's game address matches the specified IP or IP:port.</para>
-		/// <para>		The following filter operations ignore the "value" part of MatchMakingKeyValuePair_t</para>
+		/// <para>		The following filter operations ignore the "value" part of MatchMakingKeyValuePair</para>
 		/// <para>		"dedicated"</para>
 		/// <para>			- Server passes the filter if it passed true to SetDedicatedServer.</para>
 		/// <para>		"secure"</para>
@@ -540,9 +540,9 @@ namespace Steamworks {
 		/// <para> values by calling GetServerCount().  You will also receive index values in</para>
 		/// <para> ISteamMatchmakingServerListResponse::ServerResponded() callbacks</para>
 		/// </summary>
-		public static gameserverite_t GetServerDetails(HServerListRequest hRequest, int iServer) {
+		public static gameserverite GetServerDetails(HServerListRequest hRequest, int iServer) {
 			InteropHelp.TestIfAvailableClient();
-			return (gameserverite_t)Marshal.PtrToStructure(NativeMethods.ISteamMatchmakingServers_GetServerDetails(hRequest, iServer), typeof(gameserverite_t));
+			return (gameserverite)Marshal.PtrToStructure(NativeMethods.ISteamMatchmakingServers_GetServerDetails(hRequest, iServer), typeof(gameserverite));
 		}
 
 		/// <summary>

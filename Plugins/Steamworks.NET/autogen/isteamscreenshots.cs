@@ -11,9 +11,9 @@ namespace Steamworks {
 		/// <para> Writes a screenshot to the user's screenshot library given the raw image data, which must be in RGB format.</para>
 		/// <para> The return value is a handle that is valid for the duration of the game process and can be used to apply tags.</para>
 		/// </summary>
-		public static ScreenshotHandle WriteScreenshot(byte[] pubRGB, uint cubRGB, int nWidth, int nHeight) {
+		public static ScreenshotHandle WriteScreenshot(byte[] pubRGB, uint RGB, int nWidth, int nHeight) {
 			InteropHelp.TestIfAvailableClient();
-			return (ScreenshotHandle)NativeMethods.ISteamScreenshots_WriteScreenshot(pubRGB, cubRGB, nWidth, nHeight);
+			return (ScreenshotHandle)NativeMethods.ISteamScreenshots_WriteScreenshot(pubRGB, RGB, nWidth, nHeight);
 		}
 
 		/// <summary>
@@ -31,7 +31,7 @@ namespace Steamworks {
 		}
 
 		/// <summary>
-		/// <para> Causes the Steam overlay to take a screenshot.  If screenshots are being hooked by the game then a ScreenshotRequested_t callback is sent back to the game instead.</para>
+		/// <para> Causes the Steam overlay to take a screenshot.  If screenshots are being hooked by the game then a ScreenshotRequested callback is sent back to the game instead.</para>
 		/// </summary>
 		public static void TriggerScreenshot() {
 			InteropHelp.TestIfAvailableClient();
@@ -40,7 +40,7 @@ namespace Steamworks {
 
 		/// <summary>
 		/// <para> Toggles whether the overlay handles screenshots when the user presses the screenshot hotkey, or the game handles them.  If the game is hooking screenshots,</para>
-		/// <para> then the ScreenshotRequested_t callback will be sent if the user presses the hotkey, and the game is expected to call WriteScreenshot or AddScreenshotToLibrary</para>
+		/// <para> then the ScreenshotRequested callback will be sent if the user presses the hotkey, and the game is expected to call WriteScreenshot or AddScreenshotToLibrary</para>
 		/// <para> in response.</para>
 		/// </summary>
 		public static void HookScreenshots(bool bHook) {
@@ -61,7 +61,7 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> Tags a user as being visible in the screenshot</para>
 		/// </summary>
-		public static bool TagUser(ScreenshotHandle hScreenshot, CSteamID steamID) {
+		public static bool TagUser(ScreenshotHandle hScreenshot, SteamId steamID) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamScreenshots_TagUser(hScreenshot, steamID);
 		}
@@ -69,9 +69,9 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> Tags a published file as being visible in the screenshot</para>
 		/// </summary>
-		public static bool TagPublishedFile(ScreenshotHandle hScreenshot, PublishedFileId unPublishedFileID) {
+		public static bool TagPublishedFile(ScreenshotHandle hScreenshot, PublishedFileId ufileId) {
 			InteropHelp.TestIfAvailableClient();
-			return NativeMethods.ISteamScreenshots_TagPublishedFile(hScreenshot, unPublishedFileID);
+			return NativeMethods.ISteamScreenshots_TagPublishedFile(hScreenshot, ufileId);
 		}
 	}
 }

@@ -6,5 +6,5 @@
 
 namespace Steamworks {
 	[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.StdCall)] // TODO: This is probably wrong, will likely crash on some platform.
-	public delegate void SteamAPI_PostAPIResultInProcess_t(SteamAPICall_t callHandle, System.IntPtr pUnknown, uint unCallbackSize, int iCallbackNum);
+	public delegate void SteamAPI_PostAPIResultInProcess(SteamAPICall callHandle, System.IntPtr pUnknown, uint unCallbackSize, int iCallbackNum);
 }

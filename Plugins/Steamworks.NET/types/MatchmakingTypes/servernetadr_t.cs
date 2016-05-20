@@ -5,10 +5,10 @@
 // Changes to this file will be reverted when you update Steamworks.NET
 
 namespace Steamworks {
-	// servernetadr_t is all the addressing info the serverbrowser needs to know about a game server,
+	// servernetadr is all the addressing info the serverbrowser needs to know about a game server,
 	// namely: its IP, its connection port, and its query port.
 	//[StructLayout(LayoutKind.Sequential)]
-	public struct servernetadr_t {
+	public struct servernetadr {
 		private ushort _usConnectionPort;	// (in HOST byte order)
 		private ushort _usQueryPort;
 		private uint _unIP;
@@ -20,8 +20,8 @@ namespace Steamworks {
 		}
 
 #if NETADR_H
-		public netadr_t GetIPAndQueryPort() {
-			return netadr_t( _unIP, _usQueryPort );
+		public netadr GetIPAndQueryPort() {
+			return netadr( _unIP, _usQueryPort );
 		}
 #endif
 		
@@ -59,20 +59,20 @@ namespace Steamworks {
 #endif
 		}
 
-		public static bool operator <(servernetadr_t x, servernetadr_t y) => (x._unIP < y._unIP) || (x._unIP == y._unIP && x._usQueryPort < y._usQueryPort);
+		public static bool operator <(servernetadr x, servernetadr y) => (x._unIP < y._unIP) || (x._unIP == y._unIP && x._usQueryPort < y._usQueryPort);
 
-	    public static bool operator >(servernetadr_t x, servernetadr_t y) => (x._unIP > y._unIP) || (x._unIP == y._unIP && x._usQueryPort > y._usQueryPort);
+	    public static bool operator >(servernetadr x, servernetadr y) => (x._unIP > y._unIP) || (x._unIP == y._unIP && x._usQueryPort > y._usQueryPort);
 
-	    public override bool Equals(object other) => other is servernetadr_t && this == (servernetadr_t)other;
+	    public override bool Equals(object other) => other is servernetadr && this == (servernetadr)other;
 
 	    public override int GetHashCode() => _unIP.GetHashCode() + _usQueryPort.GetHashCode() + _usConnectionPort.GetHashCode();
 
-	    public static bool operator ==(servernetadr_t x, servernetadr_t y) => (x._unIP == y._unIP) && (x._usQueryPort == y._usQueryPort) && (x._usConnectionPort == y._usConnectionPort);
+	    public static bool operator ==(servernetadr x, servernetadr y) => (x._unIP == y._unIP) && (x._usQueryPort == y._usQueryPort) && (x._usConnectionPort == y._usConnectionPort);
 
-	    public static bool operator !=(servernetadr_t x, servernetadr_t y) => !(x == y);
+	    public static bool operator !=(servernetadr x, servernetadr y) => !(x == y);
 
-	    public bool Equals(servernetadr_t other) => (_unIP == other._unIP) && (_usQueryPort == other._usQueryPort) && (_usConnectionPort == other._usConnectionPort);
+	    public bool Equals(servernetadr other) => (_unIP == other._unIP) && (_usQueryPort == other._usQueryPort) && (_usConnectionPort == other._usConnectionPort);
 
-	    public int CompareTo(servernetadr_t other) => _unIP.CompareTo(other._unIP) + _usQueryPort.CompareTo(other._usQueryPort) + _usConnectionPort.CompareTo(other._usConnectionPort);
+	    public int CompareTo(servernetadr other) => _unIP.CompareTo(other._unIP) + _usQueryPort.CompareTo(other._usQueryPort) + _usConnectionPort.CompareTo(other._usConnectionPort);
 	}
 }

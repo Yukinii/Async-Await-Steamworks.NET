@@ -45,7 +45,7 @@ namespace Steamworks {
 		/// <para>/ If your game is a "mod," pass the string that identifies it.  The default is an empty string, meaning</para>
 		/// <para>/ this application is the original game, not a mod.</para>
 		/// <para>/</para>
-		/// <para>/ @see k_cbMaxGameServerGameDir</para>
+		/// <para>/ @see MaxGameServerGameDir</para>
 		/// </summary>
 		public static void SetModDir(string pszModDir) {
 			InteropHelp.TestIfAvailableGameServer();
@@ -67,9 +67,9 @@ namespace Steamworks {
 		/// <para>/ Begin process to login to a persistent game server account</para>
 		/// <para>/</para>
 		/// <para>/ You need to register for callbacks to determine the result of this operation.</para>
-		/// <para>/ @see SteamServersConnected_t</para>
-		/// <para>/ @see SteamServerConnectFailure_t</para>
-		/// <para>/ @see SteamServersDisconnected_t</para>
+		/// <para>/ @see SteamServersConnected</para>
+		/// <para>/ @see SteamServerConnectFailure</para>
+		/// <para>/ @see SteamServersDisconnected</para>
 		/// </summary>
 		public static void LogOn(string pszToken) {
 			InteropHelp.TestIfAvailableGameServer();
@@ -110,9 +110,9 @@ namespace Steamworks {
 			return NativeMethods.ISteamGameServer_BSecure();
 		}
 
-		public static CSteamID GetSteamID() {
+		public static SteamId GetSteamID() {
 			InteropHelp.TestIfAvailableGameServer();
-			return (CSteamID)NativeMethods.ISteamGameServer_GetSteamID();
+			return (SteamId)NativeMethods.ISteamGameServer_GetSteamID();
 		}
 
 		/// <summary>
@@ -144,7 +144,7 @@ namespace Steamworks {
 		/// <summary>
 		/// <para>/ Set the name of server as it will appear in the server browser</para>
 		/// <para>/</para>
-		/// <para>/ @see k_cbMaxGameServerName</para>
+		/// <para>/ @see MaxGameServerName</para>
 		/// </summary>
 		public static void SetServerName(string pszServerName) {
 			InteropHelp.TestIfAvailableGameServer();
@@ -156,7 +156,7 @@ namespace Steamworks {
 		/// <summary>
 		/// <para>/ Set name of map to report in the server browser</para>
 		/// <para>/</para>
-		/// <para>/ @see k_cbMaxGameServerName</para>
+		/// <para>/ @see MaxGameServerName</para>
 		/// </summary>
 		public static void SetMapName(string pszMapName) {
 			InteropHelp.TestIfAvailableGameServer();
@@ -185,7 +185,7 @@ namespace Steamworks {
 		/// <summary>
 		/// <para>/ Name of the spectator server.  (Only used if spectator port is nonzero.)</para>
 		/// <para>/</para>
-		/// <para>/ @see k_cbMaxGameServerMapName</para>
+		/// <para>/ @see MaxGameServerMapName</para>
 		/// </summary>
 		public static void SetSpectatorServerName(string pszSpectatorServerName) {
 			InteropHelp.TestIfAvailableGameServer();
@@ -217,7 +217,7 @@ namespace Steamworks {
 		/// <para>/ Sets a string defining the "gametags" for this server, this is optional, but if it is set</para>
 		/// <para>/ it allows users to filter in the matchmaking/server-browser interfaces based on the value</para>
 		/// <para>/</para>
-		/// <para>/ @see k_cbMaxGameServerTags</para>
+		/// <para>/ @see MaxGameServerTags</para>
 		/// </summary>
 		public static void SetGameTags(string pchGameTags) {
 			InteropHelp.TestIfAvailableGameServer();
@@ -232,7 +232,7 @@ namespace Steamworks {
 		/// <para>/ don't set this unless it actually changes, its only uploaded to the master once (when</para>
 		/// <para>/ acknowledged)</para>
 		/// <para>/</para>
-		/// <para>/ @see k_cbMaxGameServerGameData</para>
+		/// <para>/ @see MaxGameServerGameData</para>
 		/// </summary>
 		public static void SetGameData(string pchGameData) {
 			InteropHelp.TestIfAvailableGameServer();
@@ -259,22 +259,22 @@ namespace Steamworks {
 		/// <para> and identity.  The AuthBlob here should be acquired on the game client using SteamUser()-&gt;InitiateGameConnection()</para>
 		/// <para> and must then be sent up to the game server for authentication.</para>
 		/// <para> Return Value: returns true if the users ticket passes basic checks. pSteamIDUser will contain the Steam ID of this user. pSteamIDUser must NOT be NULL</para>
-		/// <para> If the call succeeds then you should expect a GSClientApprove_t or GSClientDeny_t callback which will tell you whether authentication</para>
+		/// <para> If the call succeeds then you should expect a GSClientApprove or GSClientDeny callback which will tell you whether authentication</para>
 		/// <para> for the user has succeeded or failed (the steamid in the callback will match the one returned by this call)</para>
 		/// </summary>
-		public static bool SendUserConnectAndAuthenticate(uint unIPClient, byte[] pvAuthBlob, uint cubAuthBlobSize, out CSteamID pSteamIDUser) {
+		public static bool SendUserConnectAndAuthenticate(uint unIPClient, byte[] pvAuthBlob, uint AuthBlobSize, out SteamId pSteamIDUser) {
 			InteropHelp.TestIfAvailableGameServer();
-			return NativeMethods.ISteamGameServer_SendUserConnectAndAuthenticate(unIPClient, pvAuthBlob, cubAuthBlobSize, out pSteamIDUser);
+			return NativeMethods.ISteamGameServer_SendUserConnectAndAuthenticate(unIPClient, pvAuthBlob, AuthBlobSize, out pSteamIDUser);
 		}
 
 		/// <summary>
 		/// <para> Creates a fake user (ie, a bot) which will be listed as playing on the server, but skips validation.</para>
-		/// <para> Return Value: Returns a SteamID for the user to be tracked with, you should call HandleUserDisconnect()</para>
+		/// <para> Return Value: Returns a SteamId for the user to be tracked with, you should call HandleUserDisconnect()</para>
 		/// <para> when this user leaves the server just like you would for a real user.</para>
 		/// </summary>
-		public static CSteamID CreateUnauthenticatedUserConnection() {
+		public static SteamId CreateUnauthenticatedUserConnection() {
 			InteropHelp.TestIfAvailableGameServer();
-			return (CSteamID)NativeMethods.ISteamGameServer_CreateUnauthenticatedUserConnection();
+			return (SteamId)NativeMethods.ISteamGameServer_CreateUnauthenticatedUserConnection();
 		}
 
 		/// <summary>
@@ -282,7 +282,7 @@ namespace Steamworks {
 		/// <para> track which users are currently on which servers for the purposes of preventing a single</para>
 		/// <para> account being logged into multiple servers, showing who is currently on a server, etc.</para>
 		/// </summary>
-		public static void SendUserDisconnect(CSteamID steamIDUser) {
+		public static void SendUserDisconnect(SteamId steamIDUser) {
 			InteropHelp.TestIfAvailableGameServer();
 			NativeMethods.ISteamGameServer_SendUserDisconnect(steamIDUser);
 		}
@@ -293,7 +293,7 @@ namespace Steamworks {
 		/// <para> GSUserValidationSuccess callback.</para>
 		/// <para> Return Value: true if successful, false if failure (ie, steamIDUser wasn't for an active player)</para>
 		/// </summary>
-		public static bool BUpdateUserData(CSteamID steamIDUser, string pchPlayerName, uint uScore) {
+		public static bool BUpdateUserData(SteamId steamIDUser, string pchPlayerName, uint uScore) {
 			InteropHelp.TestIfAvailableGameServer();
 			using (var pchPlayerName2 = new InteropHelp.UTF8StringHandle(pchPlayerName)) {
 				return NativeMethods.ISteamGameServer_BUpdateUserData(steamIDUser, pchPlayerName2, uScore);
@@ -306,16 +306,16 @@ namespace Steamworks {
 		/// <para> Retrieve ticket to be sent to the entity who wishes to authenticate you ( using BeginAuthSession API ).</para>
 		/// <para> pcbTicket retrieves the length of the actual ticket.</para>
 		/// </summary>
-		public static HAuthTicket GetAuthSessionTicket(byte[] pTicket, int cbMaxTicket, out uint pcbTicket) {
+		public static HAuthTicket GetAuthSessionTicket(byte[] pTicket, int MaxTicket, out uint pcbTicket) {
 			InteropHelp.TestIfAvailableGameServer();
-			return (HAuthTicket)NativeMethods.ISteamGameServer_GetAuthSessionTicket(pTicket, cbMaxTicket, out pcbTicket);
+			return (HAuthTicket)NativeMethods.ISteamGameServer_GetAuthSessionTicket(pTicket, MaxTicket, out pcbTicket);
 		}
 
 		/// <summary>
 		/// <para> Authenticate ticket ( from GetAuthSessionTicket ) from entity steamID to be sure it is valid and isnt reused</para>
-		/// <para> Registers for callbacks if the entity goes offline or cancels the ticket ( see ValidateAuthTicketResponse_t callback and EAuthSessionResponse )</para>
+		/// <para> Registers for callbacks if the entity goes offline or cancels the ticket ( see ValidateAuthTicketResponse callback and EAuthSessionResponse )</para>
 		/// </summary>
-		public static EBeginAuthSessionResult BeginAuthSession(byte[] pAuthTicket, int cbAuthTicket, CSteamID steamID) {
+		public static EBeginAuthSessionResult BeginAuthSession(byte[] pAuthTicket, int cbAuthTicket, SteamId steamID) {
 			InteropHelp.TestIfAvailableGameServer();
 			return NativeMethods.ISteamGameServer_BeginAuthSession(pAuthTicket, cbAuthTicket, steamID);
 		}
@@ -323,7 +323,7 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> Stop tracking started by BeginAuthSession - called when no longer playing game with this entity</para>
 		/// </summary>
-		public static void EndAuthSession(CSteamID steamID) {
+		public static void EndAuthSession(SteamId steamID) {
 			InteropHelp.TestIfAvailableGameServer();
 			NativeMethods.ISteamGameServer_EndAuthSession(steamID);
 		}
@@ -340,16 +340,16 @@ namespace Steamworks {
 		/// <para> After receiving a user's authentication data, and passing it to SendUserConnectAndAuthenticate, use this function</para>
 		/// <para> to determine if the user owns downloadable content specified by the provided AppID.</para>
 		/// </summary>
-		public static EUserHasLicenseForAppResult UserHasLicenseForApp(CSteamID steamID, AppId appID) {
+		public static EUserHasLicenseForAppResult UserHasLicenseForApp(SteamId steamID, AppId appID) {
 			InteropHelp.TestIfAvailableGameServer();
 			return NativeMethods.ISteamGameServer_UserHasLicenseForApp(steamID, appID);
 		}
 
 		/// <summary>
-		/// <para> Ask if a user in in the specified group, results returns async by GSUserGroupStatus_t</para>
+		/// <para> Ask if a user in in the specified group, results returns async by GSUserGroupStatus</para>
 		/// <para> returns false if we're not connected to the steam servers and thus cannot ask</para>
 		/// </summary>
-		public static bool RequestUserGroupStatus(CSteamID steamIDUser, CSteamID steamIDGroup) {
+		public static bool RequestUserGroupStatus(SteamId steamIDUser, SteamId steamIDGroup) {
 			InteropHelp.TestIfAvailableGameServer();
 			return NativeMethods.ISteamGameServer_RequestUserGroupStatus(steamIDUser, steamIDGroup);
 		}
@@ -363,9 +363,9 @@ namespace Steamworks {
 			NativeMethods.ISteamGameServer_GetGameplayStats();
 		}
 
-		public static SteamAPICall_t GetServerReputation() {
+		public static SteamAPICall GetServerReputation() {
 			InteropHelp.TestIfAvailableGameServer();
-			return (SteamAPICall_t)NativeMethods.ISteamGameServer_GetServerReputation();
+			return (SteamAPICall)NativeMethods.ISteamGameServer_GetServerReputation();
 		}
 
 		/// <summary>
@@ -402,9 +402,9 @@ namespace Steamworks {
 		/// <para> It returns the length of the packet it wants to send, or 0 if there are no more packets to send.</para>
 		/// <para> Call this each frame until it returns 0.</para>
 		/// </summary>
-		public static int GetNextOutgoingPacket(byte[] pOut, int cbMaxOut, out uint pNetAdr, out ushort pPort) {
+		public static int GetNextOutgoingPacket(byte[] pOut, int MaxOut, out uint pNetAdr, out ushort pPort) {
 			InteropHelp.TestIfAvailableGameServer();
-			return NativeMethods.ISteamGameServer_GetNextOutgoingPacket(pOut, cbMaxOut, out pNetAdr, out pPort);
+			return NativeMethods.ISteamGameServer_GetNextOutgoingPacket(pOut, MaxOut, out pNetAdr, out pPort);
 		}
 
 		/// <summary>
@@ -438,17 +438,17 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> associate this game server with this clan for the purposes of computing player compat</para>
 		/// </summary>
-		public static SteamAPICall_t AssociateWithClan(CSteamID steamIDClan) {
+		public static SteamAPICall AssociateWithClan(SteamId steamIDClan) {
 			InteropHelp.TestIfAvailableGameServer();
-			return (SteamAPICall_t)NativeMethods.ISteamGameServer_AssociateWithClan(steamIDClan);
+			return (SteamAPICall)NativeMethods.ISteamGameServer_AssociateWithClan(steamIDClan);
 		}
 
 		/// <summary>
 		/// <para> ask if any of the current players dont want to play with this new player - or vice versa</para>
 		/// </summary>
-		public static SteamAPICall_t ComputeNewPlayerCompatibility(CSteamID steamIDNewPlayer) {
+		public static SteamAPICall ComputeNewPlayerCompatibility(SteamId steamIDNewPlayer) {
 			InteropHelp.TestIfAvailableGameServer();
-			return (SteamAPICall_t)NativeMethods.ISteamGameServer_ComputeNewPlayerCompatibility(steamIDNewPlayer);
+			return (SteamAPICall)NativeMethods.ISteamGameServer_ComputeNewPlayerCompatibility(steamIDNewPlayer);
 		}
 	}
 }

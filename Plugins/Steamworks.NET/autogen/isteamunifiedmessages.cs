@@ -9,7 +9,7 @@ namespace Steamworks {
 	public static class SteamUnifiedMessages {
 		/// <summary>
 		/// <para> Sends a service method (in binary serialized form) using the Steam Client.</para>
-		/// <para> Returns a unified message handle (k_InvalidUnifiedMessageHandle if could not send the message).</para>
+		/// <para> Returns a unified message handle (InvalidUnifiedMessageHandle if could not send the message).</para>
 		/// </summary>
 		public static ClientUnifiedMessageHandle SendMethod(string pchServiceMethod, byte[] pRequestBuffer, uint unRequestBufferSize, ulong unContext) {
 			InteropHelp.TestIfAvailableClient();

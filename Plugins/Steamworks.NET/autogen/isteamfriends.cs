@@ -23,15 +23,15 @@ namespace Steamworks {
 
 		/// <summary>
 		/// <para> Sets the player name, stores it on the server and publishes the changes to all friends who are online.</para>
-		/// <para> Changes take place locally immediately, and a PersonaStateChange_t is posted, presuming success.</para>
-		/// <para> The final results are available through the return value SteamAPICall_t, using SetPersonaNameResponse_t.</para>
-		/// <para> If the name change fails to happen on the server, then an additional global PersonaStateChange_t will be posted</para>
-		/// <para> to change the name back, in addition to the SetPersonaNameResponse_t callback.</para>
+		/// <para> Changes take place locally immediately, and a PersonaStateChange is posted, presuming success.</para>
+		/// <para> The final results are available through the return value SteamAPICall, using SetPersonaNameResponse.</para>
+		/// <para> If the name change fails to happen on the server, then an additional global PersonaStateChange will be posted</para>
+		/// <para> to change the name back, in addition to the SetPersonaNameResponse callback.</para>
 		/// </summary>
-		public static SteamAPICall_t SetPersonaName(string pchPersonaName) {
+		public static SteamAPICall SetPersonaName(string pchPersonaName) {
 			InteropHelp.TestIfAvailableClient();
 			using (var pchPersonaName2 = new InteropHelp.UTF8StringHandle(pchPersonaName)) {
-				return (SteamAPICall_t)NativeMethods.ISteamFriends_SetPersonaName(pchPersonaName2);
+				return (SteamAPICall)NativeMethods.ISteamFriends_SetPersonaName(pchPersonaName2);
 			}
 		}
 
@@ -45,7 +45,7 @@ namespace Steamworks {
 
 		/// <summary>
 		/// <para> friend iteration</para>
-		/// <para> takes a set of k_EFriendFlags, and returns the number of users the client knows about who meet that criteria</para>
+		/// <para> takes a set of EFriendFlags, and returns the number of users the client knows about who meet that criteria</para>
 		/// <para> then GetFriendByIndex() can then be used to return the id's of each of those users</para>
 		/// </summary>
 		public static int GetFriendCount(EFriendFlags iFriendFlags) {
@@ -57,17 +57,17 @@ namespace Steamworks {
 		/// <para> returns the steamID of a user</para>
 		/// <para> iFriend is a index of range [0, GetFriendCount())</para>
 		/// <para> iFriendsFlags must be the same value as used in GetFriendCount()</para>
-		/// <para> the returned CSteamID can then be used by all the functions below to access details about the user</para>
+		/// <para> the returned SteamId can then be used by all the functions below to access details about the user</para>
 		/// </summary>
-		public static CSteamID GetFriendByIndex(int iFriend, EFriendFlags iFriendFlags) {
+		public static SteamId GetFriendByIndex(int iFriend, EFriendFlags iFriendFlags) {
 			InteropHelp.TestIfAvailableClient();
-			return (CSteamID)NativeMethods.ISteamFriends_GetFriendByIndex(iFriend, iFriendFlags);
+			return (SteamId)NativeMethods.ISteamFriends_GetFriendByIndex(iFriend, iFriendFlags);
 		}
 
 		/// <summary>
 		/// <para> returns a relationship to a user</para>
 		/// </summary>
-		public static EFriendRelationship GetFriendRelationship(CSteamID steamIDFriend) {
+		public static EFriendRelationship GetFriendRelationship(SteamId steamIDFriend) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamFriends_GetFriendRelationship(steamIDFriend);
 		}
@@ -76,7 +76,7 @@ namespace Steamworks {
 		/// <para> returns the current status of the specified user</para>
 		/// <para> this will only be known by the local user if steamIDFriend is in their friends list; on the same game server; in a chat room or lobby; or in a small group with the local user</para>
 		/// </summary>
-		public static EPersonaState GetFriendPersonaState(CSteamID steamIDFriend) {
+		public static EPersonaState GetFriendPersonaState(SteamId steamIDFriend) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamFriends_GetFriendPersonaState(steamIDFriend);
 		}
@@ -86,7 +86,7 @@ namespace Steamworks {
 		/// <para> same rules as GetFriendPersonaState() apply as to whether or not the user knowns the name of the other user</para>
 		/// <para> note that on first joining a lobby, chat room or game server the local user will not known the name of the other users automatically; that information will arrive asyncronously</para>
 		/// </summary>
-		public static string GetFriendPersonaName(CSteamID steamIDFriend) {
+		public static string GetFriendPersonaName(SteamId steamIDFriend) {
 			InteropHelp.TestIfAvailableClient();
 			return InteropHelp.PtrToStringUTF8(NativeMethods.ISteamFriends_GetFriendPersonaName(steamIDFriend));
 		}
@@ -94,7 +94,7 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> returns true if the friend is actually in a game, and fills in pFriendGameInfo with an extra details</para>
 		/// </summary>
-		public static bool GetFriendGamePlayed(CSteamID steamIDFriend, out FriendGameInfo_t pFriendGameInfo) {
+		public static bool GetFriendGamePlayed(SteamId steamIDFriend, out FriendGameInfo pFriendGameInfo) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamFriends_GetFriendGamePlayed(steamIDFriend, out pFriendGameInfo);
 		}
@@ -102,7 +102,7 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> accesses old friends names - returns an empty string when their are no more items in the history</para>
 		/// </summary>
-		public static string GetFriendPersonaNameHistory(CSteamID steamIDFriend, int iPersonaName) {
+		public static string GetFriendPersonaNameHistory(SteamId steamIDFriend, int iPersonaName) {
 			InteropHelp.TestIfAvailableClient();
 			return InteropHelp.PtrToStringUTF8(NativeMethods.ISteamFriends_GetFriendPersonaNameHistory(steamIDFriend, iPersonaName));
 		}
@@ -110,7 +110,7 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> friends steam level</para>
 		/// </summary>
-		public static int GetFriendSteamLevel(CSteamID steamIDFriend) {
+		public static int GetFriendSteamLevel(SteamId steamIDFriend) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamFriends_GetFriendSteamLevel(steamIDFriend);
 		}
@@ -118,7 +118,7 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> Returns nickname the current user has set for the specified player. Returns NULL if the no nickname has been set for that player.</para>
 		/// </summary>
-		public static string GetPlayerNickname(CSteamID steamIDPlayer) {
+		public static string GetPlayerNickname(SteamId steamIDPlayer) {
 			InteropHelp.TestIfAvailableClient();
 			return InteropHelp.PtrToStringUTF8(NativeMethods.ISteamFriends_GetPlayerNickname(steamIDPlayer));
 		}
@@ -133,17 +133,17 @@ namespace Steamworks {
 		}
 
 		/// <summary>
-		/// <para> returns the friends group ID for the given index (invalid indices return k_FriendsGroupID_Invalid)</para>
+		/// <para> returns the friends group ID for the given index (invalid indices return FriendsGroupID_Invalid)</para>
 		/// </summary>
-		public static FriendsGroupID_t GetFriendsGroupIDByIndex(int iFG) {
+		public static FriendsGroupID GetFriendsGroupIDByIndex(int iFG) {
 			InteropHelp.TestIfAvailableClient();
-			return (FriendsGroupID_t)NativeMethods.ISteamFriends_GetFriendsGroupIDByIndex(iFG);
+			return (FriendsGroupID)NativeMethods.ISteamFriends_GetFriendsGroupIDByIndex(iFG);
 		}
 
 		/// <summary>
 		/// <para> returns the name for the given friends group (NULL in the case of invalid friends group IDs)</para>
 		/// </summary>
-		public static string GetFriendsGroupName(FriendsGroupID_t friendsGroupID) {
+		public static string GetFriendsGroupName(FriendsGroupID friendsGroupID) {
 			InteropHelp.TestIfAvailableClient();
 			return InteropHelp.PtrToStringUTF8(NativeMethods.ISteamFriends_GetFriendsGroupName(friendsGroupID));
 		}
@@ -151,7 +151,7 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> returns the number of members in a given friends group</para>
 		/// </summary>
-		public static int GetFriendsGroupMembersCount(FriendsGroupID_t friendsGroupID) {
+		public static int GetFriendsGroupMembersCount(FriendsGroupID friendsGroupID) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamFriends_GetFriendsGroupMembersCount(friendsGroupID);
 		}
@@ -159,16 +159,16 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> gets up to nMembersCount members of the given friends group, if fewer exist than requested those positions' SteamIDs will be invalid</para>
 		/// </summary>
-		public static void GetFriendsGroupMembersList(FriendsGroupID_t friendsGroupID, CSteamID[] pOutSteamIDMembers, int nMembersCount) {
+		public static void GetFriendsGroupMembersList(FriendsGroupID friendsGroupID, SteamId[] pOutSteamIDMembers, int nMembersCount) {
 			InteropHelp.TestIfAvailableClient();
 			NativeMethods.ISteamFriends_GetFriendsGroupMembersList(friendsGroupID, pOutSteamIDMembers, nMembersCount);
 		}
 
 		/// <summary>
 		/// <para> returns true if the specified user meets any of the criteria specified in iFriendFlags</para>
-		/// <para> iFriendFlags can be the union (binary or, |) of one or more k_EFriendFlags values</para>
+		/// <para> iFriendFlags can be the union (binary or, |) of one or more EFriendFlags values</para>
 		/// </summary>
-		public static bool HasFriend(CSteamID steamIDFriend, EFriendFlags iFriendFlags) {
+		public static bool HasFriend(SteamId steamIDFriend, EFriendFlags iFriendFlags) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamFriends_HasFriend(steamIDFriend, iFriendFlags);
 		}
@@ -181,17 +181,17 @@ namespace Steamworks {
 			return NativeMethods.ISteamFriends_GetClanCount();
 		}
 
-		public static CSteamID GetClanByIndex(int iClan) {
+		public static SteamId GetClanByIndex(int iClan) {
 			InteropHelp.TestIfAvailableClient();
-			return (CSteamID)NativeMethods.ISteamFriends_GetClanByIndex(iClan);
+			return (SteamId)NativeMethods.ISteamFriends_GetClanByIndex(iClan);
 		}
 
-		public static string GetClanName(CSteamID steamIDClan) {
+		public static string GetClanName(SteamId steamIDClan) {
 			InteropHelp.TestIfAvailableClient();
 			return InteropHelp.PtrToStringUTF8(NativeMethods.ISteamFriends_GetClanName(steamIDClan));
 		}
 
-		public static string GetClanTag(CSteamID steamIDClan) {
+		public static string GetClanTag(SteamId steamIDClan) {
 			InteropHelp.TestIfAvailableClient();
 			return InteropHelp.PtrToStringUTF8(NativeMethods.ISteamFriends_GetClanTag(steamIDClan));
 		}
@@ -199,7 +199,7 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> returns the most recent information we have about what's happening in a clan</para>
 		/// </summary>
-		public static bool GetClanActivityCounts(CSteamID steamIDClan, out int pnOnline, out int pnInGame, out int pnChatting) {
+		public static bool GetClanActivityCounts(SteamId steamIDClan, out int pnOnline, out int pnInGame, out int pnChatting) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamFriends_GetClanActivityCounts(steamIDClan, out pnOnline, out pnInGame, out pnChatting);
 		}
@@ -207,9 +207,9 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> for clans a user is a member of, they will have reasonably up-to-date information, but for others you'll have to download the info to have the latest</para>
 		/// </summary>
-		public static SteamAPICall_t DownloadClanActivityCounts(CSteamID[] psteamIDClans, int cClansToRequest) {
+		public static SteamAPICall DownloadClanActivityCounts(SteamId[] psteamIDClans, int cClansToRequest) {
 			InteropHelp.TestIfAvailableClient();
-			return (SteamAPICall_t)NativeMethods.ISteamFriends_DownloadClanActivityCounts(psteamIDClans, cClansToRequest);
+			return (SteamAPICall)NativeMethods.ISteamFriends_DownloadClanActivityCounts(psteamIDClans, cClansToRequest);
 		}
 
 		/// <summary>
@@ -218,20 +218,20 @@ namespace Steamworks {
 		/// <para> note that the current user must be in a lobby to retrieve CSteamIDs of other users in that lobby</para>
 		/// <para> steamIDSource can be the steamID of a group, game server, lobby or chat room</para>
 		/// </summary>
-		public static int GetFriendCountFromSource(CSteamID steamIDSource) {
+		public static int GetFriendCountFromSource(SteamId steamIDSource) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamFriends_GetFriendCountFromSource(steamIDSource);
 		}
 
-		public static CSteamID GetFriendFromSourceByIndex(CSteamID steamIDSource, int iFriend) {
+		public static SteamId GetFriendFromSourceByIndex(SteamId steamIDSource, int iFriend) {
 			InteropHelp.TestIfAvailableClient();
-			return (CSteamID)NativeMethods.ISteamFriends_GetFriendFromSourceByIndex(steamIDSource, iFriend);
+			return (SteamId)NativeMethods.ISteamFriends_GetFriendFromSourceByIndex(steamIDSource, iFriend);
 		}
 
 		/// <summary>
 		/// <para> returns true if the local user can see that steamIDUser is a member or in steamIDSource</para>
 		/// </summary>
-		public static bool IsUserInSource(CSteamID steamIDUser, CSteamID steamIDSource) {
+		public static bool IsUserInSource(SteamId steamIDUser, SteamId steamIDSource) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamFriends_IsUserInSource(steamIDUser, steamIDSource);
 		}
@@ -239,7 +239,7 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> User is in a game pressing the talk button (will suppress the microphone for all voice comms from the Steam friends UI)</para>
 		/// </summary>
-		public static void SetInGameVoiceSpeaking(CSteamID steamIDUser, bool bSpeaking) {
+		public static void SetInGameVoiceSpeaking(SteamId steamIDUser, bool bSpeaking) {
 			InteropHelp.TestIfAvailableClient();
 			NativeMethods.ISteamFriends_SetInGameVoiceSpeaking(steamIDUser, bSpeaking);
 		}
@@ -268,7 +268,7 @@ namespace Steamworks {
 		/// <para>		"friendrequestaccept" - opens the overlay in minimal mode prompting the user to accept an incoming friend invite</para>
 		/// <para>		"friendrequestignore" - opens the overlay in minimal mode prompting the user to ignore an incoming friend invite</para>
 		/// </summary>
-		public static void ActivateGameOverlayToUser(string pchDialog, CSteamID steamID) {
+		public static void ActivateGameOverlayToUser(string pchDialog, SteamId steamID) {
 			InteropHelp.TestIfAvailableClient();
 			using (var pchDialog2 = new InteropHelp.UTF8StringHandle(pchDialog)) {
 				NativeMethods.ISteamFriends_ActivateGameOverlayToUser(pchDialog2, steamID);
@@ -298,7 +298,7 @@ namespace Steamworks {
 		/// <para> Mark a target user as 'played with'. This is a client-side only feature that requires that the calling user is</para>
 		/// <para> in game</para>
 		/// </summary>
-		public static void SetPlayedWith(CSteamID steamIDUserPlayedWith) {
+		public static void SetPlayedWith(SteamId steamIDUserPlayedWith) {
 			InteropHelp.TestIfAvailableClient();
 			NativeMethods.ISteamFriends_SetPlayedWith(steamIDUserPlayedWith);
 		}
@@ -306,7 +306,7 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> activates game overlay to open the invite dialog. Invitations will be sent for the provided lobby.</para>
 		/// </summary>
-		public static void ActivateGameOverlayInviteDialog(CSteamID steamIDLobby) {
+		public static void ActivateGameOverlayInviteDialog(SteamId steamIDLobby) {
 			InteropHelp.TestIfAvailableClient();
 			NativeMethods.ISteamFriends_ActivateGameOverlayInviteDialog(steamIDLobby);
 		}
@@ -314,7 +314,7 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> gets the small (32x32) avatar of the current user, which is a handle to be used in IClientUtils::GetImageRGBA(), or 0 if none set</para>
 		/// </summary>
-		public static int GetSmallFriendAvatar(CSteamID steamIDFriend) {
+		public static int GetSmallFriendAvatar(SteamId steamIDFriend) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamFriends_GetSmallFriendAvatar(steamIDFriend);
 		}
@@ -322,16 +322,16 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> gets the medium (64x64) avatar of the current user, which is a handle to be used in IClientUtils::GetImageRGBA(), or 0 if none set</para>
 		/// </summary>
-		public static int GetMediumFriendAvatar(CSteamID steamIDFriend) {
+		public static int GetMediumFriendAvatar(SteamId steamIDFriend) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamFriends_GetMediumFriendAvatar(steamIDFriend);
 		}
 
 		/// <summary>
 		/// <para> gets the large (184x184) avatar of the current user, which is a handle to be used in IClientUtils::GetImageRGBA(), or 0 if none set</para>
-		/// <para> returns -1 if this image has yet to be loaded, in this case wait for a AvatarImageLoaded_t callback and then call this again</para>
+		/// <para> returns -1 if this image has yet to be loaded, in this case wait for a AvatarImageLoaded callback and then call this again</para>
 		/// </summary>
-		public static int GetLargeFriendAvatar(CSteamID steamIDFriend) {
+		public static int GetLargeFriendAvatar(SteamId steamIDFriend) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamFriends_GetLargeFriendAvatar(steamIDFriend);
 		}
@@ -340,40 +340,40 @@ namespace Steamworks {
 		/// <para> requests information about a user - persona name &amp; avatar</para>
 		/// <para> if bRequireNameOnly is set, then the avatar of a user isn't downloaded</para>
 		/// <para> - it's a lot slower to download avatars and churns the local cache, so if you don't need avatars, don't request them</para>
-		/// <para> if returns true, it means that data is being requested, and a PersonaStateChanged_t callback will be posted when it's retrieved</para>
+		/// <para> if returns true, it means that data is being requested, and a PersonaStateChanged callback will be posted when it's retrieved</para>
 		/// <para> if returns false, it means that we already have all the details about that user, and functions can be called immediately</para>
 		/// </summary>
-		public static bool RequestUserInformation(CSteamID steamIDUser, bool bRequireNameOnly) {
+		public static bool RequestUserInformation(SteamId steamIDUser, bool bRequireNameOnly) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamFriends_RequestUserInformation(steamIDUser, bRequireNameOnly);
 		}
 
 		/// <summary>
 		/// <para> requests information about a clan officer list</para>
-		/// <para> when complete, data is returned in ClanOfficerListResponse_t call result</para>
+		/// <para> when complete, data is returned in ClanOfficerListResponse call result</para>
 		/// <para> this makes available the calls below</para>
 		/// <para> you can only ask about clans that a user is a member of</para>
 		/// <para> note that this won't download avatars automatically; if you get an officer,</para>
 		/// <para> and no avatar image is available, call RequestUserInformation( steamID, false ) to download the avatar</para>
 		/// </summary>
-		public static SteamAPICall_t RequestClanOfficerList(CSteamID steamIDClan) {
+		public static SteamAPICall RequestClanOfficerList(SteamId steamIDClan) {
 			InteropHelp.TestIfAvailableClient();
-			return (SteamAPICall_t)NativeMethods.ISteamFriends_RequestClanOfficerList(steamIDClan);
+			return (SteamAPICall)NativeMethods.ISteamFriends_RequestClanOfficerList(steamIDClan);
 		}
 
 		/// <summary>
 		/// <para> iteration of clan officers - can only be done when a RequestClanOfficerList() call has completed</para>
 		/// <para> returns the steamID of the clan owner</para>
 		/// </summary>
-		public static CSteamID GetClanOwner(CSteamID steamIDClan) {
+		public static SteamId GetClanOwner(SteamId steamIDClan) {
 			InteropHelp.TestIfAvailableClient();
-			return (CSteamID)NativeMethods.ISteamFriends_GetClanOwner(steamIDClan);
+			return (SteamId)NativeMethods.ISteamFriends_GetClanOwner(steamIDClan);
 		}
 
 		/// <summary>
 		/// <para> returns the number of officers in a clan (including the owner)</para>
 		/// </summary>
-		public static int GetClanOfficerCount(CSteamID steamIDClan) {
+		public static int GetClanOfficerCount(SteamId steamIDClan) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamFriends_GetClanOfficerCount(steamIDClan);
 		}
@@ -381,9 +381,9 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> returns the steamID of a clan officer, by index, of range [0,GetClanOfficerCount)</para>
 		/// </summary>
-		public static CSteamID GetClanOfficerByIndex(CSteamID steamIDClan, int iOfficer) {
+		public static SteamId GetClanOfficerByIndex(SteamId steamIDClan, int iOfficer) {
 			InteropHelp.TestIfAvailableClient();
-			return (CSteamID)NativeMethods.ISteamFriends_GetClanOfficerByIndex(steamIDClan, iOfficer);
+			return (SteamId)NativeMethods.ISteamFriends_GetClanOfficerByIndex(steamIDClan, iOfficer);
 		}
 
 		/// <summary>
@@ -421,19 +421,19 @@ namespace Steamworks {
 			NativeMethods.ISteamFriends_ClearRichPresence();
 		}
 
-		public static string GetFriendRichPresence(CSteamID steamIDFriend, string pchKey) {
+		public static string GetFriendRichPresence(SteamId steamIDFriend, string pchKey) {
 			InteropHelp.TestIfAvailableClient();
 			using (var pchKey2 = new InteropHelp.UTF8StringHandle(pchKey)) {
 				return InteropHelp.PtrToStringUTF8(NativeMethods.ISteamFriends_GetFriendRichPresence(steamIDFriend, pchKey2));
 			}
 		}
 
-		public static int GetFriendRichPresenceKeyCount(CSteamID steamIDFriend) {
+		public static int GetFriendRichPresenceKeyCount(SteamId steamIDFriend) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamFriends_GetFriendRichPresenceKeyCount(steamIDFriend);
 		}
 
-		public static string GetFriendRichPresenceKeyByIndex(CSteamID steamIDFriend, int iKey) {
+		public static string GetFriendRichPresenceKeyByIndex(SteamId steamIDFriend, int iKey) {
 			InteropHelp.TestIfAvailableClient();
 			return InteropHelp.PtrToStringUTF8(NativeMethods.ISteamFriends_GetFriendRichPresenceKeyByIndex(steamIDFriend, iKey));
 		}
@@ -441,7 +441,7 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> Requests rich presence for a specific user.</para>
 		/// </summary>
-		public static void RequestFriendRichPresence(CSteamID steamIDFriend) {
+		public static void RequestFriendRichPresence(SteamId steamIDFriend) {
 			InteropHelp.TestIfAvailableClient();
 			NativeMethods.ISteamFriends_RequestFriendRichPresence(steamIDFriend);
 		}
@@ -449,10 +449,10 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> rich invite support</para>
 		/// <para> if the target accepts the invite, the pchConnectString gets added to the command-line for launching the game</para>
-		/// <para> if the game is already running, a GameRichPresenceJoinRequested_t callback is posted containing the connect string</para>
+		/// <para> if the game is already running, a GameRichPresenceJoinRequested callback is posted containing the connect string</para>
 		/// <para> invites can only be sent to friends</para>
 		/// </summary>
-		public static bool InviteUserToGame(CSteamID steamIDFriend, string pchConnectString) {
+		public static bool InviteUserToGame(SteamId steamIDFriend, string pchConnectString) {
 			InteropHelp.TestIfAvailableClient();
 			using (var pchConnectString2 = new InteropHelp.UTF8StringHandle(pchConnectString)) {
 				return NativeMethods.ISteamFriends_InviteUserToGame(steamIDFriend, pchConnectString2);
@@ -469,17 +469,17 @@ namespace Steamworks {
 			return NativeMethods.ISteamFriends_GetCoplayFriendCount();
 		}
 
-		public static CSteamID GetCoplayFriend(int iCoplayFriend) {
+		public static SteamId GetCoplayFriend(int iCoplayFriend) {
 			InteropHelp.TestIfAvailableClient();
-			return (CSteamID)NativeMethods.ISteamFriends_GetCoplayFriend(iCoplayFriend);
+			return (SteamId)NativeMethods.ISteamFriends_GetCoplayFriend(iCoplayFriend);
 		}
 
-		public static int GetFriendCoplayTime(CSteamID steamIDFriend) {
+		public static int GetFriendCoplayTime(SteamId steamIDFriend) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamFriends_GetFriendCoplayTime(steamIDFriend);
 		}
 
-		public static AppId GetFriendCoplayGame(CSteamID steamIDFriend) {
+		public static AppId GetFriendCoplayGame(SteamId steamIDFriend) {
 			InteropHelp.TestIfAvailableClient();
 			return (AppId)NativeMethods.ISteamFriends_GetFriendCoplayGame(steamIDFriend);
 		}
@@ -490,43 +490,43 @@ namespace Steamworks {
 		/// <para> the behavior is somewhat sophisticated, because the user may or may not be already in the group chat from outside the game or in the overlay</para>
 		/// <para> use ActivateGameOverlayToUser( "chat", steamIDClan ) to open the in-game overlay version of the chat</para>
 		/// </summary>
-		public static SteamAPICall_t JoinClanChatRoom(CSteamID steamIDClan) {
+		public static SteamAPICall JoinClanChatRoom(SteamId steamIDClan) {
 			InteropHelp.TestIfAvailableClient();
-			return (SteamAPICall_t)NativeMethods.ISteamFriends_JoinClanChatRoom(steamIDClan);
+			return (SteamAPICall)NativeMethods.ISteamFriends_JoinClanChatRoom(steamIDClan);
 		}
 
-		public static bool LeaveClanChatRoom(CSteamID steamIDClan) {
+		public static bool LeaveClanChatRoom(SteamId steamIDClan) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamFriends_LeaveClanChatRoom(steamIDClan);
 		}
 
-		public static int GetClanChatMemberCount(CSteamID steamIDClan) {
+		public static int GetClanChatMemberCount(SteamId steamIDClan) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamFriends_GetClanChatMemberCount(steamIDClan);
 		}
 
-		public static CSteamID GetChatMemberByIndex(CSteamID steamIDClan, int iUser) {
+		public static SteamId GetChatMemberByIndex(SteamId steamIDClan, int iUser) {
 			InteropHelp.TestIfAvailableClient();
-			return (CSteamID)NativeMethods.ISteamFriends_GetChatMemberByIndex(steamIDClan, iUser);
+			return (SteamId)NativeMethods.ISteamFriends_GetChatMemberByIndex(steamIDClan, iUser);
 		}
 
-		public static bool SendClanChatMessage(CSteamID steamIDClanChat, string pchText) {
+		public static bool SendClanChatMessage(SteamId steamIDClanChat, string pchText) {
 			InteropHelp.TestIfAvailableClient();
 			using (var pchText2 = new InteropHelp.UTF8StringHandle(pchText)) {
 				return NativeMethods.ISteamFriends_SendClanChatMessage(steamIDClanChat, pchText2);
 			}
 		}
 
-		public static int GetClanChatMessage(CSteamID steamIDClanChat, int iMessage, out string prgchText, int cchTextMax, out EChatEntryType peChatEntryType, out CSteamID psteamidChatter) {
+		public static int GetClanChatMessage(SteamId steamIDClanChat, int iMessage, out string prgchText, int TextMax, out EChatEntryType peChatEntryType, out SteamId psteamidChatter) {
 			InteropHelp.TestIfAvailableClient();
-			var prgchText2 = Marshal.AllocHGlobal(cchTextMax);
-			var ret = NativeMethods.ISteamFriends_GetClanChatMessage(steamIDClanChat, iMessage, prgchText2, cchTextMax, out peChatEntryType, out psteamidChatter);
+			var prgchText2 = Marshal.AllocHGlobal(TextMax);
+			var ret = NativeMethods.ISteamFriends_GetClanChatMessage(steamIDClanChat, iMessage, prgchText2, TextMax, out peChatEntryType, out psteamidChatter);
 			prgchText = ret != 0 ? InteropHelp.PtrToStringUTF8(prgchText2) : null;
 			Marshal.FreeHGlobal(prgchText2);
 			return ret;
 		}
 
-		public static bool IsClanChatAdmin(CSteamID steamIDClanChat, CSteamID steamIDUser) {
+		public static bool IsClanChatAdmin(SteamId steamIDClanChat, SteamId steamIDUser) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamFriends_IsClanChatAdmin(steamIDClanChat, steamIDUser);
 		}
@@ -534,17 +534,17 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> interact with the Steam (game overlay / desktop)</para>
 		/// </summary>
-		public static bool IsClanChatWindowOpenInSteam(CSteamID steamIDClanChat) {
+		public static bool IsClanChatWindowOpenInSteam(SteamId steamIDClanChat) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamFriends_IsClanChatWindowOpenInSteam(steamIDClanChat);
 		}
 
-		public static bool OpenClanChatWindowInSteam(CSteamID steamIDClanChat) {
+		public static bool OpenClanChatWindowInSteam(SteamId steamIDClanChat) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamFriends_OpenClanChatWindowInSteam(steamIDClanChat);
 		}
 
-		public static bool CloseClanChatWindowInSteam(CSteamID steamIDClanChat) {
+		public static bool CloseClanChatWindowInSteam(SteamId steamIDClanChat) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamFriends_CloseClanChatWindowInSteam(steamIDClanChat);
 		}
@@ -558,17 +558,17 @@ namespace Steamworks {
 			return NativeMethods.ISteamFriends_SetListenForFriendsMessages(bInterceptEnabled);
 		}
 
-		public static bool ReplyToFriendMessage(CSteamID steamIDFriend, string pchMsgToSend) {
+		public static bool ReplyToFriendMessage(SteamId steamIDFriend, string pchMsgToSend) {
 			InteropHelp.TestIfAvailableClient();
 			using (var pchMsgToSend2 = new InteropHelp.UTF8StringHandle(pchMsgToSend)) {
 				return NativeMethods.ISteamFriends_ReplyToFriendMessage(steamIDFriend, pchMsgToSend2);
 			}
 		}
 
-		public static int GetFriendMessage(CSteamID steamIDFriend, int iMessageID, out string pvData, int cubData, out EChatEntryType peChatEntryType) {
+		public static int GetFriendMessage(SteamId steamIDFriend, int iMessageID, out string pvData, int Data, out EChatEntryType peChatEntryType) {
 			InteropHelp.TestIfAvailableClient();
-			var pvData2 = Marshal.AllocHGlobal(cubData);
-			var ret = NativeMethods.ISteamFriends_GetFriendMessage(steamIDFriend, iMessageID, pvData2, cubData, out peChatEntryType);
+			var pvData2 = Marshal.AllocHGlobal(Data);
+			var ret = NativeMethods.ISteamFriends_GetFriendMessage(steamIDFriend, iMessageID, pvData2, Data, out peChatEntryType);
 			pvData = ret != 0 ? InteropHelp.PtrToStringUTF8(pvData2) : null;
 			Marshal.FreeHGlobal(pvData2);
 			return ret;
@@ -577,19 +577,19 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> following apis</para>
 		/// </summary>
-		public static SteamAPICall_t GetFollowerCount(CSteamID steamID) {
+		public static SteamAPICall GetFollowerCount(SteamId steamID) {
 			InteropHelp.TestIfAvailableClient();
-			return (SteamAPICall_t)NativeMethods.ISteamFriends_GetFollowerCount(steamID);
+			return (SteamAPICall)NativeMethods.ISteamFriends_GetFollowerCount(steamID);
 		}
 
-		public static SteamAPICall_t IsFollowing(CSteamID steamID) {
+		public static SteamAPICall IsFollowing(SteamId steamID) {
 			InteropHelp.TestIfAvailableClient();
-			return (SteamAPICall_t)NativeMethods.ISteamFriends_IsFollowing(steamID);
+			return (SteamAPICall)NativeMethods.ISteamFriends_IsFollowing(steamID);
 		}
 
-		public static SteamAPICall_t EnumerateFollowingList(uint unStartIndex) {
+		public static SteamAPICall EnumerateFollowingList(uint unStartIndex) {
 			InteropHelp.TestIfAvailableClient();
-			return (SteamAPICall_t)NativeMethods.ISteamFriends_EnumerateFollowingList(unStartIndex);
+			return (SteamAPICall)NativeMethods.ISteamFriends_EnumerateFollowingList(unStartIndex);
 		}
 	}
 }

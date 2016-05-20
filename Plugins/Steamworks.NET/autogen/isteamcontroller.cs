@@ -31,10 +31,10 @@ namespace Steamworks {
 
 		/// <summary>
 		/// <para> Enumerate currently connected controllers</para>
-		/// <para> handlesOut should point to a STEAM_CONTROLLER_MAX_COUNT sized array of ControllerHandle_t handles</para>
+		/// <para> handlesOut should point to a STEAM_CONTROLLER_MAX_COUNT sized array of ControllerHandle handles</para>
 		/// <para> Returns the number of handles written to handlesOut</para>
 		/// </summary>
-		public static int GetConnectedControllers(ControllerHandle_t[] handlesOut) {
+		public static int GetConnectedControllers(ControllerHandle[] handlesOut) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamController_GetConnectedControllers(handlesOut);
 		}
@@ -43,7 +43,7 @@ namespace Steamworks {
 		/// <para> Invokes the Steam overlay and brings up the binding screen</para>
 		/// <para> Returns false is overlay is disabled / unavailable, or the user is not in Big Picture mode</para>
 		/// </summary>
-		public static bool ShowBindingPanel(ControllerHandle_t controllerHandle) {
+		public static bool ShowBindingPanel(ControllerHandle controllerHandle) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamController_ShowBindingPanel(controllerHandle);
 		}
@@ -52,10 +52,10 @@ namespace Steamworks {
 		/// <para> ACTION SETS</para>
 		/// <para> Lookup the handle for an Action Set. Best to do this once on startup, and store the handles for all future API calls.</para>
 		/// </summary>
-		public static ControllerActionSetHandle_t GetActionSetHandle(string pszActionSetName) {
+		public static ControllerActionSetHandle GetActionSetHandle(string pszActionSetName) {
 			InteropHelp.TestIfAvailableClient();
 			using (var pszActionSetName2 = new InteropHelp.UTF8StringHandle(pszActionSetName)) {
-				return (ControllerActionSetHandle_t)NativeMethods.ISteamController_GetActionSetHandle(pszActionSetName2);
+				return (ControllerActionSetHandle)NativeMethods.ISteamController_GetActionSetHandle(pszActionSetName2);
 			}
 		}
 
@@ -64,31 +64,31 @@ namespace Steamworks {
 		/// <para> This is cheap, and can be safely called repeatedly. It's often easier to repeatedly call it in</para>
 		/// <para> your state loops, instead of trying to place it in all of your state transitions.</para>
 		/// </summary>
-		public static void ActivateActionSet(ControllerHandle_t controllerHandle, ControllerActionSetHandle_t actionSetHandle) {
+		public static void ActivateActionSet(ControllerHandle controllerHandle, ControllerActionSetHandle actionSetHandle) {
 			InteropHelp.TestIfAvailableClient();
 			NativeMethods.ISteamController_ActivateActionSet(controllerHandle, actionSetHandle);
 		}
 
-		public static ControllerActionSetHandle_t GetCurrentActionSet(ControllerHandle_t controllerHandle) {
+		public static ControllerActionSetHandle GetCurrentActionSet(ControllerHandle controllerHandle) {
 			InteropHelp.TestIfAvailableClient();
-			return (ControllerActionSetHandle_t)NativeMethods.ISteamController_GetCurrentActionSet(controllerHandle);
+			return (ControllerActionSetHandle)NativeMethods.ISteamController_GetCurrentActionSet(controllerHandle);
 		}
 
 		/// <summary>
 		/// <para> ACTIONS</para>
 		/// <para> Lookup the handle for a digital action. Best to do this once on startup, and store the handles for all future API calls.</para>
 		/// </summary>
-		public static ControllerDigitalActionHandle_t GetDigitalActionHandle(string pszActionName) {
+		public static ControllerDigitalActionHandle GetDigitalActionHandle(string pszActionName) {
 			InteropHelp.TestIfAvailableClient();
 			using (var pszActionName2 = new InteropHelp.UTF8StringHandle(pszActionName)) {
-				return (ControllerDigitalActionHandle_t)NativeMethods.ISteamController_GetDigitalActionHandle(pszActionName2);
+				return (ControllerDigitalActionHandle)NativeMethods.ISteamController_GetDigitalActionHandle(pszActionName2);
 			}
 		}
 
 		/// <summary>
 		/// <para> Returns the current state of the supplied digital game action</para>
 		/// </summary>
-		public static ControllerDigitalActionData_t GetDigitalActionData(ControllerHandle_t controllerHandle, ControllerDigitalActionHandle_t digitalActionHandle) {
+		public static ControllerDigitalActionData GetDigitalActionData(ControllerHandle controllerHandle, ControllerDigitalActionHandle digitalActionHandle) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamController_GetDigitalActionData(controllerHandle, digitalActionHandle);
 		}
@@ -97,7 +97,7 @@ namespace Steamworks {
 		/// <para> Get the origin(s) for a digital action within an action set. Returns the number of origins supplied in originsOut. Use this to display the appropriate on-screen prompt for the action.</para>
 		/// <para> originsOut should point to a STEAM_CONTROLLER_MAX_ORIGINS sized array of EControllerActionOrigin handles</para>
 		/// </summary>
-		public static int GetDigitalActionOrigins(ControllerHandle_t controllerHandle, ControllerActionSetHandle_t actionSetHandle, ControllerDigitalActionHandle_t digitalActionHandle, EControllerActionOrigin[] originsOut) {
+		public static int GetDigitalActionOrigins(ControllerHandle controllerHandle, ControllerActionSetHandle actionSetHandle, ControllerDigitalActionHandle digitalActionHandle, EControllerActionOrigin[] originsOut) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamController_GetDigitalActionOrigins(controllerHandle, actionSetHandle, digitalActionHandle, originsOut);
 		}
@@ -105,17 +105,17 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> Lookup the handle for an analog action. Best to do this once on startup, and store the handles for all future API calls.</para>
 		/// </summary>
-		public static ControllerAnalogActionHandle_t GetAnalogActionHandle(string pszActionName) {
+		public static ControllerAnalogActionHandle GetAnalogActionHandle(string pszActionName) {
 			InteropHelp.TestIfAvailableClient();
 			using (var pszActionName2 = new InteropHelp.UTF8StringHandle(pszActionName)) {
-				return (ControllerAnalogActionHandle_t)NativeMethods.ISteamController_GetAnalogActionHandle(pszActionName2);
+				return (ControllerAnalogActionHandle)NativeMethods.ISteamController_GetAnalogActionHandle(pszActionName2);
 			}
 		}
 
 		/// <summary>
 		/// <para> Returns the current state of these supplied analog game action</para>
 		/// </summary>
-		public static ControllerAnalogActionData_t GetAnalogActionData(ControllerHandle_t controllerHandle, ControllerAnalogActionHandle_t analogActionHandle) {
+		public static ControllerAnalogActionData GetAnalogActionData(ControllerHandle controllerHandle, ControllerAnalogActionHandle analogActionHandle) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamController_GetAnalogActionData(controllerHandle, analogActionHandle);
 		}
@@ -124,12 +124,12 @@ namespace Steamworks {
 		/// <para> Get the origin(s) for an analog action within an action set. Returns the number of origins supplied in originsOut. Use this to display the appropriate on-screen prompt for the action.</para>
 		/// <para> originsOut should point to a STEAM_CONTROLLER_MAX_ORIGINS sized array of EControllerActionOrigin handles</para>
 		/// </summary>
-		public static int GetAnalogActionOrigins(ControllerHandle_t controllerHandle, ControllerActionSetHandle_t actionSetHandle, ControllerAnalogActionHandle_t analogActionHandle, EControllerActionOrigin[] originsOut) {
+		public static int GetAnalogActionOrigins(ControllerHandle controllerHandle, ControllerActionSetHandle actionSetHandle, ControllerAnalogActionHandle analogActionHandle, EControllerActionOrigin[] originsOut) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamController_GetAnalogActionOrigins(controllerHandle, actionSetHandle, analogActionHandle, originsOut);
 		}
 
-		public static void StopAnalogActionMomentum(ControllerHandle_t controllerHandle, ControllerAnalogActionHandle_t eAction) {
+		public static void StopAnalogActionMomentum(ControllerHandle controllerHandle, ControllerAnalogActionHandle eAction) {
 			InteropHelp.TestIfAvailableClient();
 			NativeMethods.ISteamController_StopAnalogActionMomentum(controllerHandle, eAction);
 		}
@@ -137,12 +137,12 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> Trigger a haptic pulse on a controller</para>
 		/// </summary>
-		public static void TriggerHapticPulse(ControllerHandle_t controllerHandle, ESteamControllerPad eTargetPad, ushort usDurationMicroSec) {
+		public static void TriggerHapticPulse(ControllerHandle controllerHandle, ESteamControllerPad eTargetPad, ushort usDurationMicroSec) {
 			InteropHelp.TestIfAvailableClient();
 			NativeMethods.ISteamController_TriggerHapticPulse(controllerHandle, eTargetPad, usDurationMicroSec);
 		}
 
-		public static void TriggerRepeatedHapticPulse(ControllerHandle_t controllerHandle, ESteamControllerPad eTargetPad, ushort usDurationMicroSec, ushort usOffMicroSec, ushort unRepeat, uint nFlags) {
+		public static void TriggerRepeatedHapticPulse(ControllerHandle controllerHandle, ESteamControllerPad eTargetPad, ushort usDurationMicroSec, ushort usOffMicroSec, ushort unRepeat, uint nFlags) {
 			InteropHelp.TestIfAvailableClient();
 			NativeMethods.ISteamController_TriggerRepeatedHapticPulse(controllerHandle, eTargetPad, usDurationMicroSec, usOffMicroSec, unRepeat, nFlags);
 		}

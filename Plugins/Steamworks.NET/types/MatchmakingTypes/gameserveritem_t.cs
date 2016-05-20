@@ -12,7 +12,7 @@ namespace Steamworks {
 	// Purpose: Data describing a single server
 	//-----------------------------------------------------------------------------
 	[StructLayout(LayoutKind.Sequential, Size = 372, Pack = 4)]
-	public class gameserverite_t {
+	public class gameserverite {
 		public string GetGameDir() => Encoding.UTF8.GetString(_szGameDir, 0, System.Array.IndexOf<byte>(_szGameDir, 0));
 
 	    public void SetGameDir(string dir) {
@@ -43,17 +43,17 @@ namespace Steamworks {
 			_szGameTags = Encoding.UTF8.GetBytes(tags + '\0');
 		}
 
-		public servernetadr_t _NetAdr;								
+		public servernetadr _NetAdr;								
 		public int _nPing;											
 		[MarshalAs(UnmanagedType.I1)]
 		public bool _bHadSuccessfulResponse;						
 		[MarshalAs(UnmanagedType.I1)]
 		public bool _bDoNotRefresh;									  
-		[MarshalAs(UnmanagedType.ByValArray, SizeConst = Constants.k_cbMaxGameServerGameDir)]
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = Constants.MaxGameServerGameDir)]
 		private byte[] _szGameDir;										
-		[MarshalAs(UnmanagedType.ByValArray, SizeConst = Constants.k_cbMaxGameServerMapName)]
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = Constants.MaxGameServerMapName)]
 		private byte[] _szMap;												
-		[MarshalAs(UnmanagedType.ByValArray, SizeConst = Constants.k_cbMaxGameServerGameDescription)]
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = Constants.MaxGameServerGameDescription)]
 		private byte[] _szGameDescription;								
 		public uint _appId;												
 		public int _nPlayers;											
@@ -67,14 +67,14 @@ namespace Steamworks {
 		public int	_nServerVersion;									                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
 
 		// Game server name
-		[MarshalAs(UnmanagedType.ByValArray, SizeConst = Constants.k_cbMaxGameServerName)]
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = Constants.MaxGameServerName)]
 		private byte[] _szServerName;
 
 		// the tags this server exposes
-		[MarshalAs(UnmanagedType.ByValArray, SizeConst = Constants.k_cbMaxGameServerTags)]
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = Constants.MaxGameServerTags)]
 		private byte[] _szGameTags;
 
 		// steamID of the game server - invalid if it's doesn't have one (old server, or not connected to Steam)
-		public CSteamID _steamID;
+		public SteamId _steamID;
 	}
 }

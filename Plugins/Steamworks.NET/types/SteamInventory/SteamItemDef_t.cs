@@ -5,29 +5,29 @@
 // Changes to this file will be reverted when you update Steamworks.NET
 
 namespace Steamworks {
-	public struct SteamItemDef_t : System.IEquatable<SteamItemDef_t>, System.IComparable<SteamItemDef_t> {
+	public struct SteamItemDef : System.IEquatable<SteamItemDef>, System.IComparable<SteamItemDef> {
 		public int _SteamItemDef;
 
-		public SteamItemDef_t(int value) {
+		public SteamItemDef(int value) {
 			_SteamItemDef = value;
 		}
 
 		public override string ToString() => _SteamItemDef.ToString();
 
-	    public override bool Equals(object other) => other is SteamItemDef_t && this == (SteamItemDef_t)other;
+	    public override bool Equals(object other) => other is SteamItemDef && this == (SteamItemDef)other;
 
 	    public override int GetHashCode() => _SteamItemDef.GetHashCode();
 
-	    public static bool operator ==(SteamItemDef_t x, SteamItemDef_t y) => x._SteamItemDef == y._SteamItemDef;
+	    public static bool operator ==(SteamItemDef x, SteamItemDef y) => x._SteamItemDef == y._SteamItemDef;
 
-	    public static bool operator !=(SteamItemDef_t x, SteamItemDef_t y) => !(x == y);
+	    public static bool operator !=(SteamItemDef x, SteamItemDef y) => !(x == y);
 
-	    public static explicit operator SteamItemDef_t(int value) => new SteamItemDef_t(value);
+	    public static explicit operator SteamItemDef(int value) => new SteamItemDef(value);
 
-	    public static explicit operator int(SteamItemDef_t that) => that._SteamItemDef;
+	    public static explicit operator int(SteamItemDef that) => that._SteamItemDef;
 
-	    public bool Equals(SteamItemDef_t other) => _SteamItemDef == other._SteamItemDef;
+	    public bool Equals(SteamItemDef other) => _SteamItemDef == other._SteamItemDef;
 
-	    public int CompareTo(SteamItemDef_t other) => _SteamItemDef.CompareTo(other._SteamItemDef);
+	    public int CompareTo(SteamItemDef other) => _SteamItemDef.CompareTo(other._SteamItemDef);
 	}
 }

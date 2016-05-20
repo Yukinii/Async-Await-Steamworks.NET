@@ -180,7 +180,7 @@ namespace Steamworks
         AddToCartAndShow = 2,
     }
 
-    // used in PersonaStateChange_t::_nChangeFlags to describe what's changed about a user
+    // used in PersonaStateChange::_nChangeFlags to describe what's changed about a user
     // these flags describe what the client has learned has changed recently, so on startup you'll see a name, avatar & relationship change for every friend
     [Flags]
     public enum EPersonaChange
@@ -345,7 +345,7 @@ namespace Steamworks
     }
 
     // list of possible errors returned by SendP2PPacket() API
-    // these will be posted in the P2PSessionConnectFail_t callback
+    // these will be posted in the P2PSessionConnectFail callback
     public enum Ep2PSessionError
     {
         None = 0,
@@ -518,7 +518,7 @@ namespace Steamworks
     }
 
     // Matching UGC types for queries
-    public enum EugcMatchingUGCType
+    public enum MatchingUGCType
     {
         Items = 0,      // both mtx items and ready-to-use items
         ItemsMtx = 1,
@@ -538,7 +538,7 @@ namespace Steamworks
 
     // Different lists of published UGC for a user.
     // If the current logged in user is different than the specified user, then some options may not be allowed.
-    public enum EUserUGCList
+    public enum UserUGCList
     {
         Published,
         VotedOn,
@@ -552,7 +552,7 @@ namespace Steamworks
     }
 
     // Sort order for user published UGC lists (defaults to creation order descending)
-    public enum EUserUGCListSortOrder
+    public enum UGCListSortOrder
     {
         CreationOrderDesc,
         CreationOrderAsc,
@@ -564,7 +564,7 @@ namespace Steamworks
     }
 
     // Combination of sorting and filtering for queries across all UGC
-    public enum EugcQuery
+    public enum UGCQuery
     {
         RankedByVote = 0,
         RankedByPublicationDate = 1,
@@ -583,7 +583,7 @@ namespace Steamworks
 
     public enum EItemUpdateStatus
     {
-        Invalid = 0, // The item update handle was invalid, job might be finished, listen too SubmitItemUpdateResult_t
+        Invalid = 0, // The item update handle was invalid, job might be finished, listen too SubmitItemUpdateResult
         PreparingConfig = 1, // The item update is processing configuration data
         PreparingContent = 2, // The item update is reading and processing content files
         UploadingContent = 3, // The item update is uploading content changes to Steam
@@ -592,7 +592,7 @@ namespace Steamworks
     }
 
     [Flags]
-    public enum EItemState
+    public enum ItemState
     {
         None = 0,   // item not tracked on client
         Subscribed = 1, // current user is subscribed to this item. Not just cached.
@@ -660,7 +660,7 @@ namespace Steamworks
         None = -1,          // no failure
         SteamGone = 0,      // the local Steam process has gone away
         NetworkFailure = 1, // the network connection to Steam has been broken, or was already broken
-        InvalidHandle = 2,  // the SteamAPICall_t handle passed in no longer exists
+        InvalidHandle = 2,  // the SteamAPICall handle passed in no longer exists
         MismatchedCallback = 3,// GetAPICallResult() was called with the wrong callback type for this API call
     }
 
@@ -791,7 +791,7 @@ namespace Steamworks
         InvalidCegSubmission = 81,          // The set of files submitted to the CEG server are not valid !
         RestrictedDevice = 82,              // The device being used is not allowed to perform this action
         RegionLocked = 83,                  // The action could not be complete because it is region restricted
-        RateLimitExceeded = 84,         // Temporary rate limit exceeded, try again later, different from k_EResultLimitExceeded which may be permanent
+        RateLimitExceeded = 84,         // Temporary rate limit exceeded, try again later, different from EResultLimitExceeded which may be permanent
         AccountLoginDeniedNeedTwoFactor = 85,   // Need two-factor code to login
         ItemDeleted = 86,                   // The thing we're trying to access has been deleted
         AccountLoginDeniedThrottle = 87,    // login attempt failed, try to throttle response to possible attacker
@@ -862,7 +862,7 @@ namespace Steamworks
         ExpiredTicket = 5,              // Ticket has expired
     }
 
-    // Callback values for callback ValidateAuthTicketResponse_t which is a response to BeginAuthSession
+    // Callback values for callback ValidateAuthTicketResponse which is a response to BeginAuthSession
     public enum EAuthSessionResponse
     {
         Ok = 0,                         // Steam has verified the user is online, the ticket is valid and ticket has not been reused.
@@ -897,7 +897,7 @@ namespace Steamworks
         ContentServer = 6,  // content server
         Clan = 7,
         Chat = 8,
-        ConsoleUser = 9,        // Fake SteamID for local PSN account on PS3 or Live account on 360, etc.
+        ConsoleUser = 9,        // Fake SteamId for local PSN account on PS3 or Live account on 360, etc.
         AnonUser = 10,
         Max
     }
@@ -1025,9 +1025,9 @@ namespace Steamworks
     public enum EChatSteamIdInstanceFlags
     {
         AccountInstanceMask = 0x00000FFF, // top 8 bits are flags
-        Clan = (Constants.k_unSteamAccountInstanceMask + 1) >> 1,   // top bit
-        Lobby = (Constants.k_unSteamAccountInstanceMask + 1) >> 2,  // next one down, etc
-        MmsLobby = (Constants.k_unSteamAccountInstanceMask + 1) >> 3,   // next one down, etc
+        Clan = (Constants.SteamAccountInstanceMask + 1) >> 1,   // top bit
+        Lobby = (Constants.SteamAccountInstanceMask + 1) >> 2,  // next one down, etc
+        MmsLobby = (Constants.SteamAccountInstanceMask + 1) >> 3,   // next one down, etc
 
         // Max of 8 flags
     }
@@ -1123,8 +1123,8 @@ namespace Steamworks
         // The remaining HTTP methods are not yet supported, per rfc2616 section 5.1.1 only GET and HEAD are required for
         // a compliant general purpose server.  We'll likely add more as we find uses for them.
 
-        // k_EHTTPMethodTRACE,
-        // k_EHTTPMethodCONNECT
+        // EHTTPMethodTRACE,
+        // EHTTPMethodCONNECT
     }
 
     // HTTP Status codes that the server can send in response to a request, see rfc2616 section 10.3 for descriptions

@@ -5,29 +5,29 @@
 // Changes to this file will be reverted when you update Steamworks.NET
 
 namespace Steamworks {
-	public struct ControllerHandle_t : System.IEquatable<ControllerHandle_t>, System.IComparable<ControllerHandle_t> {
+	public struct ControllerHandle : System.IEquatable<ControllerHandle>, System.IComparable<ControllerHandle> {
 		public ulong _ControllerHandle;
 
-		public ControllerHandle_t(ulong value) {
+		public ControllerHandle(ulong value) {
 			_ControllerHandle = value;
 		}
 
 		public override string ToString() => _ControllerHandle.ToString();
 
-	    public override bool Equals(object other) => other is ControllerHandle_t && this == (ControllerHandle_t)other;
+	    public override bool Equals(object other) => other is ControllerHandle && this == (ControllerHandle)other;
 
 	    public override int GetHashCode() => _ControllerHandle.GetHashCode();
 
-	    public static bool operator ==(ControllerHandle_t x, ControllerHandle_t y) => x._ControllerHandle == y._ControllerHandle;
+	    public static bool operator ==(ControllerHandle x, ControllerHandle y) => x._ControllerHandle == y._ControllerHandle;
 
-	    public static bool operator !=(ControllerHandle_t x, ControllerHandle_t y) => !(x == y);
+	    public static bool operator !=(ControllerHandle x, ControllerHandle y) => !(x == y);
 
-	    public static explicit operator ControllerHandle_t(ulong value) => new ControllerHandle_t(value);
+	    public static explicit operator ControllerHandle(ulong value) => new ControllerHandle(value);
 
-	    public static explicit operator ulong(ControllerHandle_t that) => that._ControllerHandle;
+	    public static explicit operator ulong(ControllerHandle that) => that._ControllerHandle;
 
-	    public bool Equals(ControllerHandle_t other) => _ControllerHandle == other._ControllerHandle;
+	    public bool Equals(ControllerHandle other) => _ControllerHandle == other._ControllerHandle;
 
-	    public int CompareTo(ControllerHandle_t other) => _ControllerHandle.CompareTo(other._ControllerHandle);
+	    public int CompareTo(ControllerHandle other) => _ControllerHandle.CompareTo(other._ControllerHandle);
 	}
 }

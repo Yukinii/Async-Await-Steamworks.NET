@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 
 namespace Steamworks {
 	[StructLayout(LayoutKind.Sequential, Pack = 1)]
-	public struct ControllerAnalogActionData_t {
+	public struct ControllerAnalogActionData {
 		// Type of data coming from this action, this will match what got specified in the action set
 		public EControllerSourceMode eMode;
 		
@@ -23,7 +23,7 @@ namespace Steamworks {
 	}
 
 	[StructLayout(LayoutKind.Sequential, Pack = 1)]
-	public struct ControllerDigitalActionData_t {
+	public struct ControllerDigitalActionData {
 		// The current state of this action; will be true if currently pressed
 		[MarshalAs(UnmanagedType.I1)]
 		public bool bState;
@@ -35,26 +35,26 @@ namespace Steamworks {
 
 	// friend game played information
 	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
-	public struct FriendGameInfo_t {
-		public CGameID _gameID;
+	public struct FriendGameInfo {
+		public CGameID _gameId;
 		public uint _unGameIP;
 		public ushort _usGamePort;
 		public ushort _usQueryPort;
-		public CSteamID _steamIDLobby;
+		public SteamId _steamIDLobby;
 	}
 
 	//-----------------------------------------------------------------------------
 	// Purpose: information about user sessions
 	//-----------------------------------------------------------------------------
-	public struct FriendSessionStateInfo_t {
+	public struct FriendSessionStateInfo {
 		public uint _uiOnlineSessionInstances;
 		public byte _uiPublishedToFriendsSessionInstance;
 	}
 
 	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
-	public struct SteamItemDetails_t {
-		public SteamItemInstanceID_t _itemId;
-		public SteamItemDef_t _iDefinition;
+	public struct SteamItemDetails {
+		public SteamItemInstanceID _itemId;
+		public SteamItemDef _iDefinition;
 		public ushort _unQuantity;
 		public ushort _unFlags; // see ESteamItemFlags
 	}
@@ -62,7 +62,7 @@ namespace Steamworks {
 	// connection state to a specified user, returned by GetP2PSessionState()
 	// this is under-the-hood info about what's going on with a SendP2PPacket(), shouldn't be needed except for debuggin
 	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
-	public struct P2PSessionState_t {
+	public struct P2PSessionState {
 		public byte _bConnectionActive;		// true if we've got an active open connection
 		public byte _bConnecting;			// true if we're currently trying to establish a connection
 		public byte _eP2PSessionError;		// last error recorded (see enum above)
@@ -77,22 +77,22 @@ namespace Steamworks {
 	// Purpose: Structure that contains an array of const char * strings and the number of those strings
 	//-----------------------------------------------------------------------------
 	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
-	public struct SteamParamStringArray_t {
+	public struct SteamParamStringArray {
 		public IntPtr _ppStrings;
 		public int _nNumStrings;
 	}
 
 	// Details for a single published file/UGC
 	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
-	public struct SteamUGCDetails_t {
+	public struct SteamUGCDetails {
 		public PublishedFileId PublishedField;
 		public ResultType ResultType;												// The result of the operation.
 		public EWorkshopFileType _eFileType;									// Type of the file
 		public AppId _nCreatorAppID;										// ID of the app that created this file.
 		public AppId _nConsumerAppID;										// ID of the app that will consume this file.
-		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = Constants.k_cchPublishedDocumentTitleMax)]
+		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = Constants.PublishedDocumentTitleMax)]
 		public string _rgchTitle;				// title of document
-		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = Constants.k_cchPublishedDocumentDescriptionMax)]
+		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = Constants.PublishedDocumentDescriptionMax)]
 		public string _rgchDescription;	// description of document
 		public ulong _ulSteamIDOwner;										// Steam ID of the user who created this content.
 		public uint _rtimeCreated;											// time when the published file was created
@@ -105,16 +105,16 @@ namespace Steamworks {
 		public bool _bAcceptedForUse;											// developer has specifically flagged this item as accepted in the Workshop
 		[MarshalAs(UnmanagedType.I1)]
 		public bool _bTagsTruncated;											// whether the list of tags was too long to be returned in the provided buffer
-		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = Constants.k_cchTagListMax)]
+		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = Constants.TagListMax)]
 		public string _rgchTags;								// comma separated list of all tags associated with this file
 		// file/url information
-		public UGCHandle_t _hFile;											// The handle of the primary file
-		public UGCHandle_t _hPreviewFile;										// The handle of the preview file
-		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = Constants.k_cchFilenameMax)]
+		public UGCHandle _hFile;											// The handle of the primary file
+		public UGCHandle _hPreviewFile;										// The handle of the preview file
+		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = Constants.FilenameMax)]
 		public string _pchFileName;							// The cloud filename of the primary file
 		public int _nFileSize;												// Size of the primary file
 		public int _nPreviewFileSize;										// Size of the preview file
-		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = Constants.k_cchPublishedFileURLMax)]
+		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = Constants.PublishedFileURLMax)]
 		public string _rgchURL;						// URL (for a video or a website)
 		// voting information
 		public uint _unVotesUp;												// number of votes up
@@ -127,7 +127,7 @@ namespace Steamworks {
 	// structure that contains client callback data
 	// see callbacks documentation for more details
 	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
-	public struct CallbackMsg_t {
+	public struct CallbackMsg {
 		public int _hSteamUser;
 		public int _iCallback;
 		public IntPtr _pubParam;
@@ -136,12 +136,12 @@ namespace Steamworks {
 
 	// a single entry in a leaderboard, as returned by GetDownloadedLeaderboardEntry()
 	[StructLayout(LayoutKind.Sequential, Pack = Packsize.value)]
-	public struct LeaderboardEntry_t {
-		public CSteamID _steamIDUser; // user with the entry - use SteamFriends()->GetFriendPersonaName() & SteamFriends()->GetFriendAvatar() to get more info
+	public struct LeaderboardEntry {
+		public SteamId _steamIDUser; // user with the entry - use SteamFriends()->GetFriendPersonaName() & SteamFriends()->GetFriendAvatar() to get more info
 		public int _nGlobalRank;	// [1..N], where N is the number of users with an entry in the leaderboard
 		public int _nScore;			// score as set in the leaderboard
 		public int _cDetails;		// number of int32 details available for this entry
-		public UGCHandle_t _hUGC;		// handle for UGC attached to the entry
+		public UGCHandle _hUGC;		// handle for UGC attached to the entry
 	}
 
 	/// Store key/value pair used in matchmaking queries.
@@ -150,8 +150,8 @@ namespace Steamworks {
 	/// understood as "filter operation code" and the "value" is the operand to this
 	/// filter operation.  The meaning of the operand depends upon the filter.
 	[StructLayout(LayoutKind.Sequential)]
-	public struct MatchMakingKeyValuePair_t {
-		MatchMakingKeyValuePair_t(string strKey, string strValue) {
+	public struct MatchMakingKeyValuePair {
+		MatchMakingKeyValuePair(string strKey, string strValue) {
 			_szKey = strKey;
 			_szValue = strValue;
 		}

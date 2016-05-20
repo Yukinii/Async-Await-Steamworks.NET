@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using Steamworks;
 
 namespace PlayGround
@@ -13,9 +12,9 @@ namespace PlayGround
         private static SteamManager _Instance;
         public static SteamManager Instance => _Instance ?? new SteamManager();
 
-        private readonly SteamAPIWarningMessageHook_t _SteamApiWarningMessageHook;
-        private static void SteamApiDebugTextHook(int nSeverity, System.Text.StringBuilder pchDebugText) => Debug.WriteLine(pchDebugText);
-        
+        private readonly SteamAPIWarningMessageHoot _SteamApiWarningMessageHook;
+        private static void SteamApiDebugTextHook(int severity, System.Text.StringBuilder text) => Debug.WriteLine(text);
+
         public Callback<DownloadItemResult> DownloadRequestResult;
         public Callback<ItemInstalled> ItemInstalledCallback;
         public readonly Dictionary<ulong,string> PendingDownloads = new Dictionary<ulong, string>();
@@ -34,7 +33,6 @@ namespace PlayGround
 
             ItemInstalledCallback = Callback<ItemInstalled>.Create(ItemInstalled);
             DownloadRequestResult = Callback<DownloadItemResult>.Create(OnDownloadCompleted);
-
         }
 
         private void Awake()
@@ -69,7 +67,7 @@ namespace PlayGround
         {
             foreach (var item in items)
             {
-                var state = (EItemState) SteamUGC.GetItemState(item);
+                var state = (ItemState) SteamUGC.GetItemState(item);
                 
                 //var call = SteamUGC.UnsubscribeItem(item);
 
@@ -113,20 +111,16 @@ namespace PlayGround
             }
         }
 
-        private void QueueDownload(PublishedFileId item)
+        private async void QueueDownload(PublishedFileId item)
         {
-            var call = SteamUGC.RequestUGCDetails(item, 0);
-            var DetailRequestResult = new CallResult<SteamUGCRequestUGCDetailsResult_t>();
-            DetailRequestResult.Set(call, (a, d) =>
-            {
-                Console.WriteLine($"{a._details._rgchDescription} - Is {(a._bCachedData ? "" : "not")} on your hdd!");
+            var details = await SteamUGC.GetItemDetailsAsync(item);
+            Console.WriteLine($"{details.Key._details._rgchDescription} - Is {(details.Value ? "" : "not")} on your hdd!");
 
-                if (!SteamUGC.DownloadItem(item, true))
-                    return;
+            if (!SteamUGC.DownloadItem(item, true))
+                return;
 
-                Console.WriteLine("Download queued");
-                PendingDownloads.Add(a._details.PublishedField._PublishedFileId, a._details._rgchTitle);
-            });
+            Console.WriteLine("Download queued");
+            PendingDownloads.Add(details.Key._details.PublishedField._PublishedFileId, details.Key._details._rgchTitle);
         }
 
         private void OnDownloadCompleted(DownloadItemResult param)

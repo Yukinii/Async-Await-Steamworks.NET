@@ -103,19 +103,19 @@ namespace Steamworks {
 		/// <para> API asynchronous call results</para>
 		/// <para> can be used directly, but more commonly used via the callback dispatch API (see stea_api.h)</para>
 		/// </summary>
-		public static bool IsAPICallCompleted(SteamAPICall_t hSteamAPICall, out bool pbFailed) {
+		public static bool IsAPICallCompleted(SteamAPICall hSteamAPICall, out bool pbFailed) {
 			InteropHelp.TestIfAvailableGameServer();
 			return NativeMethods.ISteamGameServerUtils_IsAPICallCompleted(hSteamAPICall, out pbFailed);
 		}
 
-		public static ESteamApiCallFailure GetAPICallFailureReason(SteamAPICall_t hSteamAPICall) {
+		public static ESteamApiCallFailure GetAPICallFailureReason(SteamAPICall hSteamAPICall) {
 			InteropHelp.TestIfAvailableGameServer();
 			return NativeMethods.ISteamGameServerUtils_GetAPICallFailureReason(hSteamAPICall);
 		}
 
-		public static bool GetAPICallResult(SteamAPICall_t hSteamAPICall, IntPtr pCallback, int cubCallback, int iCallbackExpected, out bool pbFailed) {
+		public static bool GetAPICallResult(SteamAPICall hSteamAPICall, IntPtr pCallback, int Callback, int iCallbackExpected, out bool pbFailed) {
 			InteropHelp.TestIfAvailableGameServer();
-			return NativeMethods.ISteamGameServerUtils_GetAPICallResult(hSteamAPICall, pCallback, cubCallback, iCallbackExpected, out pbFailed);
+			return NativeMethods.ISteamGameServerUtils_GetAPICallResult(hSteamAPICall, pCallback, Callback, iCallbackExpected, out pbFailed);
 		}
 
 		/// <summary>
@@ -135,7 +135,7 @@ namespace Steamworks {
 		/// <para> 'const char *' is the text of the message</para>
 		/// <para> callbacks will occur directly after the API function is called that generated the warning or message</para>
 		/// </summary>
-		public static void SetWarningMessageHook(SteamAPIWarningMessageHook_t pFunction) {
+		public static void SetWarningMessageHook(SteamAPIWarningMessageHoot pFunction) {
 			InteropHelp.TestIfAvailableGameServer();
 			NativeMethods.ISteamGameServerUtils_SetWarningMessageHook(pFunction);
 		}
@@ -167,17 +167,17 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> Asynchronous call to check if an executable file has been signed using the public key set on the signing tab</para>
 		/// <para> of the partner site, for example to refuse to load modified executable files.</para>
-		/// <para> The result is returned in CheckFileSignature_t.</para>
-		/// <para>   k_ECheckFileSignatureNoSignaturesFoundForThisApp - This app has not been configured on the signing tab of the partner site to enable this function.</para>
-		/// <para>   k_ECheckFileSignatureNoSignaturesFoundForThisFile - This file is not listed on the signing tab for the partner site.</para>
-		/// <para>   k_ECheckFileSignatureFileNotFound - The file does not exist on disk.</para>
-		/// <para>   k_ECheckFileSignatureInvalidSignature - The file exists, and the signing tab has been set for this file, but the file is either not signed or the signature does not match.</para>
-		/// <para>   k_ECheckFileSignatureValidSignature - The file is signed and the signature is valid.</para>
+		/// <para> The result is returned in CheckFileSignature.</para>
+		/// <para>   ECheckFileSignatureNoSignaturesFoundForThisApp - This app has not been configured on the signing tab of the partner site to enable this function.</para>
+		/// <para>   ECheckFileSignatureNoSignaturesFoundForThisFile - This file is not listed on the signing tab for the partner site.</para>
+		/// <para>   ECheckFileSignatureFileNotFound - The file does not exist on disk.</para>
+		/// <para>   ECheckFileSignatureInvalidSignature - The file exists, and the signing tab has been set for this file, but the file is either not signed or the signature does not match.</para>
+		/// <para>   ECheckFileSignatureValidSignature - The file is signed and the signature is valid.</para>
 		/// </summary>
-		public static SteamAPICall_t CheckFileSignature(string szFileName) {
+		public static SteamAPICall CheckFileSignature(string szFileName) {
 			InteropHelp.TestIfAvailableGameServer();
 			using (var szFileName2 = new InteropHelp.UTF8StringHandle(szFileName)) {
-				return (SteamAPICall_t)NativeMethods.ISteamGameServerUtils_CheckFileSignature(szFileName2);
+				return (SteamAPICall)NativeMethods.ISteamGameServerUtils_CheckFileSignature(szFileName2);
 			}
 		}
 
@@ -200,10 +200,10 @@ namespace Steamworks {
 			return NativeMethods.ISteamGameServerUtils_GetEnteredGamepadTextLength();
 		}
 
-		public static bool GetEnteredGamepadTextInput(out string pchText, uint cchText) {
+		public static bool GetEnteredGamepadTextInput(out string pchText, uint Text) {
 			InteropHelp.TestIfAvailableGameServer();
-			var pchText2 = Marshal.AllocHGlobal((int)cchText);
-			var ret = NativeMethods.ISteamGameServerUtils_GetEnteredGamepadTextInput(pchText2, cchText);
+			var pchText2 = Marshal.AllocHGlobal((int)Text);
+			var ret = NativeMethods.ISteamGameServerUtils_GetEnteredGamepadTextInput(pchText2, Text);
 			pchText = ret ? InteropHelp.PtrToStringUTF8(pchText2) : null;
 			Marshal.FreeHGlobal(pchText2);
 			return ret;

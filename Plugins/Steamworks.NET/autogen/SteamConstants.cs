@@ -32,7 +32,7 @@ namespace Steamworks {
 		public const string STEAMUSERSTATS_INTERFACE_VERSION = "STEAMUSERSTATS_INTERFACE_VERSION011";
 		public const string STEAMUTILS_INTERFACE_VERSION = "SteamUtils007";
 		public const string STEAMVIDEO_INTERFACE_VERSION = "STEAMVIDEO_INTERFACE_V001";
-		public const int k_cubAppProofOfPurchaseKeyMax = 64; // max bytes of a legacy cd key we support
+		public const int AppProofOfPurchaseKeyMax = 64; // max bytes of a legacy cd key we support
 		//-----------------------------------------------------------------------------
 		// Purpose: Base values for callback identifiers, each callback must
 		//			have a unique ID.
@@ -45,129 +45,129 @@ namespace Steamworks {
 		public const int SteamContentServerCallbacks = 600;
 		public const int SteamUtilsCallbacks = 700;
 		public const int ClientFriendsCallbacks = 800;
-		public const int k_iClientUserCallbacks = 900;
-		public const int k_iSteamAppsCallbacks = 1000;
-		public const int k_iSteamUserStatsCallbacks = 1100;
-		public const int k_iSteamNetworkingCallbacks = 1200;
-		public const int k_iClientRemoteStorageCallbacks = 1300;
-		public const int k_iClientDepotBuilderCallbacks = 1400;
-		public const int k_iSteamGameServerItemsCallbacks = 1500;
-		public const int k_iClientUtilsCallbacks = 1600;
-		public const int k_iSteamGameCoordinatorCallbacks = 1700;
-		public const int k_iSteamGameServerStatsCallbacks = 1800;
-		public const int k_iSteam2AsyncCallbacks = 1900;
-		public const int k_iSteamGameStatsCallbacks = 2000;
-		public const int k_iClientHTTPCallbacks = 2100;
-		public const int k_iClientScreenshotsCallbacks = 2200;
-		public const int k_iSteamScreenshotsCallbacks = 2300;
-		public const int k_iClientAudioCallbacks = 2400;
-		public const int k_iClientUnifiedMessagesCallbacks = 2500;
-		public const int k_iSteamStreamLauncherCallbacks = 2600;
-		public const int k_iClientControllerCallbacks = 2700;
-		public const int k_iSteamControllerCallbacks = 2800;
-		public const int k_iClientParentalSettingsCallbacks = 2900;
-		public const int k_iClientDeviceAuthCallbacks = 3000;
-		public const int k_iClientNetworkDeviceManagerCallbacks = 3100;
-		public const int k_iClientMusicCallbacks = 3200;
-		public const int k_iClientRemoteClientManagerCallbacks = 3300;
-		public const int k_iClientUGCCallbacks = 3400;
-		public const int k_iSteamStreamClientCallbacks = 3500;
-		public const int k_IClientProductBuilderCallbacks = 3600;
-		public const int k_iClientShortcutsCallbacks = 3700;
-		public const int k_iClientRemoteControlManagerCallbacks = 3800;
-		public const int k_iSteamAppListCallbacks = 3900;
-		public const int k_iSteamMusicCallbacks = 4000;
-		public const int k_iSteamMusicRemoteCallbacks = 4100;
-		public const int k_iClientVRCallbacks = 4200;
-		public const int k_iClientReservedCallbacks = 4300;
-		public const int k_iSteamReservedCallbacks = 4400;
-		public const int k_iSteamHTMLSurfaceCallbacks = 4500;
-		public const int k_iClientVideoCallbacks = 4600;
-		public const int k_iClientInventoryCallbacks = 4700;
-		public const int k_iClientBluetoothManagerCallbacks = 4800;
+		public const int ClientUserCallbacks = 900;
+		public const int SteamAppsCallbacks = 1000;
+		public const int SteamUserStatsCallbacks = 1100;
+		public const int SteamNetworkingCallbacks = 1200;
+		public const int ClientRemoteStorageCallbacks = 1300;
+		public const int ClientDepotBuilderCallbacks = 1400;
+		public const int SteamGameServerItemsCallbacks = 1500;
+		public const int ClientUtilsCallbacks = 1600;
+		public const int SteamGameCoordinatorCallbacks = 1700;
+		public const int SteamGameServerStatsCallbacks = 1800;
+		public const int Steam2AsyncCallbacks = 1900;
+		public const int SteamGameStatsCallbacks = 2000;
+		public const int ClientHTTPCallbacks = 2100;
+		public const int ClientScreenshotsCallbacks = 2200;
+		public const int SteamScreenshotsCallbacks = 2300;
+		public const int ClientAudioCallbacks = 2400;
+		public const int ClientUnifiedMessagesCallbacks = 2500;
+		public const int SteamStreamLauncherCallbacks = 2600;
+		public const int ClientControllerCallbacks = 2700;
+		public const int SteamControllerCallbacks = 2800;
+		public const int ClientParentalSettingsCallbacks = 2900;
+		public const int ClientDeviceAuthCallbacks = 3000;
+		public const int ClientNetworkDeviceManagerCallbacks = 3100;
+		public const int ClientMusicCallbacks = 3200;
+		public const int ClientRemoteClientManagerCallbacks = 3300;
+		public const int ClientUGCCallbacks = 3400;
+		public const int SteamStreamClientCallbacks = 3500;
+		public const int ClientProductBuilderCallbacks = 3600;
+		public const int ClientShortcutsCallbacks = 3700;
+		public const int ClientRemoteControlManagerCallbacks = 3800;
+		public const int SteamAppListCallbacks = 3900;
+		public const int SteamMusicCallbacks = 4000;
+		public const int SteamMusicRemoteCallbacks = 4100;
+		public const int ClientVRCallbacks = 4200;
+		public const int ClientReservedCallbacks = 4300;
+		public const int SteamReservedCallbacks = 4400;
+		public const int SteamHTMLSurfaceCallbacks = 4500;
+		public const int ClientVideoCallbacks = 4600;
+		public const int ClientInventoryCallbacks = 4700;
+		public const int ClientBluetoothManagerCallbacks = 4800;
 		// maximum length of friend group name (not including terminating nul!)
-		public const int k_cchMaxFriendsGroupName = 64;
+		public const int MaxFriendsGroupName = 64;
 		// maximum number of groups a single user is allowed
-		public const int k_cFriendsGroupLimit = 100;
-		public const int k_cEnumerateFollowersMax = 50;
+		public const int FriendsGroupLimit = 100;
+		public const int EnumerateFollowersMax = 50;
 		// maximum number of characters in a user's name. Two flavors; one for UTF-8 and one for UTF-16.
 		// The UTF-8 version has to be very generous to accomodate characters that get large when encoded
 		// in UTF-8.
-		public const int k_cchPersonaNameMax = 128;
-		public const int k_cwchPersonaNameMax = 32;
+		public const int PersonaNameMax = 128;
+		public const int cwchPersonaNameMax = 32;
 		// size limit on chat room or member metadata
-		public const int k_cubChatMetadataMax = 8192;
+		public const int ChatMetadataMax = 8192;
 		// size limits on Rich Presence data
-		public const int k_cchMaxRichPresenceKeys = 20;
-		public const int k_cchMaxRichPresenceKeyLength = 64;
-		public const int k_cchMaxRichPresenceValueLength = 256;
+		public const int MaxRichPresenceKeys = 20;
+		public const int MaxRichPresenceKeyLength = 64;
+		public const int MaxRichPresenceValueLength = 256;
 		// game server flags
-		public const int k_unServerFlagNone = 0x00;
-		public const int k_unServerFlagActive = 0x01; // server has users playing
-		public const int k_unServerFlagSecure = 0x02; // server wants to be secure
-		public const int k_unServerFlagDedicated = 0x04; // server is dedicated
-		public const int k_unServerFlagLinux = 0x08; // linux build
-		public const int k_unServerFlagPassworded = 0x10; // password protected
-		public const int k_unServerFlagPrivate = 0x20; // server shouldn't list on master server and
+		public const int ServerFlagNone = 0x00;
+		public const int ServerFlagActive = 0x01; // server has users playing
+		public const int ServerFlagSecure = 0x02; // server wants to be secure
+		public const int ServerFlagDedicated = 0x04; // server is dedicated
+		public const int ServerFlagLinux = 0x08; // linux build
+		public const int ServerFlagPassworded = 0x10; // password protected
+		public const int ServerFlagPrivate = 0x20; // server shouldn't list on master server and
 		// game server flags
-		public const int k_unFavoriteFlagNone = 0x00;
-		public const int k_unFavoriteFlagFavorite = 0x01; // this game favorite entry is for the favorites list
-		public const int k_unFavoriteFlagHistory = 0x02; // this game favorite entry is for the history list
+		public const int FavoriteFlagNone = 0x00;
+		public const int FavoriteFlagFavorite = 0x01; // this game favorite entry is for the favorites list
+		public const int FavoriteFlagHistory = 0x02; // this game favorite entry is for the history list
 		//-----------------------------------------------------------------------------
 		// Purpose: Defines the largest allowed file size. Cloud files cannot be written
 		// in a single chunk over 100MB (and cannot be over 200MB total.)
 		//-----------------------------------------------------------------------------
-		public const int k_unMaxCloudFileChunkSize = 100 * 1024 * 1024;
-		public const int k_cchPublishedDocumentTitleMax = 128 + 1;
-		public const int k_cchPublishedDocumentDescriptionMax = 8000;
-		public const int k_cchPublishedDocumentChangeDescriptionMax = 8000;
-		public const int k_unEnumeratePublishedFilesMaxResults = 50;
-		public const int k_cchTagListMax = 1024 + 1;
-		public const int k_cchFilenameMax = 260;
-		public const int k_cchPublishedFileURLMax = 256;
-		public const int k_nScreenshotMaxTaggedUsers = 32;
-		public const int k_nScreenshotMaxTaggedPublishedFiles = 32;
-		public const int k_cubUFSTagTypeMax = 255;
-		public const int k_cubUFSTagValueMax = 255;
+		public const int MaxCloudFileChunkSize = 100 * 1024 * 1024;
+		public const int PublishedDocumentTitleMax = 128 + 1;
+		public const int PublishedDocumentDescriptionMax = 8000;
+		public const int PublishedDocumentChangeDescriptionMax = 8000;
+		public const int EnumeratePublishedFilesMaxResults = 50;
+		public const int TagListMax = 1024 + 1;
+		public const int FilenameMax = 260;
+		public const int PublishedFileURLMax = 256;
+		public const int ScreenshotMaxTaggedUsers = 32;
+		public const int ScreenshotMaxTaggedPublishedFiles = 32;
+		public const int UFSTagTypeMax = 255;
+		public const int UFSTagValueMax = 255;
 		// Required with of a thumbnail provided to AddScreenshotToLibrary.  If you do not provide a thumbnail
 		// one will be generated.
-		public const int k_ScreenshotThumbWidth = 200;
-		public const int kNumUGCResultsPerPage = 50;
-		public const int k_cchDeveloperMetadataMax = 5000;
+		public const int ScreenshotThumbWidth = 200;
+		public const int NumUGCResultsPerPage = 50;
+		public const int DeveloperMetadataMax = 5000;
 		// size limit on stat or achievement name (UTF-8 encoded)
-		public const int k_cchStatNameMax = 128;
+		public const int StatNameMax = 128;
 		// maximum number of bytes for a leaderboard name (UTF-8 encoded)
-		public const int k_cchLeaderboardNameMax = 128;
+		public const int LeaderboardNameMax = 128;
 		// maximum number of details int32's storable for a single leaderboard entry
-		public const int k_cLeaderboardDetailsMax = 64;
+		public const int LeaderboardDetailsMax = 64;
 		//
 		// Max size (in bytes of UTF-8 data, not in characters) of server fields, including null terminator.
 		// WARNING: These cannot be changed easily, without breaking clients using old interfaces.
 		//
-		public const int k_cbMaxGameServerGameDir = 32;
-		public const int k_cbMaxGameServerMapName = 32;
-		public const int k_cbMaxGameServerGameDescription = 64;
-		public const int k_cbMaxGameServerName = 64;
-		public const int k_cbMaxGameServerTags = 128;
-		public const int k_cbMaxGameServerGameData = 2048;
-		public const int k_unSteamAccountIDMask = -1;
-		public const int k_unSteamAccountInstanceMask = 0x000FFFFF;
+		public const int MaxGameServerGameDir = 32;
+		public const int MaxGameServerMapName = 32;
+		public const int MaxGameServerGameDescription = 64;
+		public const int MaxGameServerName = 64;
+		public const int MaxGameServerTags = 128;
+		public const int MaxGameServerGameData = 2048;
+		public const int SteamAccountIDMask = -1;
+		public const int SteamAccountInstanceMask = 0x000FFFFF;
 		// we allow 3 simultaneous user account instances right now, 1= desktop, 2 = console, 4 = web, 0 = all
-		public const int k_unSteamUserDesktopInstance = 1;
-		public const int k_unSteamUserConsoleInstance = 2;
-		public const int k_unSteamUserWebInstance = 4;
-		public const int k_cchGameExtraInfoMax = 64;
-		public const int k_nSteamEncryptedAppTicketSymmetricKeyLen = 32;
-		public const int k_cubSaltSize = 8;
-		public const ulong k_GIDNil = 0xffffffffffffffff;
-		public const ulong k_TxnIDNil = k_GIDNil;
-		public const ulong k_TxnIDUnknown = 0;
-		public const int k_uPackageIdFreeSub = 0x0;
-		public const int k_uPackageIdInvalid = -1;
-		public const ulong k_ulAssetClassIdInvalid = 0x0;
-		public const int k_uPhysicalItemIdInvalid = 0x0;
-		public const int k_uCellIDInvalid = -1;
-		public const int k_uPartnerIdInvalid = 0;
+		public const int SteamUserDesktopInstance = 1;
+		public const int SteamUserConsoleInstance = 2;
+		public const int SteamUserWebInstance = 4;
+		public const int GameExtraInfoMax = 64;
+		public const int nSteamEncryptedAppTicketSymmetricKeyLen = 32;
+		public const int SaltSize = 8;
+		public const ulong GIDNil = 0xffffffffffffffff;
+		public const ulong TxnIDNil = GIDNil;
+		public const ulong TxnIDUnknown = 0;
+		public const int uPackageIdFreeSub = 0x0;
+		public const int uPackageIdInvalid = -1;
+		public const ulong ulAssetClassIdInvalid = 0x0;
+		public const int uPhysicalItemIdInvalid = 0x0;
+		public const int uCellIDInvalid = -1;
+		public const int uPartnerIdInvalid = 0;
 		public const int STEAM_CONTROLLER_MAX_COUNT = 16;
 		public const int STEAM_CONTROLLER_MAX_ANALOG_ACTIONS = 16;
 		public const int STEAM_CONTROLLER_MAX_DIGITAL_ACTIONS = 128;
@@ -179,9 +179,9 @@ namespace Steamworks {
 		public const ushort MASTERSERVERUPDATERPORT_USEGAMESOCKETSHARE	= 0xFFFF;
 		public const int INVALID_HTTPREQUEST_HANDLE		= 0;
 		// maximum number of characters a lobby metadata key can be
-		public const byte k_nMaxLobbyKeyLength = 255;
-		public const int k_SteamMusicNameMaxLength = 255;
-		public const int k_SteamMusicPNGMaxLength = 65535;
+		public const byte nMaxLobbyKeyLength = 255;
+		public const int SteamMusicNameMaxLength = 255;
+		public const int SteamMusicPNGMaxLength = 65535;
 		//-----------------------------------------------------------------------------
 		// Constants used for query ports.
 		//-----------------------------------------------------------------------------

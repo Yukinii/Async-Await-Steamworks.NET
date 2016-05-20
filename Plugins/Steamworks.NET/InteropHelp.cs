@@ -85,7 +85,7 @@ namespace Steamworks {
 		    readonly IntPtr[] _Strings;
 			// The pointer to the condensed version of _Strings
 		    readonly IntPtr _ptrStrings;
-			// The pointer to the StructureToPtr version of SteamParamStringArray_t that will get marshaled
+			// The pointer to the StructureToPtr version of SteamParamStringArray that will get marshaled
 		    readonly IntPtr _pSteamParamStringArray;
 
 			public SteamParamStringArray(IList<string> strings) {
@@ -103,14 +103,14 @@ namespace Steamworks {
 				}
 
 				_ptrStrings = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(IntPtr)) * _Strings.Length);
-				var stringArray = new SteamParamStringArray_t
+				var stringArray = new global::Steamworks.SteamParamStringArray
 				{
 					_ppStrings = _ptrStrings,
 					_nNumStrings = _Strings.Length
 				};
 				Marshal.Copy(_Strings, 0, stringArray._ppStrings, _Strings.Length);
 
-				_pSteamParamStringArray = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(SteamParamStringArray_t)));
+				_pSteamParamStringArray = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(SteamParamStringArray)));
 				Marshal.StructureToPtr(stringArray, _pSteamParamStringArray, false);
 			}
 
@@ -138,12 +138,12 @@ namespace Steamworks {
 		private readonly IntPtr _pNativeArray;
 		private readonly IntPtr _pArrayEntries;
 
-		public MMKVPMarshaller(MatchMakingKeyValuePair_t[] filters) {
+		public MMKVPMarshaller(MatchMakingKeyValuePair[] filters) {
 			if (filters == null) {
 				return;
 			}
 
-			var sizeOfMMKVP = Marshal.SizeOf(typeof(MatchMakingKeyValuePair_t));
+			var sizeOfMMKVP = Marshal.SizeOf(typeof(MatchMakingKeyValuePair));
 
 			_pNativeArray = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(IntPtr)) * filters.Length);
 			_pArrayEntries = Marshal.AllocHGlobal(sizeOfMMKVP * filters.Length);
@@ -191,18 +191,18 @@ namespace Steamworks {
 				fileBytes = Version.SteamAPI64DLLSize;
 			}
 
-			IntPtr handle = GetModuleHandle(fileName);
+			var handle = GetModuleHandle(fileName);
 			if (handle == IntPtr.Zero) {
 				return true;
 			}
 
-			StringBuilder filePath = new StringBuilder(256);
+			var filePath = new StringBuilder(256);
 			GetModuleFileName(handle, filePath, filePath.Capacity);
-			string file = filePath.ToString();
+			var file = filePath.ToString();
 
 			// If we can not find the file we'll just skip it and let the DllNotFoundException take care of it.
 			if (System.IO.File.Exists(file)) {
-				System.IO.FileInfo fInfo = new System.IO.FileInfo(file);
+				var fInfo = new System.IO.FileInfo(file);
 				if (fInfo.Length != fileBytes) {
 					return false;
 				}

@@ -84,10 +84,10 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> Returns metadata for DLC by index, of range [0, GetDLCCount()]</para>
 		/// </summary>
-		public static bool BGetDLCDataByIndex(int iDLC, out AppId pAppID, out bool pbAvailable, out string name, int cchNameBufferSize) {
+		public static bool BGetDLCDataByIndex(int iDLC, out AppId pAppID, out bool pbAvailable, out string name, int NameBufferSize) {
 			InteropHelp.TestIfAvailableClient();
-			var name2 = Marshal.AllocHGlobal(cchNameBufferSize);
-			var ret = NativeMethods.ISteamApps_BGetDLCDataByIndex(iDLC, out pAppID, out pbAvailable, name2, cchNameBufferSize);
+			var name2 = Marshal.AllocHGlobal(NameBufferSize);
+			var ret = NativeMethods.ISteamApps_BGetDLCDataByIndex(iDLC, out pAppID, out pbAvailable, name2, NameBufferSize);
 			name = ret ? InteropHelp.PtrToStringUTF8(name2) : null;
 			Marshal.FreeHGlobal(name2);
 			return ret;
@@ -110,7 +110,7 @@ namespace Steamworks {
 		/// <para> Request cd-key for yourself or owned DLC. If you are interested in this</para>
 		/// <para> data then make sure you provide us with a list of valid keys to be distributed</para>
 		/// <para> to users when they purchase the game, before the game ships.</para>
-		/// <para> You'll receive an AppProofOfPurchaseKeyResponse_t callback when</para>
+		/// <para> You'll receive an AppProofOfPurchaseKeyResponse callback when</para>
 		/// <para> the key is available (which may be immediately).</para>
 		/// </summary>
 		public static void RequestAppProofOfPurchaseKey(AppId appId) {
@@ -121,10 +121,10 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> returns current beta branch name, 'public' is the default branch</para>
 		/// </summary>
-		public static bool GetCurrentBetaName(out string name, int cchNameBufferSize) {
+		public static bool GetCurrentBetaName(out string name, int NameBufferSize) {
 			InteropHelp.TestIfAvailableClient();
-			var name2 = Marshal.AllocHGlobal(cchNameBufferSize);
-			var ret = NativeMethods.ISteamApps_GetCurrentBetaName(name2, cchNameBufferSize);
+			var name2 = Marshal.AllocHGlobal(NameBufferSize);
+			var ret = NativeMethods.ISteamApps_GetCurrentBetaName(name2, NameBufferSize);
 			name = ret ? InteropHelp.PtrToStringUTF8(name2) : null;
 			Marshal.FreeHGlobal(name2);
 			return ret;
@@ -141,7 +141,7 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> return installed depots in mount order</para>
 		/// </summary>
-		public static uint GetInstalledDepots(AppId appID, DepotId_t[] Depots, uint cMaxDepots) {
+		public static uint GetInstalledDepots(AppId appID, DepotId[] Depots, uint cMaxDepots) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamApps_GetInstalledDepots(appID, Depots, cMaxDepots);
 		}
@@ -149,10 +149,10 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> returns current app install folder for AppID, returns folder name length</para>
 		/// </summary>
-		public static uint GetAppInstallDir(AppId appID, out string pchFolder, uint cchFolderBufferSize) {
+		public static uint GetAppInstallDir(AppId appID, out string pchFolder, uint FolderBufferSize) {
 			InteropHelp.TestIfAvailableClient();
-			var pchFolder2 = Marshal.AllocHGlobal((int)cchFolderBufferSize);
-			var ret = NativeMethods.ISteamApps_GetAppInstallDir(appID, pchFolder2, cchFolderBufferSize);
+			var pchFolder2 = Marshal.AllocHGlobal((int)FolderBufferSize);
+			var ret = NativeMethods.ISteamApps_GetAppInstallDir(appID, pchFolder2, FolderBufferSize);
 			pchFolder = ret != 0 ? InteropHelp.PtrToStringUTF8(pchFolder2) : null;
 			Marshal.FreeHGlobal(pchFolder2);
 			return ret;
@@ -167,11 +167,11 @@ namespace Steamworks {
 		}
 
 		/// <summary>
-		/// <para> returns the SteamID of the original owner. If different from current user, it's borrowed</para>
+		/// <para> returns the SteamId of the original owner. If different from current user, it's borrowed</para>
 		/// </summary>
-		public static CSteamID GetAppOwner() {
+		public static SteamId GetAppOwner() {
 			InteropHelp.TestIfAvailableClient();
-			return (CSteamID)NativeMethods.ISteamApps_GetAppOwner();
+			return (SteamId)NativeMethods.ISteamApps_GetAppOwner();
 		}
 
 		/// <summary>

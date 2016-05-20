@@ -12,18 +12,18 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> INVENTORY ASYNC RESULT MANAGEMENT</para>
 		/// <para> Asynchronous inventory queries always output a result handle which can be used with</para>
-		/// <para> GetResultStatus, GetResultItems, etc. A SteamInventoryResultReady_t callback will</para>
+		/// <para> GetResultStatus, GetResultItems, etc. A SteamInventoryResultReady callback will</para>
 		/// <para> be triggered when the asynchronous result becomes ready (or fails).</para>
 		/// <para> Find out the status of an asynchronous inventory result handle. Possible values:</para>
-		/// <para>  k_EResultPending - still in progress</para>
-		/// <para>  k_EResultOK - done, result ready</para>
-		/// <para>  k_EResultExpired - done, result ready, maybe out of date (see DeserializeResult)</para>
-		/// <para>  k_EResultInvalidParam - ERROR: invalid API call parameters</para>
-		/// <para>  k_EResultServiceUnavailable - ERROR: service temporarily down, you may retry later</para>
-		/// <para>  k_EResultLimitExceeded - ERROR: operation would exceed per-user inventory limits</para>
-		/// <para>  k_EResultFail - ERROR: unknown / generic error</para>
+		/// <para>  EResultPending - still in progress</para>
+		/// <para>  EResultOK - done, result ready</para>
+		/// <para>  EResultExpired - done, result ready, maybe out of date (see DeserializeResult)</para>
+		/// <para>  EResultInvalidParam - ERROR: invalid API call parameters</para>
+		/// <para>  EResultServiceUnavailable - ERROR: service temporarily down, you may retry later</para>
+		/// <para>  EResultLimitExceeded - ERROR: operation would exceed per-user inventory limits</para>
+		/// <para>  EResultFail - ERROR: unknown / generic error</para>
 		/// </summary>
-		public static ResultType GetResultStatus(SteamInventoryResult_t resultHandle) {
+		public static ResultType GetResultStatus(SteamInventoryResult resultHandle) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamInventory_GetResultStatus(resultHandle);
 		}
@@ -32,7 +32,7 @@ namespace Steamworks {
 		/// <para> Copies the contents of a result set into a flat array. The specific</para>
 		/// <para> contents of the result set depend on which query which was used.</para>
 		/// </summary>
-		public static bool GetResultItems(SteamInventoryResult_t resultHandle, SteamItemDetails_t[] pOutItemsArray, ref uint punOutItemsArraySize) {
+		public static bool GetResultItems(SteamInventoryResult resultHandle, SteamItemDetails[] pOutItemsArray, ref uint punOutItemsArraySize) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamInventory_GetResultItems(resultHandle, pOutItemsArray, ref punOutItemsArraySize);
 		}
@@ -41,7 +41,7 @@ namespace Steamworks {
 		/// <para> Returns the server time at which the result was generated. Compare against</para>
 		/// <para> the value of IClientUtils::GetServerRealTime() to determine age.</para>
 		/// </summary>
-		public static uint GetResultTimestamp(SteamInventoryResult_t resultHandle) {
+		public static uint GetResultTimestamp(SteamInventoryResult resultHandle) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamInventory_GetResultTimestamp(resultHandle);
 		}
@@ -51,7 +51,7 @@ namespace Steamworks {
 		/// <para> result does not. This is important when using DeserializeResult, to verify</para>
 		/// <para> that a remote player is not pretending to have a different user's inventory.</para>
 		/// </summary>
-		public static bool CheckResultSteamID(SteamInventoryResult_t resultHandle, CSteamID steamIDExpected) {
+		public static bool CheckResultSteamID(SteamInventoryResult resultHandle, SteamId steamIDExpected) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamInventory_CheckResultSteamID(resultHandle, steamIDExpected);
 		}
@@ -59,7 +59,7 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> Destroys a result handle and frees all associated memory.</para>
 		/// </summary>
-		public static void DestroyResult(SteamInventoryResult_t resultHandle) {
+		public static void DestroyResult(SteamInventoryResult resultHandle) {
 			InteropHelp.TestIfAvailableClient();
 			NativeMethods.ISteamInventory_DestroyResult(resultHandle);
 		}
@@ -74,7 +74,7 @@ namespace Steamworks {
 		/// <para> this function only when you are about to display the user's full inventory,</para>
 		/// <para> or if you expect that the inventory may have changed.</para>
 		/// </summary>
-		public static bool GetAllItems(out SteamInventoryResult_t pResultHandle) {
+		public static bool GetAllItems(out SteamInventoryResult pResultHandle) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamInventory_GetAllItems(out pResultHandle);
 		}
@@ -88,7 +88,7 @@ namespace Steamworks {
 		/// <para> currently equipped cosmetic items and serialize this to a buffer, and</para>
 		/// <para> then transmit this buffer to other players upon joining a game.</para>
 		/// </summary>
-		public static bool GetItemsByID(out SteamInventoryResult_t pResultHandle, SteamItemInstanceID_t[] pInstanceIDs, uint unCountInstanceIDs) {
+		public static bool GetItemsByID(out SteamInventoryResult pResultHandle, SteamItemInstanceID[] pInstanceIDs, uint unCountInstanceIDs) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamInventory_GetItemsByID(out pResultHandle, pInstanceIDs, unCountInstanceIDs);
 		}
@@ -108,7 +108,7 @@ namespace Steamworks {
 		/// <para> Results have a built-in timestamp which will be considered "expired" after</para>
 		/// <para> an hour has elapsed. See DeserializeResult for expiration handling.</para>
 		/// </summary>
-		public static bool SerializeResult(SteamInventoryResult_t resultHandle, byte[] pOutBuffer, out uint punOutBufferSize) {
+		public static bool SerializeResult(SteamInventoryResult resultHandle, byte[] pOutBuffer, out uint punOutBufferSize) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamInventory_SerializeResult(resultHandle, pOutBuffer, out punOutBufferSize);
 		}
@@ -120,7 +120,7 @@ namespace Steamworks {
 		/// <para> The bRESERVED_MUST_BE_FALSE flag is reserved for future use and should not</para>
 		/// <para> be set to true by your game at this time.</para>
 		/// <para> DeserializeResult has a potential soft-failure mode where the handle status</para>
-		/// <para> is set to k_EResultExpired. GetResultItems() still succeeds in this mode.</para>
+		/// <para> is set to EResultExpired. GetResultItems() still succeeds in this mode.</para>
 		/// <para> The "expired" result could indicate that the data may be out of date - not</para>
 		/// <para> just due to timed expiration (one hour), but also because one of the items</para>
 		/// <para> in the result set may have been traded or consumed since the result set was</para>
@@ -129,14 +129,14 @@ namespace Steamworks {
 		/// <para> simply ignore the "expired" result code and continue as normal, or you</para>
 		/// <para> could challenge the player with expired data to send an updated result set.</para>
 		/// </summary>
-		public static bool DeserializeResult(out SteamInventoryResult_t pOutResultHandle, byte[] pBuffer, uint unBufferSize, bool bRESERVED_MUST_BE_FALSE = false) {
+		public static bool DeserializeResult(out SteamInventoryResult pOutResultHandle, byte[] pBuffer, uint unBufferSize, bool bRESERVED_MUST_BE_FALSE = false) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamInventory_DeserializeResult(out pOutResultHandle, pBuffer, unBufferSize, bRESERVED_MUST_BE_FALSE);
 		}
 
 		/// <summary>
 		/// <para> INVENTORY ASYNC MODIFICATION</para>
-		/// <para> GenerateItems() creates one or more items and then generates a SteamInventoryCallback_t</para>
+		/// <para> GenerateItems() creates one or more items and then generates a SteamInventoryCallbact</para>
 		/// <para> notification with a matching nCallbackContext parameter. This API is insecure, and could</para>
 		/// <para> be abused by hacked clients. It is, however, very useful as a development cheat or as</para>
 		/// <para> a means of prototyping item-related features for your game. The use of GenerateItems can</para>
@@ -144,7 +144,7 @@ namespace Steamworks {
 		/// <para> If punArrayQuantity is not NULL, it should be the same length as pArrayItems and should</para>
 		/// <para> describe the quantity of each item to generate.</para>
 		/// </summary>
-		public static bool GenerateItems(out SteamInventoryResult_t pResultHandle, SteamItemDef_t[] pArrayItemDefs, uint[] punArrayQuantity, uint unArrayLength) {
+		public static bool GenerateItems(out SteamInventoryResult pResultHandle, SteamItemDef[] pArrayItemDefs, uint[] punArrayQuantity, uint unArrayLength) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamInventory_GenerateItems(out pResultHandle, pArrayItemDefs, punArrayQuantity, unArrayLength);
 		}
@@ -155,7 +155,7 @@ namespace Steamworks {
 		/// <para> were granted, if any. If no items were granted because the user isn't eligible for any</para>
 		/// <para> promotions, this is still considered a success.</para>
 		/// </summary>
-		public static bool GrantPromoItems(out SteamInventoryResult_t pResultHandle) {
+		public static bool GrantPromoItems(out SteamInventoryResult pResultHandle) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamInventory_GrantPromoItems(out pResultHandle);
 		}
@@ -166,12 +166,12 @@ namespace Steamworks {
 		/// <para> definition or set of item definitions. This can be useful if your game has custom UI for</para>
 		/// <para> showing a specific promo item to the user.</para>
 		/// </summary>
-		public static bool AddPromoItem(out SteamInventoryResult_t pResultHandle, SteamItemDef_t itemDef) {
+		public static bool AddPromoItem(out SteamInventoryResult pResultHandle, SteamItemDef itemDef) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamInventory_AddPromoItem(out pResultHandle, itemDef);
 		}
 
-		public static bool AddPromoItems(out SteamInventoryResult_t pResultHandle, SteamItemDef_t[] pArrayItemDefs, uint unArrayLength) {
+		public static bool AddPromoItems(out SteamInventoryResult pResultHandle, SteamItemDef[] pArrayItemDefs, uint unArrayLength) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamInventory_AddPromoItems(out pResultHandle, pArrayItemDefs, unArrayLength);
 		}
@@ -185,7 +185,7 @@ namespace Steamworks {
 		/// <para> fully blocked via the Steamworks website to minimize support/abuse issues such as the</para>
 		/// <para> clasic "my brother borrowed my laptop and deleted all of my rare items".</para>
 		/// </summary>
-		public static bool ConsumeItem(out SteamInventoryResult_t pResultHandle, SteamItemInstanceID_t itemConsume, uint unQuantity) {
+		public static bool ConsumeItem(out SteamInventoryResult pResultHandle, SteamItemInstanceID itemConsume, uint unQuantity) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamInventory_ConsumeItem(out pResultHandle, itemConsume, unQuantity);
 		}
@@ -200,7 +200,7 @@ namespace Steamworks {
 		/// <para> (Note: although GenerateItems may be hard or impossible to use securely in your game,</para>
 		/// <para> ExchangeItems is perfectly reasonable to use once the whitelists are set accordingly.)</para>
 		/// </summary>
-		public static bool ExchangeItems(out SteamInventoryResult_t pResultHandle, SteamItemDef_t[] pArrayGenerate, uint[] punArrayGenerateQuantity, uint unArrayGenerateLength, SteamItemInstanceID_t[] pArrayDestroy, uint[] punArrayDestroyQuantity, uint unArrayDestroyLength) {
+		public static bool ExchangeItems(out SteamInventoryResult pResultHandle, SteamItemDef[] pArrayGenerate, uint[] punArrayGenerateQuantity, uint unArrayGenerateLength, SteamItemInstanceID[] pArrayDestroy, uint[] punArrayDestroyQuantity, uint unArrayDestroyLength) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamInventory_ExchangeItems(out pResultHandle, pArrayGenerate, punArrayGenerateQuantity, unArrayGenerateLength, pArrayDestroy, punArrayDestroyQuantity, unArrayDestroyLength);
 		}
@@ -209,9 +209,9 @@ namespace Steamworks {
 		/// <para> TransferItemQuantity() is intended for use with items which are "stackable" (can have</para>
 		/// <para> quantity greater than one). It can be used to split a stack into two, or to transfer</para>
 		/// <para> quantity from one stack into another stack of identical items. To split one stack into</para>
-		/// <para> two, pass k_SteamItemInstanceIDInvalid for itemIdDest and a new item will be generated.</para>
+		/// <para> two, pass SteamItemInstanceIDInvalid for itemIdDest and a new item will be generated.</para>
 		/// </summary>
-		public static bool TransferItemQuantity(out SteamInventoryResult_t pResultHandle, SteamItemInstanceID_t itemIdSource, uint unQuantity, SteamItemInstanceID_t itemIdDest) {
+		public static bool TransferItemQuantity(out SteamInventoryResult pResultHandle, SteamItemInstanceID itemIdSource, uint unQuantity, SteamItemInstanceID itemIdDest) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamInventory_TransferItemQuantity(out pResultHandle, itemIdSource, unQuantity, itemIdDest);
 		}
@@ -246,7 +246,7 @@ namespace Steamworks {
 		/// <para> to directly control rarity. It is primarily useful during testing and development,</para>
 		/// <para> where you may wish to perform experiments with different types of drops.</para>
 		/// </summary>
-		public static bool TriggerItemDrop(out SteamInventoryResult_t pResultHandle, SteamItemDef_t dropListDefinition) {
+		public static bool TriggerItemDrop(out SteamInventoryResult pResultHandle, SteamItemDef dropListDefinition) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamInventory_TriggerItemDrop(out pResultHandle, dropListDefinition);
 		}
@@ -263,7 +263,7 @@ namespace Steamworks {
 		/// <para> item instance id numbers and quantities of the received items.</para>
 		/// <para> (Note: new item instance IDs are generated whenever an item changes ownership.)</para>
 		/// </summary>
-		public static bool TradeItems(out SteamInventoryResult_t pResultHandle, CSteamID steamIDTradePartner, SteamItemInstanceID_t[] pArrayGive, uint[] pArrayGiveQuantity, uint nArrayGiveLength, SteamItemInstanceID_t[] pArrayGet, uint[] pArrayGetQuantity, uint nArrayGetLength) {
+		public static bool TradeItems(out SteamInventoryResult pResultHandle, SteamId steamIDTradePartner, SteamItemInstanceID[] pArrayGive, uint[] pArrayGiveQuantity, uint nArrayGiveLength, SteamItemInstanceID[] pArrayGet, uint[] pArrayGetQuantity, uint nArrayGetLength) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamInventory_TradeItems(out pResultHandle, steamIDTradePartner, pArrayGive, pArrayGiveQuantity, nArrayGiveLength, pArrayGet, pArrayGetQuantity, nArrayGetLength);
 		}
@@ -278,7 +278,7 @@ namespace Steamworks {
 		/// <para> weapon mod = 55) and does not allow for adding new item types without a client patch.</para>
 		/// <para> LoadItemDefinitions triggers the automatic load and refresh of item definitions.</para>
 		/// <para> Every time new item definitions are available (eg, from the dynamic addition of new</para>
-		/// <para> item types while players are still in-game), a SteamInventoryDefinitionUpdate_t</para>
+		/// <para> item types while players are still in-game), a SteamInventoryDefinitionUpdate</para>
 		/// <para> callback will be fired.</para>
 		/// </summary>
 		public static bool LoadItemDefinitions() {
@@ -293,7 +293,7 @@ namespace Steamworks {
 		/// <para> contain the total size necessary for a subsequent call. Otherwise, the call will</para>
 		/// <para> return false if and only if there is not enough space in the output array.</para>
 		/// </summary>
-		public static bool GetItemDefinitionIDs(SteamItemDef_t[] pItemDefIDs, out uint punItemDefIDsArraySize) {
+		public static bool GetItemDefinitionIDs(SteamItemDef[] pItemDefIDs, out uint punItemDefIDsArraySize) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamInventory_GetItemDefinitionIDs(pItemDefIDs, out punItemDefIDsArraySize);
 		}
@@ -306,7 +306,7 @@ namespace Steamworks {
 		/// <para> Pass a NULL pointer for pchPropertyName to get a comma - separated list of available</para>
 		/// <para> property names.</para>
 		/// </summary>
-		public static bool GetItemDefinitionProperty(SteamItemDef_t iDefinition, string pchPropertyName, out string pchValueBuffer, ref uint punValueBufferSize) {
+		public static bool GetItemDefinitionProperty(SteamItemDef iDefinition, string pchPropertyName, out string pchValueBuffer, ref uint punValueBufferSize) {
 			InteropHelp.TestIfAvailableClient();
 			var pchValueBuffer2 = Marshal.AllocHGlobal((int)punValueBufferSize);
 			using (var pchPropertyName2 = new InteropHelp.UTF8StringHandle(pchPropertyName)) {

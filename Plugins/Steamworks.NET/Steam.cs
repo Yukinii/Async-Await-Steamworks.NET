@@ -77,7 +77,7 @@ namespace Steamworks {
 		//
 		//	STEAM_CALLBACK macros are meant for use inside of a C++ class definition.
 		//	They map a Steam notification callback directly to a class member function
-		//	which is automatically prototyped as "void func( callback_type *pParam )".
+		//	which is automatically prototyped as "void func( callbactype *pParam )".
 		//
 		//	CCallResult is used with specific Steam APIs that return "result handles".
 		//	The handle can be passed to a CCallResult object's Set function, along with
@@ -169,9 +169,9 @@ namespace Steamworks {
 			return NativeMethods.SteamGameServer_BSecure();
 		}
 
-		public static CSteamID GetSteamID() {
+		public static SteamId GetSteamID() {
 			InteropHelp.TestIfPlatformSupported();
-			return (CSteamID)NativeMethods.SteamGameServer_GetSteamID();
+			return (SteamId)NativeMethods.SteamGameServer_GetSteamID();
 		}
 
 		public static HSteamPipe GetHSteamPipe() {
@@ -186,44 +186,44 @@ namespace Steamworks {
 	}
 
 	public static class SteamEncryptedAppTicket {
-		public static bool BDecryptTicket(byte[] rgubTicketEncrypted, uint cubTicketEncrypted, byte[] rgubTicketDecrypted, ref uint pcubTicketDecrypted, byte[] rgubKey, int cubKey) {
+		public static bool BDecryptTicket(byte[] rgubTicketEncrypted, uint TicketEncrypted, byte[] rgubTicketDecrypted, ref uint pcubTicketDecrypted, byte[] rgubKey, int Key) {
 			InteropHelp.TestIfPlatformSupported();
-			return NativeMethods.BDecryptTicket(rgubTicketEncrypted, cubTicketEncrypted, rgubTicketDecrypted, ref pcubTicketDecrypted, rgubKey, cubKey);
+			return NativeMethods.BDecryptTicket(rgubTicketEncrypted, TicketEncrypted, rgubTicketDecrypted, ref pcubTicketDecrypted, rgubKey, Key);
 		}
 
-		public static bool BIsTicketForApp(byte[] rgubTicketDecrypted, uint cubTicketDecrypted, AppId appId) {
+		public static bool BIsTicketForApp(byte[] rgubTicketDecrypted, uint TicketDecrypted, AppId appId) {
 			InteropHelp.TestIfPlatformSupported();
-			return NativeMethods.BIsTicketForApp(rgubTicketDecrypted, cubTicketDecrypted, appId);
+			return NativeMethods.BIsTicketForApp(rgubTicketDecrypted, TicketDecrypted, appId);
 		}
 
-		public static uint GetTicketIssueTime(byte[] rgubTicketDecrypted, uint cubTicketDecrypted) {
+		public static uint GetTicketIssueTime(byte[] rgubTicketDecrypted, uint TicketDecrypted) {
 			InteropHelp.TestIfPlatformSupported();
-			return NativeMethods.GetTicketIssueTime(rgubTicketDecrypted, cubTicketDecrypted);
+			return NativeMethods.GetTicketIssueTime(rgubTicketDecrypted, TicketDecrypted);
 		}
 
-		public static void GetTicketSteamID(byte[] rgubTicketDecrypted, uint cubTicketDecrypted, out CSteamID psteamID) {
+		public static void GetTicketSteamID(byte[] rgubTicketDecrypted, uint TicketDecrypted, out SteamId psteamID) {
 			InteropHelp.TestIfPlatformSupported();
-			NativeMethods.GetTicketSteamID(rgubTicketDecrypted, cubTicketDecrypted, out psteamID);
+			NativeMethods.GetTicketSteamID(rgubTicketDecrypted, TicketDecrypted, out psteamID);
 		}
 
-		public static uint GetTicketAppID(byte[] rgubTicketDecrypted, uint cubTicketDecrypted) {
+		public static uint GetTicketAppID(byte[] rgubTicketDecrypted, uint TicketDecrypted) {
 			InteropHelp.TestIfPlatformSupported();
-			return NativeMethods.GetTicketAppID(rgubTicketDecrypted, cubTicketDecrypted);
+			return NativeMethods.GetTicketAppID(rgubTicketDecrypted, TicketDecrypted);
 		}
 
-		public static bool BUserOwnsAppInTicket(byte[] rgubTicketDecrypted, uint cubTicketDecrypted, AppId appId) {
+		public static bool BUserOwnsAppInTicket(byte[] rgubTicketDecrypted, uint TicketDecrypted, AppId appId) {
 			InteropHelp.TestIfPlatformSupported();
-			return NativeMethods.BUserOwnsAppInTicket(rgubTicketDecrypted, cubTicketDecrypted, appId);
+			return NativeMethods.BUserOwnsAppInTicket(rgubTicketDecrypted, TicketDecrypted, appId);
 		}
 
-		public static bool BUserIsVacBanned(byte[] rgubTicketDecrypted, uint cubTicketDecrypted) {
+		public static bool BUserIsVacBanned(byte[] rgubTicketDecrypted, uint TicketDecrypted) {
 			InteropHelp.TestIfPlatformSupported();
-			return NativeMethods.BUserIsVacBanned(rgubTicketDecrypted, cubTicketDecrypted);
+			return NativeMethods.BUserIsVacBanned(rgubTicketDecrypted, TicketDecrypted);
 		}
 
-		public static byte[] GetUserVariableData(byte[] rgubTicketDecrypted, uint cubTicketDecrypted, out uint pcubUserData) {
+		public static byte[] GetUserVariableData(byte[] rgubTicketDecrypted, uint TicketDecrypted, out uint pcubUserData) {
 			InteropHelp.TestIfPlatformSupported();
-			var punSecretData = NativeMethods.GetUserVariableData(rgubTicketDecrypted, cubTicketDecrypted, out pcubUserData);
+			var punSecretData = NativeMethods.GetUserVariableData(rgubTicketDecrypted, TicketDecrypted, out pcubUserData);
 			var ret = new byte[pcubUserData];
 			System.Runtime.InteropServices.Marshal.Copy(punSecretData, ret, 0, (int)pcubUserData);
 			return ret;

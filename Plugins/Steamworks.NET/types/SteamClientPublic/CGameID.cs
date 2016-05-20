@@ -9,10 +9,10 @@ namespace Steamworks {
 		public ulong _GameID;
 
 		public enum EGameIDType {
-			k_EGameIDTypeApp = 0,
-			k_EGameIDTypeGameMod = 1,
-			k_EGameIDTypeShortcut = 2,
-			k_EGameIDTypeP2P = 3,
+			EGameIDTypeApp = 0,
+			EGameIDTypeGameMod = 1,
+			EGameIDTypeShortcut = 2,
+			EGameIDTypeP2P = 3,
 		};
 
 		public CGameID(ulong GameID) {
@@ -27,17 +27,17 @@ namespace Steamworks {
 		public CGameID(AppId appId, uint nModID) {
 			_GameID = 0;
 			SetAppID(appId);
-			SetType(EGameIDType.k_EGameIDTypeGameMod);
+			SetType(EGameIDType.EGameIDTypeGameMod);
 			SetModID(nModID);
 		}
 
-		public bool IsSteamApp() => Type() == EGameIDType.k_EGameIDTypeApp;
+		public bool IsSteamApp() => Type() == EGameIDType.EGameIDTypeApp;
 
-	    public bool IsMod() => Type() == EGameIDType.k_EGameIDTypeGameMod;
+	    public bool IsMod() => Type() == EGameIDType.EGameIDTypeGameMod;
 
-	    public bool IsShortcut() => Type() == EGameIDType.k_EGameIDTypeShortcut;
+	    public bool IsShortcut() => Type() == EGameIDType.EGameIDTypeShortcut;
 
-	    public bool IsP2PFile() => Type() == EGameIDType.k_EGameIDTypeP2P;
+	    public bool IsP2PFile() => Type() == EGameIDType.EGameIDTypeP2P;
 
 	    public AppId AppID() => new AppId((uint)(_GameID & 0xFFFFFFul));
 
@@ -48,16 +48,16 @@ namespace Steamworks {
 	    public bool IsValid() {
 			// Each type has it's own invalid fixed point:
 			switch (Type()) {
-				case EGameIDType.k_EGameIDTypeApp:
+				case EGameIDType.EGameIDTypeApp:
 					return AppID() != AppId.Invalid;
 
-				case EGameIDType.k_EGameIDTypeGameMod:
+				case EGameIDType.EGameIDTypeGameMod:
 					return AppID() != AppId.Invalid && (ModID() & 0x80000000) != 0;
 
-				case EGameIDType.k_EGameIDTypeShortcut:
+				case EGameIDType.EGameIDTypeShortcut:
 					return (ModID() & 0x80000000) != 0;
 
-				case EGameIDType.k_EGameIDTypeP2P:
+				case EGameIDType.EGameIDTypeP2P:
 					return AppID() == AppId.Invalid && (ModID() & 0x80000000) != 0;
 
 				default:

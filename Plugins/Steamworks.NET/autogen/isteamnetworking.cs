@@ -16,15 +16,15 @@ namespace Steamworks {
 		/// <para> Sends a P2P packet to the specified user</para>
 		/// <para> UDP-like, unreliable and a max packet size of 1200 bytes</para>
 		/// <para> the first packet send may be delayed as the NAT-traversal code runs</para>
-		/// <para> if we can't get through to the user, an error will be posted via the callback P2PSessionConnectFail_t</para>
+		/// <para> if we can't get through to the user, an error will be posted via the callback P2PSessionConnectFail</para>
 		/// <para> see Ep2PSend enum above for the descriptions of the different ways of sending packets</para>
 		/// <para> nChannel is a routing number you can use to help route message to different systems 	- you'll have to call ReadP2PPacket()</para>
 		/// <para> with the same channel number in order to retrieve the data on the other end</para>
 		/// <para> using different channels to talk to the same user will still use the same underlying p2p connection, saving on resources</para>
 		/// </summary>
-		public static bool SendP2PPacket(CSteamID steamIDRemote, byte[] pubData, uint cubData, Ep2PSend eP2PSendType, int nChannel = 0) {
+		public static bool SendP2PPacket(SteamId steamIDRemote, byte[] pubData, uint Data, Ep2PSend eP2PSendType, int nChannel = 0) {
 			InteropHelp.TestIfAvailableClient();
-			return NativeMethods.ISteamNetworking_SendP2PPacket(steamIDRemote, pubData, cubData, eP2PSendType, nChannel);
+			return NativeMethods.ISteamNetworking_SendP2PPacket(steamIDRemote, pubData, Data, eP2PSendType, nChannel);
 		}
 
 		/// <summary>
@@ -41,29 +41,29 @@ namespace Steamworks {
 		/// <para> if the buffer passed in is too small, the message will be truncated</para>
 		/// <para> this call is not blocking, and will return false if no data is available</para>
 		/// </summary>
-		public static bool ReadP2PPacket(byte[] pubDest, uint cubDest, out uint pcubMsgSize, out CSteamID psteamIDRemote, int nChannel = 0) {
+		public static bool ReadP2PPacket(byte[] pubDest, uint Dest, out uint pcubMsgSize, out SteamId psteamIDRemote, int nChannel = 0) {
 			InteropHelp.TestIfAvailableClient();
-			return NativeMethods.ISteamNetworking_ReadP2PPacket(pubDest, cubDest, out pcubMsgSize, out psteamIDRemote, nChannel);
+			return NativeMethods.ISteamNetworking_ReadP2PPacket(pubDest, Dest, out pcubMsgSize, out psteamIDRemote, nChannel);
 		}
 
 		/// <summary>
-		/// <para> AcceptP2PSessionWithUser() should only be called in response to a P2PSessionRequest_t callback</para>
-		/// <para> P2PSessionRequest_t will be posted if another user tries to send you a packet that you haven't talked to yet</para>
+		/// <para> AcceptP2PSessionWithUser() should only be called in response to a P2PSessionRequest callback</para>
+		/// <para> P2PSessionRequest will be posted if another user tries to send you a packet that you haven't talked to yet</para>
 		/// <para> if you don't want to talk to the user, just ignore the request</para>
-		/// <para> if the user continues to send you packets, another P2PSessionRequest_t will be posted periodically</para>
+		/// <para> if the user continues to send you packets, another P2PSessionRequest will be posted periodically</para>
 		/// <para> this may be called multiple times for a single user</para>
 		/// <para> (if you've called SendP2PPacket() on the other user, this implicitly accepts the session request)</para>
 		/// </summary>
-		public static bool AcceptP2PSessionWithUser(CSteamID steamIDRemote) {
+		public static bool AcceptP2PSessionWithUser(SteamId steamIDRemote) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamNetworking_AcceptP2PSessionWithUser(steamIDRemote);
 		}
 
 		/// <summary>
 		/// <para> call CloseP2PSessionWithUser() when you're done talking to a user, will free up resources under-the-hood</para>
-		/// <para> if the remote user tries to send data to you again, another P2PSessionRequest_t callback will be posted</para>
+		/// <para> if the remote user tries to send data to you again, another P2PSessionRequest callback will be posted</para>
 		/// </summary>
-		public static bool CloseP2PSessionWithUser(CSteamID steamIDRemote) {
+		public static bool CloseP2PSessionWithUser(SteamId steamIDRemote) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamNetworking_CloseP2PSessionWithUser(steamIDRemote);
 		}
@@ -71,19 +71,19 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> call CloseP2PChannelWithUser() when you're done talking to a user on a specific channel. Once all channels</para>
 		/// <para> open channels to a user have been closed, the open session to the user will be closed and new data from this</para>
-		/// <para> user will trigger a P2PSessionRequest_t callback</para>
+		/// <para> user will trigger a P2PSessionRequest callback</para>
 		/// </summary>
-		public static bool CloseP2PChannelWithUser(CSteamID steamIDRemote, int nChannel) {
+		public static bool CloseP2PChannelWithUser(SteamId steamIDRemote, int nChannel) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamNetworking_CloseP2PChannelWithUser(steamIDRemote, nChannel);
 		}
 
 		/// <summary>
-		/// <para> fills out P2PSessionState_t structure with details about the underlying connection to the user</para>
+		/// <para> fills out P2PSessionState structure with details about the underlying connection to the user</para>
 		/// <para> should only needed for debugging purposes</para>
 		/// <para> returns false if no connection exists to the specified user</para>
 		/// </summary>
-		public static bool GetP2PSessionState(CSteamID steamIDRemote, out P2PSessionState_t pConnectionState) {
+		public static bool GetP2PSessionState(SteamId steamIDRemote, out P2PSessionState pConnectionState) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamNetworking_GetP2PSessionState(steamIDRemote, out pConnectionState);
 		}
@@ -107,7 +107,7 @@ namespace Steamworks {
 		/// <para> and these older functions will be removed eventually</para>
 		/// <para>//////////////////////////////////////////////////////////////////////////////////////////</para>
 		/// <para> creates a socket and listens others to connect</para>
-		/// <para> will trigger a SocketStatusCallback_t callback on another client connecting</para>
+		/// <para> will trigger a SocketStatusCallbact callback on another client connecting</para>
 		/// <para> nVirtualP2PPort is the unique ID that the client will connect to, in case you have multiple ports</para>
 		/// <para>		this can usually just be 0 unless you want multiple sets of connections</para>
 		/// <para> unIP is the local IP address to bind to</para>
@@ -115,25 +115,25 @@ namespace Steamworks {
 		/// <para> unPort is the port to use</para>
 		/// <para>		pass in 0 if you don't want users to be able to connect via IP/Port, but expect to be always peer-to-peer connections only</para>
 		/// </summary>
-		public static SNetListenSocket_t CreateListenSocket(int nVirtualP2PPort, uint nIP, ushort nPort, bool bAllowUseOfPacketRelay) {
+		public static SNetListenSocket CreateListenSocket(int nVirtualP2PPort, uint nIP, ushort nPort, bool bAllowUseOfPacketRelay) {
 			InteropHelp.TestIfAvailableClient();
-			return (SNetListenSocket_t)NativeMethods.ISteamNetworking_CreateListenSocket(nVirtualP2PPort, nIP, nPort, bAllowUseOfPacketRelay);
+			return (SNetListenSocket)NativeMethods.ISteamNetworking_CreateListenSocket(nVirtualP2PPort, nIP, nPort, bAllowUseOfPacketRelay);
 		}
 
 		/// <summary>
 		/// <para> creates a socket and begin connection to a remote destination</para>
 		/// <para> can connect via a known steamID (client or game server), or directly to an IP</para>
-		/// <para> on success will trigger a SocketStatusCallback_t callback</para>
-		/// <para> on failure or timeout will trigger a SocketStatusCallback_t callback with a failure code in _eSNetSocketState</para>
+		/// <para> on success will trigger a SocketStatusCallbact callback</para>
+		/// <para> on failure or timeout will trigger a SocketStatusCallbact callback with a failure code in _eSNetSocketState</para>
 		/// </summary>
-		public static SNetSocket_t CreateP2PConnectionSocket(CSteamID steamIDTarget, int nVirtualPort, int nTimeoutSec, bool bAllowUseOfPacketRelay) {
+		public static SNetSocket CreateP2PConnectionSocket(SteamId steamIDTarget, int nVirtualPort, int nTimeoutSec, bool bAllowUseOfPacketRelay) {
 			InteropHelp.TestIfAvailableClient();
-			return (SNetSocket_t)NativeMethods.ISteamNetworking_CreateP2PConnectionSocket(steamIDTarget, nVirtualPort, nTimeoutSec, bAllowUseOfPacketRelay);
+			return (SNetSocket)NativeMethods.ISteamNetworking_CreateP2PConnectionSocket(steamIDTarget, nVirtualPort, nTimeoutSec, bAllowUseOfPacketRelay);
 		}
 
-		public static SNetSocket_t CreateConnectionSocket(uint nIP, ushort nPort, int nTimeoutSec) {
+		public static SNetSocket CreateConnectionSocket(uint nIP, ushort nPort, int nTimeoutSec) {
 			InteropHelp.TestIfAvailableClient();
-			return (SNetSocket_t)NativeMethods.ISteamNetworking_CreateConnectionSocket(nIP, nPort, nTimeoutSec);
+			return (SNetSocket)NativeMethods.ISteamNetworking_CreateConnectionSocket(nIP, nPort, nTimeoutSec);
 		}
 
 		/// <summary>
@@ -141,7 +141,7 @@ namespace Steamworks {
 		/// <para> any unread data on the socket will be thrown away</para>
 		/// <para> if bNotifyRemoteEnd is set, socket will not be completely destroyed until the remote end acknowledges the disconnect</para>
 		/// </summary>
-		public static bool DestroySocket(SNetSocket_t hSocket, bool bNotifyRemoteEnd) {
+		public static bool DestroySocket(SNetSocket hSocket, bool bNotifyRemoteEnd) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamNetworking_DestroySocket(hSocket, bNotifyRemoteEnd);
 		}
@@ -149,7 +149,7 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> destroying a listen socket will automatically kill all the regular sockets generated from it</para>
 		/// </summary>
-		public static bool DestroyListenSocket(SNetListenSocket_t hSocket, bool bNotifyRemoteEnd) {
+		public static bool DestroyListenSocket(SNetListenSocket hSocket, bool bNotifyRemoteEnd) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamNetworking_DestroyListenSocket(hSocket, bNotifyRemoteEnd);
 		}
@@ -161,9 +161,9 @@ namespace Steamworks {
 		/// <para> use the reliable flag with caution; although the resend rate is pretty aggressive,</para>
 		/// <para> it can still cause stalls in receiving data (like TCP)</para>
 		/// </summary>
-		public static bool SendDataOnSocket(SNetSocket_t hSocket, IntPtr pubData, uint cubData, bool bReliable) {
+		public static bool SendDataOnSocket(SNetSocket hSocket, IntPtr pubData, uint Data, bool bReliable) {
 			InteropHelp.TestIfAvailableClient();
-			return NativeMethods.ISteamNetworking_SendDataOnSocket(hSocket, pubData, cubData, bReliable);
+			return NativeMethods.ISteamNetworking_SendDataOnSocket(hSocket, pubData, Data, bReliable);
 		}
 
 		/// <summary>
@@ -171,7 +171,7 @@ namespace Steamworks {
 		/// <para> returns false if there is no data remaining</para>
 		/// <para> fills out *pcubMsgSize with the size of the next message, in bytes</para>
 		/// </summary>
-		public static bool IsDataAvailableOnSocket(SNetSocket_t hSocket, out uint pcubMsgSize) {
+		public static bool IsDataAvailableOnSocket(SNetSocket hSocket, out uint pcubMsgSize) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamNetworking_IsDataAvailableOnSocket(hSocket, out pcubMsgSize);
 		}
@@ -179,12 +179,12 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> fills in pubDest with the contents of the message</para>
 		/// <para> messages are always complete, of the same size as was sent (i.e. packetized, not streaming)</para>
-		/// <para> if *pcubMsgSize &lt; cubDest, only partial data is written</para>
+		/// <para> if *pcubMsgSize &lt; Dest, only partial data is written</para>
 		/// <para> returns false if no data is available</para>
 		/// </summary>
-		public static bool RetrieveDataFromSocket(SNetSocket_t hSocket, IntPtr pubDest, uint cubDest, out uint pcubMsgSize) {
+		public static bool RetrieveDataFromSocket(SNetSocket hSocket, IntPtr pubDest, uint Dest, out uint pcubMsgSize) {
 			InteropHelp.TestIfAvailableClient();
-			return NativeMethods.ISteamNetworking_RetrieveDataFromSocket(hSocket, pubDest, cubDest, out pcubMsgSize);
+			return NativeMethods.ISteamNetworking_RetrieveDataFromSocket(hSocket, pubDest, Dest, out pcubMsgSize);
 		}
 
 		/// <summary>
@@ -193,7 +193,7 @@ namespace Steamworks {
 		/// <para> fills out *pcubMsgSize with the size of the next message, in bytes</para>
 		/// <para> fills out *phSocket with the socket that data is available on</para>
 		/// </summary>
-		public static bool IsDataAvailable(SNetListenSocket_t hListenSocket, out uint pcubMsgSize, out SNetSocket_t phSocket) {
+		public static bool IsDataAvailable(SNetListenSocket hListenSocket, out uint pcubMsgSize, out SNetSocket phSocket) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamNetworking_IsDataAvailable(hListenSocket, out pcubMsgSize, out phSocket);
 		}
@@ -202,19 +202,19 @@ namespace Steamworks {
 		/// <para> retrieves data from any socket that has been connected off this listen socket</para>
 		/// <para> fills in pubDest with the contents of the message</para>
 		/// <para> messages are always complete, of the same size as was sent (i.e. packetized, not streaming)</para>
-		/// <para> if *pcubMsgSize &lt; cubDest, only partial data is written</para>
+		/// <para> if *pcubMsgSize &lt; Dest, only partial data is written</para>
 		/// <para> returns false if no data is available</para>
 		/// <para> fills out *phSocket with the socket that data is available on</para>
 		/// </summary>
-		public static bool RetrieveData(SNetListenSocket_t hListenSocket, IntPtr pubDest, uint cubDest, out uint pcubMsgSize, out SNetSocket_t phSocket) {
+		public static bool RetrieveData(SNetListenSocket hListenSocket, IntPtr pubDest, uint Dest, out uint pcubMsgSize, out SNetSocket phSocket) {
 			InteropHelp.TestIfAvailableClient();
-			return NativeMethods.ISteamNetworking_RetrieveData(hListenSocket, pubDest, cubDest, out pcubMsgSize, out phSocket);
+			return NativeMethods.ISteamNetworking_RetrieveData(hListenSocket, pubDest, Dest, out pcubMsgSize, out phSocket);
 		}
 
 		/// <summary>
 		/// <para> returns information about the specified socket, filling out the contents of the pointers</para>
 		/// </summary>
-		public static bool GetSocketInfo(SNetSocket_t hSocket, out CSteamID pSteamIDRemote, out int peSocketStatus, out uint punIPRemote, out ushort punPortRemote) {
+		public static bool GetSocketInfo(SNetSocket hSocket, out SteamId pSteamIDRemote, out int peSocketStatus, out uint punIPRemote, out ushort punPortRemote) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamNetworking_GetSocketInfo(hSocket, out pSteamIDRemote, out peSocketStatus, out punIPRemote, out punPortRemote);
 		}
@@ -223,7 +223,7 @@ namespace Steamworks {
 		/// <para> returns which local port the listen socket is bound to</para>
 		/// <para> *pnIP and *pnPort will be 0 if the socket is set to listen for P2P connections only</para>
 		/// </summary>
-		public static bool GetListenSocketInfo(SNetListenSocket_t hListenSocket, out uint pnIP, out ushort pnPort) {
+		public static bool GetListenSocketInfo(SNetListenSocket hListenSocket, out uint pnIP, out ushort pnPort) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamNetworking_GetListenSocketInfo(hListenSocket, out pnIP, out pnPort);
 		}
@@ -231,7 +231,7 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> returns true to describe how the socket ended up connecting</para>
 		/// </summary>
-		public static EsNetSocketConnectionType GetSocketConnectionType(SNetSocket_t hSocket) {
+		public static EsNetSocketConnectionType GetSocketConnectionType(SNetSocket hSocket) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamNetworking_GetSocketConnectionType(hSocket);
 		}
@@ -239,7 +239,7 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> max packet size, in bytes</para>
 		/// </summary>
-		public static int GetMaxPacketSize(SNetSocket_t hSocket) {
+		public static int GetMaxPacketSize(SNetSocket hSocket) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamNetworking_GetMaxPacketSize(hSocket);
 		}

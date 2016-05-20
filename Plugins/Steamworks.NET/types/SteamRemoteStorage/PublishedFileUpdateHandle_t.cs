@@ -5,30 +5,30 @@
 // Changes to this file will be reverted when you update Steamworks.NET
 
 namespace Steamworks {
-	public struct PublishedFileUpdateHandle_t : System.IEquatable<PublishedFileUpdateHandle_t>, System.IComparable<PublishedFileUpdateHandle_t> {
-		public static readonly PublishedFileUpdateHandle_t Invalid = new PublishedFileUpdateHandle_t(0xffffffffffffffff);
+	public struct PublishedFileUpdateHandle : System.IEquatable<PublishedFileUpdateHandle>, System.IComparable<PublishedFileUpdateHandle> {
+		public static readonly PublishedFileUpdateHandle Invalid = new PublishedFileUpdateHandle(0xffffffffffffffff);
 		public ulong _PublishedFileUpdateHandle;
 
-		public PublishedFileUpdateHandle_t(ulong value) {
+		public PublishedFileUpdateHandle(ulong value) {
 			_PublishedFileUpdateHandle = value;
 		}
 
 		public override string ToString() => _PublishedFileUpdateHandle.ToString();
 
-	    public override bool Equals(object other) => other is PublishedFileUpdateHandle_t && this == (PublishedFileUpdateHandle_t)other;
+	    public override bool Equals(object other) => other is PublishedFileUpdateHandle && this == (PublishedFileUpdateHandle)other;
 
 	    public override int GetHashCode() => _PublishedFileUpdateHandle.GetHashCode();
 
-	    public static bool operator ==(PublishedFileUpdateHandle_t x, PublishedFileUpdateHandle_t y) => x._PublishedFileUpdateHandle == y._PublishedFileUpdateHandle;
+	    public static bool operator ==(PublishedFileUpdateHandle x, PublishedFileUpdateHandle y) => x._PublishedFileUpdateHandle == y._PublishedFileUpdateHandle;
 
-	    public static bool operator !=(PublishedFileUpdateHandle_t x, PublishedFileUpdateHandle_t y) => !(x == y);
+	    public static bool operator !=(PublishedFileUpdateHandle x, PublishedFileUpdateHandle y) => !(x == y);
 
-	    public static explicit operator PublishedFileUpdateHandle_t(ulong value) => new PublishedFileUpdateHandle_t(value);
+	    public static explicit operator PublishedFileUpdateHandle(ulong value) => new PublishedFileUpdateHandle(value);
 
-	    public static explicit operator ulong(PublishedFileUpdateHandle_t that) => that._PublishedFileUpdateHandle;
+	    public static explicit operator ulong(PublishedFileUpdateHandle that) => that._PublishedFileUpdateHandle;
 
-	    public bool Equals(PublishedFileUpdateHandle_t other) => _PublishedFileUpdateHandle == other._PublishedFileUpdateHandle;
+	    public bool Equals(PublishedFileUpdateHandle other) => _PublishedFileUpdateHandle == other._PublishedFileUpdateHandle;
 
-	    public int CompareTo(PublishedFileUpdateHandle_t other) => _PublishedFileUpdateHandle.CompareTo(other._PublishedFileUpdateHandle);
+	    public int CompareTo(PublishedFileUpdateHandle other) => _PublishedFileUpdateHandle.CompareTo(other._PublishedFileUpdateHandle);
 	}
 }

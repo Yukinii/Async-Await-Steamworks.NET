@@ -35,3 +35,18 @@ private async void ItemInstalled(ItemInstalled item)
 }
 ```
 
+##### The Clean Part
+
+No more '_t' class endings or other artifacts from automated code generation! 
+Compare the following two screenshots to the two I took with this wrapper and you'll surely see why this wrapper is easier to use.
+
+Steamworks.NET
+![alt text](http://img.prntscr.com/img?url=http://i.imgur.com/JDrHtfZ.png)
+![alt text](http://img.prntscr.com/img?url=http://i.imgur.com/LXDlcsR.png)
+
+Steamworks.NET Async/Await
+![alt text](http://img.prntscr.com/img?url=http://i.imgur.com/X05A8c2.png)
+![alt text](http://img.prntscr.com/img?url=http://i.imgur.com/OOzvNev.png)
+
+
+

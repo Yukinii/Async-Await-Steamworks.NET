@@ -1,12 +1,15 @@
-### FOR THE ORIGINAL CODE GO TO [STEAMWORKS.NET](https://github.com/rlabrecque/Steamworks.NET)
+#### FOR THE ORIGINAL CODE GO TO [STEAMWORKS.NET](https://github.com/rlabrecque/Steamworks.NET)
 
-Task Async/Await Steamworks.NET Wrapper
-=======
+#Task Async/Await Steamworks.NET Wrapper
 
-1. Getting Started
+
+##### Getting Started
 
 ```csharp
- public SteamManager()
+        private static SteamManager _Instance;
+        public static SteamManager Instance => _Instance ?? new SteamManager();
+        
+        public SteamManager()
         {
             if (_Instance == null)
                 _Instance = this;
@@ -22,13 +25,13 @@ Task Async/Await Steamworks.NET Wrapper
 ```
 Notice the two events on the bottom? No more CallbackResult mess!
 
-2. The Async/Await Part
+##### The Async/Await Part
 
 ```csharp
-private async void ItemInstalled(ItemInstalled param)
+private async void ItemInstalled(ItemInstalled item)
 {
-    var details = await SteamUGC.GetItemDetailsAsync(param.PublishedFileId);
-    Console.WriteLine("Installed: "+details.Details.Title);
+     var result = await SteamUGC.GetItemDetailsAsync(item.PublishedFileId);
+     Console.WriteLine("Installed: "+result.Details.Title);
 }
 ```
 

@@ -21,3 +21,14 @@ Task Async/Await Steamworks.NET Wrapper
         }
 ```
 Notice the two events on the bottom? No more CallbackResult mess!
+
+2. The Async/Await Part
+
+```csharp
+private async void ItemInstalled(ItemInstalled param)
+{
+    var details = await SteamUGC.GetItemDetailsAsync(param.PublishedFileId);
+    Console.WriteLine("Installed: "+details.Details.Title);
+}
+```
+

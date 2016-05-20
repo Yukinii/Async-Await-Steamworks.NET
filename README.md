@@ -41,12 +41,23 @@ No more '_t' class endings or other artifacts from automated code generation!
 Compare the following two screenshots to the two I took with this wrapper and you'll surely see why this wrapper is easier to use.
 
 Steamworks.NET
-![alt text](http://img.prntscr.com/img?url=http://i.imgur.com/JDrHtfZ.png)
-![alt text](http://img.prntscr.com/img?url=http://i.imgur.com/LXDlcsR.png)
+
+<p align="left">
+  <img src="http://img.prntscr.com/img?url=http://i.imgur.com/JDrHtfZ.png" width="450"/>
+  <img src="http://img.prntscr.com/img?url=http://i.imgur.com/LXDlcsR.png" width="450"/>
+</p>
+
 
 Steamworks.NET Async/Await
-![alt text](http://img.prntscr.com/img?url=http://i.imgur.com/X05A8c2.png)
-![alt text](http://img.prntscr.com/img?url=http://i.imgur.com/OOzvNev.png)
+
+<p align="left">
+  <img src="http://img.prntscr.com/img?url=http://i.imgur.com/X05A8c2.png" width="450"/>
+  <img src="http://img.prntscr.com/img?url=http://i.imgur.com/OOzvNev.png" width="450"/>
+</p>
 
 
+[img1]: http://img.prntscr.com/img?url=http://i.imgur.com/JDrHtfZ.png
+[img2]: http://img.prntscr.com/img?url=http://i.imgur.com/LXDlcsR.png
+[img3]: http://img.prntscr.com/img?url=http://i.imgur.com/X05A8c2.png
+[img4]: http://img.prntscr.com/img?url=http://i.imgur.com/OOzvNev.png
 

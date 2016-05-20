@@ -27,12 +27,29 @@ Notice the two events on the bottom? No more CallbackResult mess!
 
 ##### The Async/Await Part
 
+Async/Await version:
+
 ```csharp
-private async void ItemInstalled(ItemInstalled item)
-{
-     var result = await SteamUGC.GetItemDetailsAsync(item.PublishedFileId);
-     Console.WriteLine("Installed: "+result.Details.Title);
-}
+        private async void ItemInstalled(ItemInstalled item)
+        {
+             var result = await SteamUGC.GetItemDetailsAsync(item.PublishedFileId);
+             Console.WriteLine("Installed: "+result.Details.Title);
+        }
+```
+
+versus...
+
+```csharp
+        private void ItemInstalled(ItemInstalled_t param)
+        {
+            var call = SteamUGC.RequestUGCDetails(param.m_nPublishedFileId, 0);
+            var detailRequestResult = new CallResult<SteamUGCRequestUGCDetailsResult_t>();
+            detailRequestResult.Set(call, (result, isCached) =>
+            {
+                Console.WriteLine("Installed: " + result.m_details.m_rgchTitle);
+            });
+            //now hold the flow here somehow to return the data to a UI since the result will come in whenever..
+        }
 ```
 
 ##### The Clean Part
@@ -54,10 +71,4 @@ Steamworks.NET Async/Await
   <img src="http://img.prntscr.com/img?url=http://i.imgur.com/X05A8c2.png" width="350"/>
   <img src="http://img.prntscr.com/img?url=http://i.imgur.com/OOzvNev.png" width="250"/>
 </p>
-
-
-[img1]: http://img.prntscr.com/img?url=http://i.imgur.com/JDrHtfZ.png
-[img2]: http://img.prntscr.com/img?url=http://i.imgur.com/LXDlcsR.png
-[img3]: http://img.prntscr.com/img?url=http://i.imgur.com/X05A8c2.png
-[img4]: http://img.prntscr.com/img?url=http://i.imgur.com/OOzvNev.png
 

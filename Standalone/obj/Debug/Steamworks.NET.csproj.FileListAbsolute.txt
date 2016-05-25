@@ -2,3 +2,4 @@ x:\Users\domi\Desktop\GIT\Steamworks.NET\Standalone\bin\Debug\Steamworks.NET.dll
 x:\Users\domi\Desktop\GIT\Steamworks.NET\Standalone\bin\Debug\Steamworks.NET.pdb
 x:\Users\domi\Desktop\GIT\Steamworks.NET\Standalone\obj\Debug\Steamworks.NET.dll
 x:\Users\domi\Desktop\GIT\Steamworks.NET\Standalone\obj\Debug\Steamworks.NET.pdb
+x:\Users\domi\Desktop\GIT\Steamworks.NET\Standalone\obj\Debug\Steamworks.NET.csprojResolveAssemblyReference.cache

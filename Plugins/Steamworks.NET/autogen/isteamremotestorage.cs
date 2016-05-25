@@ -290,13 +290,13 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> publishing UGC</para>
 		/// </summary>
-		public static SteamAPICall PublishWorkshopFile(string File, string PreviewFile, AppId nConsumerAppId, string Title, string Description, ERemoteStoragePublishedFileVisibility eVisibility, System.Collections.Generic.IList<string> pTags, EWorkshopFileType eWorkshopFileType) {
+		public static SteamAPICall PublishWorkshopFile(string File, string PreviewFile, AppId nConsumerAppId, string Title, string Description, Visibility eVisibility, System.Collections.Generic.IList<string> pTags, WorkshopFileType workshopFileType) {
 			InteropHelp.TestIfAvailableClient();
 			using (var File2 = new InteropHelp.UTF8StringHandle(File))
 			using (var PreviewFile2 = new InteropHelp.UTF8StringHandle(PreviewFile))
 			using (var Title2 = new InteropHelp.UTF8StringHandle(Title))
 			using (var Description2 = new InteropHelp.UTF8StringHandle(Description)) {
-				return (SteamAPICall)NativeMethods.ISteamRemoteStorage_PublishWorkshopFile(File2, PreviewFile2, nConsumerAppId, Title2, Description2, eVisibility, new InteropHelp.SteamParamStringArray(pTags), eWorkshopFileType);
+				return (SteamAPICall)NativeMethods.ISteamRemoteStorage_PublishWorkshopFile(File2, PreviewFile2, nConsumerAppId, Title2, Description2, eVisibility, new InteropHelp.SteamParamStringArray(pTags), workshopFileType);
 			}
 		}
 
@@ -333,7 +333,7 @@ namespace Steamworks {
 			}
 		}
 
-		public static bool UpdatePublishedFileVisibility(PublishedFileUpdateHandle updateHandle, ERemoteStoragePublishedFileVisibility eVisibility) {
+		public static bool UpdatePublishedFileVisibility(PublishedFileUpdateHandle updateHandle, Visibility eVisibility) {
 			InteropHelp.TestIfAvailableClient();
 			return NativeMethods.ISteamRemoteStorage_UpdatePublishedFileVisibility(updateHandle, eVisibility);
 		}
@@ -413,7 +413,7 @@ namespace Steamworks {
 			return (SteamAPICall)NativeMethods.ISteamRemoteStorage_EnumerateUserSharedWorkshopFiles(steamId, unStartIndex, new InteropHelp.SteamParamStringArray(pRequiredTags), new InteropHelp.SteamParamStringArray(pExcludedTags));
 		}
 
-		public static SteamAPICall PublishVideo(EWorkshopVideoProvider eVideoProvider, string VideoAccount, string VideoIdentifier, string PreviewFile, AppId nConsumerAppId, string Title, string Description, ERemoteStoragePublishedFileVisibility eVisibility, System.Collections.Generic.IList<string> pTags) {
+		public static SteamAPICall PublishVideo(EWorkshopVideoProvider eVideoProvider, string VideoAccount, string VideoIdentifier, string PreviewFile, AppId nConsumerAppId, string Title, string Description, Visibility eVisibility, System.Collections.Generic.IList<string> pTags) {
 			InteropHelp.TestIfAvailableClient();
 			using (var VideoAccount2 = new InteropHelp.UTF8StringHandle(VideoAccount))
 			using (var VideoIdentifier2 = new InteropHelp.UTF8StringHandle(VideoIdentifier))

@@ -6,6 +6,8 @@
 
 #define VERSION_SAFE_STEAM_API_INTERFACES
 
+using System.Timers;
+
 namespace Steamworks {
 	public static class Version {
 		public const string SteamworksNetVersion = "9.0.0";
@@ -15,25 +17,9 @@ namespace Steamworks {
 		public const int SteamAPI64DllSize = 239184;
 	}
 
-	public static class SteamAPI {
-		//----------------------------------------------------------------------------------------------------------------------------------------------------------//
-		//	Steam API setup & shutdown
-		//
-		//	These functions manage loading, initializing and shutdown of the steamclient.dll
-		//
-		//----------------------------------------------------------------------------------------------------------------------------------------------------------//
-
-		// Detects if your executable was launched through the Steam client, and restarts your game through
-		// the client if necessary. The Steam client will be started if it is not running.
-		//
-		// Returns: true if your executable was NOT launched through the Steam client. This function will
-		//          then start your application through the client. Your current process should exit.
-		//
-		//          false if your executable was started through the Steam client or a stea_appid.txt file
-		//          is present in your game's directory (for development). Your current process should continue.
-		//
-		// NOTE: This function should be used only if you are using CEG or not using Steam's DRM. Once applied
-		//       to your executable, Steam's DRM will handle restarting through Steam if necessary.
+	public static class SteamAPI
+	{
+	    public static Timer SteamCallbackTimer = new Timer(500);
 		public static bool RestartAppIfNecessary(AppId unOwappId) {
 			InteropHelp.TestIfPlatformSupported();
 			return NativeMethods.SteamAPI_RestartAppIfNecessary(unOwappId);
@@ -43,9 +29,17 @@ namespace Steamworks {
 		public static bool InitSafe() => Init();
 
 	    // [Steamworks.NET] This is for Ease of use, since we don't need to care about the differences between them in C#.
-		public static bool Init() {
+		public static bool Init(bool useBackgroundTimerForCallbacks=true) {
 			InteropHelp.TestIfPlatformSupported();
-			return NativeMethods.SteamAPI_InitSafe();
+            SteamUGC.Initialize();
+		    if (!NativeMethods.SteamAPI_InitSafe())
+                return false;
+		    if (!useBackgroundTimerForCallbacks)
+		        return true;
+
+		    SteamCallbackTimer.Elapsed += (sender, args) => RunCallbacks();
+		    SteamCallbackTimer.Start();
+		    return true;
 		}
 #else
 		public static bool Init() {

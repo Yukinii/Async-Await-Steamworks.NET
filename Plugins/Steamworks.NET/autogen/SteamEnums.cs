@@ -437,14 +437,14 @@ namespace Steamworks
         All = -1
     }
 
-    public enum ERemoteStoragePublishedFileVisibility
+    public enum Visibility
     {
         Public = 0,
         FriendsOnly = 1,
         Private = 2,
     }
 
-    public enum EWorkshopFileType
+    public enum WorkshopFileType
     {
         First = 0,
 

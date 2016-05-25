@@ -1383,7 +1383,7 @@ namespace Steamworks {
 		public ulong SteamIDOwner;		// Steam ID of the user who created this content.
 		public uint timeCreated;			// time when the published file was created
 		public uint timeUpdated;			// time when the published file was last updated
-		public ERemoteStoragePublishedFileVisibility Visibility;
+		public Visibility Visibility;
 		[MarshalAs(UnmanagedType.I1)]
 		public bool Banned;
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = Constants.TagListMax)]
@@ -1396,7 +1396,7 @@ namespace Steamworks {
 		public int PreviewFileSize;		// Size of the preview file
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = Constants.PublishedFileURLMax)]
 		public string URL;	// URL (for a video or a website)
-		public EWorkshopFileType FileType;	// Type of the file
+		public WorkshopFileType FileType;	// Type of the file
 		[MarshalAs(UnmanagedType.I1)]
 		public bool AcceptedForUse;			// developer has specifically flagged this item as accepted in the Workshop
 	}
@@ -1449,7 +1449,7 @@ namespace Steamworks {
 	[CallbackIdentity(Constants.ClientRemoteStorageCallbacks + 22)]
 	public struct RemoteStoragePublishedFileUnsubscribed {
 		public const int Callback = Constants.ClientRemoteStorageCallbacks + 22;
-		public PublishedFileId PublishedField;	// The published file id
+		public PublishedFileId PublishedFile;	// The published file id
 		public AppId _appId;						// ID of the app that will consume this file.
 	}
 
@@ -1601,7 +1601,7 @@ namespace Steamworks {
 		public const int Callback = Constants.ClientUGCCallbacks + 1;
 		public UGCQueryHandle _handle;
 		public ResultType ResultType;
-		public uint _unNumResultsReturned;
+		public uint ResultsCount;
 		public uint _unTotalMatchingResults;
 		[MarshalAs(UnmanagedType.I1)]
 		public bool CachedData;	// indicates whether this data was retrieved from the local on-disk cache
@@ -1652,7 +1652,7 @@ namespace Steamworks {
 	public struct ItemInstalled {
 		public const int Callback = Constants.ClientUGCCallbacks + 5;
 		public AppId AppId;
-		public PublishedFileId PublishedFileId;
+		public PublishedFileId PublishedFile;
 	}
 
 	//-----------------------------------------------------------------------------

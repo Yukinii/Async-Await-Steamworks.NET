@@ -31,7 +31,7 @@ namespace Steamworks {
 		
 		// Whether or not this action is currently available to be bound in the active action set
 		[MarshalAs(UnmanagedType.I1)]
-		public bool Active;
+		public readonly bool Active;
 	}
 
 	// friend game played information
@@ -56,22 +56,22 @@ namespace Steamworks {
 	public struct SteamItemDetails {
 		public SteamItemInstanceId _itemId;
 		public SteamItemDef _iDefinition;
-		public ushort Quantity;
-		public ushort Flags; // see ESteamItemFlags
+		public readonly ushort Quantity;
+		public readonly ushort Flags; // see ESteamItemFlags
 	}
 
 	// connection state to a specified user, returned by GetP2PSessionState()
 	// this is under-the-hood info about what's going on with a SendP2PPacket(), shouldn't be needed except for debuggin
 	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	public struct P2PSessionState {
-		public byte ConnectionActive;		// true if we've got an active open connection
-		public byte Connecting;			// true if we're currently trying to establish a connection
-		public byte P2PSessionError;		// last error recorded (see enum above)
-		public byte UsingRelay;			// true if it's going through a relay server (TURN)
-		public int BytesQueuedForSend;
-		public int PacketsQueuedForSend;
-		public uint RemoteIP;				// potential IP:Port of remote host. Could be TURN server.
-		public ushort RemotePort;			// Only exists for compatibility with older authentication api's
+		public readonly byte ConnectionActive;		// true if we've got an active open connection
+		public readonly byte Connecting;			// true if we're currently trying to establish a connection
+		public readonly byte P2PSessionError;		// last error recorded (see enum above)
+		public readonly byte UsingRelay;			// true if it's going through a relay server (TURN)
+		public readonly int BytesQueuedForSend;
+		public readonly int PacketsQueuedForSend;
+		public readonly uint RemoteIP;				// potential IP:Port of remote host. Could be TURN server.
+		public readonly ushort RemotePort;			// Only exists for compatibility with older authentication api's
 	}
 
 	//-----------------------------------------------------------------------------
@@ -87,61 +87,61 @@ namespace Steamworks {
 	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	public struct SteamUGCDetails {
 		public PublishedFileId Field;
-		public ResultType ResultType;												// The result of the operation.
-		public EWorkshopFileType FileType;									// Type of the file
-		public AppId CreatorAppID;										// ID of the app that created this file.
-		public AppId ConsumerAppID;										// ID of the app that will consume this file.
+		public readonly ResultType ResultType;						
+		public readonly WorkshopFileType FileType;					
+		public AppId CreatorAppID;									
+		public AppId ConsumerAppID;									       
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = Constants.PublishedDocumentTitleMax)]
-		public string Title;				// title of document
+		public readonly string Title;				
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = Constants.PublishedDocumentDescriptionMax)]
-		public string Description;	// description of document
-		public ulong SteamIDOwner;										// Steam ID of the user who created this content.
-		public uint timeCreated;											// time when the published file was created
-		public uint timeUpdated;											// time when the published file was last updated
-		public uint timeAddedToUserList;									// time when the user added the published file to their list (not always applicable)
-		public ERemoteStoragePublishedFileVisibility Visibility;			// visibility
+		public readonly string Description;	
+		public readonly ulong SteamIDOwner;	
+		public readonly uint TimeCreated;	
+		public readonly uint TimeUpdated;	      
+		public readonly uint TimeAddedToUserList;	
+		public readonly Visibility Visibility;		
 		[MarshalAs(UnmanagedType.I1)]
-		public bool Banned;													// whether the file was banned
+		public readonly bool Banned;				
 		[MarshalAs(UnmanagedType.I1)]
-		public bool AcceptedForUse;											// developer has specifically flagged this item as accepted in the Workshop
+		public readonly bool AcceptedForUse;		
 		[MarshalAs(UnmanagedType.I1)]
-		public bool TagsTruncated;											// whether the list of tags was too long to be returned in the provided buffer
+		public readonly bool TagsTruncated;			                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = Constants.TagListMax)]
-		public string Tags;								// comma separated list of all tags associated with this file
+		public readonly string Tags;								// comma separated list of all tags associated with this file
 		// file/url information
 		public UGCHandle _hFile;											// The handle of the primary file
 		public UGCHandle _hPreviewFile;										// The handle of the preview file
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = Constants.FilenameMax)]
-		public string _FileName;							// The cloud filename of the primary file
-		public int FileSize;												// Size of the primary file
-		public int PreviewFileSize;										// Size of the preview file
+		public readonly string FileName;							// The cloud filename of the primary file
+		public readonly int FileSize;												// Size of the primary file
+		public readonly int PreviewFileSize;										// Size of the preview file
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = Constants.PublishedFileURLMax)]
-		public string URL;						// URL (for a video or a website)
+		public readonly string URL;						// URL (for a video or a website)
 		// voting information
-		public uint _unVotesUp;												// number of votes up
-		public uint _unVotesDown;											// number of votes down
-		public float _flScore;												// calculated score
+		public readonly uint VotesUp;												// number of votes up
+		public readonly uint VotesDown;											// number of votes down
+		public readonly float Score;												// calculated score
 		// collection details
-		public uint _unNumChildren;
+		public readonly uint NumChildren;
 	}
 
 	// structure that contains client callback data
 	// see callbacks documentation for more details
 	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	public struct CallbackMsg {
-		public int _hSteamUser;
-		public int _iCallback;
-		public IntPtr _pubParam;
-		public int _cubParam;
+		public readonly int SteamUser;
+		public readonly int Callback;
+		public IntPtr ParamPtr;
+		public readonly int Param;
 	}
 
 	// a single entry in a leaderboard, as returned by GetDownloadedLeaderboardEntry()
 	[StructLayout(LayoutKind.Sequential, Pack = Packsize.Value)]
 	public struct LeaderboardEntry {
 		public SteamId _userId; // user with the entry - use SteamFriends()->GetFriendPersonaName() & SteamFriends()->GetFriendAvatar() to get more info
-		public int GlobalRank;	// [1..N], where N is the number of users with an entry in the leaderboard
-		public int Score;			// score as set in the leaderboard
-		public int _cDetails;		// number of int32 details available for this entry
+		public readonly int GlobalRank;	// [1..N], where N is the number of users with an entry in the leaderboard
+		public readonly int Score;			// score as set in the leaderboard
+		public readonly int Details;		// number of int32 details available for this entry
 		public UGCHandle _hUGC;		// handle for UGC attached to the entry
 	}
 
@@ -152,14 +152,10 @@ namespace Steamworks {
 	/// filter operation.  The meaning of the operand depends upon the filter.
 	[StructLayout(LayoutKind.Sequential)]
 	public struct MatchMakingKeyValuePair {
-		MatchMakingKeyValuePair(string strKey, string strValue) {
-			_szKey = strKey;
-			_szValue = strValue;
-		}
+	    [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
+		public readonly string _szKey;
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
-		public string _szKey;
-		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
-		public string _szValue;
+		public readonly string _szValue;
 	}
 
 }

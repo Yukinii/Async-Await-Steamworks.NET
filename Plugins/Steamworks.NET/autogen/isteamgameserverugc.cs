@@ -225,9 +225,9 @@ namespace Steamworks {
 		/// <para> Steam Workshop Creator API</para>
 		/// <para> create new item for this app with no content attached yet</para>
 		/// </summary>
-		public static SteamAPICall CreateItem(AppId nConsumerAppId, EWorkshopFileType eFileType) {
+		public static SteamAPICall CreateItem(AppId nConsumerAppId, WorkshopFileType fileType) {
 			InteropHelp.TestIfAvailableGameServer();
-			return (SteamAPICall)NativeMethods.ISteamGameServerUGC_CreateItem(nConsumerAppId, eFileType);
+			return (SteamAPICall)NativeMethods.ISteamGameServerUGC_CreateItem(nConsumerAppId, fileType);
 		}
 
 		/// <summary>
@@ -281,7 +281,7 @@ namespace Steamworks {
 		/// <summary>
 		/// <para> change the visibility of an UGC item</para>
 		/// </summary>
-		public static bool SetItemVisibility(UGCUpdateHandle handle, ERemoteStoragePublishedFileVisibility eVisibility) {
+		public static bool SetItemVisibility(UGCUpdateHandle handle, Visibility eVisibility) {
 			InteropHelp.TestIfAvailableGameServer();
 			return NativeMethods.ISteamGameServerUGC_SetItemVisibility(handle, eVisibility);
 		}

@@ -1718,7 +1718,7 @@ namespace Steamworks {
 		public static extern bool ISteamRemoteStorage_ResetFileRequestState();
 #endif
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern ulong ISteamRemoteStorage_PublishWorkshopFile(InteropHelp.UTF8StringHandle File, InteropHelp.UTF8StringHandle PreviewFile, AppId nConsumerAppId, InteropHelp.UTF8StringHandle Title, InteropHelp.UTF8StringHandle Description, ERemoteStoragePublishedFileVisibility eVisibility, IntPtr pTags, EWorkshopFileType eWorkshopFileType);
+		public static extern ulong ISteamRemoteStorage_PublishWorkshopFile(InteropHelp.UTF8StringHandle File, InteropHelp.UTF8StringHandle PreviewFile, AppId nConsumerAppId, InteropHelp.UTF8StringHandle Title, InteropHelp.UTF8StringHandle Description, Visibility eVisibility, IntPtr pTags, WorkshopFileType workshopFileType);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern ulong ISteamRemoteStorage_CreatePublishedFileUpdateRequest(PublishedFileId unPublishedFileId);
@@ -1741,7 +1741,7 @@ namespace Steamworks {
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamRemoteStorage_UpdatePublishedFileVisibility(PublishedFileUpdateHandle updateHandle, ERemoteStoragePublishedFileVisibility eVisibility);
+		public static extern bool ISteamRemoteStorage_UpdatePublishedFileVisibility(PublishedFileUpdateHandle updateHandle, Visibility eVisibility);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
@@ -1785,7 +1785,7 @@ namespace Steamworks {
 		public static extern ulong ISteamRemoteStorage_EnumerateUserSharedWorkshopFiles(SteamId steamId, uint unStartIndex, IntPtr pRequiredTags, IntPtr pExcludedTags);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern ulong ISteamRemoteStorage_PublishVideo(EWorkshopVideoProvider eVideoProvider, InteropHelp.UTF8StringHandle VideoAccount, InteropHelp.UTF8StringHandle VideoIdentifier, InteropHelp.UTF8StringHandle PreviewFile, AppId nConsumerAppId, InteropHelp.UTF8StringHandle Title, InteropHelp.UTF8StringHandle Description, ERemoteStoragePublishedFileVisibility eVisibility, IntPtr pTags);
+		public static extern ulong ISteamRemoteStorage_PublishVideo(EWorkshopVideoProvider eVideoProvider, InteropHelp.UTF8StringHandle VideoAccount, InteropHelp.UTF8StringHandle VideoIdentifier, InteropHelp.UTF8StringHandle PreviewFile, AppId nConsumerAppId, InteropHelp.UTF8StringHandle Title, InteropHelp.UTF8StringHandle Description, Visibility eVisibility, IntPtr pTags);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern ulong ISteamRemoteStorage_SetUserPublishedFileAction(PublishedFileId unPublishedFileId, EWorkshopFileAction eAction);
@@ -1939,7 +1939,7 @@ namespace Steamworks {
 		public static extern ulong ISteamUGC_RequestUGCDetails(PublishedFileId fileId, uint unMaxAgeSeconds);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern ulong ISteamUGC_CreateItem(AppId nConsumerAppId, EWorkshopFileType eFileType);
+		public static extern ulong ISteamUGC_CreateItem(AppId nConsumerAppId, WorkshopFileType fileType);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern ulong ISteamUGC_StartItemUpdate(AppId nConsumerAppId, PublishedFileId fileId);
@@ -1962,7 +1962,7 @@ namespace Steamworks {
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamUGC_SetItemVisibility(UGCUpdateHandle handle, ERemoteStoragePublishedFileVisibility eVisibility);
+		public static extern bool ISteamUGC_SetItemVisibility(UGCUpdateHandle handle, Visibility eVisibility);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
@@ -2785,7 +2785,7 @@ namespace Steamworks {
 		public static extern ulong ISteamGameServerUGC_RequestUGCDetails(PublishedFileId fileId, uint unMaxAgeSeconds);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern ulong ISteamGameServerUGC_CreateItem(AppId nConsumerAppId, EWorkshopFileType eFileType);
+		public static extern ulong ISteamGameServerUGC_CreateItem(AppId nConsumerAppId, WorkshopFileType fileType);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern ulong ISteamGameServerUGC_StartItemUpdate(AppId nConsumerAppId, PublishedFileId fileId);
@@ -2808,7 +2808,7 @@ namespace Steamworks {
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
-		public static extern bool ISteamGameServerUGC_SetItemVisibility(UGCUpdateHandle handle, ERemoteStoragePublishedFileVisibility eVisibility);
+		public static extern bool ISteamGameServerUGC_SetItemVisibility(UGCUpdateHandle handle, Visibility eVisibility);
 
 		[DllImport(NativeLibraryName, CallingConvention = CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]

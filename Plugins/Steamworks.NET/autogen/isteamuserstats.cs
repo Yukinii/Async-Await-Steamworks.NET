@@ -307,7 +307,7 @@ namespace Steamworks {
 		/// <para>				LeaderboardEntry leaderboardEntry;</para>
 		/// <para>				int32 details[3];		// we know this is how many we've stored previously</para>
 		/// <para>				GetDownloadedLeaderboardEntry( pLeaderboardScoresDownloaded-&gt;_hSteamLeaderboardEntries, index, &amp;leaderboardEntry, details, 3 );</para>
-		/// <para>				assert( leaderboardEntry._cDetails == 3 );</para>
+		/// <para>				assert( leaderboardEntry.Details == 3 );</para>
 		/// <para>				...</para>
 		/// <para>			}</para>
 		/// <para> once you've accessed all the entries, the data will be free'd, and the SteamLeaderboardEntries handle will become invalid</para>
